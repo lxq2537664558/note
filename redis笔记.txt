@@ -1,0 +1,243 @@
+Redis	Remote Dictionary Server(远程数据服务)
+Redis 	内存高速缓存数据库
+	高速读取数据(in-menmory)
+	减轻数据库负担
+	有集合计算功能(由于普通数据库和同类别产品)
+	多种数据结构支持
+
+linux使用redis
+安装
+	解压文件进入文件夹 make
+		redis.conf		配置文件
+	mkdir /usr/local/redis
+	cp redis.conf /usr/local/redis
+	cd src
+		redis-cli		客户端
+		redis-server	服务端
+	cp redis-cli redis-server /usr/local/redis
+
+启动redis服务(前台)
+/usr/local/redis/redis-server
+
+设置redis服务后台启动
+vi /usr/local/redis/redis.conf
+	daemonize yes
+	后台启动
+	/usr/local/redis/redis-server redis.conf
+
+启用redis客户端	/usr/local/redis/redis-cli
+
+redis数据
+	key	不能有 空格 \n换行
+
+数据类型
+	string  list  hash  set  sorted set
+
+key操作
+	exists key				测试制定key是否存在
+	del key1 key2 ..		删除指定的key
+	type key 				返回给定key 的value类型
+	keys pattern			返回匹配制定模式的所有key  可用*
+	randomkey				返回从当前数据库中随机选择的一个key
+	rename oldkey newkey	改名字
+	dbsize					返回当前数据库的key数量
+	expire key seconds		为key指定过期时间
+	ttl key					返回key 的剩余过期秒数
+	  (redis 默认有16个数据库   redis.conf 中有设置)
+	select db-index			选择数据库
+	move key db-index		将key从当前数据库移动到指定数据库
+	flushdb					删除当前数据库中所有key
+	flushall				删除所有数据库中的所有key
+
+String类型操作
+	set key value			设置key对应的值为string类型的value
+	get key 				获取
+	mset key1 value1 keyN valueN  	设置多个
+	mget key1 key2 key3				获取多个
+	incr key				递增1  返回新的值
+	decr key  				递减1  返回新的值
+	incrby key integer		增加指定的值 返回新的值
+	decrby key integer		减少指定的值 返回新的值
+	append key value 		给指定key的字符串值追加value
+	substr key start end	返回截取过的key的字符串值
+
+list类型操作
+	lpush key string		在key对应list的头部添加字符串元素
+	rpush key string		同上 在尾部添加
+	llen key				返回key对应list的长度,key不存在返回0 key对应类型不是list返回错误
+	lrange key start end	返回指定区间内的元素 下表从0开始
+	ltrim key start end		截取list 保留指定区间内元素
+	lset key index value 	设置list中指定下标的元素值
+	lrem key count value 	从key对应list中删除count个和value相同的元素.count为0时候删除全部
+	lpop key 				从list的头部伤处元素,并返回删除元素
+	rpop key 				从list的尾部删除元素,并返回删除元素
+
+set集合
+	sadd key member				添加一个string元素到key对应的set集合中,成功返回1,如果元素已经在集合中 返回0,key对应的set不存在返回错误
+	srem key member[member]		从key对应set中移除给定元素,成功返回1
+	smove p1 p2 member			从p1对应set中移除member并添加到p2对应set中
+	scard key 					返回set的元素个数
+	sismember key member		判断member是否在set中
+	sinter key1 key2 ...		返回所有给定key的交集
+	sinterstore p1 key1 key2 	同sinter,并同时保存交集到p1中
+	sunion key1 key2 ... 		返回所有给定key的并集
+	sunionstore p1 key1 key2 	同sunion,并同时保存并集到p1中
+	sdiff key1 key2 ...			返回所有给定key的差集
+	sdiffstore p1 key1 key2 	同sdiff,并同时保存差集到p1中
+	smembers key 				返回key对应set的所有元素,结果是无序的
+
+sort set 排序集合类型
+	set类型 		集合类型,内部元素没有顺序,同一个集合没有重复元素
+	list类型 	内部元素有彼此的先后顺序,同一个链表允许有重复元素
+	Sort set类型 排序集合类型,相比set类型有排序功能
+
+	zadd key score member		添加元素到集合,元素在集合中存在则更新对应score
+	zrem key member 			删除指定元素,1表示成功,如果元素不存在返回0
+	zincrby key incr member 	按照incr增加对应member的score值,返回score值
+	zrank key menmber 			返回指定元素在集合中的排名(下标),集合中元素是按score从小到大排序的
+	zrevrank key member 		同上 但是集合中元素是按score从大道小排序
+	zrange key start end 		类似lrange操作从集合中去制定区间元素 返回是有序结果
+	zrevrange key start end 	同上,返回结果是按score逆序的
+	zrangebyscore key min max	返回集合中score在给定区间的元素
+	zcount key min max			返回集合中score在给定区间的数量
+	zcard key 					返回集合中元素个数
+	zscore key element			返回给定元素对应的score
+	zremrangebyrank key min max	删除集合中排名在给定区间的元素
+	zremrangebyscore key mix max删除集合中score在给定区间的元素
+
+hash数据类型		redis模仿数据库把一条记录信息给存储起来
+	hset key field value 		设置hash field 为指定值,如果key不存,则先创建
+	hget key field 				获取指定的hash field
+	hmget key filed 1filed2...	获取多个指定的hash filed
+	hmset key filed1 value1...	设置hash的多个field
+	hincrby key field integer	将指定的hash filed加上给定值
+	hexists key field			测试指定dield是否存在
+	hdel key field				删除指定的hash field
+	hlen key					返回指定hash的field数量
+	hkeys key 					返回hash的所有field
+	hvals key 					返回hash的所有value
+	hgetall key 				返回hash 的所有filed和value
+
+持久化功能
+	redis为了内部数据的安全考虑,会把本身的数据保存到硬盘中一份,在服务器重启之后会自动把硬盘的数据恢复到内存(redis)的里面
+	数据保存到硬盘的过程就称为"持久化"效果
+
+	快照持久化	Snap shotting
+		该持久化默认开启,一次性把redis中全部的数据保存一份存储在硬盘中,如果数据非常多(10G-20G)就不适合频繁持久化操作
+		设置快照持久化备份文件"名字"和"目录"设置
+			vi ./redis.conf
+				dbfilename dump.rdb
+				dir ./
+		快照持久化的出发机制
+			save 900 1		900秒内如果超过一次key被修改,则发起快照保存
+			save 300 10 	300秒内超过10次key被修改,发起快照
+			save 60 10000	60秒内超过10000次key被修改,发起快照
+		手动快照持久化
+			./redis-cli [-h 主机名 ip -p 端口号] bgsave
+
+	精细持久化	Append-only file (aof)
+		把用户执行的每个"写" 指令(添加, 修改, 删除)都备份到文件中, 还原数据的时候就是执行具体写指令而已
+		开启精细持久化并设置备份文件名字
+			vi ./redis.conf
+				appendonly yes		开启
+				appendfilename appendonly.aof	不设置则使用默认名字
+		精细触发机制
+			# appendfsync always	每次收到写命令就立即潜质写入磁盘,最慢的,当时保证完全的持久化.不推荐使用
+			appendfsync	everysec	每秒钟强制写入磁盘一次,在性能和持久化方面做了很好的折中
+			# appendfsync no		完全依赖os,性能最好,持久化没有保证
+
+	注 修改完redis配置文件后 需要杀死redis进程 重启redis
+
+	redis的持久化相关指令
+		./redis-cli bgsave		异步保存数据到磁盘(快照保存)
+					lastsave	返回上次成功保存到磁盘的unix时间戳
+					shutdown	同步保存到服务器并关闭redis服务器
+					bgrewriteaof当日志文件过长时优化AOF日志文件存储
+
+redis 主从配置
+	主服务器设置
+	vi ./redis.conf
+		daemonize yes
+		port 6379
+		requirepass 123456	 			设置主服务器连接密码
+
+	从服务器设置
+	vi ./redis.conf
+		daemonize yes
+		port 6300
+		slaveof 192.168.1.1 6379 		主服务器ip 端口
+		masterauth 123456				主服务器密码
+
+php与redis结合
+	安装php的redis扩展
+		安装依赖软件 autoconf
+			tar zxvf autoconf-2.62.tar.gz
+			cd autoconf-2.62
+			./configure && make && make install
+		安装phpredis
+			tar zxvf phpredis.tar.gz
+			cd phpredis
+			/usr/local/php/bin/phpize
+			./configure --with-php-config=/usr/local/php/bin/php-config
+			make && make install
+		给php.ini设置redis扩展
+			vi /usr/local/php/lib/php.ini
+				extension=redis.so
+		重启apache
+			/usr/local/http2/bin/apachectl restart
+
+php操作redis
+	$redis = new Redis();
+	$redis->connect('192.168.1.102','6379'); 	//连接redis
+			ping() 								//检查服务器是否运行
+
+			set('key', 'value');				//设置key 的值为 value
+			get('key'); 						//获取key的值
+			mset(['key1'=>'v1','key2'=>'v2']);  //设置多个
+			mget(['key1',key2','key3']);		//获取多个
+			setex('key', 5, 'value'); 			//设置有效期为5秒的键值
+			psetex('key', 5000, 'value');		//设置有效期为5000毫秒的键值
+			setnx('key_lock', "123");			//(锁)如果数据库中不存在该键, 设置关键值参数
+			delete('key');  					//删除key  返回删除的项数
+			getSet('key', 'value'); 			//将key 的值设置为 value, 并返回这个键原来的值
+			getMultiple(['key1', 'key2']); 		//取得所有指定的键值. 如果一个或多个键不存在, 该数组中该键的值为假
+
+
+			lpush('list', 'value'); 			//列表头添加字符串值. 成功返回数组长度. 如果不存在该键则创建该列表. 如果该键存在, 而且不是一个列表, 返回false
+			rpush('list', 'value'); 			//列表尾添加字符串值. 同上
+			lpop('list', 'value');				//返回和移除列表的第一个元素  成功返回第一个元素的值, 失败返回false
+			lsize,llen('list');					//返回列表的长度. 如果列表不存在或为空, 该命令返回0. 如果该键不是列表返回false
+			lget('list', index); 				//返回指定键存在的列表中指定的元素 0为第一个 -1为倒数第一个 成功返回指定的元素的值 错误的索引或键不指向列表则返回false
+			lset('list', index, 'value'); 		//为列表指定的索引赋新的值, 成功返回ture 若不存在该索引返回false
+			lgetrange('list', start, end); 		//返回在该区域中的指定键列表中开始到结束存储的指定元素, 成功返回查找的值, 失败false
+			lremove('list', 'key', count);		//链表从左开始删除元素的count个key
+			lrem('list', 'key', count);			//同上
+
+			sadd('set', 'value'); 				//为一个set添加一个值. 如果这个值已经在这个set中, 则返回false
+			sremove('set', 'value'); 			//删除set中指定的value值 返回true | false
+			smove('secset', 'dstkey', 'value'); //将value元素从srckey集合移到dstkey的集合
+			scontains('set', 'value'); 			//检查集合中是否存在指定的值
+			ssize('set');  						//返回集合中存储值的数量 成功返回数量 失败返回0
+			spop('set'); 						//随机移除并返回key中的一个值  成功返回删除的值  失败false
+			sinter('set1', 'set2'); 			//返回一个所有指定键的交集, 如果只指定一个键, 那么这个命令生成的这个集合成员, 如果不存在某个键, 则返回false
+			sinterstore('output', 's1', 's2'); 	//求交集并将交集保存到 out 的集合  成功返回成功的个数
+			sUnion('s0', 's1'); 				//s0和s1 的并集
+			sUnionStore('output', 's1', 's2');  //求s1和s2的并集保存到 output
+			sDiff('s0', 's1'); 					//返回第一个集合中存在并在其它集合中不存在的结果
+			sDiffStore('output', 's0', 's1'); 	//返回s0集合中存在并在其它集合中不存在的结果 存在output集合中  成功返回个数
+			sMembers|sGetMembers('set');   		//返回合集的内容
+
+			sort
+				'by' => 'some_pattern_*',
+				'limit' => array(0, 1),
+				'get' => 'some_other_pattern_*' or an array of patterns,
+				'sort' => 'asc' or 'desc',
+				'alpha' => TRUE,
+				'store' => 'external-key'
+
+				sort('key', ['sort' => 'desc']);	//排序
+
+反射
+	method=new ReflectionClass('Redis');
+	$res = $method->getMethods();
+	print_r($res);

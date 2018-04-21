@@ -1,0 +1,73 @@
+svn全称SubVersion子级版本(自己源代码版本控制管理软件)
+它是一个自由/开源的版本控制系统,一组文件存放在中心本库,记录每一次文件和目录的修改,Subversion允许把数据恢复到早期版本,或是检查数据修改的历史,subversion可以通过网络访问它的版本库,从而使用户在不同的电脑上进行操作.
+
+创建仓库
+cmd >svnadmin create D:/Subversion/app/book
+
+启动仓库服务
+	svnserve -d(后台运行) -r(监管目录)  D:\WWW\svn\myapp\shop
+cmd >svnserve -d -r D:/Subversion/app/shop
+	该svn服务走svn协议,端口号是3690
+	此窗口不能关	ctrl+c 结束
+
+建立联系	右键->Checkout
+	进入选择文件夹 检出 svn://ip地址 选择svn文件夹 检出
+	得到隐藏文件夹.svn则为成功
+	
+右键->SVN->Add	本地的.svn对该文件形成管理
+右键->Commit		本次的文件提交给svn仓库	
+右键->Update		更新
+
+蓝色加号	本地的.svn对该文件有形成管理
+绿色对号	本地文件 .svn管理的版本文件 仓库文件 三者一直
+红色叹号	本地文件 与 .svn和仓库文件不一致(用户自己修改了该文件)
+黄色叹号	表示该文件正处于冲突状态
+
+开启匿名账号权限
+	仓库文件夹 conf/svnserve.ocnf
+	anon-access = write
+
+版本回退
+右键 -> tortoiseSVN -> 跟新至版本 -> 显示日志 -> 选择版本 -> 确定
+
+权限控制
+svnserve.conf	svn的主配置文件
+passwd			用户名和密码配置文件
+authz			权限配置文件
+
+默认情况下,系统主配置文件,是没有开启passwd以及authz授权功能的,
+svnserve.conf 开启passwd authz
+	password-db = passwd
+	zuthz-db = authz
+添加用户	passwd
+	[users]		
+	用户名 = 密码
+给用户授权 authz
+	[groups]
+	组名 = 用户名1,用户名2,用户名3
+	名称_groups = 用户名
+	[操作文件夹名称:/]
+	
+	[/]			仓库的主机名地址 svn://localhost 
+				运行的仓库服务   svnserve -d -r D:/Subversion/app/shop
+	
+	[shop:/]	仓库的主机名地址 svn://localhost/shop
+				运行的仓库服务   svnserve -d -r D:/Subversion/app/
+	用户名 = rw或r
+	* = 
+	@组名 = rw|r
+
+	[shop:/controller]	给文件夹设置权限
+	
+anon-access = none
+
+添加到系统服务
+	sc create SVNService(服务名字) binpath= "路径\svnserve.exe -r 监管目录 --service" start= auto
+	binpath=|start= 后面有一个空格
+	添加后启动
+	
+	cmd
+	sc create svnd binPath= "D:/Subversion/Server/bin/svnserve.exe -r D:/Subversion/app/ --service" start= auto
+		net start svnd 启动
+		net stop svnd  停止
+		sc delete svnd 删除

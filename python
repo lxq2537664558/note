@@ -1,0 +1,288 @@
+Mac和Linux上直接运行py文件
+	文件开头加上
+	#!/usr/bin/env python3
+	给执行权限
+	$ chmod a+x hello.py
+
+文件一律使用 UTF-8 编码
+文件头部必须加入
+#-*-coding:utf-8-*-
+
+
+
+//输出
+print('hello, world')
+
+//输入   返回字符串
+input()   可以让用户输入字符串，并存放到一个变量里
+
+//格式化
+	'Hello, %s' % 'world'
+	'Hi, %s, you have $%d.' % ('Michael', 1000000)
+
+	%d 整数
+	%f 浮点数
+	%s 字符串
+	%x 十六进制整数
+	%% %
+
+	'%2d-%02d' % (3, 1)
+	' 3-01'
+	'%.2f' % 3.1415926
+	'3.14'
+
+
+
+dict 字典   dictionary  map
+	//定义
+	d = {'a': 1, 'b': 2, 'c': 3}
+	//获取
+	d['a']
+	//赋值
+	d['b'] = 1
+
+	//下标不存在时会报错
+	//判断b 是否存在在d里
+	'b' in d
+	// dict提供的get方法
+	d.get('b', 'default')
+
+	//删除   会返回该值
+	d.pop('b')
+
+	和list比较，dict有以下几个特点：
+		1.查找和插入的速度极快，不会随着key的增加而增加；
+		2.需要占用大量的内存，内存浪费多。
+	而list相反：
+		1.查找和插入的时间随着元素的增加而增加；
+		2.占用空间小，浪费内存很少。
+
+
+	dict的key必须是不可变对象
+
+
+set 
+	set和dict类似，也是一组key的集合，但不存储value。由于key不能重复，所以，在set中，没有重复的key
+
+	//定义
+	s = set([1, 2, 3])
+	//添加元素
+	s.add(key)
+	//删除元素
+	s.remove(key)
+
+	两个set可以做 交集 并集 等操作
+	s1 & s2   
+	s1 | s2
+
+	set和dict的唯一区别仅在于没有存储对应的value，但是，set的原理和dict一样，所以，同样不可以放入可变对象，因为无法判断两个可变对象是否相等，也就无法保证set内部“不会有重复元素”
+
+
+list [] 列表  有序集合
+	//定义
+	a = ['a', 'b', 'c']
+	//排序
+	a.sort()
+	//长度
+	len(a)
+	//获取
+	a[0]
+	//取最后一个元素
+	a[-1]
+	//追加元素到末尾
+	a.append('d')
+	//插入到指定位置
+	a.insert(1, 'd')
+	//删除末尾元素
+	a.pop()
+	//删除指定位置的元素
+	a.pop(1)
+	//赋值  替换
+	a[1] = 'c'
+
+
+
+tuple 元组
+	另一种有序列表叫元组：tuple。tuple和list非常类似，但是tuple一旦初始化就不能修改
+
+	因为tuple不可变，所以代码更安全
+
+	//定义
+	t = ('a', 'b', 'c')
+
+
+数据类型
+	整数
+
+	浮点数
+		整数与浮点数没有大小限制
+		但浮点数超出一定范围就直接表示inf(无限大)
+
+	string   字符串
+		//定义
+		a = 'abc'
+		//替换
+		a.replace('a', 'A')
+
+		print(r'\\\t\\')   r开头表示不转义
+
+		多行文本
+		'''123
+		234
+		345
+		456'''
+
+		//获取到字符的整数表示
+		ord()  
+		//把编码转换为对应的字符
+		chr()
+
+		//十六进制输出 '中文'
+		'\u4e2d\u6587'
+
+		//表示数据为 bytes类型的数据
+		b'abc'
+
+		//str通过encode() 方法可以编码为指定的bytes
+		'中文'.encode('utf-8')
+		'abc'.encode('ascii')
+		//bytes转为str
+		decode('utf-8')
+
+		//len()函数 统计字符串字符数  如果换成bytes  len计算字节数
+		len('中国')
+
+
+
+	布尔值
+		True
+		Flase
+		注意大小写
+
+		布尔值可以只是用逻辑运算符
+		and
+		or
+		not
+
+	空值
+		None
+
+
+%  取余
+// 地板除法   只取结果的整数
+
+
+
+条件判断
+	age = 20
+	if age >= 20:
+		print('y')
+	elif age < 10:
+		print('s')
+	else:
+		print('n')
+
+	if x:
+	    print('True')
+
+	//只要x是非零数值、非空字符串、非空list等，就判断为True，否则为False
+
+
+循环
+	name = ['a', 'b', 'c']
+	for name in names:
+		print(name)
+
+	默认情况下 dict迭代的是key  如果要迭代value 使用
+	for value in d.values()
+
+	如果要同时迭代key和value 使用
+	for k, v in d.items()
+
+	判断一个对象是否可以迭代
+	from collections import Iterable
+	isinstance('abc', Iterable)  # 返回True为可以迭代
+
+	list实现 索引-元素 对
+	for i, value in enumerate(['a', 'b', 'c'])
+
+	迭代器 
+		可以被next()函数调用并不断返回下一个值的对象称为迭代器：Iterator
+
+		//判断是否为迭代器
+		from collections import Iterator
+		isinstance((x for x in range(10)), Iterator)
+
+		把list、dict、str等Iterable变成Iterator可以使用
+		iter()
+
+		Python的for循环本质上就是通过不断调用next()函数实现
+			# 首先获得Iterator对象:
+			it = iter([1, 2, 3, 4, 5])
+			# 循环:
+			while True:
+			    try:
+			        # 获得下一个值:
+			        x = next(it)
+			    except StopIteration:
+			        # 遇到StopIteration就退出循环
+			        break
+
+	把一个list中所有字符串变成小写
+	[s.lower() for s in L]
+
+	n = 99
+	while n > 0:
+		n = n - 2
+
+
+//生成0开始 小于5的整数
+range(5)
+
+
+类型转换
+	
+	int() 			//转换为整型
+	float() 		//转换为浮点型
+	str() 			//转换为字符串
+	bool() 			//转换为布尔
+ 	list() 			//转换为列表
+
+类型检查
+	//检查x 是否为 int 或 float
+	isinstance(x, (int, float))
+
+
+函数
+	def fact(n):
+    	if n==1:
+        	return 1
+    	return n * fact(n - 1)
+
+    定义函数
+    def 函数名(参数='默认值', *['可变参数'], **kw):
+    	*			可变参数      tuple
+    	**			关键字参数   dict
+    	*, 参数 	命名关键字   限制关键字的命名
+
+	!!! 默认参数一定要用不可变对象，如果是可变对象，程序运行时会有逻辑错误！
+
+    参数定义的顺序必须是：必选参数、默认参数、可变参数/命名关键字参数和关键字参数。
+
+    空函数
+    def nop():
+    	pass
+
+    pass语句什么都不做  作为占位符
+
+    函数返回多值其实就是返回一个tuple
+
+
+切片  Slice
+	L[0:3]     索引0到3  不包括3
+	L[:10:2]   前10个  每两取一个
+	L[::5]     每5个 取一个
+	L[:] 		复制一个list
+
+//导入math包
+import math	

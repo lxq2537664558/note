@@ -1,0 +1,103 @@
+###电脑硬件
+电源		心脏
+
+主机
+	主板		骨骼
+	cpu		大脑
+	内存		临时存储数据
+外设
+	储存
+		磁盘
+			硬盘     血肉    存储数据
+				- 机械
+					- sata
+					- sas
+				- 电子
+					- ssd
+			软盘
+		光盘
+		内存
+	输入
+		键盘
+		鼠标
+		扫描仪
+		摄像头
+		光驱
+	输出
+		显卡
+		音响
+		打印机
+
+bios芯片 电脑开机先加载
+
+进程: 正在运行着的程序, 进程会放在内存里执行
+守护进程: 持续保持运行着的程序
+
+IO优化
+	高并发 大数据量: 会把数据先写到内存, 达到一定的量, 然后在定时或者定量的写到磁盘 (减少磁盘IO)
+		优点: 写数据到内存, 性能高(微博, 微信, SNS, 秒杀)
+		缺点: 可能会丢失一部分在内存中还没有来得及存入磁盘的数据
+			解决方法:
+				1 服务器主板上安装电池
+				2 UPS 不间断供电 (持续供电10分钟, IDC 数据 UPS 1小时)
+	并发不是很大的网站,读多写少的业务, 会先把数据写入到磁盘, 然后通过程序把数据读入到内存里, 在对外通过读内存提供访问服务
+
+	Note: 写入数据到内存, 成为缓冲区 (buffer) 从内存读取数据,内存空间 (cache)
+
+
+Dell 整列卡 (RAID卡)
+	基本作用: 网站数据量很大, 单块盘装不下了, 有了多快盘, 又不想单个盘存放数据, 就需要工具把所有硬盘整合成一个大磁盘, 在这个大磁盘上在分区放数据
+
+	RAID 有多种整合方式, RAID 0 1 5 10
+
+
+DNS 全称 Domain Name System
+
+查看客户端本地缓存的 DNS 解析记录命令
+	win 	C:\>ipconfig /displaydns
+	linux 	
+清除客户端本地缓存的 DNS 解析记录命令
+	win  	C:\>ipconfig /flushdns
+	linux 	systemctl restart nscd
+hosts 域名解析记录位置
+	win		C:\Windows\System32\drivers\etc\hosts
+	linux	\etc\hosts
+
+
+
+
+DNS    解析原理
+
+http   协议通信原理
+
+TCP/IP 3次握手和四次断开
+
+
+1
+	硬件 
+	cpu 控制器 运行器 寄存器 
+2
+	操作系统  Kernel:内核
+3
+	库 library:API(application Program Interface)  公用库
+4
+	应用程序
+
+
+
+
+
+
+
+查看nginx支持的mime类型
+cd nginx/conf/	
+	less mime.types
+
+ssh -p端口号 用户名@ip
+
+利用 rewrite 技术将动态网页伪装成静态网页
+
+
+eject	弹出光驱
+
+

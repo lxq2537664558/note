@@ -1,0 +1,107 @@
+MsgBox 123  提示框输出123
+
+#		代表 windows	
+^		代表 ctrl		
+!		代表 alt 		
++			 shift
+&		一个连接符可以用在任何连个键或鼠标按键的中键,从而将它们组合成一个自定义热键
+<		使用成对按键中左边的按键值
+>		
+*		通配符:即使附加的修饰按键被按住也激发热键
+~		当激发热键时,按键的原来的功能不会被屏蔽(被操作命令系统隐藏)
+$		这个符号通常仅仅在脚本使用Send命令发送包含了热键自身的按键时才有必要还是用,否则这可能导致发送热键出发它自己.
+
+space	代表 空格
+
+
+::		分隔符
+Run		用来启动一个程序,文档,URL(统一资源定位符)或者快捷方式.
+
+RWin::return		禁用一个键或组合键
+
+一键可以打开多个程序
+
+WinWait 等待程序或文档 窗口出现
+RunWait	等待程序或文档 窗口关闭
+
+return
+
+%A_Program Files%	內建变量
+
+
+	
+	
+Send		输出文本
+	
+{Enter}		回车
+{Space}		空格
+{Delete}	删除
+{Up}		方向键
+{tab}		tab键
+{#}			#字符  { } ! + ^
+
+热字串	键入btw紧跟一个空格或逗号 输出by the way
+::btw::by the way	
+
+鼠标
+
+鼠标点击	Left/左键 Right/右键 Middle/中键  获得鼠标坐标 window spy
+Click
+	Click				在鼠标当前位置点击鼠标左键
+	Click 44,55			相对当前窗口 坐标44,55处点击鼠标左键(以coordmode/坐标模式 的设置为基础).
+	Click right 44,55	和上面一样,不过是点击鼠标右键
+	Click 2				在当前位置点击鼠标左键两次(同双击)
+	Click down 			按住鼠标左键不放
+	Click up right		松开鼠标右键
+	Click %x% %y%		因为Click命令不支持expressions/表达式,变量必须用两个百分号包住.
+	Click之后可以跟0个或多个参数,各个擦桉树之间用至少一个空格 tab '\' 或逗号分隔.各个参数顺序不限,除了ClickCount,他必须出现在坐标的后面
+	Click WheelUp|WU 向上滚动
+	Click WheelDown|WD向下滚动
+	ClickCount 参数 		滚动次数 不过有些程序不接受VlickCount大于1的情况,对于这些程序可以使用Loop/循环
+	Relative|Rel 			表示以当前鼠标坐标为坐标原点,鼠标会更具设置的坐标参数从当前位置开始往右移动x像素
+	MouseMove		移动
+	MouseClickDrag	托选
+	
+激活与操作窗口
+	WinActivate		使窗口在最前面
+	#IfWinActive 标题名
+	#IfWinActive411;
+	IfWinExist		检查指定的窗口当前是否激活
+	WinWaitActive	等待指定的窗口变为活动的窗口(典型地使用在发送一个窗口激活键击之后,例如按下 Control-F 来'查找')
+	WinColose		关闭指定的窗口
+	WinMove			移动及(或)调整指定窗口的大小
+	WinMinimize,WinMaximize,WinRestore:分别最小化 最大化 或还原指定的窗口
+
+sleep,100   毫秒
+
+	
+变量 
+a=1 
+a:=1
+a=%另一个变量%
+	
+循序结构O
+选择结构
+	if 条件{}else{}
+循环结构
+	for	k[,value] in 对象{}  ;只支持object
+	loop{a_index break continue}
+		a_index 默认的索引  break终止循环 continue 跳过后面 开始下一次
+	while GetKeyState('LButton'){	;获取鼠标按下状态
+		MouseGetPos,x,y 
+		sleep,10 					;循环次数
+	}
+CoordMode,Mouse,Screen  	鼠标相对于整个屏幕
+MouseGetPos,x,y 			获取鼠标的位置
+		
+确保至少有一个使用键盘钩子的脚本正在运行。你只要通过打开一个脚本的主窗口并从菜单栏选择 "View->Key history" 就能知道它是否使用了键盘钩子。 
+双击那个脚本的托盘图标来打开它的主窗口。 
+按下你键盘上的某个“神秘按键”。 
+选择菜单项 "View->Key history" 
+向下滚动到页面的底部。在底部附近的某处就有你的按键的按下和弹起事件记录。注意：某些按键不生成事件记录，因此这里将看不到记录。如果是这种情况，你不能直接让那个特殊按键成为一个热键，因为你的键盘驱动或硬件在一个 AutoHotkey 访问不到的很低的层面处理它。要得到可能的解决方案，再往下看。 
+如果你的按键可被探测到，记下在列表第二列的 3 位十六进制数值 (例如 159)。 
+要定义此键为一个热键，参照此例： 
+SC159:: ;用你那按键的数值替换 159。
+MsgBox, %A_ThisHotKey% 被按下。
+return
+

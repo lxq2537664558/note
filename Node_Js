@@ -1,0 +1,218 @@
+
+stability 2 很稳定
+
+
+
+cnpm镜像  淘宝
+npm install -g cnpm –registry=https://registry.npm.taobao.org 
+
+
+
+
+模块
+	在Node.js中, 以模块为单位划分所有功能, 并且提供另一个完整的模块加载机制, 这时的我们可以将应用程序划分为各个不同的部分
+	不可能用一个js文件去写全部的业务. 肯定要有mvc  ？？？
+	狭义的说，　每一个JavaScript 文件都是一个模块; 而多个JavaScript 文件之间可以互相require, 他们共同实现了一个功能, 他们整体对外, 又称为一个广义上的模块
+	Node.js中, 一个JavaScript 文件中定义的变量, 函数, 都只是这个文件内部有效. 当需要从模块外部引用这些变量, 函数时, 必须使用 exports 对象进行暴露. 使用者用require() 命令引用这个JS 文件
+ 
+
+HTTP 模块
+var http = require('http');
+
+var server = http.createServer(function(request, response){
+	//req参数表示请求, res表示响应
+
+
+
+	//设置响应头
+	response.writeHead(200,{
+		"Content-type":"text/html;charset=utf-8"
+	});
+	//响应
+	response.end([data][, encoding][, callback])
+
+});
+
+//监听端口   绑定端口 ip地址
+server.listen(3000,'127.0.0.1');
+
+
+Url 模块
+	var url = require('url');
+
+	url.parse(urlString[, parseQueryString[, slashesDenoteHost]]);  //方法会解析一个 URL 字符串并返回一个 URL 对象
+		//urlString  		url地址
+		//parseQueryString  true 返回结果为 对象
+
+		urlObject.href
+			//  'http://user:pass@host.com:8080/p/a/t/h?query=string#hash'
+		urlObject.protocol
+			//  'http:'
+		urlObject.slashes
+			//  'host.com:8080'
+		urlObject.auth 			auth 属性是 URL 的用户名与密码部分。 该字符串跟在 protocol 和双斜杠（如果有）的后面，排在 host 部分的前面且被一个 ASCII 的 at 符号（@）分隔。 该字符的格式为 {username}[:{password}]，[:{password}] 部分是可选的
+			//  'user:pass'
+		urlObject.hostname
+			//  'host.com'
+		urlObject.port
+			//  '8080'
+		urlObject.pathname      不会对查询字符串执行解码。
+			//  '/p/a/t/h'
+		urlObject.path
+			//  '/p/a/t/h?query=string'  	不会对 path 执行解码。
+		urlObject.query
+			//  'query=string' or {'query': 'string'}   如果返回一个对象，则键和值都会被解码。如果返回一个字符串，则不会对查询字符串执行解码。
+		urlObject.hash
+			//  '#hash'
+
+	var querystring =  require('querystring');
+
+		querystring.parse('foo=bar&baz=quz&baz=quux&corge');
+		//return 
+		{foo:'bar', baz:['qux', 'quux'], corge:''}
+
+		//中文转码
+		querystring.parse('w=%D6%D0%CE%C4&foo=bar', null, null, {decodeURIComponent: gbkDecodeURIComponent});
+		//return 
+		{w:'中文', foo:'bar'}
+
+FS 模块   文件操作(异步)
+	var fs = require('fs');
+
+	//读取文件
+	//第一个参数是完整路径
+	//第二个参数是回调函数, 表示文件读取成功之后, 做的事情
+	fs.readFile('./test/1.txt', function(err, data){
+		if(err){
+			throw err; 
+		}
+	});
+
+	//创建一个文件夹
+	ffs.mkdir('./path'[, mode], callback)
+		mode 默认为 0o777
+
+	//删除一个文件夹
+	fs.rmdir('./path', callback)
+
+	//文件信息
+	fs.stat('./path', function(err, stats){
+		stats.isDirectory();
+		//判断是不是一个文件夹  返回booler
+	})
+	
+	//读取一个文件夹 获取所有文件 
+	fs.readdir('./path', function(err, files){
+		//files 是一个数组
+		console.log(files);
+	})
+
+Path 模块
+	var path = require('path');
+
+	//获取文件的后缀
+	path.extname('pathname');
+
+	//返回路径的正确 路径
+	path.normalize('pathname');
+
+
+
+
+
+
+log4js
+	下面这三行代码为你展示了 log4js 最简单的用法：
+
+	// file: simplest.js
+	var log4js = require('log4js');
+	var logger = log4js.getLogger();
+	logger.debug("Time:", new Date());
+
+	调用 .getLogger() 可以获得 log4js 的 Logger 实例，这个实例的用法与 console 是一致的，可以调用.debug（也有 .info、.error 等方法）来输出日志。
+	$node simplest.js
+
+
+
+
+
+V8高性能文本服务器
+	没有历史包袱, 没有同步I/O, 不会出现一个同步I/O导致事件循环性能急剧降低的情况
+	V8性能足够号, 远远比Python, Ruby 等其它脚本语言的引擎快
+	JavaScript语言的闭包特性非常方便, 比C中的回调函数好用
+
+Node.js是一个让JavaScript运行在服务器端的开发平台, 它让JavaScript的触角伸到了服务器端, 可以与PHP, JSP, Python, Ruby平起平坐
+
+但Node似乎有点不同: 
+	Node.js 不是一种独立的语言, 与PHP, JSP, Python, Perl, Ruby 的"即是语言, 也是平台" 不同, Node.js的使用 JavaScript进行编程, 运行在 JavaScript引擎上(V8)
+	与PHP,JSP 等相比, Node.js 跳过了Apache, Nginx, IIS等HTTP服务器, 它自己不用建设在任何服务器软件之上. Node.js 的许多设计理念与经典架构(LAMP) 有着很大的不同, 可以提供强大的伸缩能力
+
+	Node.js 自身哲学, 是花最小的硬件成本, 追求更高的并发, 更高的处理性能
+
+nodejs.org
+
+单线程
+	在Java, PHP 或者.net 等服务器语言中, 会为每一个客户端连接一个新的线程. 而每个线程需要耗费大约 2MB 内存. 也就是说, 理论上, 一个8GB 内存的服务器可以同时链接的最大用户数为4000 个左右. 要让Web 应用程序支持更多的用户, 就需要增加服务器的数量, 而Web应用程序的硬件成本当然就上升了.
+	Node.js不为每个客户链接创建一个新的线程, 而仅仅使用一个线程. 当有用户链接了, 就触发一个内部时间, 通过非阻塞I/O, 事件驱动机制, 让Node.js 程序宏观上也是并行的. 使用Node.js, 一个8GB 内存的服务器, 可以同时超过处理超过4万用户的链接
+	另外, 带线程的带来的好处, 还有操作系统完全不再有线程创建, 销毁的时间开销
+	坏处, 就是一个用户造成了线程的崩溃, 整个服务器都崩溃了, 其他人也崩溃了
+
+非阻塞I/O  异步和非阻塞是一个概念
+	例如, 当在访问数据库取得数据的时候, 需要一段时间. 在传统的单线程处理机制中, 在执行了访问数据库代码之后, 整个线程都会暂停下来, 等待数据库返回结果, 才能执行后面的代码. 也就是说, I/O阻塞了代码的执行, 极大地降低了程序的执行效率
+	由于 Node.js 中采用了非阻塞型I/O机制, 因此在执行了访问数据库的代码之后, 将立即转而执行其后面的代码, 把数据库返回结果的处理代码放在回调函数中, 从而提高了程序的执行效率
+	当某个I/O执行完毕时, 将以时间的形式通知执行I/O操作的线程, 线程执行的这个时间的回调函数, 为了处理异步I/O, 线程必须有事件循环, 不断的检查有没有未处理的事件, 依次予以处理.
+	阻塞模式下,  一个线程只能处理一项任务, 要想提高吞吐量必须通过多线程. 而非阻塞模式下, 一个线程永远在执行计算操作, 这个线程的CPU核心利用率永远是100% 所以, 这是一种特别有哲理的解决方案: 与其人多, 但是好多人闲着, 还不如一个人玩命, 往死里干活儿
+
+事件驱动
+	在Node中, 客户端请求建立链接, 提交数据等行为, 会触发相应的事件. 在Node中, 在一个时刻, 只能执行一个事件回调函数, 但是在执行一个事件回调函数的中途, 可以转而处理其它事件(比如, 又有新用户连接了), 然后返回继续执行原事件的回调函数, 这种处理机制, 称为"事件环" 机制. 
+	Node.js 底层是C++ (V8也是C++写的). 底层代码中, 近半数都用于事件队列, 回调函数队列的构建. 用事件驱动来完成服务器的任务调度, 这是鬼才才能想到的 针尖上的舞蹈, 用一个线程, 担负起了非常多的任务的使命
+
+
+Node.js 中所有的I/O都是异步的 回调函数,套用回调函数
+
+
+Node.js 使用场景
+	善于 I/O, 不善于计算. 因为Node.js 最擅长的是任务调度, 如果你的业务有很多的CPU计算, 实际上也相当于这个计算阻塞了这个单线程, 就不适合Node开发
+	当应用程序需要处理大量并发的I/O, 而在向客户端发出响应之前, 应用程序内部并不需要进行非常复杂的处理的时候, Node.js非常适合. Node.js也非常适合与 web socket配合, 开发长连接的实时交互应用程序
+
+	用户表单
+	考试系统
+	聊天室
+	图文直播
+	提供JSON的API(为前台Angular使用)
+
+Node.js 无法挑战3P(PHP,JSP,ASP)
+	Node.js本来就是极客追求性能极致的产物, 缺少了很多服务器的健壮考量. 所以Node不可能应用在银行, 证劵, 电信等需要极高可靠性的业务中
+	中国的企业实战中, 企业型公司(正处于A轮, B轮) 非常爱使用Node做核心业务
+		功夫熊的APP, 后台是Node.js 在伺服
+		实现网, 整站为Node.js 搭建
+	成熟大企业, 基本上都是用Node实现某一方面的功能:
+		知乎用了一个Node进程, 跑起了 "站内信" 功能
+		百度的很多表单, 使用Node保存到数据库的
+
+Node不是银弹, 就是你工具箱中的一个小工具而已	
+
+Nodejs 没有根目录的概念, 因为它不是 web 服务器
+
+安装
+	下载
+		cd /usr/local/src/
+		wget http://nodejs.org/dist/v0.10.24/node-v0.10.24.tar.gz
+	解压
+		tar zxvf node-v0.10.24.tar.gz
+	编译安装
+		cd node-v0.10.24
+		./configure --prefix=/usr/local/node/0.10.24
+		make
+		make install
+	配置NODE_HOME，进入profile编辑环境变量
+	 	vim /etc/profile
+
+	 	export NODE_HOME=/usr/local/node/0.10.24
+		export PATH=$NODE_HOME/bin:$PATH
+	配置生效
+		source /etc/profile
+	验证是否安装配置成功
+		node -v
+	npm模块安装路径
+		/usr/local/node/0.10.24/lib/node_modules/

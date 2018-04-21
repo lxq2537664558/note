@@ -1,0 +1,135 @@
+公众平台
+	用来强调信息流. 可以向微博一样给关注的用户去推送一些内容, 也可以像 10086 一样, 根据用户发过来的信息进行智能的回复. 这些功能我们可以通过后台来实现, 同样还可以将用户引向 html5 的页面, 实现一些更为复杂的功能
+
+40013  AppID 无效错误
+
+weixin 
+	Appid 			wx873ff71c4eb7704d
+	Token 			keyide
+	Appsecret 		6f91b5a7d57a59c1ca06611677d6a8bb
+	EncodingAESKey	CSuRUcyZY2Q0Gb1Ids6rt7WARKn7rAI8ZEDS7poj4iM
+
+lbs.qq.com
+	ZKMBZ-2S3K6-7C7SI-M52OQ-NPBBK-G4B6C
+
+
+http://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login
+
+<?php
+//自定义完成微信的操作功能类
+
+class weChatTes
+{
+	private $appid;
+	private $appsecret;
+	private $access_token;
+
+	function __custruct($appid, $appsecret){
+		$this->appid = $appid;
+		$this->appsecret = $appsecret;
+	}
+
+	private function get($url, $dataType='json')
+	{
+		return $this->request($url, 'get' , [], $dataType);
+	}
+
+	private function post($url, $data=null, $dataType='json')
+	{
+		return $this->request($url, 'post', $data, $dataType);
+	}
+
+	function sendAllOpenIdText($open_id_list=[], $content)
+	{
+		$url = sprintf('');
+
+		$data = [
+			'touser' => $open_id_list;
+			'msgtype' => 'text',
+			'text' => [
+				'content' => $content,
+			],
+		];
+
+		$response = $this->post($url, json_encode($data, JSON_UNESCAPED_UNICODE));
+
+		if($response){
+			return true;
+		}else{
+			trigger_error('请求失败');
+			return false;
+		}
+	}
+
+	fucntion getAccessToken()
+	{
+		//判断当前本地的access_token是否有效
+		$access_token_file = './access_token';
+		if( file_exists($access_token_file) && filemtime($access_token_file) > time()-7200){
+			//有效
+			$access_token = file_get_contents($access_token_file);
+		}else{
+			//无效
+			$url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$this->appid.'&secret='.$this->appsecret;
+			$data = $this->request($url);
+			if($data && isset($data->access_token)){
+				//获取新的 access_token
+				file_put_contents($access_token_file, $data->access_token);
+				$access_token = $data->access_token;
+			}
+
+			//记录下来的acccess_token 
+			$this->access_token = $access_token;
+			return $this;
+		}
+
+	}
+
+	function request($url, $type='get', $data=null, $dataType='json'){
+		//资源
+		$curl = curl_init();  
+		//设置地址
+		curl_setopt($curl, CURLOP_URL, $url);
+
+		//判断是否是 https
+		$scheme = parse_url($url, PHP_URL_SCHEME)
+		//返回url 
+
+		if('https' == $scheme){
+			//不做服务器认证
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+			//不做客户端认证
+			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		}
+
+		如果是post请求
+		if('post' == strtolower($type)){
+			//设置post请求方式
+			curl_setopt($curl, CURLOPT_POST, true);
+			//设置post请求数据
+			curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+		}
+
+		curl_setopt($url, CURLOPT_RETURNTRANSFER, true);//只获取页面, 不进行输出
+		//发送请求
+		
+		$response = curl_exec($curl);
+
+		if($response){
+			switch($dataType){
+				case 'josn':
+
+			}
+		}
+
+	}
+}
+
+defin('APPID', '');
+defin('APPSECRET', '');
+
+require __DIR__.'/weChatTest.php';
+$wechat = new weChatTest(APPID, APPSECRET);
+$wechat->getAccessToken();
+
+?>	

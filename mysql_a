@@ -1,0 +1,909 @@
+概述
+
+
+sql层面
+- 避免使用select *
+- count(1)或count(列) 代替 count(*)
+- 创建表时尽量时 char 代替 varchar
+- 表的字段顺序固定长度的字段优先
+- 组合索引代替多个单列索引（经常使用多个条件查询时）
+- 尽量使用短索引
+- 使用连接（JOIN）来代替子查询(Sub-Queries)
+- 连表时注意条件类型需一致
+- 索引散列值（重复少）不适合建索引，例：性别不适合
+
+order by null 禁用排序
+	group会自动排序
+order by rand() 随机排序
+	在应用层实现
+
+limit 1
+	如果明确获取一天记录即可, 建议加上 limit 1
+
+设计层面
+1 单表字段数量不要太多
+	30个左右
+
+2 预留字段
+	修改表结构开销很大
+	alter table add column 		尽可能避免
+
+	如果真的需要 alter table, 线上步骤
+	1 建立新表
+	2 导入旧表的数据
+	3 项目切换新表
+
+3 字段设计
+	timestamp 4字节 1970 ~ 2038-01-19 11:14:07
+
+	在满足功能的情况下 尽可能小
+	TEXT 		65535 	64k
+	MEDIUMTEXT	1677万	16M
+	LONGTEXT 	42亿		4G
+
+	double 8  float 4
+	decimal 定点型   不会出现精度丢失, 变长数据类型,
+
+	需要精度的使用 小单位 大数值
+
+	定长表, 如果一个表中所有的字段, 都是定长数据类型. 这样的表. 每条记录占用的储存空间是一致的. 表的空间结构 更容易被优化
+
+4 尽可能使用整数代替字符串
+	整数的计算速度要快
+
+	存储ip 使用 整数
+		mysql   inet_ntoa	inet_aton
+		php		ip2long 	long2ip
+
+5 强制增加注释
+
+6 尽可能 not null
+
+7 外键约束 foreign key
+	业务逻辑程序员来说, 能使用应用程序做到的, 都使用程序完成
+
+- 避免使用select *
+- count(1)或count(列) 代替 count(*)
+- 创建表时尽量时 char 代替 varchar
+- 表的字段顺序固定长度的字段优先
+- 组合索引代替多个单列索引（经常使用多个条件查询时）
+- 尽量使用短索引
+- 使用连接（JOIN）来代替子查询(Sub-Queries)
+- 连表时注意条件类型需一致
+- 索引散列值（重复少）不适合建索引，例：性别不适合
+
+
+范式Normal FOrmat 规定的一种设计方式
+	!!!重要
+	1 每种类型的数据, 使用独立的表进行存储
+	2 每张表, 存在一个独立的主键字段, id最好与业务逻辑无关  主键字段独立, 仅有标志性, 没有业务逻辑性
+	3 数据间的关联联系,  使用管理字段进行处理, 一对多(关联字段), 多对多(关联表)
+
+	第一范式 1NF	数据表的设计的字段中,每个字段都不能再分,每个字段都必须是最小的不可分割的单位(原子性)
+		Note: 关系型数据库, 默认满足原子性 满足第一范式
+	第二范式 2NF	一个数据表中的字段只能依赖一张表中的全部主键,而不能够依赖部分主键(主键是复合主键),第二范式的任务就是取消部分依赖
+	第三范式 3NF	如果在一个表中,出现了的数据会在其他实体(表)中出现,那么该类数据就应该同一拿出来新建一张表来进行维护.如果一个字段,依赖一个表中的非主键字段,这个时候就称之为传递依赖,就应该将该字段一级依赖的字段取出,重新维护一张表
+
+
+
+
+锁
+	lock table 表名1 READ|WRITE,表名2 READ|WRITE;		加锁
+	LOCK TABLE 表名 write写锁
+	unlock tables;									释放
+	当客户端操作表(记录)时,为了保证操作的隔离性(多个客户端操作不能互相影响) 通过加锁来处理
+	操作方面
+		read读锁(共享锁) 			读操作时增加的锁,S-lock.阻塞所有客户端的写操作,不阻塞读操作
+		write写锁(排它锁,独占锁)	写操作时增加的锁,X-lock.只有自己能操作 阻塞其他客户端的读,写操作
+	锁定粒度(范围)
+		行级 提升并发性,锁本身开销大
+			间隙锁, 锁定一个子范围 select * from table where id<10  (多行)
+		表级 不利于并发性,锁开销小
+
+	Note: 在锁表的过程中只能操作被锁定的表, 如果要操作其它表, 必须把所有要操作的表都锁定起来
+
+	死锁  互相依赖导致死锁
+		两个事物 Ta, Tb
+		row1, row2
+
+		Ta 需要使用 row1, row2 | Tb 需要使用 row2, row1
+
+		Ta, Tb 同时发生
+		Ta先用了 row1, 尝试 row2 | Tb先用了 row2, 尝试使用 row1
+
+		此时, row2, 被Tb锁定, Tb事物未结束 导致 row2 始终处于锁定状态, Ta,就不能使用到 row2, 只能等待
+		此时, row1 被 Ta 锁定, Ta 事物未结束, 导致锁定不能释放, Tb也不能使用到 row1, Tb也不能结束, 处于等待等待状态
+
+		解决方案
+			1 设置超时(尝试次数)极限值. 当达到极限值, 该事物选择回滚 常规操作,大多数的事物框架都支持, 设置超时时间或者是超时次数
+			2 提升隔离级别到串行化的级别 将所操作的资源一次性全部锁定住
+
+		如何尽可能避免死锁
+			1）以固定的顺序访问表和行。比如对第2节两个job批量更新的情形，简单方法是对id列表先排序，后执行，这样就避免了交叉等待锁的情形；又比如对于3.1节的情形，将两个事务的sql顺序调整为一致，也能避免死锁。
+			2）大事务拆小。大事务更倾向于死锁，如果业务允许，将大事务拆小。
+			3）在同一个事务中，尽可能做到一次锁定所需要的所有资源，减少死锁概率。
+			4）降低隔离级别。如果业务允许，将隔离级别调低也是较好的选择，比如将隔离级别从RR调整为RC，可以避免掉很多因为gap锁造成的死锁。
+			5）为表添加合理的索引。可以看到如果不走索引将会为表的每一行记录添加上锁，死锁的概率大大增大。
+
+		show InnoDB STATUS  最近死锁的日志
+
+索引
+	索引: 关键字 与数据(记录) 的位置的映射就是索引 其最主要的目的, 快速定位数据(记录)的位置
+	关键字, 从数据(记录) 中提取的部分数据, 称之为关键字
+
+	索引的关键字一定是排序的
+	关键字	某个字段,某些字段的一部分
+	索引的类型	差异 对索引关键字的要求不同
+		普通索引	index			对关键字没有要求  (索引关键字的长度, 有一个限制, 不能超过700多个字符)
+		唯一索引	unique index	要求关键字不能重复,同时增加唯一约束
+		主索引	promary key		要求关键字不能重复,同时不能为NULL,同时增加了主键约束
+		全文索引	fulltext key	关键字的来源不是所有字段的数据,而是从字段中提取的特别关键字
+	关键词的来源 可以是某个字段,也可以是某些字段.如果一个索引通过在多个字段上提取的关键字,称之为 复合索引
+
+	索引使用场景
+		索引检索
+		索引排序
+			如果order by 排序需要的字段,上存在索引,可能使用到索引
+	索引覆盖
+		索引拥有的关键字内容,覆盖了查询所需要的全部数据,此时,就不需要在数据区获取数据,仅仅在索引区即可
+	使用原则		索引存在,没有满足使用原则,导致索引无效
+		列独立
+			如果需要某个字段上使用索引,则需要在字段参与的表达中,保证字段独立在一侧
+		左原则
+			like 匹配模式必须要左边确定不能以通配符开头
+			like'%key' 需要使用全文索引
+			复合索引  仅仅针对左边(复合索引)字段有效果
+		OR的使用
+			必须要保证OR两端的条件都存在可以用的索引,该查询才能使用索引
+		mysql智能选择  弃用索引
+			查询即时使用索引,会导致出现大量的随机IO. 相对于从数据记录的第一条遍历到最后一条的顺序IO开销,还要大
+	索引的数据结构
+		两种数据结构 指的是mysql存储索引锁采用的数据结构.其中 用户所维护的所有的索引结构B-Tree
+		Hash
+		B-Tree(B树)  多路平衡查找树
+			通用的在磁盘上, 存储索引的数据结构
+			该数据结构的目的: 尽可能做到, 最少量的磁盘读取, 最多的关键字的获取
+			索引的检查, 就是在遍历关键字, 关键字相对于数据来说小, 索引关键字都是排序存储的
+			而索引也是需要存储到磁盘上的(.myi), 遍历时也需要从磁盘中读取到内存中, 而磁盘的IO(读写)开销, 比较大开销
+			由于需要快速的遍历索引. B-Tree, 就为了快速遍历存储在磁盘的索引而设计的, 尽可能做到, 最少量的磁盘读取, 最多量的关键字的获取
+			将BTree的节点, 设计为一次IO的大小(512k)
+
+			每隔节点,排序存储多个关键字 为了解决一次性磁盘IO开销 可以读取到更多的关键字数量
+			每个关键字之间, 存在一个子节点指针, 指向某个B-Tree的子节点
+			子节点上储存的关键字, 在子节点指针两端的关键字排序
+
+		聚簇索引
+			mysql中任何类型的索引, 都是储存与B-Tree结构中,
+			主键一个例外  主键属于聚簇  B+Tree结构
+
+	前缀索引		建立索引关键字一种方案
+		通常会使用字段的整体作为索引关键字 有时,即使使用字段前部分数据,也可以去识别某些记录
+		index `name` (`字段`(N))		使用name 前N个字符建立索引
+		ALTER TABLE table_name ADD KEY(column_name(prefix_length));
+		先找到最大的辨识度 依次取得前N个字符,进行对比,找到极限接近的
+		辨识度
+			select 1.0*count(distinct column_name)/count(*) from table_name
+			select 1.0*count(distinct left(FirstName,3))/count(*) from Employee
+
+		前缀索引不能用于索引覆盖
+	全文索引		该类型的索引特殊在 关键字的创建上
+		为了解决like '%key%' 这类查询的匹配问题
+		建立了全文索引 要使用Match(字段) against('匹配字')  代替like
+		Match against() 返回的关键字的匹配度(关键字的关联程度)
+		停止词	发现'in'等常用词,是不能被全文索引所检索的
+
+	管理索引的语法
+		创建
+			建表时
+				primary key (`字段名`) 			主索引
+				unique index `name` (`字段名`)	唯一索引
+				index `name` (`字段名`)			普通的 复合索引
+				fulltext index `name` (`字段名`)	全文索引
+				索引可以起名字,但是主索引不能起名字,因为一个表仅仅可以有一个主索引,其他索引可以出现多个.名字可以省略,mysql会默认生成,普通使用字段名来充当.
+			更新表结构时
+				索引可以指定名字, 主要用于后期的删除管理, 也可以自动生成名字, 生成的原则, 关键字的i字段就是收银的名字. 乳沟是复合收银, 使用的第一个字段的名字; 如果一个字段上建立的多个索引,
+				alter table 表名 add (建表时的语法)
+				如果表中存在数据,数据符合唯一或主键的约束才可能创建成功
+
+
+			CREATE [UNIQUE|FULLTEXT] INDEX index_name ON table_name (index_column_name[(length)][ASC|DESC],...])
+				FULLTEXT索引用来索引文本字段
+				可选的length字段允许指定只有该字段前length个字符将被索引.也可以指定 一个索引的排序为升序或降序;默认值是升序
+
+
+	索引查询
+		show index from tblname;
+		show keys from tblname;
+		show create table tbName
+			Table 			tbName
+			Non_unique 		0		//不是唯一索引   0   是的
+			Key_name 		PRIMARY //
+			Column_name 	id
+			index_type		BTERR
+	索引删除
+		删除非主键索引
+		alter table tbName drop indexName;
+		alter table 表名 drop `name`
+		删除主键索引
+		alter table tbName drop primary key;
+		alter table 表名 drop primary key
+
+
+
+	索引修改
+
+分区 partition	分区与存储引擎无关,是mysql逻辑层完成的.
+	适用场景：
+		1、表非常大以至于无法全部都放到内存，或者只在表的最后部分有热点数据，其他均为历史数据
+		2、分区表数据更容易维护（可独立对分区进行优化、检查、修复及批量删除大数据可以采用drop分区的形式等）
+		3、分区表的数据可以分布在不同的物理设备上，从而高效地利用多个硬件设备
+		4、分区表可以避免某些特殊的瓶颈（ps: InnoDB的单个索引的互斥访问、ext3文件系统的inode锁竞争等）
+		5、可以备份和恢复独立的分区，非常适用于大数据集的场景
+
+	优势 客户端程序不需要任何改动, 数据就分散到了多个区中
+	分区对于单条数据的查询是没有优势的,
+
+	单表最多支持1024个分区
+	分区表无法使用外键约束
+	分区必须使用相同的Engine
+
+	show variables like 'have_partitioning'		查看mysql是否支持分区
+	将某张表数据,分别存储到不同的区域中
+		每个分区就是一张表.都要存储该分区数据的数据,索引等信息
+	创建分区
+		在创建表时,指定分区的选项
+		create table name(
+			定义
+		)
+	Hash(哈希) 取余
+		partition by hash(key) partitions 分区数量;
+			key		按照某个字段进行取余  分区的字段必须是主键 或者主键的一部分
+			hash	按照某个表达式的值进行取余
+
+	list(预定义列表)	需要指定的每个分区数据的存储条件
+		partition by 分区算法 (month(字段)) (
+			partition p_name values in (1,2,3),
+			partition p_name values in (4,5,6)
+		);
+
+	range(范围)	条件依赖的数据是一个条件表达式
+		partition by 分区算法 (year(字段)) (
+			partition p_name values LESS THAN (1980),
+			partition p_name values LESS THAN (1990),
+			partition p_name values LESS THAN MAXVALUE
+		);
+		//less than 小于
+
+	key(键值) 是Hash模式的一种延伸
+
+	Composite(复合模式)
+
+	分区算法	参与分区的参数字段需要为主键的一部分
+		取余 key,hash		分区参数要求必须为整数
+			增加分区数量
+				alter table 表名 add partition N;
+			减少分区数量
+				alter table 表名 coalesce partition N;
+			采用取余算法的分区数量的修改,不会导致已有分区数据的丢失,需要重新分配数据到新的分区
+		条件 list,range
+			添加分区
+				alter table 表名 add partition(
+					partition p_name values less than (2010)
+				);
+			删除分区
+				alter table 表名 drop partition p_name;
+			删除条件算法的分区,导致分区数据丢失
+		选择分区算法
+			平均分配				就按照主键进行key(primary key)即可(非常常见)
+			按照某种业务逻辑分区	选择哪种最容易被筛选的字符按,整数型
+	分表 水平分表 	没有分区时的做法
+		创建结构相同的N个表	 结合php实现
+	mrg_myisam(引擎)merge
+		mysql提供一个可以将多个结构相同的myisam表,合并到一起的存储引擎
+	垂直分表	结构上的分表
+		常用字段  ----  非常用字段
+		减少每条记录的长度
+
+
+查询缓存
+	将select的结果,存取起来供二次使用缓存区域
+
+	查看  查询缓存配置
+	show variables like 'query_cache%';
+
+	mysql.conf
+	query_cache_type = ON
+
+	set global query_cache_type = 1		//开启
+	set global query_cache_size = 1024*1024*32  //设置缓存为32M
+		查询缓存存在判断是严格依赖于select语句本身的:严格保证sql一致
+		查询时包含动态数据,则不能被缓存
+		一旦开启查询缓存,mysql会将所有可以被缓存的select语句都缓存 如果存在不想使用缓存的SQL执行,则可以使用SQL_NO_CACHE语法提示达到目的
+			select SQL_NO_CACHE * from emp where id=1;
+
+mysql配置
+	show variables like ''
+	max_connections=100 	最大连接数
+	myisam
+		key_buffer_size = 55M	键缓存的大小
+		table_cache=			表缓存 表文件连接句柄
+	innodb
+		innodb_buffer_pool_size =107  都是使用该缓存池 索引,事务日志缓存等
+
+- 查看执行时间
+    set profiling = 1;
+    SQL...
+    show profiles;
+
+Explain 执行计划
+	可以通过在select语句前使用explain,来获取该查询语句的执行计划,而不是真正执行该语句
+	explain select ****
+	5.6之前只有select才能获取执行计划
+		Id				编号，识别符号，查询序列号。常规为数字，特殊可能为NULL（例如union操作）。
+		Select_type		查询类型，如下类型：
+			Simple：简单型，不包含子查询和union。
+			PRIMARY：如果包含子查询或Union，则最外层的查询被标记为Primary（主要）
+			SUBQUERY：非From型子查询。
+			DERIVED ： Form型子查询
+			UNION：union查询中的第二个和后续的查询。
+			UNION RESULT：union操作本身。
+			DEPENDENT SUBQUERY ： 子查询依赖于其他查询
+			DEPENDENT UNION ： union查询依赖于其他查询
+		table			输出的行所引用的表 可能是临时表，或者实际表或其别名
+		type			访问类型。下面给出各种联接类型，按照从最佳类型到最坏类型进行排序：
+			Null：不用访问表或者索引
+			system:表中仅有一行，即常量表；
+			const:表中最多有一个匹配行，如
+			primary key和unique index。
+			Eq_ref:多表连接中使用
+			primary key和unique index。
+			Ref: 与eq_ref类似，但多表连接中使用普通索引。
+			Ref_of_null:与ref类似，区别在于条件中带有对Null的查询。
+			All:对前面的每一行都需要通过扫描全表来得到数据。
+		possible_keys		表示查询时，可能使用的索引
+		key					决定使用的索引
+			值可能是不出现在possible_key中，意味着通常选择了覆盖索引，extra 中存在Using index
+		key_len				使用了的索引字节数，复合索引中如果部分列上使用索引，会显示该长度
+		ref					该查询在所使用的索引中需要的常量或者字段。
+		rows				估计查找到数据所需要使用的真实数据行数
+		Extra				额外说明信息。
+			Using index，使用了覆盖索引。
+			Using where，mysql在存储引擎检索后在进行过滤。
+			Using temporay，在对结果排序时会使用临时表。
+			Using filesort，对结果使用外部索引排序，而不是索引顺序排序。
+			Range checked for each rocord 没有好用的索引，新索引会重新估算。
+			No table used，没有使用到表
+
+Profile
+	开启profile
+	set profile=no
+
+	记录所有执行的sql
+	show profiles;
+
+	详细查看sql执行流程 上面的 query id
+	show profile for query id
+
+慢查询日志
+	用于记录执行时间超过某个时间临界值的sql
+
+	定位执行较慢的查询语句方案
+	show variables like 'slow_query%'		查看慢查询设置
+	set slow_query_log = 1			开启
+	slow_query_log_file = 		文件位置
+	set long_query_time = 0.5	设置慢查询时间
+
+
+
+架构层面
+	主从复制
+		一台主服务器 执行写操作
+		多台从服务器 执行读操作
+
+		主服务器
+			//主服务器id
+				server_id = 1
+			//二进制日志
+				log_bin
+			//创建一个 slaver6 用户  该用户完成赋值
+				mysql> grant replication slave On *.* To 'slaver6'@'192.168.93.%' identified by 'name';
+			//主服务器
+				show master status
+		从服务器
+			//从服务器id
+				server_id = 2
+			//设置复制源
+				mysql> change master to master_host='192.168.93.1', master_port=3306, master_user='slaver6', master_password='123', master_log_file='文件', master_log_pos=状态码;
+			//开启复制
+				start slave;
+			show slave status\G
+				Slave_IO_Running: Yes  //读写进程运行
+				Slave_SQL_Running:Yes  //sql进程运行
+				//开启成功
+			//
+
+	//安装 amoeba
+		amoeba 是用java开发的
+		//安装jdk  java运行环境    jvm
+	 	JAVA_HOME家目录设置  环境变量
+
+		tar zxvf amoeba...tar.gz -C /usr/local/amoeba
+			-C 指定解压目录
+
+		vi bin/
+			DEFAULT_OPTS=""
+				改为 -Xss256k
+		启动//amoeba
+		amoeba start
+
+		vi conf/dbServers.xml
+			//一个 dbServers 代表一个服务器
+			// name 名字
+			// parent 父级名
+
+			//property
+				//ipAddress 主机地址地址
+				//user  	用户名
+				//password 	密码
+				//
+
+			//读服务器池
+			//loadbalance   负载算法
+				//1 roundrobin  轮询 默认
+				//2 加权轮询
+				//3 高可用
+			//property
+				//poolNames  服务器名 , 分隔
+
+		vi amoeba.xml
+			//property
+				//port  端口
+				//user  用户
+				//pass  密码
+
+				//defaultPool 	默认的池子
+				//writePool   	谁用来写
+				//readPool 		谁来读
+	读写分离,负载均衡
+
+
+
+高可用 HA
+	保证服务器的运行稳定性
+
+	主要思想: 单点冗余
+	为所有的单点服务器, 提供备份, 当单点服务器发生错误时, 使用备份继续工作
+
+//显示错误
+show warnings
+
+
+
+全文索引
+	全文索引, 主要针对的是较长数据, 例如text, varchar(255)
+
+	类似于: like %keyword% 的逻辑, 内容中包含某个关键字的逻辑
+
+	全文索引的实现方式:
+	 从内容中, 提取词, 作为全文索引的关键字来使用.
+
+	 典型的在PHP 程序中使用较多的:
+
+	 安装讯搜
+	 	tar jxvf xunsearch .bz2
+	 	cd xunsear..
+
+	 	sudo ./setup.sh
+
+	 	键入回车 表示当前文件夹  在Y
+
+	 	开启
+	 		sudo bin/sx-ctl.sh
+
+		rc.local
+
+	使用
+		建立索引
+			建立索引配置文件
+				cd sdk/php/app
+				每个项目对应一个配置文件   命名方式 项目.ini
+
+				//name 名字
+				//default_charset 字符集
+				//index
+				//search
+
+				//[] 表示字段
+				[goods_id]			//记录的唯一标志, 主键, type=id 将来用他去数据库中获取更详细的内容  不参与搜索
+				type=id
+
+				//字符创类型的字段, 参与搜索. title和body, 特殊的字符串类型 只能有一个title 和body, 其余的都应该是字符串. title 和 body 的地位较高
+				[name]
+				type=title
+				[description]
+				type=body
+				[category_title]
+				type=string
+				index=both
+				[brand_title]
+				type=string
+				index=both
+				//排序
+				[sotr_number]
+				type=numeric
+				[price]
+				type=numeric
+			基于数据源建立索引
+				典型情况下, 从mysql 中获取数据, 完成
+
+				sdk/php/util/indexer.php
+				使用php 执行
+
+				Indexer.php --project=test --rebuild --source=mysql://root@192.168.0.1:3306/test --sql="select goods_id, decription,包含配置文件的所有字段"
+				Note: sql获取的结果  要与配置文件中的字段匹配
+			php searchSkel.php --project=test --output=/usr/local/apache/htdocs
+		利用索引检索
+			serach 对象
+				加载XS的核心类 sdk/php/lib/XS.php
+
+				//引入XS.php
+				require './xunSearch/XS.php';
+
+				//获取serarch对象
+				define('XS_APP_ROOT', '/usr/local/xunsearch/sdk/php/app/');
+				$project = 'test';
+				$xs = new XS($project);
+				$search = $xs->search;
+
+				设置搜索关键词
+					通过search对象的setQuery()方法完成.
+
+				$keyword issset($_EWQUWAR['keyword']) ? $_REQUEST['keyword'] : null;
+				if(is_null($keyword)){
+					die('请输入正确搜索关键字');
+				}
+
+				$serach->setQuery($keyword);
+
+				//执行搜索
+				$docs = $search->search();
+				//搜索完毕后, 会返回匹配的文档集合. 讯搜将 索引到的内容称之为 doc文档集合
+
+				//遍历结果
+				foreach($docs as $doc){
+					echo $doc->name;
+				}
+
+				//模糊搜索
+				//当输入的搜索关键词, 由多个构成时, 此时匹配条件为或的关系  称之为 模糊搜索
+				//默认情况下  多个关键词之间的逻辑关系 为 并且
+
+				Note: XunSearch, 对关键词在搜索前, 也会分词的工作
+
+				//获取处理之后的关键词
+				//$search->getQuery() 可以获取
+
+				//更改默认的 搜索关键词的关系   改为or(模糊)     在设置关键词之前执行才生效
+				$search->setFuzzy();
+
+				//但字段搜索
+				//如果需要某个字段独立搜索,需要在设置setQuery 时, 指定是哪一个字段
+				$serach->setQuery($field.':('.$keyword.')');
+
+				//配置文件 .ini 中  index决定了字段是否支持单关键词搜索
+				none  	不做索引   (默认)
+				self 	单字段索引
+				mixed 	混合区索引
+				both  	相当于 self+mixed
+
+					id 默认是 self
+					title 默认 both  body 默认 mixed
+
+				//获取最后一次匹配文档总数(常用)
+				$serach->getLastCount();
+
+				//分页展示
+				$page = 1;
+				$limit = 5
+				$offset = ($page-1)*$limit;
+				$serach->setLimit($limit,$offset)
+
+				//结果排序
+				//默认的排序方式, 是关键词与文档的 匹配度, 这是所有的全文索引采用的默认的排序方式
+				$doc->percent()    //得到当前匹配数据的 百分比 匹配度
+
+				//自定义排序
+				$serach->setSort(配置文件排序字段, true就是升序);
+
+				//关键词加亮
+				$serach->highLigth()
+
+				//搜索日志
+				//分为2部分
+				//A, 记录下来每次搜索的关键字
+				// data/test/search.log
+				//B, 分析关键字的频率, 次数, 相关性
+				// data/test/log_db
+				//该目录的更新不是立即更新
+				// php logger.php --project=test --flush
+
+				//热门搜索
+				$search->getHotQuery(limit, 时间段);
+					时间段 total|lastnum|currnum
+						total   全部
+						lastnum 上周
+						currnum 本周
+
+				//给定相关搜索词
+				$search->getRelatedQuery();
+				//可以在setQuery()后执行
+
+				//搜索建议
+				//根据用户提供
+				$serach->getExpandedQuery($keyword);
+
+				//纠错词
+				判断输入的关键词有误, 给出纠错错
+				$serach->getCorrectedQuery()
+
+			//关键词管理
+				//添加关键词
+				etc/dict_user.txt
+				 word  	关键词
+				 tf 	词频
+				 idf 	逆词频
+				 attr 	词性     nt(团体)]
+				sudo xun start
+				sudo xun bin/xs-ctl start
+				//设置词的操作  一定要尽早去做   要不没有索引
+
+ 		维护索引
+ 			项目执行的时候数据会发生改动, 以test为例
+ 			xunsearch 提供的即时(实时)索引更新机制. 当数据改动时, 立即去将索引维护. 不需要等到一个特殊的时刻. (有些全文索引是增量索引, 运行一段时间后, 再将数据更新到索引中)
+ 			mysql 内置的索引就是实时更新的
+
+ 			提供了索引维护的PHP接口, 通过操作PHP程序, 就可以完成, 索引的更新任务
+ 			需要修改, php程序, 完成更新索引的任务
+ 			(如果你的数据需要被全文索引所检索, 在管理该数据时, 考虑更新索引的问题)
+
+ 			define('XS_APP_ROOT', '/usr/local/xunSearch/sdk/php/app/');
+ 			require './xunsearch/XS.php';
+
+ 			$project = 'text';
+ 			$xs = new XS($project);
+
+ 			$index = $xs->index;
+ 			//index对象通过 XS对象的index属性来获取(与search对象一致)
+
+			//添加文档到索引
+				//生成与记录匹配的文档
+				//利用商品id, 查询获取配置文件中所配置的全部字段信息
+				$field = getDoc(23);
+				funciton getDoc($goods_id){
+					$sql = "select   where goods_id=123"  //利用子查询优化
+					return $sql查询后的结果;
+				}
+
+				$doc = new XSDocument();
+				$doc->setFields($field);
+
+				$index->add($doc);
+
+			//更新索引中的文档
+				跟新和添加是一样的  把add换成update();
+				$index->update()
+			//删除索引中的文档
+				给定主键值
+				$index->del(123)
+
+
+
+
+
+大量数据插入
+	alter table_name disable keys;  禁用索引约束
+	alter table_name enable keys;	启用
+	针对innodb
+		drop index,drop constraint	要保留主键
+		Begin transaction | set autocommit = 0;
+		commit;
+		add index,add constraint
+
+
+1. SQL优化的原则是：将一次操作需要读取的BLOCK数减到最低,即在最短的时间达到最大的数据吞吐量。
+调整不良SQL通常可以从以下几点切入：
+? 检查不良的SQL，考虑其写法是否还有可优化内容
+? 检查子查询 考虑SQL子查询是否可以用简单连接的方式进行重新书写
+? 检查优化索引的使用
+? 考虑数据库的优化器
+
+2. 避免出现SELECT * FROM table 语句，要明确查出的字段。
+
+3. 在一个SQL语句中，如果一个where条件过滤的数据库记录越多，定位越准确，则该where条件越应该前移。
+
+4. 查询时尽可能使用索引覆盖。即对SELECT的字段建立复合索引，这样查询时只进行索引扫描，不读取数据块。
+
+5. 在判断有无符合条件的记录时建议不要用SELECT COUNT （*）和select top 1 语句。
+
+6. 使用内层限定原则，在拼写SQL语句时，将查询条件分解、分类，并尽量在SQL语句的最里层进行限定，以减少数据的处理量。
+
+7. 应绝对避免在order by子句中使用表达式。
+
+8. 如果需要从关联表读数据，关联的表一般不要超过7个。
+
+9. 小心使用 IN 和 OR，需要注意In集合中的数据量。建议集合中的数据不超过200个。
+
+10. <> 用 < 、 > 代替，>用>=代替，<用<=代替，这样可以有效的利用索引。
+
+11. 在查询时尽量减少对多余数据的读取包括多余的列与多余的行。
+
+12. 对于复合索引要注意，例如在建立复合索引时列的顺序是F1，F2，F3，则在where或order by子句中这些字段出现的顺序要与建立索引时的字段顺序一致，且必须包含第一列。只能是F1或F1，F2或F1，F2，F3。否则不会用到该索引。
+
+13. 多表关联查询时，写法必须遵循以下原则，这样做有利于建立索引，提高查询效率。格式如下select sum（table1.je） from table1 table1, table2 table2, table3 table3 where (table1的等值条件（=）) and (table1的非等值条件) and (table2与table1的关联条件) and (table2的等值条件) and (table2的非等值条件) and (table3与table2的关联条件) and (table3的等值条件) and (table3的非等值条件)。
+注:关于多表查询时from 后面表的出现顺序对效率的影响还有待研究。
+
+14. 子查询问题。对于能用连接方式或者视图方式实现的功能，不要用子查询。例如：select name from customer where customer_id in ( select customer_id from order where money>1000)。应该用如下语句代替：select name from customer inner join order on customer.customer_id=order.customer_id where order.money>100。
+
+15. 在WHERE 子句中，避免对列的四则运算，特别是where 条件的左边，严禁使用运算与函数对列进行处理。比如有些地方 substring 可以用like代替。
+
+16. 如果在语句中有not in（in）操作，应考虑用not exists（exists）来重写,最好的办法是使用外连接实现。
+
+17. 对一个业务过程的处理，应该使事物的开始与结束之间的时间间隔越短越好，原则上做到数据库的读操作在前面完成，数据库写操作在后面完成，避免交叉。
+
+18. 请小心不要对过多的列使用列函数和order by,group by等，谨慎使用disti软件开发t。
+
+19. 用union all 代替 union，数据库执行union操作，首先先分别执行union两端的查询，将其放在临时表中，然后在对其进行排序，过滤重复的记录。
+当已知的业务逻辑决定query A和query B中不会有重复记录时，应该用union all代替union，以提高查询效率。
+
+数据更新的效率
+1. 在一个事物中，对同一个表的多个insert语句应该集中在一起执行。
+2. 在一个业务过程中，尽量的使insert,update,delete语句在业务结束前执行，以减少死锁的可能性。
+
+数据库物理规划的效率
+
+为了避免I/O的冲突，我们在设计数据库物理规划时应该遵循几条基本的原则(以ORACLE举例)：
+?? table和index分离：table和index应该分别放在不同的tablespace中。
+
+?? Rollback Segment的分离：Rollback Segment应该放在独立的Tablespace中。
+
+?? System Tablespace的分离：System Tablespace中不允许放置任何用户的object。（mssql中primary filegroup中不允许放置任何用户的object）
+
+?? Temp Tablesace的分离：建立单独的Temp Tablespace，并为每个user指定default Temp Tablespace
+
+??避免碎片：但segment中出现大量的碎片时，会导致读数据时需要访问的block数量的增加。对经常发生DML操作的segemeng来说，碎片是不能完全避免的。所以，我们应该将经常做DML操作的表和很少发生变化的表分离在不同的Tablespace中。
+
+当我们遵循了以上原则后，仍然发现有I/O冲突存在，我们可以用数据分离的方法来解决。
+?? 连接Table的分离：在实际应用中经常做连接查询的Table，可以将其分离在不同的Taclespace中，以减少I/O冲突。
+
+?? 使用分区：对数据量很大的Table和Index使用分区，放在不同的Tablespace中。
+
+在实际的物理存储中，建议使用RAID。日志文件应放在单独的磁盘中。
+
+
+
+
+SHOW命令
+SHOW DATABASES︰列出 MySQL Server 上的数据库。
+
+SHOW TABLES [FROM db_name]︰列出数据库中的表。
+
+SHOW TABLE STATUS [FROM db_name]︰列出数据库的表信息，比较详细。
+
+SHOW COLUMNS FROM tbl_name [FROM db_name]︰列出表的列信息，同 SHOW FIELDS FROM tbl_name [FROM db_name]，DESCRIBE tbl_name [col_name]。
+
+SHOW FULL COLUMNS FROM tbl_name [FROM db_name]︰列出表的列信息，比较详细，同 SHOW FULL FIELDS FROM tbl_name [FROM db_name]。
+
+SHOW INDEX FROM tbl_name [FROM db_name]︰列出表的索引信息。
+
+SHOW STATUS︰列出 Server 的状态信息。
+
+SHOW VARIABLES︰列出 MySQL 系統参数值
+
+SHOW PROCESSLIST︰查看当前mysql查询进程
+
+SHOW GRANTS FOR user︰列出用户的授权命令
+
+
+根据天来查询
+select
+    DATE_FORMAT(p.create_Time,'%Y年%m月%d日') as time,
+    sum( case when plan_type_cde=1 then 1 else 0 end ) as '物资设备总需求计划',
+    sum( case when plan_type_cde=2 then 1 else 0 end ) as '物资设备年度需求计划',
+    sum( case when plan_type_cde=3 then 1 else 0 end ) as '批次招标采购需求计划',
+    sum( case when plan_type_cde=4 then 1 else 0 end ) as '季度分月需求计划',
+    sum( case when plan_type_cde=5 then 1 else 0 end ) as '需求调整计划'
+from gt_demand_supply_plan p
+WHERE
+    p.deleted=0 and p.create_Time BETWEEN '2016-10-01' and '2016-10-25'
+GROUP BY time
+ORDER BY time
+;
+
+TIMESTAMPDIFF(second, startTime, engTime)            startTime到engTime 之间的时间差  秒
+
+
+exists
+
+
+
+information_schema
+	SCHEMATA表：提供了关于数据库的信息。
+
+	TABLES表：给出了关于数据库中的表的信息。
+		TABLE_CATALOG
+		TABLE_SCHEMA  		库名
+		TABLE_NAME  		表名
+		TABLE_TYPE 			BASE TABLE
+		ENGINE   			引擎
+		VERSION 			10
+		ROW_FORMAT 			Dynamic
+		TABLE_ROWS    		表的行数
+		AVG_ROW_LENGTH 		20
+		DATA_LENGTH 		260100
+		MAX_DATA_LENGTH  	665600
+		DATA_FREE 			128
+		AUTO_INCREMENT 		自增长
+		CREATE_TIME 		创建时间
+		UPDATE_TIME 		更新时间
+		CHECK_TIME
+		TABLE_COLLATION     排序规则
+		CHECKSUM
+		CREATE_OPTIONS
+		TABLE_COMMENT
+
+
+1.查看数据库表基本信息。
+select * from information_schema.TABLES where information_schema.TABLES.TABLE_SCHEMA = ‘数据库名’ and information_schema.TABLES.TABLE_NAME = ‘表名’;
+
+2.查看MySQL数据库大小
+SELECT sum(DATA_LENGTH)+sum(INDEX_LENGTH) FROM information_schema.TABLES where TABLE_SCHEMA=’数据库名’;
+得到的结果是以字节为单位，除1024为K，除1048576(=1024*1024)为M。
+
+3.查看表的最后mysql修改时间
+select TABLE_NAME,UPDATE_TIME from information_schema.TABLES where TABLE_SCHEMA=’数据库名’ order by UPDATE_TIME desc limit 1;
+select TABLE_NAME,UPDATE_TIME from information_schema.TABLES where TABLE_SCHEMA=’数据库名’ and information_schema.TABLES.TABLE_NAME = ‘表名’;
+
+
+	COLUMNS表：给出了表中的列信息。
+
+	STATISTICS表：给出了关于表索引的信息。
+
+	USER_PRIVILEGES表：给出了关于全程权限的信息。该信息源自mysql.user授权表。
+
+	SCHEMA_PRIVILEGES表：给出了关于方案（数据库）权限的信息。该信息来自mysql.db授权表。
+
+	TABLE_PRIVILEGES表：给出了关于表权限的信息。该信息源自mysql.tables_priv授权表。
+
+	COLUMN_PRIVILEGES表：给出了关于列权限的信息。该信息源自mysql.columns_priv授权表。
+
+	CHARACTER_SETS表：提供了关于可用字符集的信息。
+
+	COLLATIONS表：提供了关于各字符集的对照信息。
+
+	COLLATION_CHARACTER_SET_APPLICABILITY表：指明了可用于校对的字符集。
+
+	TABLE_CONSTRAINTS表：描述了存在约束的表。
+
+	KEY_COLUMN_USAGE表：描述了具有约束的键列。
+
+	ROUTINES表：提供了关于存储子程序（存储程序和函数）的信息。此时，ROUTINES表不包含自定义函数（UDF）。
+
+	VIEWS表：给出了关于数据库中的视图的信息。
+
+	TRIGGERS表：提供了关于触发程序的信息。
+
+
+注意： analyze、check、optimize执行期间将对表进行锁定，因此一定注意要在MySQL数据库不繁忙的时候执行相关的操作。
+
+
+
+每个表的索引被查询，并且使用最好的索引，除非优化器认为使用表扫描更有效。是否使用扫描取决于是否最好的索引跨越超过30%的表。优化器更加复杂，其估计基于其它因素，例如表大小、行数和I/O块大小，因此固定比例不再决定选择使用索引还是扫描。
+
+
+取随机数
+select id from `dynamic` t1 join (select  rand() * (select max(id) from `dynamic`) as nid) t2 on t1.id > t2.nid limit 1000;
+
+
+mysqlbinlog --start-datetime="2017-09-20 08:35:00" --stop-datetime="2017-09-20 09:00:00" /u01/gnway/mysql/data/gnwaysvr-relay-bin.000635 > /tmp/cxh
+
+

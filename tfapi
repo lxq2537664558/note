@@ -1,0 +1,635 @@
+@require_once('/u01/gnway/etc/version.php');
+require_once('config.inc');
+require_once('/u01/gnway/www/.private.osp.php');
+
+linking('system.system');
+linking('system.exetime');
+linking('db.adodb');
+
+linking('db.sql');
+
+linking('common.forms');
+linking('common.smarty');
+linking('common.cache');
+linking('lang.gb2312_zh');
+using('keywords');
+using('passport_login');
+
+using('osp_system');
+
+include_once('/u01/gnway/etc/RequestPassPort.php');
+using('webservice');
+
+linking('common.common_webservice');
+linking('common.common_soap');
+linking('api.auth');
+linking('common.common_webservice_baseserver');
+linking('common.common_webservice_non_standard');
+linking('common.common_restful');
+
+using('cache_source');
+linking('common.common_cache_source');
+
+using('api_system');
+
+using('agent_action');
+
+linking('common.common_action');
+using('mcdb_action');
+using('commonTicketUser_action');
+using('serviceModeSetting_action');
+using('agent_module_action');
+using("servicers_action");
+
+using('apple_push');
+using('writeLog_action');
+using('qcloudlib/TimRestApi');
+require_once dirname(__FILE__) . '/TimRestInterface.php';
+
+using('android_push');
+using('bw8im_action');
+
+using('userData_action');
+using("serviceModeSetting_action");
+using('web_chat_action');
+
+using('memcachedInit');
+using('userOnline_action');
+
+using("memcachedInit");
+
+using('OSS_action');
+
+using('role_action');
+
+
+
+
+
+linking('html.form_action3');
+	linking('html.table_maker');
+	linking("html.table_action");
+	linking('html.form_maker3');
+	linking('html.form_validator4');
+	linking('html.form_designer3');
+
+
+
+using('eavColumn_action');
+
+
+
+using('tab_action');
+
+
+GetFromMemCache($key)  							//获取memcached
+SetToMemCache($key, $value, $expiration = 0)	//设置memcached
+
+AsyncExecuteSQL($sql) 							//异步执行sql
+	还没有找到服务端
+
+modifyUserPassword($UserName, $pwd) 			//修改用户密码
+	清除url缓存
+
+
+加载文件
+
+linking($moduleName)
+‌	/u01/gnway/www/tongfuapi/GBK/TFAPI/
+usinggn_htdocs(moduleName)
+	‌/u01/gnway/www/WEB-APP/htdocs/classes/
+using(moduleName)
+	‌/u01/gnway/www/WEB-APP/bangwo8.com/classes/
+usinggn(moduleName)  			(htdocs 时才有用)
+	/u01/gnway/www/WEB-APP/htdocs_interface/classes/
+merging($moduleName)
+	‌/u01/gnway/www/WEB-APP/bangwo8.com/phpx/
+
+note: . 被替换为 /
+
+
+
+array_full_null(&$arr, $checkKeyArr)
+$arr 中 不存在以 $checkkeyArr值 为键的数组  值为null
+
+
+
+输出错误
+tfapi_sys_err_trace($consoleMode=false) 						返回css样式字符串
+tfapi_sys_err_handler($errno, $errstr, $errfile, $errline)
+tfapi_sys_err($msg, $code=E_USER_ERROR)
+get_tfapi_sql_err($sqlErrMsg, $sqlStr)
+debug
+tfapi_sys_debug_begin()											//ob_start()
+tfapi_sys_debug_end()
+tfapi_sys_log_begin() 											//ob_start()
+tfapi_sys_log_end()												//tfapi_sys_log(ob_get_clean());
+tfapi_sys_log($log)
+tfapi_sys_log_print_r(&$var)
+tfapi_sys_log_var_dump(&$var)
+tfapi_speed_test_begin()
+tfapi_speed_test_end($begin)
+
+
+//计时类
+$exetime = new exetime()
+$exetime->start() 			//开始
+$exetime->end() 			//结束
+$exetime->output() 			//返回时差
+
+//写入数据库 logs
+logEvent($type, $arg, $msg, $loginId)
+
+
+//写入文件中
+$word = new word();
+$word->start();
+echo 1;
+$word->save($path);
+
+
+D:\u01\gnway\www\WEB-APP\bangwo8.com\classes\Verification.inc
+//验证类
+new Verification();
+
+
+D:\u01\gnway\www\WEB-APP\bangwo8.com\classes\returnKeyword.inc
+//返回数组
+
+
+@file_put_contents('/tmp/cxh', '$AZChar = '.var_export($AZChar, true) . ';' . PHP_EOL.PHP_EOL, FILE_APPEND);
+
+
+
+        'ticket'=>'FreeColumnAGent',                //工单自定义字段
+        'ticketform'=>'FreeAgentTable',
+        // 下面 by guanst
+        'companyAgent'=>'companyColumnAgent',       //公司
+        'contacterAgent'=>'contacterColumnAgent',  	//联系人
+        'callCenterAgent'=>'callCenterColumnAgent',
+        'serviceRecordAgent'=>'serviceRecordColumnAgent',
+        'addcustAgent'=>'addcustColumnAgent',
+        'tableList'=>'tableList',
+
+        'ticket'=>'工单字段'
+        'ticketform'=>'工单表单字段',
+        'companyAgent'=>'公司字段',
+        'contacterAgent'=>'联系人字段',
+        'callCenterAgent'=>'呼叫中心字段',
+        'serviceRecordAgent'=>'远程服务字段',
+        'addcustAgent'=>'手动添加服务记录字段',
+        'tableList'=>'数据表字段',
+
+//把中文转换为 大写的字母
+$AZChar = strtoupper($ctObj->get_pinyin($v[0]));
+
+
+
+http://192.168.99.12:8133/charts.php?sid=138b16dd8ade628e&form_refresh=1&fullscreen=0&groupid=34&hostid=10609&graphid=8302
+xinglisha
+xinglisha
+
+
+https://139.129.214.199:8443/server-status
+
+//验证
+//verify
+using('Verification');
+Verification::
+Verification::valid_cellphone
+
+testnewha testnewha
+gnkefu gnwaykf
+
+0389gwig!
+
+192.168.1.158   本地环境
+119.10.27.91 	测试
+
+120.25.120.64 		192.168.99.26
+114.215.29.237 		192.168.99.29
+120.25.149.180 		192.168.99.13
+139.129.214.199 	192.168.99.27
+118.190.139.84 		192.168.99.44
+
+
+mysql
+mmm -h rm-m5e3sr2m5u2p0ab7h.mysql.rds.aliyuncs.com -u bw8_root
+
+每个服务器对应的天联ip   我们新增了84服务器做www网站
+
+
+用户名:liguowen
+密码:bw8019zv
+入口:
+
+http://gndev-codemgr.gnvip.net:8067/updateTaskInfo.php
+
+
+git
+http://192.168.1.133:10080/root/bangwo8
+
+
+svn
+
+yuyayan
+yuyayan0901
+https://192.168.1.250/repos/website/trunk/www/bangwo8.com
+https://192.168.1.250/repos/website/trunk/www/WEB-APP/bangwo8.com
+https://192.168.1.250/repos/website/trunk/www/smarty/bangwo8.com
+
+using("writeLog_action");
+writeLog_action::writeLogs('cxh_apilmport','$agentData='.var_export($$result, true));
+
+create_validator
+
+$this->validator->add_rule("pwd","r1(min[6]max[18])",array("密码最短6个字符","密码最长18个字符"),"请输入密码","6~18位字母、数字");
+
+$this->validator->add_rule("conQQ","r1(reg[".base64_encode("[0-9]")."]min[5]max[10])",array('QQ号只能是数字'),"请输入QQ");
+
+天联
+gndev
+tanhao2016
+abc2016
+
+crm帐号
+chenxiaohu
+123456
+
+天联账号
+gn_alpha
+chenxiaohu1
+abc123456
+
+
+数据 Data
+
+显示 View
+	原始数据 Original
+		tf_common_action 对象进行存取，我们这里所说的原始数据指的就是数据库数据。
+	加工数据 Processed
+		tf_webservice_process 对象扩展的用户对象里面的各种方法进行反复加工。
+	缓存数据 Cached
+		tf_cache_source_data 对象设置的缓存数据源将加工过的数据进行缓存。
+	准数据 Done
+
+set extindex.php-> .root.php（生成了几个方法）-> 加载‘/u01/gnway/www/WEB-APP/bangwo8.com/web.inc’
+
+WEBAPP_PATH  ‘/u01/gnway/www/WEB-APP/bangwo8.com/classes/’
+
+WEB_APP_ROOT =/u01/gnway/www/WEB-APP/bangwo8.com/
+
+linking('config.inc');
+FRAME_CLASS_PATH   '  /'
+include_once('/u01/gnway/www/tongfuapi/GBK/TFAPI/'. 'config'. '.inc')
+
+GBK/TFAPI/excel.excel
+
+using   CLASS_PATH
+/u01/gnway/www/WEB-APP/bangwo8.com/classes/
+osp_system
+
+
+usinggn   CLASS_GNWAY_PATH
+/u01/gnway/www/WEB-APP/htdocs_interface/classes/
+
+
+merging   CODE_BEHIND_PATH
+WEB_APP_ROOT. "php/"
+
+/u01/gnway/www/bangwo8.com/
+
+
+//添加路由
+WEB-APP/classes/webservice.inc
+	init
+
+book.php
+function __construct()
+	//指定方法
+	$this->add_user_action('add', '添加');
+
+function filter_row()
+	//开启方法 指定执行的字段
+	$this->actionObj->set_action_link($row, 'mode', $row['bookId']);
+
+//debug调试模式
+remap_data($orderBy){
+$this->tableData = tfapiWebServiceCtrlr::$objArr['book']->debug=3;
+}
+
+//表格输出
+function  get_table_show_argv
+$argv->titles   输出的字段
+
+function load_info()
+//tfapiWebServiceCtrlr::$objArr['book']->LoadInfo($curId);
+
+
+
+
+//读取标签的数据
+$this->tableData = tfapiWebServiceCtrlr::$objArr['shopTags']->LoadTable($this-pageObj->get->get_array(), $this->pageSize, $this->pagePV, $extraOpts);
+
+
+
+//表单5件套
+validator_add form_add form_show_arg_add form_error_add process_add
+
+//add验证
+function validator_add()
+
+//输出的表格
+function form_add
+	//创建表单对象
+	$frmObj = new form_mark_action3($this->tableConfig, $this->pageObj, 'add');
+
+	//表单提交后不会立即跳转 会提交到一个 iframe 里面  (提交错误时不用刷新页面)
+	$frmObj->set_target();
+
+	$frmObj->add_textfield('author');  	//输入框
+		   ->add_textarea('message');	//文本域
+		   ->add_parssword('pass');		//密码
+		   ->add_checkboxes('inter', array(1=>'篮球', 2=>'游泳'));  	//复选
+		   ->add_radios('gender', array(1=>'男',2=>'女'));			//单选
+		   ->add_file('photo'); 		//文件
+		   ->add_select('eduction', array(1=>'初中',2=>'高中'), '--请选择--'); 		//下拉
+	$frmObj->add_button('buSubmit',1,'添加留言');  //按钮
+	//多按钮设置
+	$frmOb j->add_button('buSubmit',1,'添加留言');  //按钮
+	$frmObj->add_button('btnTest',1,'测试');  //按钮
+		   ->set_formaters(array('bunSubmit'=>'<b>1</b> %btnSubmit% <b>2</b> %btnTest%'));
+	//设置表格元素的 宽高
+		   ->set_whs(array('password'=>array(100,300));
+    //设置class
+    	   ->set_class(array('pass','eduction'), 'userform');
+    //设置标签属性
+		   ->set_extra(array('user'), 'autocomplet="qwe"');
+    //设置默认属性
+		   ->set_values(array('author'=>'我是超人', 'message'=>'测试'))
+
+    //验证码
+    	   ->add_safecode_samplel('vc', 'testVSN');
+    	//刷新验证码
+   		image_safe_code::reset_key('testVSN');
+
+   	//编辑器
+   		   ->add_ueditor('ueditorSample', '<b>默认值</b>', 500, 300, 'classic|default', null, array());
+   		   ->add_fckeditor('fckeditorSampleSample', '<b>默认值</b>', 500, 300, 'classic|default', null, array(
+   		   		'saveDir' => 'images/book/',  //存储路径
+   		   		'hookScript' => 'TFAPI_FCK_HOOK.php', //文件上传成功后执行的钩子文件
+   		   ));
+   	//日期控件
+		   ->add_date('dateStart', array(
+		   		'changeMonth' => true,     	//允许修改月
+		   		'changeYear'  => true,		//允许修改年
+		   		'yearRange'   => '-10:+10'  //年的范围
+		   ));
+    //多个时间控件
+    	   ->add_date('dateStart');
+    	   ->add_date('dateEnd');
+    	   ->set_formaters(array('dateStart'=> '从 %dateStart% 到 %dateEnd%'));
+   	//多选下拉框
+		   ->addDoubleSelectMove('A', 'B', array(1=>'初中',2=>'高中',3=>'大学'),300,150,null,'1,2');
+    //可搜索下拉框
+		   ->addHtmlSelectWithSearchBox('C', 'CSE', array(1=>'初中',2=>'高中',3=>'大学'));
+	//排序下拉框
+    	   ->addListItemSortor('sortEx', array(1=>'初中',2=>'高中',3=>'大学'));
+   	//树状结构(无限极分类)
+		   ->addTreeViewOptions(treeViewSelector', 'ajaxBook.php', 300, 100, false, 2, array());
+
+//表单显示
+function form_show_arg_add()
+	//表单名
+	$arg['fortitle'] = '编辑留言'. $this->curInfo['author'];
+	//表格对应的标签
+	$arg['labels'] = array('作者', '留言');
+
+//错误返回
+function  form_error_add()
+
+//处理
+function process_add($arr, &$err)
+	$arr   提交表单后 接收到的要处理的参数
+	$this->pageObj->file->get_array()   文件
+	$this->pageObj->file->photo; 		图片
+
+	//添加数据
+	->Add($arr['author'], $arr['message']);  (webservices\book.php里面)
+
+	//验证 验证码
+	if(image_safe_code::verify($arr['vc'], "testVSN")) echo '验证成功';
+
+	//调用webservices\book 文件的方法 test方法
+	tfapiWebServiceCtrlr::$objArr['book']->test();
+
+//指定修改的方法
+function filter_row(&$row)
+
+//方法里面 静态调用的数据库
+book::main(array(
+	'__db__'  //别名
+));
+
+
+
+webservices\book.php
+	function test(){
+	//查询
+		$sql = 'select * from book';
+		//执行sql语句 并返回所有结果 二维array
+		$ret = $this->dbObj->table($sql);
+		//第一条结果
+						   ->row($sql);
+	   	//第一行的第一列结果
+						   ->scalar($sql);
+	   	//返回  第一个字段为下标 第二个值的 数组
+						   ->to_array('selelct gbid, author from guestbook');
+		//返回  所有的 第一个字段 的序列
+						   ->to_list('select gid from book')
+		//以上方法都有简写模式
+		就是在前面加上 safe_
+			safe_table()  		st()
+			safe_row()			sr()
+			safe_scalar() 		ss()
+			safe_to_array() 	sta()
+			safe_to_list() 		stl()
+			safe_get_total()	sgt() 		//返回结果集的行数
+			execute()			se()
+			insert_builder()	ib()
+			update_builder() 	ub()
+			sql_builder() 		sb()
+	//更新
+		$this->dbObj->execute($sql);
+		//该命令用于提交所有更改性质的sql语句, 包括create drop insert update delete grant   执行失败的情况下返回false
+
+	//插入语句拼凑 insert_builder
+		$this->dbObj->insert_builder('表名', array('字段名'=>'值'));
+
+	//更新语句拼凑 update_builder
+		$this->dbObj->update_builder('表名', array('字段'=>'值'), '条件id=2');
+		note:	可以使用在字段名称前面加‘@’的方式提交特殊内容，例如：array('@datetime'=>"now()")，这个时候会解析为 datetime = now() 而不会给 now() 加引号
+				可以使用在字符名称前面加数学运算符的方式提交特殊内容，例如：array('+readCount'=>1)，这个时候会解析为 readCount = readCount+1 实现自增目的
+
+	//查询语句拼凑 sql_builder
+		$this->dbObj->sql_builder('select * from users where uld = @int', 123);
+			a) @int、@dcm、@str、@lstr、@llstr、@lrstr。
+			b）@int 		会被替换为整数
+			c）@decimal 	会被替换为浮点数
+			d）@str 		'str'
+				lstr 		'%str%'
+				llstr 		'%str'
+				rlstr 		'str%'
+
+
+
+		//返回
+		return $ret;
+	}
+
+
+this->get_querys()
+
+
+primaryKey
+majorTableName
+
+
+
+//处理ADD时传输的数据
+function Add()
+	->duplicate_chack('bookNmae', $userName);
+
+//处理Mod时传输的数据
+function Mod()
+
+
+
+
+//设置数据库
+WEB-APP\dbcfg.inc\dbcfg.inc
+
+//缓存
+WEB-APP\classes\cache_source.inc
+
+
+
+html
+<% $actFormDcustFun->formBoundarys.begin %>
+	<% $actFormDcustFun->show_item("sPassportName") %>
+<% $actFormDcustFun->formBoundarys.end %>
+
+<% $actFormJScustFun %>                           js验证
+
+
+
+<% foreach from=$items key=myId item=cItem  %>
+	<tr>
+		<td><% $cItem.priceMoney %>元</td>
+		<td><% $cItem.priUnit %></td>
+	</tr>
+<% /foreach %>
+
+
+//模型语句
+//WEB-APP\classes\book_action.inc
+//sql 设置   function make_sql
+
+//时间查询条件语句
+$this->make_distence_condition('postDatetime', $getVars['dtS'], $getBars['dtE'], true, true);
+
+//模型 模板
+//WEB-APP\smarty\tpls\book.html
+
+
+sample\sysGuestbook.php - 模块管理列表页面，模块列表和管理操作都在这里完成
+sample\webservices\sysGuestbook.php - 模块Web服务页面，模块所有事件和操作的逻辑都在这里完成
+sample\WEB-APP\smarty\tpls\sysGuestbook.html - 模块模板页面，模块的展示区设计都在这里了
+sample\WEB-APP\smarty\tpls\header.htm - 模块模板头部页面，默认情况下模板的头部是要单独分离出来的
+sample\WEB-APP\smarty\tpls\footer.htm - 模块模板脚部页面，默认情况下模板的脚部是要单独分离出来的
+sample\WEB-APP\classes\sysGuestbook_action.inc - 模块控制器对象，模块所有数据的存取操作都在这里完成
+sample\WEB-APP\classes\cache_source\cache_src_sysGuestbook.inc - 模块缓存控制对象，模块所有数据的缓存控制都在这里完成
+
+index.php
+-> osp_non_user_system(osp_system.inc)
+-> html_frame(system.inc)
+-> frame(system.inc)
+
+
+
+//获取列
+
+getTableInfo($tableName, $forWhat="")
+	$this->getTableExtraInfo($tableInfo, $forWhat)
+
+
+selectTable($tableName, $selectColumnArr=null, $filterArr=null, $limitArr=null, $useOR=false)
+
+
+$this->CreateTable($tableName);
+
+
+getTableRowId
+
+
+tfapi_eav_tables
+  tableId         表Id
+  tableName       表名
+  rowIdMax        最大的行号
+
+tfapi_eav_columns
+  columnId        列的Id
+  columnName      列的名字
+  tableId         表Id
+  columnType      列类型
+    1 int
+    2 bigint
+    3 varchar
+    4 longvarchar
+    5 text
+    6 logtext
+    7 decimal
+    8 datetime
+
+tfapi_eav_extends   列的属性
+  extId
+  columnId                列Id
+  dataType                数据类型
+  isVisible               是否可见
+  columnTitle             列的标题
+  columnDescript          列的说明
+  visibleLevel            可见的等级
+  extraData               列的值
+  requiredForServicer     唯一
+  visibleState            可见状态
+
+
+//存储的数据
+tfapi_eav_attr_int
+tfapi_eav_attr_bigint
+tfapi_eav_attr_varchar
+tfapi_eav_attr_text
+tfapi_eav_attr_logtext
+tfapi_eav_attr_decimal
+tfapi_eav_attr_datetime
+  attrId        值id
+  attrName      tid.tableId.rid.rowIdMax
+  attrValue     值
+  tableId       表Id
+  columnId      列Id
+
+tfapi_eav_rows
+  rowId
+  attrName      tid.tableId.rid.rowIdMax
+  tableId
+
+
+
+
+
+‌SELECT base.attrName FROM tfapi_eav_rows as base USE INDEX ( join_keys1 )
+			INNER JOIN tfapi_eav_attr_varchar AS eavColumn201 USE INDEX ( join_keys1 )
+			ON base.tableId = eavColumn201.tableId
+				AND eavColumn201.columnId = 201
+				AND base.attrName = eavColumn201.attrName
+			WHERE base.tableId = 151	AND ( eavColumn201. attrValue = 'test' )

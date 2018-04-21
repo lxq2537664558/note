@@ -1,0 +1,330 @@
+在开发, 部署时, 用来管理代码进度, 同步代码环境的一个开发工具
+
+Git 版本控制器
+	其主要作用, 保证项目代码在开发阶段, 任何代码都不会丢失. 而且可以快速的获取到任何阶段的开发代码
+	版本: 项目在开发过程中, 某个时间点的项目的进度
+
+安装   git-scm.com
+	Win
+		exe 可执行文件安装
+		选择 unix换行符
+	CentOS
+		yum install git
+	Ubuntu
+		apt-get install git
+	linux 源码安装
+		//安装依赖
+		yum --disablerepo=\* --enablerepo=c6-media install gcc gcc-c++ perl perl-devel curl-devel expat-devel gettext-devel openssl-devel perl-devel zlib-devel tcl build-essential tk gettext
+		tar zxvf git-2.9.0
+		cd git
+		make configure
+		./configure --prefix=/usr/local/git && make && sudo make install
+		配置环境变量
+		vi /etc/profile
+			export PATH="$PATH:/usr/local/git/bin"
+
+show git安装路径
+	which -a git
+show git版本
+	git --version
+
+本地开发
+	git init  				//初始化
+		将当前目录, 初始化为 git 可以管理的携带版本仓库的目录
+		.git 目录, 不要去手动管理. git命令完成全部的管理  还是正常在项目目录完成项目开发即可
+		存在代码文件的目录, 也可以被初始化为 git 版本库管理
+
+	git add  				//添加到暂存
+	git add 1.php 2.php 	//暂存多个文件
+	git add . 				//暂存所有文件
+		add, 添加修改到暂存区
+		暂存区, 是一个临时用来储存, 需要提交的修改的位置. 之后在暂存区中的内容(修改) 会被整理成一个版本, 提交到版本库中
+
+	git commit				 //提交版本
+	git commit -m '版本描述'
+		将存储与暂存的修改, 提交形成一个新的版本, 记录在版本库中, 此代码永不消逝
+		一旦提交, 修改就不在暂存区了
+	git commit  回车可以使用vi 添加描述
+	git -a -m '描述'
+		-a 参数表示先完成 git add 再去提交
+		简化 git add . && git commit -m ''
+		Note: 如果当前新增了文件, 需要执行 git add 才可以加入到暂存
+
+	Note: 如果是第一次提交(第一次安装 git 第一次提交, 需要配置添加的用户信息)
+		git config --global user.name "用户名"
+		git config --global user.email "邮箱"
+
+	git rm 1.php			//删除文件 修改 暂存
+		将文件从版本库的追踪状态删除. 同时删除文件
+		等效于  rm 文件 && git add
+
+	git reset 				//重置
+		git reset --hard  目标版本的提交id
+			hard 				//硬重置
+				将当前的工作区(代码), 直接切换到目标的版本
+			soft 					重置(软重置)
+				与因重置相对
+				但是, 会保留工作区中的修改. 会记录下, 当前版本与切换的目标版本的差异(修改) 并暂存到暂存区中. 此时决定权就在用户手上. 可以选择: A 保留某些修改(再次提交即可) B 重置某些修改
+
+	git reset HEAD 文件列表  //取消暂存
+
+	git checkout -- 文件列表 //撤销修改
+
+	HEAD 版本指针
+		当前版本的指针, 永远指向当前所处的版本
+		通常情况是指向最新的版本
+		当切换版本时, 调整了指针的版本指向. 版本没有消失, 指向发生了改动
+
+		HEAD^		前1个版本
+		HEAD^^^ 	前3个版本
+		HEAD~50		前50个版本
+		例子: git reset --soft HEAD^
+
+远程协作
+	远程版本库
+		通常, 仅仅做代码版本库的S理, 不做开发而用
+		在配置远程版本库时, 选择裸版本库. 只有版本库,,没有工作区的版本库		(仅仅需要 .git 目录即可)
+
+		cd ~/repo
+		创建远程裸库
+			git init --bare 版本库名字.git
+	本地库  利用远程版本库, 克隆本地库
+		本地, 需要通过 clone 实现, 本地版本库的创建. 克隆自远程版本库
+			git clone ssh://root@123.206.55.98:22/root/myNote/note.git [可以更改项目名字]
+	本地开发
+		配置
+			git config --local user.name 'irnp'
+			git config --local user.email 'irnp@qq.com'
+		git add .
+		git commit -m '注释'
+	推送到远程 push
+		git push origin master
+	从远程拉取
+		git pull
+ 	手动解决冲突
+ 		当用户修改了相同的文件时. 自动合并就很难完成
+
+ 		编辑冲突的文件
+ 		利用版本号确定作者 和作者协商
+
+.gitignore  忽略追踪
+	项目中, 通常有些文件, 不需要被提交到版本中. 不需要提交到源代码
+	自己不需要别人知道的信息, 别人可以自动运行获取的内容. 都是不需要提交
+
+	在目录中 增加 .gitgonre即可
+
+	Note: gitignore 是需要被提交的
+	强调 一定要在第一次add 文件前, 完成忽略配置. 一旦文件被追踪. 忽略不能生效. 此时需要删除该文件git rm, 才能下次生效. git init之后. 就需要完成: 配置.gitignore工作
+
+状态 		git status
+	三个逻辑位置概念
+		工作区  项目目录, 不包含 .git的部分, 就是工作区. 我们在工作区完成代码的编写
+		暂存区  stage, 临时存储需要被提交的修改的区域. 内部的修改, 在commit时, 会被提交到版本库中. 如果需要提交, 则必须现在暂存区进行整理才可以
+		版本去  repo, 存储提交的版本的区域
+
+	文件状态
+		未追踪  文件第一次出现在工作去, 版本库还没有存储该文件的状态
+		已追踪  只要第一次 add了文件 文件就是已追踪
+		未修改  文件在工作区未被修改
+		已修改  文件在工作去已被修改
+		未暂存  文件已修改, 但是没有add到暂存区
+		已暂存  已经将修改的文件 add 到暂存区
+		未提交  已暂存的文件, 没有 commit 提交. 处于暂存区
+		已提交  提交到版本库的文件修改
+
+	状态查看结构
+		Untracked file  		//未追踪
+		On branch master changes to be commit
+		//已暂存  准备提交的文件
+		nothing to commit, working directory clean
+		//没有需要提交的修改, 工作区整洁
+		changes not stagec for commit
+		//修改但未暂存
+
+提交日志 		git log
+	git log, 默认出发一个翻页查看程序. less(类似于 more), 通过 空格,ctrl+b,q 完成 下一页,上一页,退出
+	git relog  版本的切换记录
+	//过滤
+		//用户名过滤
+		git log --author = '用户'  	//过滤   多人协作时, 常用的过滤条件
+		//时间过滤
+		git log --after = '2017-03-31 0:0:0'  --befor="2017-03-31 11:00:00//
+	//展示格式
+		//版本号标识
+		commit-id
+		//格式化输出, 单行输出
+		git log --pretty="oneline"
+		//输出版本修改
+		git log -p
+
+配置
+git config -list  		//列出配置项
+	配置的层级
+		系统级			--system, 针对与所有的用户的配置
+		全局(用户级)  	--global, 针对当前系统的登录用户, 配置生效, 无论该用户管理几个 git 版本库项目, 配置是一致的
+		项目(本地)		--local,  仅仅针对于当前项目起作用
+
+	Note: 范围小的配置会重写范围大的配置
+
+分支 branch
+	主分支, 分支的一个, 一个默认的分支
+	master 主分支 	目的提供稳定的代码用于发布
+	devel  开发分支 	开发分支, 开发时使用的分支
+	bug#42  用于解决42号 bug 的临时分支
+
+	git branch 			//查看分支  (* 当前分支)
+	git branch devel 	//创建分支 devel
+	git branch -d devel //删除 devel 分支
+	git checkout master //切换到 master 分支
+	git merge devel		//分支合并, 将某个分支合并到当前分支
+
+远程分支
+	从远程克隆 只能克隆主分支
+	当克隆完毕后, 如果切换到与远程分支同名的本地分支
+	git 会自动将本地分支与远程分支建立关联
+
+	推送分支到远程
+	git push origin 本地分支
+	此时的本地分 推送到 远程同名分支上
+
+	语法上还支持, 本地分支A 推送到远程的 分支B 上
+	git push origin 本地分支:远程分支
+
+标签 Tag
+	经常使用版本号作为某个版本的特定标志, 就是该版本的标签
+
+	git tag  			//列出当前所有的标签
+	git tag -a '标签' -m '版本描述'  //添加
+	git tag -a '标签' -m '描述' commi-id
+	git show v1.0.0 	//显示v1.0.0 版本信息
+	git checkout v1.0.0 //切换到v1.0.0 版本
+
+分布式的版本库控制器
+(集中屎版本控制器)
+
+本地和远程都是独立的版本库, 之间存在关联而已
+
+相对的集中式, 多人写作, 只有一个版本库. 每个本地, 都需要在每次提交时, 将版本提交到唯一的版本库上
+
+分布式(相对于集中)优势
+	1 大多数操作都是本地操作, 不需要联网
+	2 可以提交大量的版本
+	3 只有在 pull 拉去才需要做, 本地与远程合并
+
+快照型版本库
+	git 实现版本, 采用存储快照, 而不是存储差异的方式
+
+cvs, svn, bitkeep 都是版本控制器
+
+//隐藏 .git文件
+.git/.htaccess
+Require all denied
+
+
+//设置用户名
+git config --global user.name 'ubuntu'
+//设置邮箱
+git config --global user.email 'ornp@qq.com'
+//查看用户
+git config --list
+//修改用户
+git config --unset --global user.name
+
+~.gitconfig  存储用户
+
+git help
+git help -a 可用的命令
+
+
+
+centOS 7.2 安装 git2.7
+
+1、安装所需软件包
+# yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel
+# yum install gcc perl-ExtUtils-MakeMaker
+2、下载&安装
+# cd /usr/src
+# wget https://www.kernel.org/pub/software/scm/git/git-2.7.3.tar.gz
+# tar xzf git-2.7.0.tar.gz
+# cd git-2.7.0
+# make prefix=/usr/local/git all
+# make prefix=/usr/local/git install
+# echo "export PATH=$PATH:/usr/local/git/bin" >> /etc/bashrc
+# source /etc/bashrc
+3、检查版本
+
+# git --version
+
+git checkout -b huidu origin/huidu
+
+
+git checkout -b dev 新建并切换到本地dev分支
+git pull origin dev 本地分支与远程分支相关联
+
+git branch --set-upstream-to=origin/远程分支的名字
+
+在本地新建分支并推送到远程
+git checkout -b test
+git push origin test   这样远程仓库中也就创建了一个test分支
+
+删除远程分支
+git branch -r -d origin/branch-name
+git push origin :branch-name
+
+
+
+Push rejected: Push to origin/huidu was rejected
+git pull origin huidu --allow-unrelated-histories
+
+
+git clean -d -fx  	删除一些没有 git add 的文件
+    git clean 参数
+    -n 显示将要删除的文件和目录；
+    -x -----删除忽略文件已经对git来说不识别的文件
+    -d -----删除未被添加到git的路径中的文件
+    -f -----强制运行
+    git clean -n
+    git clean -df
+    git clean -f
+
+
+git reset --hard origin/huidu
+git fetch origin hiudu
+
+
+git stash list
+
+git stash
+git stash pop
+
+git stash save "work in progress for foo feature"
+git stash apply stash@{1}
+
+git stash clear   		//清空所有的暂存
+
+
+
+
+ git mergetool
+
+
+合并commit
+git rebase -i
+
+
+更改commit注释
+git commit --amend
+
+
+刷新分支
+git fetch
+
+
+
+git show commit-id filename
+
+
+
+
+//创建秘钥
+ssh-keygen -t rsa

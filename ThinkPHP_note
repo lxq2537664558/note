@@ -1,0 +1,921 @@
+ThinkPHP是一个基于MVC的框架 也叫TP框架
+	优点
+		快速,稳定的搭建系统程序
+		可以使开发人员精力集中在业务逻辑上,不需要关心程序的底层架构
+		可以节省大量的代码,后期升级,维,优化十分方便
+		有利于团都id代码风格统一
+		
+框架,即framework.其实就是某种应用的半成品,就是一组组件,供你选用完成你自己的系统
+	代码重用
+	合理分工
+	解决多人协作开发问题
+	
+常见的php框架
+	Zend framework
+		zend公司开发的官方框架,功能很强大,重量级框架
+	Yii
+		国人开发的重量级框架,该框架的特点就是代码的可重用性非常好
+	CI	Codelgniter
+		轻量级的框架
+	ThinkPHP
+		国人开发的,免费,开源的.简单的,面向对象的,轻量级PHP框架
+	cakePHP
+		外国框架 重量级 速度慢
+	Symfony
+		外国重量级框架
+	
+MVC
+	MVC是施乐帕克研究中心(Xerox PARC)在八十年代为编程语言Smalltalk-80发明的一种软件设计模式,至今已被广泛使用
+	MVC是一个设计模式,它强制性的使应用程序的输入,处理和输出分开.使用MVC应用程序被分成三个核心部件:模型,视图,控制器
+	M:Model		模型
+	V:View		视图
+	C:Control	控制器
+
+发开thinkphp项目流程
+	创建项目
+	创建入口文件
+	配置项目
+	创建控制器
+	创建模型
+	创建模板
+	运行调式,调优
+	部署到生产环境
+
+echo M()->getLastSql()	查询最后一条sql
+		  getLastInsID()返回最后插入的id
+	 $model()->_sql();	  
+getDbError，getError，getPk，getDbFields
+
+编写项目入口文件
+	//定义tp框架目录
+	define('THINK_PATH','./ThinkPHP/');
+	//定义项目所在目录
+	define('APP_PATH','./');
+	//定义项目名称
+	define('APP_NAEM','project');
+	//定义是否开启调式模式
+	define('APP_DEBUG',true);
+		
+	//包含框架入口文件
+	include(THINK_PATH.'ThinkPHP.php');
+	注:如果你的目录结构与上面相同,相关常量的定义可以省略
+
+TP框架的配置文件
+	惯例配置:ThinkPHP/conf/convention.php 
+	应用配置:Application/Common/conf/config.php
+	调式配置:Application/Common/conf/debug.php 
+	模块配置:Application/Home/conf/config.php 
+	加载顺序
+		惯例->应用->模式->调式->状态->模块->扩展->动态
+		因为后面的配置会覆盖之前同名配置(在没有生效的前提下) 所以配置的优先顺序从右到左
+配置项
+	'MODULE_DENY_LIST' => array('Common','Runtime'), // 禁止访问的模块列表
+	'MODULE_ALLOW_LIST' => array(),    // 允许访问的模块列表
+	
+	'DEFAULT_MODULE'		=> 'Home'		默认模块
+	'DEFAULT_CONTROLLER'	=> 'Index'		默认控制器
+	'DEFAULT_ACTION'		=> 'index'		默认操作名
+	
+	'ACTION_SUFFIX' 		=> 'Action' 	操作方法后缀
+
+	'SESSION_AUTO_START' => true	是否开启session
+	'TMPL_ENGINE_TYPE' => 'Smarty'	模板引擎设置为Smarty	
+		Smarty引擎的存放位置在Vendor	驱动在Library->Think->Template->Driver
+	'TMPL_ENGINE_CONFIG' => array(
+		'left_delimiter' => '<{',
+		'right_delimiter' => '>}',
+	),
+
+	'DEFAULT_FILTER' => 'htmlspecialchars'默认过滤
+	'TMPL_VAR_IDENTIFY' => 'array'	点语法默认解析
+	'TMPL_FILE_DEPR' => ''			模板url的连接符
+	
+	分组 
+		在项目,如果需要分组,修改config.php配置文件,添加以下两个选项即可
+		'APP_GROUP_LIST'		分组列表
+		'DEFAULT_GROUP'			默认分组
+
+	写在模块com里面
+	'URL_ROUTER_ON' => true,		是否开启URL路由功能
+	'URL_ROUTE_RULES' => array(
+		'goods/:goods_id(参数)\d(正则)' =>array('Shop/info')
+	)
+	
+路由
+	调度模式 在tp中,调度模式共有四种,可以通过配置选项:URL_MODEL来设置 url调度模式就是指在tp中访问页面url的方式
+		0 普通模式 (基本get形式)
+			http://项目/入口文件?g=分组&m=模块名&a=动作名
+		1 pathinfo路径形式	推荐 (默认方式)
+			http://项目/入口文件/分组名/模块名/动作名
+		2 rewrite重写形式, (伪静态技术) 省略index.php入口文件
+			http://项目/分组名/模块名/动作名
+			httpd.conf配置文件加载mod_rewrite.so模块
+			虚拟主机中 AllowOverride None改为All
+			把下面内容保存为.htaccess文件(无名文件)放到入口文件的同级目录下
+			#目录选项:允许目录内使用符号连接(在某些Apache服务器下,如果没有该选项导致 403error)
+			#Options +FollowSymlinks			
+			#ifModule判断某个模块是否开启
+			<IfModule mod_rewrite.c>
+				#开启重写引擎
+				RewriteEngine on 	
+				#从写条件,对后面出现的RewriteRule起作用(当规则满足时,判断条件是否满足,如果满足,则完整重写操作)
+				# ! 取反 -d(directory) 是目录 -f(file) 是文件
+				RewriteCond %{REQUEST_FILENAME} !-d
+				RewriteCond %{REQUEST_FILENAME} !-f
+				#设置重写规则
+				RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+				#设置盗链图片等
+				#RewriteCond %{HTTP_REFERER} !test.kang.com 
+				#Rewrite \.(css|jpeg|png|gif|js|jpg)$ - [F]
+			</IfModule>
+		3 兼容模式
+			http://项目/入口文件?s=/分组名/模块名/动作名
+		以上四种方式除了第3种, 其它的url模式都可以使用 
+	
+	在访问的url中,我们可以自己指定分隔符
+		'URL_PATHINFO_DEPR' => '/';	
+
+	URL大小写
+		'URL_CASE_INSENSITIVE' = true 	不区分大小写
+
+	伪静态 
+		'URL_HTML_SUFFIX'=>'shtml'	设置为空则可以支持所有静态后缀  并且记录当前后缀到常量__EXT__
+		'URL_HTML_SUFFIX' => 'html|shtml|xml' 	多个伪静态
+		'URL_DENY_SUFFIX' => 'pdf|ico'	URL禁止访问的后缀设置	
+
+	页面跳转
+		success		操作成功后调用的方法 
+		error		操作失败后调用的方法
+		$this->error('提示','/控制器/方法',[时间=3])
+		'TMPL_ACTION_ERROR'   => THINK_PATH.'Tpl/dispatch_jump.tpl', // 默认错误跳转对应的模板文件
+	    'TMPL_ACTION_SUCCESS' => THINK_PATH.'Tpl/dispatch_jump.tpl', // 默认成功跳转对应的模板文件
+
+	页面重定向	
+		$this->redirect('model/action',array('id'=>'传递的参数'),停留秒数,'提示')
+
+	错误页面
+		_404('提示','url')	调式模式没用
+		halt('提示')			抛出错误信息
+			'TMPL_EXCEPTION_FILE' => 'url'	指定错误页面模板路径
+				模板中 <?php echo $e['message'] ?> 输出提示	
+
+	空操作
+		空操作是指系统在找不到指定的操作方法的时候,会定位到空操作(_empty)方法来执行,利用这个机制,我们可以实现错误页面给和一些URL的优化
+		public function _empty($name){}
+	空模块	
+		空模块的概念是指当系统找不到指定的模块名称的时候,系统会尝试定位空模块(EmptyAction)利用这个机制我们可以用来定制错误页面和进行url的优化
+		class EmptyController extends Action(){} 
+		注:空模块中的常量 MODULE_NAME 表示请求的当前的不存在的模块名
+
+
+视图		视图就是用户看到的并与之交互的的界面
+	左右分隔符
+		'TMPL_L_DELIM' => '{'
+		'TMPL_R_DELIM' => '}'
+
+	模板替换
+		在TP的模板中,有一些模板字符串常量,当执行时,会自动被解析成为一些路径
+			__ROOT__		当前网站地址
+			__APP__			当前项目地址
+			__PUBLIC__		当前网站的公共目录
+			__GROUP__		当前分组的URL地址
+			__MODULE__		当前分组		/shop/index.php/分组
+			__URL__			当前控制器	__CONTROLLER__
+			__CONTROLLER__				/shop/index.php/分组/控制器
+			__ACTION__		当前操作地址	/shop/index.php/分组/控制器/操作方法
+			__SELF__		当前请求地址	/shop/index.php/分组/控制器/操作方法/名称/值
+		
+		定义模板常用字符串
+			'TMPL_PARSE_STRING' => array(
+				'__XX__' => '/Xx/Xx'
+			)	
+			/Admin/Public/static/
+			/Admin/Public/lib/
+	获取内容
+		$re = fetch()			//获取网页内容
+		$this->show($re);		//显示网页内容
+	注释
+		{/**/}
+		{//}
+	系统变量
+		$Tink.server
+		$Tink.get
+		$Tink.post
+		$Tink.request
+		$Tink.cookie
+		$Tink.session
+		$Tink.config
+	使用函数
+		{$name|fn1|fn2=arg1,arg2,###}
+			传参为自身用 ###
+		{:fn()}
+	默认值	当变量为空时 使用默认值
+		{$name|default='默认值'}
+	运算符
+		+ - * / % ++ --
+	内置标签
+		开放标签
+			<volist name='' id='' offset='' length='' key=''></volist>
+				name	要遍历的数组名
+				id		每次遍历到的数组元素
+				offset	要输出数据的offsetr
+				length	输出数据的长度,需要指定offset
+				key		循环索引 默认值:i 从1开始
+			<foreach name='' item='' key=''></foreach>
+				name	要遍历的数组名
+				item	每次遍历到的数组元素
+			<if condition=''><elseif condition=''><else/></if>
+				condition	条件
+					eq 或 equal		等于
+					heq				恒等于
+					neq 或 noeequal	不等于
+					nheq			不恒等于
+					gt				大于
+					egt				大于等于
+					lt				小于
+					elt				小于等于
+			{$info['status']?$info['msg']:$info['error']} 三元
+			<php></php>		使用php代码
+				'TMPL_DENY_PHP' => true 模板禁用<?php?>
+			<literal></literal>		防止模板标签被解析
+		闭合标签
+			<include file="模块名/模板名" 参数名='参数值'/>	包含文件
+			<import type='' file=''/>	资源文件
+		模板布局
+			分组里面com
+			'LAYOUT_ON'=> true ,	//开启布局 	
+			'LAYOUT_NAME'=>'layout', //当前布局名字
+			view 里面添加layout.html 
+				头
+				(__CONTENT__)
+				尾
+			单独页面不要布局 页面头添加	{__NOLAYOUT__}
+				使用别的布局 <layout name="layout2" />
+
+			//全局模板布局
+				'LAYOUT_ON' => true,
+			//布局模板标签	
+				'TMPL_LAYOUT_ITEM' => '{__CONTENT__}',
+
+				<extend name="Public:base" />
+				<extend name="./Template/Public/base.html" />
+
+
+控制器	3.1为Action 3.2为Controller
+	控制器类的命名规范:模块名+Action.class.php 系统默认模块是Index
+	类名和文件名一致.默认操作index
+	class IndexAction extends Action{
+		public function index(){
+			echo 'hello';
+		}
+	}
+
+	_before_add
+	_after_add
+
+	前置public function_before_index(){index方法执行前执行}
+	后置public function _after_index(){index方法执行后执行}
+	
+	参数绑定		分 变量名|变量顺序 绑定 默认变量名   给操作方法定义默认值是一个避免报错的好办法
+		'URL_PARAMS_BIND' => true 	URL变量绑定到操作方法作为参数
+		'URL_PARAMS_BIND_TYPE' => 1 设置参数绑定按照变量顺序绑定  不必带参数名 仅对PATHINFO地址有效
+	
+	赋值到模板
+		$this->name = $value;
+		$this->assign('name',$value);
+		$this->assign($arr)
+	
+	输出到模板
+		fetch()					返回页面字符串
+		display()				调用当前操作同名的模板
+		display('操作名')			调用当前模块下指定的模板
+		display('index/index')				
+		display('模块名:操作名')	调用指定模块下指定的模板
+		display('分组@模块名:操作名')	
+		
+		display('模板','utf-8','text/xml')
+
+
+	控制器开头需要定义命名空间
+		namespace Home\Controller
+		use Think\Controller
+
+配置数据库
+	'DB_TYPE'	=> '',		//数据库类型
+	'DB_HOST'	=> '',		//服务器地址
+	'DB_NAME'	=> '',		//数据库名
+	'DB_USER'	=> '',		//用户名
+	'DB_PWD'	=> '',		//密码
+	'DB_PORT'	=> '',		//端口
+	'DB_PREFIX'	=> '',		//数据库表前缀
+	'DB_CHARSET'=> 'utf8',	//编码
+	'DB_FIELDTYPE_CHECK' => false,//是否进行字段类型检查
+	'DB_FIELDS_CACHE' => true //启用字段缓存
+	
+	或采用如下配置
+		'DB_DSN' => '数据库类型://用户名:密码@数据库地址:数据库端口/数据库名'
+	如果两种配置参数同时存在的话,DB_DSN配置参数优先		
+
+模型		模型表示企业数据和业务规则
+	表名(首字母大写)+Model.class.php
+	class 表名(首字母大写)+Model extends Model{}
+	模型内可定义属性	protected
+		$tablePrefix		表前缀
+		$tableName			不包含前缀的表明
+		$trueTableName		包含前缀的表名(完整的表名)
+		$dbName				数据库名
+	实例化模型
+		$name = new \Home\Model\nameModel(['模型名'],['表前缀'],['连接信息'])
+			链接信息:  mysql://root:1234@localhost/demo
+	getDbFields()	获取数据对象的全部字段信息
+	
+
+
+	字段定义	 如果你的部署模式下面修改了数据表的字段信息,可能需要清空Data/_fields目录下面的缓存文件,让系统重新获取更新的数据表字段信息
+		字段缓存 调试模式默认关闭
+		在模型内定义数据表字段名称可以避免IO加载的效率开销
+		protected $fields = array('id','username','age','_autoinc'=>true,
+			'_type'=>array('id'=>'bigint','username'=>'varcher','email'=>'varchar','age'=>'int')) //type定义类型
+		protected $pk = array('user_id','name'); //复合主键
+			pk属性定义当前数据表的主键名,默认值是id,因此如果是id的话可以无需定义
+	
+	字段映射	可以让你表单中隐藏真正的数据字段
+		protected $_map = array(
+			'表单里面的名' => '字段名',
+			'表单里面的名' => '字段名',
+		)	
+
+	字段验证
+		$User->validate($User->_validate)->create()	指定验证数组
+		
+		protected $insertFields = 'name,email';	//新增数据的时候允许写入name和email字段
+		protected $updateFields = 'email';		//编辑数据的时候只允许写入email字段
+
+		$User->getError()	返回失败信息
+		protected $patchValidate= true;  //一次性获得全部验证错误
+		
+		protected $_validate = array(
+			array('验证字段','验证规则','错误提示',[验证条件,附加规则,验证时间])
+				验证规则
+					require		必须填写
+					email		邮箱
+					url			地址 
+					currency	货币
+					number 		数字
+				验证条件
+					0 存在字段就验证		默认 	self::EXISTS_VALIDATE
+					1 必须验证					self::MUST_VALIDATE
+					2 值不为空的时候验证 			self::VALUE_VALIDATE
+				附加规则
+					regex		判断 验证规则 的正则是否真确(默认)
+					function	函数验证, 验证规则 是一个函数名
+					callback	方法验证, 验证规则 是当前模型类的一个方法
+					confirm		判断是否与 验证规则 字段相同
+					equal		验证是否等于某个值 该值为 验证规则
+					notequal	验证是否不等于某个值 该值为 验证规则
+					in			验证是否在某个范围内  验证规则 是一个数组或者逗号分割的字符串
+					notin		验证是否不在某个范围内 验证规则 是一个数组或者逗号分割的字符串
+					length		验证长度 验证规则表示范围 可以使用字符串或者数组
+					between
+					notbetween
+					expire
+					unique		验证是否唯一
+				验证时间
+					1 新添数据时候验证			self::MODEL_INSERT
+					2 编辑数据时候验证			self::MODEL_UPDATE
+					3 全部情况下验证(默认) 	self::MODEL_BOTH
+		)
+
+	自动完成
+		protected $_auto => array(
+			array('完成字段','完成规则',[完成时间,'附加规则']),
+				完成时间 
+					1 新增数据的时候处理（默认）self::MODEL_INSERT
+					2 更新数据的时候处理		self::MODEL_UPDATE 
+					3 所有情况都进行处理		self::MODEL_BOTH 
+				附加规则 
+					function	使用函数 表示一个函数名
+					callback	回调方法 当前模型的方法
+					field 		用其他字段填充 一个其他的字段值
+					string		字符串
+					ignore		为空则忽略
+		)
+
+	生命周期
+		_before_insert(&$data, $options){}
+		_after_insert($data, $options){}
+
+		_before_update(&$data, $options)
+		_after_update($data, $options)
+
+		_before_delete($options){}
+		_after_delete($data, $options){}
+
+		_before_select()
+		_after_select()
+
+
+
+	
+AR模式	ActiveRecord
+	将数据表映射到类
+	将数据表字段映射到属性
+	将数据映射到对象
+
+CURD	创建(Create),更新(Updata),读取(Read),删除(Delete),一般的项目开发的各种参数的基本功能都是CURD.
+	数据创建	create方法的本质就是从一个数组中创建数据  将元素和数据库中的字段一一匹配 没有的字段去除 
+	create()方法还有收集数据 过滤数据 非法字段过滤等等功能
+		create([$data],[$option],[$replace])
+		$user->create();		根据表单提交的POST数据创建数据对象
+		$user->create([$data,类型]);	
+			$data可以是对象 数组
+			类型 1为 insert 2为 update
+	
+	数据写入	add() 成功返回1 如果是自增主键则返回主键值
+		$User->add($data);	
+		$User->data($data)->add();
+		如果在add之前已经创建数据对象的话(例如使用了create或者data方法) add方法就不需要在传入数据了
+			$User->add();
+		支持的连贯操作
+			table data field relation validate auto filter scope bind token comment
+		字段过滤		如果写入了数据表中不存在的字符按数据,则会被直接过滤
+			field('name')			只允许写入name字段
+			filter('strip_tags')	内容过滤(去除标签)
+		mysql的特殊操作
+			$User->addAll(二维数组)	批量插入数据
+			$User->add($data='',$options=array(),$replacr=false)	$replacr参数(是否添加数据时允许覆盖)
+	数据读取
+		$model->select()			//全部
+		$model->select(id)			//查询主键信息等于条件id值的记录
+		$model->select('1,2')		//查询主键信息在条件范围内的记录
+		(使用select()方法会始终放回一个二维数组信息)
+
+		支持的连贯操作
+			where table alias field order group having join union distinct lock relation result scope bind comment
+
+		$User->where()->find()			读取一行数据  成功一维数组	失败false 结果为NULL		
+		$User->where()->getField('id')	读取字段值	成功id字段值	失败false 结果为NULL
+
+		$User->getField('id',true)		获取id数组	成功一维数组	失败false 结果为NULL
+		$User->getField('id,name')		成功关联数组 array('id'=>'name')
+		$User->getField('id,name,value')	返回二维数组
+		$User->getField('id,name,value,':') 返回array('id'=>name:value)
+		$this->getField('id,name',5); // 限制返回5条记录
+		$this->getField('id',3); // 获取id数组 限制3条记录
+		还可以用data方法获取查询或的数据对象
+	更新数据		save() 成功返回影响的记录数
+		支持的连贯操作
+			where table alias field order lock relation scope bind comment
+		如果在save之前已经创建数据对象的话(例如使用了create或者data方法) add方法就不需要在传入数据了
+			$User->save();
+		$User->save($data)		$data中没有主键值则不会更改
+		$User->where('id=5')->save($data)
+		$User->where('id=5')->save()		更新$User对象中的属性
+		字段过滤		和add方法一样,save方法支持使用field方法和filter方法过滤数据
+		$User->where()->setField('name','value')	更新字段
+		$Use->where('id=5')->setField($data)		更新多字段
+		$User->where('id=5')->setInc('score',3); // 用户的积分加3
+		$User->where('id=5')->setInc('score'); // 用户的积分加1
+		$User->where('id=5')->setDec('score',5); // 用户的积分减5
+		$User->where('id=5')->setDec('score'); // 用户的积分减1
+	数据删除		delete() 成功返回影响的记录数
+		支持的连贯操作
+			where table alias order lock relation scope bind comment
+		$User->delete(5)	删除主键值为5的数据
+		$User->delete('1,2')删除主键值为1,2的数据
+		$User->where(条件)->delete()
+		$User->whiere(1)->delete()		删除所有数据
+	常用连贯操作
+		where('条件')	查询条件
+		$model->where("name like '%qw' and id > 100")
+		where(array('id' => array('gt',0)))
+			EQ	等于（=）
+			NEQ	不等于（<>）
+			GT	大于（>）
+			EGT	大于等于（>=）
+			LT	小于（<）
+			ELT	小于等于（<=）
+			LIKE	模糊查询
+			[NOT] BETWEEN	（不在）区间查询
+			[NOT] IN	（不在）IN 查询
+			EXP	表达式查询，支持SQL语法
+		$model->limit(5);
+		limit(0,5)				分页
+		order('id desc')		排序
+		group('cateid')			分组
+		field('$a',$b)			指定字段
+			$a 字段字符串逗号分隔 要获取的字段,  为true时 全部字段
+			$b true时 为排除
+		having()
+	动态查询
+		getBy+字段名()	只查询一条
+	聚合 统计查询		和select() 平级
+		count(字段名)	总
+		max()			大
+		min()			小
+		avg()			平均
+		sum()			和
+	直接使用sql
+		M()->query('sql语句')	查询		二位数组
+		M()->execute('sql语句')	增删改	受影响的条数
+	
+	表关联
+		//表前缀
+		$fix = $this->tableprefix;
+
+		aliasrr(a) 		别名
+		//左连接
+		join('LEFT JOIN __BRAND__ b ON a.brand_id=b.id') 
+	
+常量
+	THINK_VERSION	版本号
+	MODULE_NAME 	分组名称
+	CONTROLLER_NAME	控制器
+	ACTION_NAME		操作方法
+
+函数
+	dump()
+	
+	获取url
+		U('地址表达式',['参数' ],\['伪静态后缀'],['显示域名']).
+			地址表达式: [模块/控制器/操作#锚点@域名]?参数1=值&参数2=值
+		U的方法4个参数都都为true,表示自动识别当前域名,自动根据子域名部署设置APP_SUB_DOMAIN_DEPLOY和APP_SUB_DOMAIN_RULES自动匹配生成当前地址的子域名
+		3.1  U('模块/动作',array(参数名=>参数值),'伪静态后缀名',不跳转0,加上域名true) 生成url
+		{:U()}	U在模板中使用
+		U('Bolg/read#comment?id=1')	U函数可以直接生成URL地址中的锚点
+	获取传递的值
+		I('变量类型.变量名',['默认值'],['过滤方法'],['额外数据源'])		
+			'trim,htmlspecialchars'
+			mysql_real_escape_string
+		I('data.file1','','',$_FILES)	获取不支持的类型进行读取
+	读取配置
+		C('配置参数名')			读取 C方法可以用于读取二维配置  '.'
+		C('参数名称','新的参数值') 设置 动态配置赋值仅对当前请求有效,不会对以后的请求造成影响
+		C('config',null,'123')	3.2.1版本支持设置默认值 config尚未设置返回123
+	实例化控制器
+		A('控制器名',['控制器'])	控制器默认为Controller
+		A('模块名'/'控制器名',['控制器'])	
+		R('[项目://][分组/]模块/操作','参数','控制器名称')
+		R方法用于调用某个控制器的操作方法,是A方法的进一步增强和补充.
+		A R区别
+		A函数: 实例化了对象, 然后在调用成员方法
+		R函数: 即实例化了对象还调用了成员方法
+	实例化模型
+		D('模型名')		快速实例化自定义模型 当类不存在的时候,会尝试实例化Common下面的Model类
+		D('Admin/name')	跨模块调用
+		D('Extend://Editor/Info')	实例化Extend扩展名空间下的Info模型
+		M('模型名')		快速实例化基础模型
+		M('db_name.User','ot_')	操作db_name数据库的ot_user表
+		注:如果D方法没有找到定义的模型类,则会自动调用M方法
+	文件读写
+		F('phiz',$phiz,'./Data/')		在./Data/目录下建立phiz文件保存$phiz
+		$phiz = F('phiz','','./Data/')	获取./Data目录下phiz文件的内容赋值给$phiz
+	缓存
+		S(name,value)	设置缓存
+		S(name)			读取缓存
+		S(name,null)	清除缓存
+	性能
+		G('start'); 	//标记 start
+		G('end');		//标记 end
+		G('start', 'end', 3); 	//从标记 start 到 标记 end 使用了的时间  3: 小数点的位置
+		G('start', 'end', 'm'); //内存开销了多少
+事物处理
+	$User->startTrans()		开启事物
+	$User->commit()			提交事物
+	$User->rollback()		回滚事物
+
+显示页面追踪日志信息	 调试用
+	'SHOW_PAGE_TRACE' => true		在页面底部显示日志信息
+	trace(变量, '文字提示', ['面板'])	$str 变量 $str= 文字提示 						
+	'TRACE_PAGE_TABS' => ['']  		更改跟踪面板的显示内容
+		
+session		'SESSION_AUTO_START' => true  默认开启session
+	session('name','value')		创建session并赋值
+	$var = session('name')		获取session的值
+	session('name',null)		清空指定的session的值
+	session(null)				清空所有session的值
+	session('?name')			判断指定的session是否设置
+	session(array())			session初始化直射
+		id				session_id值
+		name			session_name 值
+		path			session_save_path 值
+		prefix			session 本地化空间前缀
+		expire			session.gc_maxlifetime 设置值
+		domain			session.cookie_domain 设置值
+		use_cookies		session.use_cookies 设置值
+		use_trans_sid	session.use_trans_sid 设置值
+		cache_limiter	session_cache_limiter设置值
+		cache_expire	session_cache_expire设置值
+		type			session hander类型，可以使用hander驱动扩展	
+	session('[pause]'); 		// 暂停session写入
+	session('[start]'); 		// 启动session
+	session('[destroy]'); 		// 销毁session
+	session('[regenerate]'); 	// 重新生成session id
+		
+	session数据库保存
+		‘SESSION_TYPE’=> 'Db'
+	
+cookie
+	cookie('name','value')		创建cookie
+	cookie('name','value',3600)	创建cookie并设置它的有效时间
+	$var = cookie('name')		获取指定的cookie的值
+	cookie('name',null)			清空指定的cookie值
+
+文件载入
+	'LOAD_EXT_CONFIG' 		=> 'db'  		加载db.php 配置文件
+	'LOAD_EXT_FILE'  		=> 'f1,f2' 		加载外部的文件
+	载入函数文件
+		1 Common/common.php	
+			tp会自动加载 编译到~runtime.php文件中,下次直接执行runtime.php文件中的函数,所以如果函数发生改变,不会直接看到最新效果
+		2 Common/config.php  
+			'LOAD_EXT_FILE' = 'config'		扩展自动加载文件 多文件可以用','分隔
+			这样的文件的函数不会被编译到runtime.php文件中,如果修改函数内容,可以即使看到最新效果
+		以上两种做法都是tp对文件实行自动加载,但是在很多时候,某一个页面使用不到那么多的方法,比较浪费资源,我们需要让程序在需要的时候再去加载函数文件
+		3 Common/user.php 
+			在控制器方法内,使用load函数对用户自定义的函数文件进行动态加载
+			load('@/f3')
+			load('@.文件名')
+	载入类文件
+		import('Think.Util.Array');
+		require THINK_PATH.'Lib/Util/Array.class.php';
+		建议使用命名空间
+
+AJAX返回
+	'DEFAULT_AJAX_RETURN' => '' 设置ajax返回的默认格式
+	ajaxReturn($data,['type'])	默认为JOSN 
+		$data	可以是字符串或数组
+		type	返回客户端的时候根据不同的返回格式进行编码后传输
+			JSON|JSONP	自动编码JSON字符串
+			XML			自动编码XML字符串
+			EVAL		输出字符串data数据
+	默认的JSONP格式返回的处理方法是jsonpReturn, 采用不同的方法可以设置
+		'DEFAULT_JSONP_HANDLER' = 'myJsonpReturn'
+
+验证码 Verify
+	$config = array(
+		'imageH' => 30,
+		'imageW' => 120,
+		'fontSize' => 14,
+		'fontttf' => '4.ttf',
+		'length' => 4
+	)
+	$verify = new \Think\Verify($config)	实例化verify类
+	$verify->entry()						输出验证码
+	$verify->check()						校验验证码
+	buildImageVerify(长度,格式,格式,宽,高)
+
+分页
+	public function search($praPage = 5)
+	{
+		$count = $this-> count();
+
+		$pageObj = new \Think\Page($count, $perPage);
+
+		$pageString = $pageObj->show();
+
+		$data = $this->limit($pageObj->firstRow.','.$pageObj->listRows)->select();
+
+		return array(
+			'data' => $data,
+			'page' => $pageString,
+		)
+	}
+
+	$User = M('User'); // 实例化User对象
+	$count = $User->where('status=1')->count();// 查询满足要求的总记录数
+	$Page = new \Think\Page($count,25);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+	$show = $Page->show();// 分页显示输出
+	// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
+	$list = $User->where('status=1')->limit($Page->firstRow.','.$Page->listRows)->select();
+	$this->assign('list',$list);// 赋值数据集
+	$this->assign('page',$show);// 赋值	分页输出
+	$this->display(); // 输出模板
+	
+	$User = M('User'); // 实例化User对象
+	// 进行分页数据查询 注意page方法的参数的前面部分是当前的页数使用 $_GET[p]获取
+	$list = $User->where('status=1')->page($_GET['p'].',25')->select();
+	$this->assign('list',$list);// 赋值数据集
+	$count = $User->where('status=1')->count();// 查询满足要求的总记录数
+	$Page = new \Think\Page($count,25);// 实例化分页类 传入总记录数和每页显示的记录数
+	$show = $Page->show();// 分页显示输出
+	$this->assign('page',$show);// 赋值分页输出
+	$this->display(); // 输出模板
+	
+	分页样式设置
+		$Page->setConfig('header','个会员');
+		header	头部描述信息，默认值 “共 %TOTAL_ROW% 条记录”
+		prev	上一页描述信息，默认值 “<<”
+		next	下一页描述信息，默认值 “>>”
+		first	第一页描述信息，默认值 “1...”
+		last	最后一页描述信息，默认值 “...%TOTAL_PAGE%”
+		theme	分页主题描述信息，包括了上面所有元素的组合 ，设置该属性可以改变分页的各个单元的显示位置，默认值是 "%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END%"
+			%FIRST%	表示第一页的链接显示
+			%UP_PAGE%	表示上一页的链接显示
+			%LINK_PAGE%	表示分页的链接显示
+			%DOWN_PAGE%	表示下一页的链接显示
+			%END%	表示最后一页的链接显示
+			first（第一页）
+			prev（上一页）
+			next（下一页）
+			rend（最后一页）
+			num（其他页的数字）
+			current（当前页）
+
+	Css样式
+	<style>
+		.first,.prev,.next,.end,.num,.current{
+			color: #fff;
+			text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+			background-color: #3daae9;
+			background-image: linear-gradient(to bottom,#46aeea,#2fa4e7);
+			background-repeat: repeat-x;
+			border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+			box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+			padding: 2px 10px;
+			font-size: 11.9px;
+			border-radius: 4px;
+			display: inline-block;
+			margin-bottom: 0;
+			line-height: 20px;
+			text-align: center;
+			vertical-align: middle;
+			cursor: pointer;
+			border: 2px solid #fff;
+			font-family: "Microsoft YaHei","Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+			font-weight: normal;
+			float:left;
+			position:relative;
+			left:30%;
+		}
+		.current{
+			color: #000 !important;
+		}
+	</style>
+
+			
+文件上传
+	$config = array(
+		'maxSize' => 3145728,
+		'rootPath' => './Uploads/',			//保存根目录
+		'savePath' => 'Goods/',				//保存的二级目录
+		'exts' => array('jpg','gif','png','jpeg'),
+		'saveName' => array('uniqid',''),	//上传文件的保存规则  arr[0] 函数名 arr[1] 函数参数
+		'autoSub' => true,					//自动使用子目录保存上传文件 默认为true
+		'subName' => array('date','Ymd')	//子目录的创建方式
+	);
+	$upload = new \Think\Upload($config);
+	$upload->upload();		//上传文件
+	$upload->uploadOne();	//单文件上传
+			 key			附件上传的表单名称
+			 savepath		上传文件的保存路径
+			 name			上传文件的原始名称
+			 savename		上传文件的保存名称
+			 size			上传文件的大小
+			 type			上传文件的MIME类型
+			 ext			上传文件的后缀类型
+	$upload->getError();	//上传错误信息
+
+图片处理
+	$image = new \Think\Image();
+	$image->open()		打开一个图像资源
+	$image->width()		宽
+	$image->height()	高
+	$image->type()		类型
+	$image->mime()		mime类型
+	$image->size()		图片尺寸
+
+	//将图片裁剪为400×400并保存为corp.jpg
+	$image->crop(400,400)->save('./crop.jpg')
+	
+	//从100,30开始剪裁
+	$image->crop(400,400,100,30)->save('./crop.jpg')
+	
+	缩略图
+		//生成一个居中裁剪为150*150的缩略图并保存为thumb.jpg 
+		$image->thumb(150, 150,\Think\Image::IMAGE_THUMB_CENTER)->save('./thumb.jpg');
+	
+		IMAGE_THUMB_SCALE     =   1 ; //等比例缩放类型
+		IMAGE_THUMB_FILLED    =   2 ; //缩放后填充类型
+		IMAGE_THUMB_CENTER    =   3 ; //居中裁剪类型
+		IMAGE_THUMB_NORTHWEST =   4 ; //左上角裁剪类型
+		IMAGE_THUMB_SOUTHEAST =   5 ; //右下角裁剪类型
+		IMAGE_THUMB_FIXED     =   6 ; //固定尺寸缩放类型
+	
+	添加水印
+		//给原图添加水印并保存为water_o.gif（需要重新打开原图）
+		$image->open('./1.jpg')->water('./logo.png')->save("water_o.gif"); 
+		//在图片右下角添加水印文字 ThinkPHP 并保存为new.jpg
+		$image->open('./1.jpg')->text('ThinkPHP','./1.ttf',20,'#000000',\Think\Image::IMAGE_WATER_SOUTHEAST)->save("new.jpg"); 
+	
+		IMAGE_WATER_NORTHWEST =   1 ; //左上角水印
+		IMAGE_WATER_NORTH     =   2 ; //上居中水印
+		IMAGE_WATER_NORTHEAST =   3 ; //右上角水印
+		IMAGE_WATER_WEST      =   4 ; //左居中水印
+		IMAGE_WATER_CENTER    =   5 ; //居中水印
+		IMAGE_WATER_EAST      =   6 ; //右居中水印
+		IMAGE_WATER_SOUTHWEST =   7 ; //左下角水印
+		IMAGE_WATER_SOUTH     =   8 ; //下居中水印
+		IMAGE_WATER_SOUTHEAST =   9 ; //右下角水印
+	
+	$image->save()				保存
+	$image->save('2.png')		保存并重命名
+	
+多语言支持
+	多语言支持就是通过get参数告诉当前的请求使用何种语言
+	1 多语言通过行为Behavior支持
+	2 语言包一共有4种,后定义的要覆盖先定义的(类似配置文件config.php覆盖convertion.php)
+	3 在config.php里面开启多语言支持
+		'LANG_SWITCH_ON' => true,			//默认关闭语言包功能
+		'LABG_AUTO_DETECT' => true,			//自动侦测语言 开启多语言功能后有效
+		'LABG_LIST' => 'zh-cn,zh-tw,en-us',	//允许切换的语言裂变 用 逗号分隔
+		'VAR_LANGUAGE' => 'hl'				//默认语言切换变量
+	4 确保行为Behavior代码执行
+		手动启动CheckLangBehavior行为
+		shop/Common/Conf/tags.php 
+			return array(
+				'app_brgin' => array(
+					'Behavior\ReadHtmlCache',	//读取静态缓存
+					'Behavior\CheckLang',		//启动多语言支持
+				)
+			)
+	5 语言包4个等级
+		www/ThinkPHP/Lang/zh-tw.php 
+		www/shop/Common/Lang/zh-tw.php 
+		www/shop/Admin/Lang/zh-tw.php
+		www/shop/Admin/Lang/zh-tw/maneger.php
+	6 获得语言变量信息
+		L()快捷函数,可以获得全部或制定语言变量
+		使用语言,忽地全部语言,assign()传递语言变量到模板进行具体使用
+		{$Think.language.name}
+	7 每个语言自己对应具体的一个文件
+
+令牌验证  防止表单重复提交
+	1 新建 common/conf/tags.php
+	2 写入代码
+	  <?php
+	  return [
+	  	'view_filter' => ['Behavior\TokenBuildBehavior']
+	  ];
+	3 开启令牌验证 config.php
+	  'TOKEN_ON'	=> true,
+	  'TOKEN_NAME' 	=> '__hash__',
+	  'TOKEN_TYPE' 	=> 'md5',
+	  'TOKEN_RESET' => true,
+	4 视图中使用 验证令牌
+	  <input type='hidden' name='__hash__' /> 
+	5 在控制器中验证表单是否重复提交
+	  if($model->autoCheckToken($_POST)) echo '成功';
+
+
+
+ThinkPHP3.2
+
+├─index.php       入口文件
+├─README.md       README文件
+├─Application     应用目录
+│	├─	Common			公共
+│	│	├─Common			公共
+│	│	└─Conf				配置
+│	│		└─config.php		配置文件
+│	├─	Home			首页
+│	│	├─Common			公共
+│	│	├─Conf				配置
+│	│	├─Controller		控制器
+│	│	├─Model			模型
+│	│	└─View				视图
+│	└─	Runtime			运行时目录
+│  	├─Cache 模板缓存目录
+│  	├─Data 数据缓存目录
+│  	├─Logs 日志文件目录
+│  	└─Temp 临时缓存目录
+├─Public          资源文件目录
+└─ThinkPHP        框架目录
+
+
+
+
+addslashes	转义
+
+
+Nginx 配置
+server {
+
+	server_name tp3.shop.com;
+
+	root /var/www/thinkphp/tp3shop;
+	index index.php;
+
+	location ~ \.php$ {
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+		fastcgi_index index.php;
+		include fastcgi_params;
+	}
+	location / {
+		if (!-e $request_filename) {
+			rewrite  ^(.*)$  /index.php?s=$1  last;
+			break;
+	}
+
+}
+

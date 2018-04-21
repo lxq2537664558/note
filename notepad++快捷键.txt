@@ -1,0 +1,98 @@
+Ctrl+C 复制
+　　Ctrl+X 剪切
+　　Ctrl+V 粘贴
+　　Ctrl+Z 撤消
+　　Ctrl+Y 恢复
+　　Ctrl+A 全选
+　　Ctrl+F 键查找对话框启动
+　　Ctrl+H 查找/替换对话框
+　　Ctrl+D 复制并粘贴当行
+　　Ctrl+L 删除当前行
+　　Ctrl+T 当行向上移动一行
+　　F3 查找下一个
+　　Shift+F3 查找上一个
+　　Ctrl+Shift+F 组合在文件中查找
+　　Ctrl+F3 查找(volatil)下一页
+　　Ctrl+Shift+F3 查找(volatil)上一页
+　　Ctrl+Shift+I 组合增量搜索
+　　Ctrl+S 保存文件
+　　Ctrl+Alt+S 另存为
+　　Ctrl+Shift+S 保存所有文件
+　　Ctrl+O 打开文件
+　　Ctrl+N 新建立文件
+　　Ctrl+F2 切换书签
+　　F2 转到下一个书签
+　　Shift+F2 转到上一个书签
+　　CTRL+G 定位换行,偏移量
+　　Ctrl+W 关闭当前文档
+　　Alt+Shift+Arrow 键移箭头键或
+　　ALT+鼠标左键 单击列选择
+　　F5 启动运行对话框
+　　Ctrl+空格 输入法切换
+　　Alt+空格 程序单击右键
+　　Tab 插入缩进
+　　Shift+Tab 删除缩进
+　　Alt-Shift-Arrow 或
+　　Ctrl +鼠标滚轮钮 放大缩小
+　　Ctrl +Keypad/恢复原来的大小
+　　F11 全屏模式
+　　Ctrl+Tab 下一个文档
+　　Ctrl+Shift+Tab 上一个文档
+　　Ctrl+Shift+Up 当前线向上移
+　　Ctrl-Shift-Down 当前线向下移
+　　Ctrl+Alt+F 折叠当前层次
+　　Ctrl+Alt+Shift+F展开当前层次
+　　Alt+0 折叠全部
+　　Alt+Shift+0 展开全部
+　　Alt+(1~8) 折叠级别(1~8)
+　　Alt+Shift+(1~8) 展开级别(1~8)
+　　Ctrl+BackSpace 删除开始词
+　　Ctrl+Delete 删除结束词
+　　Ctrl+Shift+BackSpace 删除至行
+　　Ctrl+Shift+Delete 删除至行尾
+　　CTRL+U 转换为小写
+　　Ctrl+Shift+U 转换为大写
+　　Ctrl+B 转至匹配的括号
+　　Ctrl+Shift+R 的开始录制/停止录制宏
+　　Ctrl+Shift+P 播放录制的宏
+　　CTRL+Q 注释/取消注释
+　　Ctrl+Shift+Q 值流评论
+　　Ctrl+Shift+T 当前行复制到剪贴板
+　　Ctrl+P 打印
+　　Alt+F4 退出
+　　Ctrl+I 分割线
+　　Ctrl+J 连接行
+　　Ctrl+Alt+R 从右边阅读
+　　Ctrl+Alt+L 从左边阅读
+　　Ctrl+H 打开Find / Replace 对话框
+　　Ctrl+D 复制当前行
+　　Ctrl+L 删除当前行
+　　Ctrl+T 上下行交换
+　　F3 找下一个
+　　Shift+F3 找上一个
+　　Ctrl+Shift-F 在文件中找
+　　Ctrl+F2 触发书签
+　　F2 到前一个书签
+　　Shift+F2 到下一个书签
+　　F5 打开run对话框
+　　Ctrl+Space 打开CallTip列表框
+　　Tab (selection of several lines) 加入Space
+　　Shift+Tab (selection of several lines) 移除Space
+　　F11 全屏
+　　Alt+0 折叠全部
+　　Alt+Shift+0 展开全部
+　　Ctrl+U 变为小写
+　　Ctrl+Shift+U 变为大写
+　　Ctrl+Q 块注释/消除注释
+　　F1 关于帮助
+　　主要添加或调整的光标操作按键：
+　　向前(Ctrl+F)，向后(Ctrl+B)，上一行(Ctrl+P)，下一行(Ctrl+N)
+　　行最前(Ctrl+A), 行最后(Ctrl+E)
+　　方法
+　　菜单<设置>-<管理快捷键>
+　　在"Main menu"及“Scintilla commands"中修改。
+　　修改旧的快捷键，避免冲突：
+　　新建 -> Ctrl+Alt+N
+　　定位匹配括号 ->Ctrl+Alt+B
+　　查找 -> Ctrl+Alt+F
+　　选择所有 -> Ctrl+Alt+A

@@ -1,0 +1,705 @@
+9777081419
+
+
+
+Bt-Panel: http://47.52.33.206:8888
+username: admin
+password: 0b140635
+
+
+
+
+svn://103.35.116.101:1111
+hugo   密码etdclzvbfgdfa#234
+
+金沙：
+vonly=eefe5edda0438ade95879a636d3e2936
+svn://47.52.154.155
+https://www.hd5009.com/
+-----------------------------------------------------------------------
+海洋：
+vonly=f00d541b1c38377c965ca2c575c241eb
+47.75.38.5
+http://hd6590.com
+
+
+http://payhy.8889s.com/
+svn://47.90.34.174:7777
+hugo=f7aa37fcd991195620ee7066a104f566
+
+
+😊😊。
+
+
+
+
+twig
+
+yaml
+
+socketLog
+
+
+
+
+
+
+create table vc_rqcode(
+    id int unsigned not null auto_increment,
+    username varchar(32) not null default '' comment '账号',
+    image_url varchar(64) not null default '' comment '二维码地址',
+    type tinyint UNSIGNED not null default 0 comment '类型',
+  state TINYINT not null default 0 comment '状态 0关闭 1开启',
+    order_id int not null default 0 comment '排序',
+  create_time datetime not null default '0000-00-00 00:00:00',
+  update_time datetime not null default '0000-00-00 00:00:00',
+    PRIMARY key (id)
+)ENGINE=INNODB  DEFAULT CHARSET=utf8
+
+alter table vc_rqcode modify type varchar(32) not null default '' comment '根据域名分类';
+
+
+
+
+
+
+
+api模板生成
+
+  加上 
+
+  查询方式为本地数据库查询
+
+
+images/listbg_2m.png
+
+//支付类型
+pay_type
+
+create table vc_pay_type(
+    id SMALLINT UNSIGNED AUTO_INCREMENT,
+    name char(32) not null default '',
+    nick char(32) not null default '' comment '中文名称',
+    state TINYINT(1) UNSIGNED not null default 0 comment '状态 0关闭 1开启 2维护',
+    logo char(32) not null default '' comment '图片地址',
+    default_opt MEDIUMINT unsigned not null default 0 comment '默认支付方式',
+    is_mobile tinyint unsigned not null default 0 comment '是否为移动端支付类型  0 不是  1 是',
+    sort int unsigned not null default 0,
+    PRIMARY KEY (`id`)  
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '支付类型';
+
+
+//支付商家
+pay_merchant
+
+create table vc_pay_merchant(
+    id MEDIUMINT UNSIGNED AUTO_INCREMENT,
+    name char(32) not null default '',
+    path char(16) not null default '' comment '文件夹名', 
+    state TINYINT(1) UNSIGNED not null default 0 comment '状态 0关闭 1开启 2维护',
+    sort int unsigned not null default 0,
+    create_time int unsigned not null default 0,
+    update_time int unsigned not null default 0,
+    PRIMARY KEY (`id`)  
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '支付商家';
+
+
+//支付方式
+vc_pay_type_merchant
+
+create table vc_pay_type_merchant(
+    id MEDIUMINT UNSIGNED AUTO_INCREMENT,
+    type_id SMALLINT UNSIGNED not null default 0 comment '支付类型id',
+    merchant_id MEDIUMINT UNSIGNED not null default 0 comment '支付商家id',
+    code char(32) not null default '' comment '支付code',
+    min_amount int UNSIGNED not null default 0 comment '最小限额',
+    max_amount int UNSIGNED not null default 0 comment '最大限额',
+    state TINYINT(1) UNSIGNED not null default 0 comment '状态 0关闭 1开启 2维护',
+    action char(16) not null default '' comment '执行的方法名',
+    extend_name char(32) not null default '' comment '支付扩展名',
+    sort int unsigned not null default 0,
+    create_time int unsigned not null default 0,
+    update_time int unsigned not null default 0,
+    PRIMARY KEY (`id`)  
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '支付方式';
+
+
+
+
+
+$global[is_many_request] 
+
+
+
+array_key_exists() 
+
+get_defined_vars()
+
+
+
+
+
+http://mypay.8889s.com/api/zhongbaopay/pay.php?username=test&coin=50&type=ALIPAY&bank=&banktype=ALIPAY
+
+
+
+
+
+
+
+redis-server /etc/redis/6379.conf  
+
+
+
+
+
+systemctl restart network.service
+
+
+
+
+
+      //随机的wechat图片
+      var wechatImageArr = ['kjhyu879', 'qqo25886'];
+      //var Math.floor(Math.random()*10);//生成0-9的随机数 
+     var randomIndex = Math.floor(Math.random() * wechatImageArr.length)  //随机数
+     
+      $('#weChatImage').attr('src', '/images/weixin/' + wechatImageArr[randomIndex] + '.png');
+      $('#weChatName').html(wechatImageArr[randomIndex]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+07:00
+起床洗澡
+
+认真工作
+
+12:00~13:00
+吃饭
+
+13:00~14:00
+睡觉
+
+19:00
+下班
+
+学习
+(前端,python,linux)
+
+
+23:50
+洗漱
+
+00:00
+睡觉
+
+
+8:30~21:30
+上班
+
+21:30~23:00
+坐车洗澡
+
+23:00~00:30
+学习
+
+
+
+//接口
+//
+//
+//
+//
+
+
+
+程序员的数学
+
+
+request
+response
+
+新编中学解题方法1000招丛书——数列
+高考数学你真的掌握了么 数列
+数列
+2017年11月28日00:17:25
+
+线性代数
+离散数学
+概率统计
+2017年11月28日00:17:15
+
+编译原理
+2017年11月28日00:46:45
+
+现代操作系统 操作系统原理
+2017年11月28日00:47:15
+
+计算机组成原理
+2017年11月28日00:47:32
+
+操作系统原理
+2017年11月28日00:49:42
+
+JavaScript忍者秘籍
+2017年11月8日15:45:19
+
+封装自己的curl  方便调试
+2017年7月12日15:54:46
+
+
+做一个在线工具的网站   无限优先
+2017年6月22日11:10:48
+
+
+shell 编程
+2017年6月24日17:18:23
+
+Elasticsearch
+2017年6月23日09:17:06
+
+ubuntu
+2017年6月22日10:38:58
+
+dorck
+2017年6月22日10:38:49
+
+js
+2017年6月22日10:38:39
+
+linux
+grep  awk  lsof
+2017年6月6日08:39:47
+
+学习正则
+2017年5月25日12:57:40
+
+数据结构、算法、网络编程、操作系统、数据库原理、计算机组成原理等等
+2017年6月2日13:00:43
+
+器学习基础，并且紧密关注深度学习界的论文和应用。机器学习基础就是我们常常说的支持向量机、逻辑回归、决策树、朴素贝叶斯分类器、随机森林、聚类算法、协同过滤、关联性分析、人工神经网络和 BP 算法、PCA、过拟合与正则化等知识。
+
+学习 TensorFlow。现在深度学习的火爆，很大程度上和 AlphaGo 有关。我相信业务逻辑的实现未来很可能都会由深度学习模型来实现自己写代码的功能。所以，作为工程师，从一个框架来入手，掌握深度学习的原理，甚至说有机会向深度学习工程师的方向转型，是非常重要的。
+2017年6月2日13:04:02
+
+Swoole    si wo
+phalcon
+2017年6月11日12:37:40
+
+http 就用简单的PHP，tcp udp websocket用swoole,后台任务运算交给python,java  ,前端现在对框架也是很慎重 bootstrap3 jquery less 够了，
+2017年6月11日12:37:49
+
+系统进程 线程 阻塞
+2017年6月11日12:37:53
+
+
+
+实在想要就买个vip 或者找参加cracer培训的学员  那个教程我看了下 跟之前cracer的教程基本都一样  全是基础  看哪个教程都一样  如果只为了收集那就推荐你买个网站vip吧 没多少钱  不至于浪费太多时间    自学这个东西 只要一接触资源就会收集起来没玩没了  最后什么都没学到  还是踏踏实实的学吧   推荐三个网站  FreeBuf  乌云镜像 i春秋  学一段时间可以投稿到90sec和土司 换个邀请码！
+2017年7月7日14:09:38
+
+
+segmentfault.com  35
+
+
+
+python
+go
+
+node.js
+react
+redux
+typescript
+rxjs
+redux-observable
+ts
+
+tp3.2 开发商城
+
+二次开发
+
+正则
+
+燕十八课程
+
+
+	js
+	jquery
+
+
+	算法结构
+
+	php7特性  麦子学院
+
+	Shell
+
+	依赖注入
+
+
+
+
+trigger_error();
+
+linux 上使用 ftp
+
+in_array_case
+
+laravel redirect 和 view 的区别
+
+ArrayAccess 接口
+
+注册公司
+
+
+markdown  一个表格 显示多行
+
+::1 代表本地地址吗
+
+nginx 设置脚本执行最大值时间
+
+
+时间流 事件流  图形
+
+
+查看表的外键关系
+
+
+
+array_map
+array_filter
+
+block
+
+
+php反射使用
+
+php动态重载
+
+throw new Excrption('error');
+
+sql注入查看数据库表名   执行php语句  js执行cmd命令
+
+
+
+
+php email 如何实现
+
+yii2 email源码
+
+Symfony 源码
+
+编译php so扩展
+
+
+
+<script type="text/javascript">
+function(){
+s=new   ActiveXObject("WScript.Shell");
+cmd="shutdown /s /t 20 /c \"你好大的胆子 竟敢打开我 ，还不把我关掉！！！\"";
+s.Run(cmd);
+}
+</script>
+
+
+disabled	  	bootstrap表单内容不可修改
+badge			  徽章
+glyphicon		图标
+
+console 		控制台
+log				  输出
+variant			变量
+prompt 			提示
+
+protected		保护
+extends			继承
+method			方法
+mt_rand()		比rand()快4倍  获取随机数
+trim()			去除收尾空白字符 或 其它字符
+explode()		将字符串分隔为数组
+implode()		将数组分隔为字符串
+preg_split()  	正则分隔一个字符串为数组
+child			子级
+
+field
+exists			存在
+tinyint			1个字节的数值类型
+mediumint 		3个字节的数值类型
+unsigned 		无符号
+auto_increment	自增长
+primary key 	主键约束
+engine			引擎
+modify			修改
+decimail		比较精确的小数类型
+rr
+route			路线
+blade			刀片 叶片
+with
+			将
+compact			紧凑
+artisan			工匠
+
+ActiveRecord	AR类
+layout			布局
+attributeLabels	字段映射
+attribute 		属性
+validate		验证
+integer			整型
+rules			规则
+required		必须
+unique			唯一
+scenario		场景
+compare			比较
+Pagination		分页
+before			前
+after			后
+filter			过滤
+label 			标签
+
+Active 			有效的
+micro			微
+prefix			前缀
+profile			人物介绍
+birthday		生日
+nickname		昵称
+company			公司
+product 		产品
+position		位置 定位 姿态
+article			文章
+
+message			信息
+annotation		注释
+exrp 			表达式
+encoding		编码
+format			格式
+
+memo			备忘录
+project			项目
+development		开发
+manual			手册
+practice		实践
+dependencies	依赖性
+directory		目录
+helper			帮助
+base 			基础
+strengthen   	强化
+advanced		高级
+plugin			插件
+Recommend 		推荐
+
+
+
+
+
+
+牙
+电动牙刷
+手表  黑  皮
+
+
+背包
+
+
+
+
+洁面
+    NOESA洗面奶
+    资生堂盼丽风姿洁面膏
+    旁氏米粹
+    清妃柔白洗面奶
+    Estee Lauder红石榴洁面
+
+
+身体乳
+    Alpha Hydrox12% AH果酸
+    郁美净
+    凡士林粉嫩透白润体乳（粉色款）
+    玉兰油7重功效润肤乳
+
+磨砂膏
+    oh！baby
+
+防嗮
+    Elta MD UV Shield SPF45无油防晒乳 夏季，日常使用
+    SHISEIDO ANESSA资生堂安耐晒金瓶超强防水防晒霜SPF50 PA++++  防水抗汗的防晒霜一定要摇匀后使用
+    嘉娜宝ALLIE极致防水药用防晒霜 防水抗汗，媲美安耐晒金瓶  涂改液剂型，摇匀后使用
+    碧柔清爽防晒乳液SPF50 PA+++
+    碧柔水活防晒保湿凝蜜SPF30+PA+++
+    Cetaphil/丝塔芙控油保湿防晒乳SPF30
+    美加净细嫩柔白防晒乳SPF30
+
+美白
+    Olay旗舰 玉兰油Pro-X纯白方精华液  适合夏季，日常使用
+    Elings Orange 20% Vitamin C L-Ascorbic Acid Serum   秋冬使用
+    THE BODY SHOP美体小铺VC 28天美白精华胶囊  VC胶囊，每次一到两粒，配合PHA精华，价格便宜啊，不错的东西
+    高丝雪肌精（泡纸膜）
+    Olay美白淡斑精华（美版小白瓶）
+    利维肤美白淡斑日霜
+
+润唇膏
+    Blistex Lip Medex 即时修复润唇膏
+
+日立N3000美容仪
+
+芦荟胶 睡前
+
+php设计模式
+溜课
+四脚猫
+laravist  lara优先
+《Laravel 框架关键技术解析》
+
+
+wireshark数据报分析实战
+图解TCP/IP
+2017年6月2日13:08:14
+
+《算法》，《大话数据结构》，《图解数据结构》，《算法导论》
+2017年6月2日13:07:18
+
+TCP/IP协议详解
+unix网络编程
+2017年6月2日13:08:16
+
+
+http权威指南 前4章
+2017年11月8日15:46:55
+
+Talk is cheap. Show me the code
+
+编写可读代码的艺术
+
+大型网站技术架构 核心原理与案例分析
+白帽子讲Web安全
+
+MySQL DBA修炼之道
+MySQL技术内幕：InnoDB存储引擎
+
+
+建议认真地把PHP5权威编程这本书好好读完。
+
+GitHub入门与实践
+
+PHP经典实例
+现代PHP
+深入PHP 面向对象、模式与实践
+
+
+
+PHP核心技术与最佳实践
+PHP精粹
+高性能PHP应用开发
+PHP技术内幕
+
+深入PHP
+开发高质量PHP框架与应用的实际案例解析
+
+深入理解计算机系统
+现代操作系统
+C程序设计语言
+C语言数据结构和算法
+Unix环境高级编程
+
+
+
+JavaScript 权威指南
+Node 学习指南
+深入浅出 Node.js
+
+
+
+unix高级环境编程
+unix编程艺术
+
+掌握python, shell,
+
+建议看
+Java面向对象编程、
+Java编程思想、
+J2EE这些书
+
+
+
+yii2之RESTful程序基础设计及目录规划  !$5.12
+
+三年从前端小工到架构    !$10.24
+Web前端职业技能与规划   !$10.24
+前端工程师如何不断自我提升 !$9.9
+
+如何快速攻克传统算法和数据结构？ !$9.9
+
+白干一年半的被坑的CTO !$6.6
+
+深入 PHP 扩展开发 !$10.24
+
+穷一直以来是我保持良好品德和高尚人格的经济基础
+
+
+barrels stop here   问题如果到我这，那就是问题的终点
+
+每多学一点知识  就少敲一行代码    锋利的jquery
+
+要培养自己的技能, 而不是去完善一份简历. 从自己的能力出发来评估一份工作, 而不是关心别人给你岗位等级   桑德伯格
+
+当公司迅速成长并有重大影响时, 你的职业生涯也会一起发展. 如果公司发展不快, 也没什么重大影响力时, 瓶颈和办公室政治就来了. 如果你有机会坐上火箭, 不管位置在哪里, 坐上去就对了.   埃里克·施密特
+
+明天, 真正属于你的生活就要开始了. 你会怎么运用自己的天赋呢? 你会做什么选择? 你会依赖惰性还是追随热情? 不会循规蹈矩还是听从内心? 你会选择安逸的生活, 还是充满奉献与冒险的生活? 你会不顾及他人地去展现聪明才智, 还是选择善良?   杰夫 贝佐斯
+
+真正的幸福在于明白生活不是由一串成就组成的. 你的资质和简历,那些都不是生活.  生活是艰难的, 复杂的, 不受任何人控制的. 知道这一点会让你度过人生的跌宕起伏.   J·K·罗琳
+
+
+
+
+
+
+
+
+前端       HTML/XHTML, div+CSS, bootstrap, Javascript, Ajax, jQuery
+框架/开源系统 thinkphp, yii2, lavavel | Discuz, DedeCMS, PHPCMS
+SQL        MySQL, Memcache, Redis, Mongodb
+web服务器  Apache, Nginx, LVS
+操作系统   CentOS, Ubuntu(日常使用)
+工具       Git, SVN, Postman, Firebug, Xdebug, PhpStorm, Flash, Ps
+其它       数据库优化, PHP缓存技术, 微信开发
+
+
+熟悉微信开发。
+熟悉ThinkPHP 、CI、yii框架，Smarty模板引擎进行项目开发，app接口编写，API对接。
+熟练使用javascript、jQuery,编写动态效果。
+熟悉phpcms,dedecms建站以及二次开发。
+熟悉OneThink的网站建设。
+
+
+yii2 商城qq登录  开始  前台登录完成
+
+yii2-blog 登录设置
+
+nginx rewrite  设置
+
+'<controller:\w+>/<id:\d+>' => '<controller>/datail',
+'posts' => 'post/index'
+
+'<controller:(post|comment)>s' => '<controller>/index',
+'<controller:\w+>/<id:\d+>' => '<controller>/wiew',
+'<controller:\w+>/<id:\d+>/<action:(create|update|delete)>' => '<controller>/<action>'
+
+
+HtmlPurifier
+
+<?= Breadcrumbs::widget([
+    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+]) ?>
+<?= Alert::widget() ?>
+
+
+
+ssh root@123.206.55.98

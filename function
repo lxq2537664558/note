@@ -1,0 +1,1138 @@
+php
+
+function format_date( $time )
+{
+    $t = abs( $_SERVER['REQUEST_TIME'] - $time );
+    $f = array(
+            '31536000' => '年',
+            '2592000'  => '个月',
+            '604800'   => '星期',
+            '86400'    => '天',
+            '3600'     => '小时',
+            '60'       => '分钟',
+            '1'        => '秒'
+        );
+    foreach ($f as $k => $v) {
+        if( 0 != $c = floor( $t/ (int) $k ) )
+            return $c . $v . '前';
+    }
+}
+
+function present_date( $time )
+{
+    $t = abs( $_SERVER['REQUEST_TIME'] - $time );
+    $f = array(
+            '31536000' => '年',
+            '2592000'  => '个月',
+            '604800'   => '星期',
+            '86400'    => '天',
+            '3600'     => '小时',
+            '60'       => '分钟',
+            '1'        => '秒'
+        );
+    foreach ($f as $k => $v) {
+        if( 0 != $c = floor( $t/ (int) $k ) )
+            return $c . $v ;
+    }
+}
+
+//判断一个url是否有效
+public function url_exists($url) {
+    $hdrs = @get_headers($url);
+    return is_array($hdrs) ? preg_match('/^HTTP\\/\\d+\\.\\d+\\s+2\\d\\d\\s+.*$/',$hdrs[0]) : false;
+}
+
+<?php
+/******************************************************************************************
+| 字符串函数                                                                               |
+*******************************************************************************************/
+    /**
+     * 接口成功生成json数据格式
+     * @param integer|$code 状态码
+     * @param string|$message 提示信息
+     * @param array|$data 数据
+     * @return string
+     * @author zxr <15764271210@163.com>
+     */
+    function success($code, $data =[]){
+        //状态码不是数字返回空
+        if(!is_numeric($code)) {
+            return '';
+        }
+         $result = [
+            'code' => $code,
+            'data' => $data
+         ];
+        return json_encode($result);
+    }
+
+    /**
+     * 接口失败生成json数据格式
+     * @param integer|$code 状态码
+     * @param string|$message 提示信息
+     * @param array|$data 数据
+     * @return string
+     * @author zxr <15764271210@163.com>
+     */
+    function error_msg($code, $message){
+        //状态码不是数字返回空
+        if(!is_numeric($code)) {
+            return '';
+        }
+         $result = [
+                    'code' => $code,
+                    'message' => $message
+                ];
+        return json_encode($result);
+    }
+
+    /**
+     * 字符串截取，支持中文和其他编码
+     * @static
+     * @access public
+     * @param string $str 需要转换的字符串
+     * @param string $start 开始位置
+     * @param string $length 截取长度
+     * @param string $charset 编码格式
+     * @param string $suffix 截断显示字符
+     * @return string
+     */
+    function msubstr($str, $start=0, $length, $charset="utf-8", $suffix=true) {
+        if(function_exists("mb_substr"))
+            $slice = mb_substr($str, $start, $length, $charset);
+        elseif(function_exists('iconv_substr')) {
+            $slice = iconv_substr($str,$start,$length,$charset);
+            if(false === $slice) {
+                $slice = '';
+            }
+        }else{
+            $re['utf-8']   = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xff][\x80-\xbf]{3}/";
+            $re['gb2312'] = "/[\x01-\x7f]|[\xb0-\xf7][\xa0-\xfe]/";
+            $re['gbk']    = "/[\x01-\x7f]|[\x81-\xfe][\x40-\xfe]/";
+            $re['big5']   = "/[\x01-\x7f]|[\x81-\xfe]([\x40-\x7e]|\xa1-\xfe])/";
+            preg_match_all($re[$charset], $str, $match);
+            $slice = join("",array_slice($match[0], $start, $length));
+        }
+        return $suffix ? $slice.'...' : $slice;
+    }
+
+    /**
+     * 根据身份证号获取年龄
+     * @param string|$id
+     * @return float|string
+     * @author zxr <15764271210@163.com>
+     */
+    function get_age_by_id($id)
+    {
+        //过了这年的生日才算多了1周岁
+        if(empty($id)) {
+            return 0;
+        }
+        if (strlen($id) != 18) {
+            return 0;
+        }
+        $date = strtotime(substr($id,6,8));
+        //获得出生年月日的时间戳
+        $today=strtotime('today');
+        //获得今日的时间戳
+        $diff = floor(($today-$date)/86400/365);
+        //得到两个日期相差的大体年数
+        //strtotime加上这个年数后得到那日的时间戳后与今日的时间戳相比
+        $age = strtotime(substr($id,6,8).' +'.$diff.'years')>$today?($diff+1):$diff;
+        return (int)$age;
+    }
+
+    /**
+     * 获取几小时前、几分钟前 ...
+     * @param int $time
+     * @return string
+     * @author zxr <15764271210@163.com>
+     */
+    function format_date( $time ){
+        $t = abs( $_SERVER['REQUEST_TIME'] - $time );
+        $f = array(
+                '31536000' => '年',
+                '2592000'  => '个月',
+                '604800'   => '星期',
+                '86400'    => '天',
+                '3600'     => '小时',
+                '60'       => '分钟',
+                '1'        => '秒'
+            );
+        foreach ($f as $k => $v) {
+            if( 0 != $c = floor( $t/ (int) $k ) )
+                return $c . $v . '前';
+        }
+    }
+
+    /**
+     * 验证某个字符串是否包含另一个字符串
+     * @param string $string
+     * @return string
+     * @author zxr <15764271210@163.com>
+     */
+    function checkstr( $needle,  $string ){
+        if( empty($needle) || empty($string) )
+            return false;
+        $tmparray = explode( $needle , $string );
+        if(count($tmparray)>1){
+            return $tmparray;
+        } else{
+            return false;
+        }
+    }
+
+/******************************************************************************************
+| 数组函数                                                                                |
+*******************************************************************************************/
+    /**
+     * 多维数组转为一条拼接的字符串
+     * @param array    $arr        数组
+     * @param string   $glue   切割字符
+     * @param string   $field  指定键名
+     * @author zxr <15764271210@163.com>
+     *
+     */
+    function arrTostr($arr, $field='',$glue = ',',$return='string'){
+        $str = null;
+        if( empty( $arr ) ){
+            return '';
+        }
+        foreach ($arr as $key => $value) {
+            $str = is_array( $value["{$field}"] ) ? arrTostr( $value["{$field}"], $field, $glue  ) : $value["{$field}"] . $glue . $str;
+        }
+        $str = rtrim($str, $glue);      //抛出最后一个分割符
+        if( $return == 'string' ){
+            return $str;
+        }else{
+            return str2arr($str,$glue);
+        }
+    }
+
+    /**
+     * 把返回的数据集转换成Tree
+     * @param array $list 要转换的数据集
+     * @param string $pid parent标记字段
+     * @return array
+     * @author zxr <15764271210@163.com>
+     */
+    function list_to_tree($list, $pk='id', $pid = 'pid', $child = '_child', $root = 0) {
+        // 创建Tree
+        $tree = array();
+        if(is_array($list)) {
+            $refer = array();
+            foreach ($list as $key => $data) {
+                $refer[$data[$pk]] =& $list[$key];
+            }
+            foreach ($list as $key => $data) {
+                // 判断是否存在parent
+                $parentId =  $data[$pid];
+                if ($root == $parentId) {
+                    $tree[] =& $list[$key];
+                }else{
+                    if (isset($refer[$parentId])) {
+                        $parent =& $refer[$parentId];
+                        $parent[$child][] =& $list[$key];
+                    }
+                }
+            }
+        }
+        return $tree;
+    }
+
+    /**
+     * 将list_to_tree的树还原成列表
+     * @param  array $tree  原来的树
+     * @param  string $child 子节点的键
+     * @param  string $order 排序显示的键，一般是主键 升序排列
+     * @param  array  $list  过渡用的中间数组，
+     * @return array        返回排过序的列表数组
+     */
+    function tree_to_list($tree, $child = '_child', $order='id', &$list = array()){
+        if(is_array($tree)) {
+            $refer = array();
+            foreach ($tree as $key => $value) {
+                $reffer = $value;
+                if(isset($reffer[$child])){
+                    unset($reffer[$child]);
+                    tree_to_list($value[$child], $child, $order, $list);
+                }
+                $list[] = $reffer;
+            }
+            $list = list_sort_by($list, $order, $sortby='asc');
+        }
+        return $list;
+    }
+
+    /**
+     * 对查询结果集进行排序
+     * @param array $list 查询结果
+     * @param string $field 排序的字段名
+     * @param array $sortby 排序类型 asc正向排序 desc逆向排序 nat自然排序
+     * @return array
+     */
+    function list_sort_by($list, $field, $sortby='asc') {
+        if(is_array($list)){
+            $refer = $resultSet = array();
+            foreach ($list as $i => $data)
+                $refer[$i] = &$data[$field];
+            switch ($sortby) {
+                case 'asc': // 正向排序
+                    asort($refer);
+                    break;
+                case 'desc':// 逆向排序
+                    arsort($refer);
+                    break;
+                case 'nat': // 自然排序
+                    natcasesort($refer);
+                    break;
+            }
+            foreach ( $refer as $key=> $val)
+                $resultSet[] = &$list[$key];
+            return $resultSet;
+        }
+        return false;
+    }
+
+    /**
+     * 字符串过滤
+     * @param string $string
+     * @return string
+     * @author zxr <15764271210@163.com>
+     */
+    function f_safe_replace($string) {
+
+        $string = htmlspecialchars_decode( $string );
+
+        $string = str_replace('&lt;','<',$string);
+        $string = str_replace('&gt;','>',$string);
+        $string = str_replace('&quot;','"',$string);
+        $string = str_replace('quot;','"',$string);
+        $string = str_replace('\\','',$string);
+
+        return $string;
+    }
+
+    /**
+     *  此方法为公共方法用来删除某个文件夹下的所有文件(谨慎使用)
+     * @param   $path为文件的路径
+     * @param   $fileName文件夹名称
+     * @author zxr <15764271210@163.com>
+     */
+    function rmFile($path,$fileName){
+        //去除空格
+        $path = preg_replace('/(\/){2,}|{\\\}{1,}/','/',$path);
+        //得到完整目录
+        $path.= $fileName;
+        //判断此文件是否为一个文件目录
+        if(is_dir($path)){
+            //打开文件
+            if ($dh = opendir($path)){
+                //遍历文件目录名称
+               while (($file = readdir($dh)) != false){
+                   //逐一进行删除
+                   unlink($path.'\\'.$file);
+                }
+                   //关闭文件
+                closedir($dh);
+            }
+        }
+    }
+
+    /**
+     * 把一个二维数组的数据 转换为 三维数组  有规则型的
+     * @param $list 索引数组
+     * @param $listnum 每组条数
+     * @param $groupnum 有多少组
+     * @author zxr <15764271210@163.com>
+     */
+    function setDataGroup( $list = array(), $listnum = 6 , $groupnum = 10 ){
+        if( empty($list) )
+            return $list;
+        $list = array_values($list);
+        for( $i = 1 ; $i <= $groupnum ; $i++ ){
+            foreach ($list as $key => $value) {
+                if( $i * $listnum > $key && $key >=  ($i-1) * $listnum ){
+                    $data[$i][] = $value;
+                }
+            }
+        }
+        return $data;
+    }
+
+    /**
+     * 对象转数组
+     * @param data|$data object数据
+     * @return array
+     * @author zxr <15764271210@163.com>
+     */
+    function objToArray($array){
+        if(is_object($array)) {
+            $array = (array)$array;
+        }
+        if(is_array($array)) {
+            foreach($array as $key=>$value) {
+                $array[$key] = objToArray($value);
+            }
+        }
+        return $array;
+    }
+
+    /**
+     * 数组转对象
+     * @param data|$data array数据
+     * @return array
+     * @author zxr <15764271210@163.com>
+     */
+    function ArrayToObject(&$object){
+        if (is_object($object)) {
+            $arr = (array)($object);
+        } else {
+            $arr = &$object;
+        }
+        if (is_array($arr)) {
+            foreach($arr as $varName => $varValue){
+                $arr[$varName] = $this->object2array($varValue);
+            }
+        }
+        return $arr;
+    }
+
+    /*
+     * XML转数组
+     * @param data|$data XML数据
+     * @return array
+     * @author zxr <15764271210@163.com>*/
+
+    function xmlToAarray($xml){
+         //禁止引用外部xml实体
+        libxml_disable_entity_loader(true);
+        $data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+        return $data;
+    }
+
+    /*
+     * XML转数组
+     * @param data|$data XML数据
+     * @return array
+     * @author zxr <15764271210@163.com>
+     */
+    function arrayToXml($arr){
+        $xml = "<xml>";
+        foreach ($arr as $key=>$val)
+        {
+            if (is_numeric($val)){
+                $xml.="<".$key.">".$val."</".$key.">";
+            }else{
+                 $xml.="<".$key."><![CDATA[".$val."]]></".$key.">";
+            }
+        }
+        $xml.="</xml>";
+        return $xml;
+    }
+
+
+/******************************************************************************************
+| 正则函数                                                                                |
+*******************************************************************************************/
+    /**
+     * 验证正则
+     * @param $str  待验证的字符串
+     * @param $exp  正则表达式
+     * @author zxr <15764271210@163.com>
+     */
+    function checkReg( $str , $exp ){
+        if( $str == '' || $str == null )
+            return false;
+        if( preg_match( $exp,$str ) ){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     *  验证电话号码
+     *  @param  $str
+     *  @return true 或 false
+     *  @author zxr <15764271210@163.com>
+     */
+    function checkMobile( $str ){
+        $exp = '/^(1)[0-9]{10}$/';
+        return checkReg( $str , $exp );
+    }
+
+    /**
+     *  验证数字
+     *  @param  $str
+     *  @return true 或 false
+     *  @author zxr <15764271210@163.com>
+     */
+    function checkNumber( $str ){
+        $exp = '/^[0-9.-]+$/';
+        return checkReg( $str , $exp );
+    }
+
+
+    /**
+     *  验证整数
+     *  @param  $str
+     *  @return true 或 false
+     *  @author zxr <15764271210@163.com>
+     */
+    function checkInteger( $str ){
+        $exp = '/^[0-9-]+$/';
+        return checkReg( $str , $exp );
+    }
+
+    /**
+     *  验证字母
+     *  @param  $str
+     *  @return true 或 false
+     *  @author zxr <15764271210@163.com>
+     */
+    function checkLetter( $str ){
+        $exp = '/^[a-z]+$/i';
+        return checkReg( $str , $exp );
+    }
+
+    /**
+     *  验证邮箱
+     *  @param  $str
+     *  @return true 或 false
+     *  @author zxr <15764271210@163.com>
+     */
+    function checkEmail( $str ){
+        $exp = '/^[\w\-\.]+@[\w\-\.]+(\.\w+)+$/';
+        return checkReg( $str , $exp );
+    }
+
+    /**
+     *  验证QQ号码
+     *  @param  $str
+     *  @return true 或 false
+     *  @author zxr <15764271210@163.com>
+     */
+    function checkQq( $str ){
+        $exp = '/^[0-9]{5,20}$/';
+        return checkReg( $str , $exp );
+    }
+
+    /**
+     *  验证是否是超级链接 即外部链接 前缀是 http://
+     *  @param  $str
+     *  @return true 或 false
+     *  @author zxr <15764271210@163.com>
+     */
+    function checkHyperLink ( $str ){
+        $exp = '/^http:\/\//';
+        return checkReg( $str , $exp );
+    }
+
+    /**
+     *  验证固定电话 或  座机号码
+     *  @param  $str
+     *  @return true 或 false
+     *  @author zxr <15764271210@163.com>
+     */
+    function checkFixedTelephone( $str ){
+        $exp = '/^[0-9-]{6,13}$/';
+        return checkReg( $str , $exp );
+    }
+
+    /**
+     *  验证邮编号码
+     *  @param  $str
+     *  @return true 或 false
+     *  @author zxr <15764271210@163.com>
+     */
+    function checkZipCode( $str ){
+        $exp = '/^[0-9-]{6,13}$/';
+        return checkReg( $str , $exp );
+    }
+
+    /**
+     *  验证 数字 字母 下划线的 组合
+     *  @param  $str
+     *  @return true 或 false
+     *  @author zxr <15764271210@163.com>
+     */
+    function checkWordNumber( $str ){
+        $exp = '/^[0-9a-zA-Z\_]*$/';
+        return checkReg( $str , $exp );
+    }
+
+    /**
+     *  汉字、数字、字母、下划线 不能以 下划线  2 - 16位
+     *  @param  $str
+     *  @return true 或 false
+     *  @author zxr <15764271210@163.com>
+     */
+    function checkWordNumberChar( $str ){
+        $exp = '/^[a-zA-Z0-9\x{4e00}-\x{9fa5}][\x{4e00}-\x{9fa5}\w]{1,16}$/u';
+        return checkReg( $str , $exp );
+    }
+
+
+    function isMobile()
+    {
+        // 如果有HTTP_X_WAP_PROFILE则一定是移动设备
+        if(isset ($_SERVER['HTTP_X_WAP_PROFILE']))
+            return true;
+
+        //此条摘自TPM智能切换模板引擎，适合TPM开发
+        if(isset ($_SERVER['HTTP_CLIENT']) && 'PhoneClient' == $_SERVER['HTTP_CLIENT'])
+            return true;
+        //如果via信息含有wap则一定是移动设备,部分服务商会屏蔽该信息
+        if(isset ($_SERVER['HTTP_VIA']))
+            //找不到为flase,否则为true
+            return stristr($_SERVER['HTTP_VIA'], 'wap') ? true : false;
+        //判断手机发送的客户端标志,兼容性有待提高
+        if(isset ($_SERVER['HTTP_USER_AGENT'])){
+            $clientkeywords = array(
+                'nokia', 'sony', 'ericsson', 'mot', 'samsung', 'htc', 'sgh', 'lg', 'sharp', 'sie-', 'philips', 'panasonic', 'alcatel', 'lenovo', 'iphone', 'ipod', 'blackberry', 'meizu', 'android', 'netfront', 'symbian', 'ucweb', 'windowsce', 'palm', 'operamini', 'operamobi', 'openwave', 'nexusone', 'cldc', 'midp', 'wap', 'mobile'
+            );
+            //从HTTP_USER_AGENT中查找手机浏览器的关键字
+            if(preg_match("/(" . implode('|', $clientkeywords) . ")/i", strtolower($_SERVER['HTTP_USER_AGENT']))){
+                return true;
+            }
+        }
+        //协议法，因为有可能不准确，放到最后判断
+        if(isset ($_SERVER['HTTP_ACCEPT'])){
+            // 如果只支持wml并且不支持html那一定是移动设备
+            // 如果支持wml和html但是wml在html之前则是移动设备
+            if((strpos($_SERVER['HTTP_ACCEPT'], 'vnd.wap.wml') !== false) && (strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false || (strpos($_SERVER['HTTP_ACCEPT'], 'vnd.wap.wml') < strpos($_SERVER['HTTP_ACCEPT'], 'text/html')))){
+                return true;
+            }
+        }
+        return false;
+    }
+/******************************************************************************************
+| 其它函数                                                                                |
+*******************************************************************************************/
+curl post
+    $ch = curl_init();//初始化curl
+    curl_setopt($ch, CURLOPT_URL,$urlString);//抓取指定网页
+    curl_setopt($ch, CURLOPT_HEADER, 0);//设置header
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//要求结果为字符串且输出到屏幕上
+    curl_setopt($ch, CURLOPT_POST, 1);//post提交方式
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $dataArray);
+    $data = curl_exec($ch);//运行curl
+    curl_close($ch);
+    return $data;
+
+curl post json数据发送
+    $headers = array("Content-type: application/json;charset='utf-8'",
+        "Accept: application/json",
+        "Cache-Control: no-cache",
+        "Pragma: no-cache"
+    );
+
+    $dataJsonString = json_encode($dataArray);
+
+    $ch = curl_init();
+    curl_setopt($ch,CURLOPT_URL,$urlString);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, ($dataJsonString));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    $response=curl_exec($ch);
+    curl_close($ch);
+
+
+
+
+js
+
+// 合并多个空白为一个空白
+String.prototype.ResetBlank = function() {    //对字符串扩展
+  var regEx = /\s+/g;
+  return this.replace(regEx, ' ');
+};
+
+window.onload = function()
+{
+  var str = "你   在他想还好吗?";
+  alert(str);
+  str = str.ResetBlank();    //这样就能够调用了，跟C#的很像吧!
+  alert(str);
+}
+
+// 清除两边的空格
+String.prototype.trim = function() {
+  return this.replace(/(^\s*)|(\s*$)/g, '');
+};
+// 合并多个空白为一个空白
+String.prototype.ResetBlank = function() {
+  var regEx = /\s+/g;
+  return this.replace(regEx, ' ');
+};
+
+// 保留数字
+String.prototype.GetNum = function() {
+  var regEx = /[^\d]/g;
+  return this.replace(regEx, '');
+};
+
+// 保留中文
+String.prototype.GetCN = function() {
+  var regEx = /[^\u4e00-\u9fa5\uf900-\ufa2d]/g;
+  return this.replace(regEx, '');
+};
+
+// String转化为Number
+String.prototype.ToInt = function() {
+  return isNaN(parseInt(this)) ? this.toString() : parseInt(this);
+};
+
+// 得到字节长度
+String.prototype.GetLen = function() {
+  var regEx = /^[\u4e00-\u9fa5\uf900-\ufa2d]+$/;
+  if (regEx.test(this)) {
+    return this.length * 2;
+  } else {
+    var oMatches = this.match(/[\x00-\xff]/g);
+    var oLength = this.length * 2 - oMatches.length;
+    return oLength;
+  }
+};
+
+// 获取文件全名
+String.prototype.GetFileName = function() {
+  var regEx = /^.*\/([^\/\?]*).*$/;
+  return this.replace(regEx, '$1');
+};
+
+// 获取文件扩展名
+String.prototype.GetExtensionName = function() {
+  var regEx = /^.*\/[^\/]*(\.[^\.\?]*).*$/;
+  return this.replace(regEx, '$1');
+};
+
+//替换所有
+String.prototype.replaceAll = function(reallyDo, replaceWith, ignoreCase) {
+  if (!RegExp.prototype.isPrototypeOf(reallyDo)) {
+    return this.replace(new RegExp(reallyDo, (ignoreCase ? "gi" : "g")), replaceWith);
+  } else {
+    return this.replace(reallyDo, replaceWith);
+  }
+};
+//格式化字符串 add By 刘景宁 2010-12-09
+String.Format = function() {
+  if (arguments.length == 0) {
+    return '';
+  }
+
+  if (arguments.length == 1) {
+    return arguments[0];
+  }
+
+  var reg = /{(\d+)?}/g;
+  var args = arguments;
+  var result = arguments[0].replace(reg, function($0, $1) {
+    return args[parseInt($1) + 1];
+  });
+  return result;
+};
+
+// 数字补零
+Number.prototype.LenWithZero = function(oCount) {
+  var strText = this.toString();
+  while (strText.length < oCount) {
+    strText = '0' + strText;
+  }
+  return strText;
+};
+
+// Unicode还原
+Number.prototype.ChrW = function() {
+  return String.fromCharCode(this);
+};
+
+// 数字数组由小到大排序
+Array.prototype.Min2Max = function() {
+  var oValue;
+  for (var i = 0; i < this.length; i++) {
+    for (var j = 0; j <= i; j++) {
+      if (this[i] < this[j]) {
+        oValue = this[i];
+        this[i] = this[j];
+        this[j] = oValue;
+      }
+    }
+  }
+  return this;
+};
+
+// 数字数组由大到小排序
+Array.prototype.Max2Min = function() {
+  var oValue;
+  for (var i = 0; i < this.length; i++) {
+    for (var j = 0; j <= i; j++) {
+      if (this[i] > this[j]) {
+        oValue = this[i];
+        this[i] = this[j];
+        this[j] = oValue;
+      }
+    }
+  }
+  return this;
+};
+
+// 获得数字数组中最大项
+Array.prototype.GetMax = function() {
+  var oValue = 0;
+  for (var i = 0; i < this.length; i++) {
+    if (this[i] > oValue) {
+      oValue = this[i];
+    }
+  }
+  return oValue;
+};
+
+// 获得数字数组中最小项
+Array.prototype.GetMin = function() {
+  var oValue = 0;
+  for (var i = 0; i < this.length; i++) {
+    if (this[i] < oValue) {
+      oValue = this[i];
+    }
+  }
+  return oValue;
+};
+
+// 获取当前时间的中文形式
+Date.prototype.GetCNDate = function() {
+  var oDateText = '';
+  oDateText += this.getFullYear().LenWithZero(4) + new Number(24180).ChrW();
+  oDateText += this.getMonth().LenWithZero(2) + new Number(26376).ChrW();
+  oDateText += this.getDate().LenWithZero(2) + new Number(26085).ChrW();
+  oDateText += this.getHours().LenWithZero(2) + new Number(26102).ChrW();
+  oDateText += this.getMinutes().LenWithZero(2) + new Number(20998).ChrW();
+  oDateText += this.getSeconds().LenWithZero(2) + new Number(31186).ChrW();
+  oDateText += new Number(32).ChrW() + new Number(32).ChrW() + new Number(26143).ChrW() + new Number(26399).ChrW() + new String('26085199682010819977222352011620845').substr(this.getDay() * 5, 5).ToInt().ChrW();
+  return oDateText;
+};
+//扩展Date格式化
+Date.prototype.Format = function(format) {
+  var o = {
+    "M+": this.getMonth() + 1, //月份
+    "d+": this.getDate(), //日
+    "h+": this.getHours() % 12 == 0 ? 12 : this.getHours() % 12, //小时
+    "H+": this.getHours(), //小时
+    "m+": this.getMinutes(), //分
+    "s+": this.getSeconds(), //秒
+    "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+    "S": this.getMilliseconds() //毫秒
+  };
+  var week = {
+    "0": "\u65e5",
+    "1": "\u4e00",
+    "2": "\u4e8c",
+    "3": "\u4e09",
+    "4": "\u56db",
+    "5": "\u4e94",
+    "6": "\u516d"
+  };
+  if (/(y+)/.test(format)) {
+    format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+  }
+  if (/(E+)/.test(format)) {
+    format = format.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "\u661f\u671f" : "\u5468") : "") + week[this.getDay() + ""]);
+  }
+  for (var k in o) {
+    if (new RegExp("(" + k + ")").test(format)) {
+      format = format.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    }
+  }
+  return format;
+}
+Date.prototype.Diff = function(interval, objDate) {
+  //若参数不足或 objDate 不是日期类型則回传 undefined
+  if (arguments.length < 2 || objDate.constructor != Date) { return undefined; }
+  switch (interval) {
+    //计算秒差
+    case 's': return parseInt((objDate - this) / 1000);
+      //计算分差
+    case 'n': return parseInt((objDate - this) / 60000);
+      //计算時差
+    case 'h': return parseInt((objDate - this) / 3600000);
+      //计算日差
+    case 'd': return parseInt((objDate - this) / 86400000);
+      //计算周差
+    case 'w': return parseInt((objDate - this) / (86400000 * 7));
+      //计算月差
+    case 'm': return (objDate.getMonth() + 1) + ((objDate.getFullYear() - this.getFullYear()) * 12) - (this.getMonth() + 1);
+      //计算年差
+    case 'y': return objDate.getFullYear() - this.getFullYear();
+      //输入有误
+    default: return undefined;
+  }
+};
+
+//检测是否为空
+Object.prototype.IsNullOrEmpty = function() {
+  var obj = this;
+  var flag = false;
+  if (obj == null || obj == undefined || typeof (obj) == 'undefined' || obj == '') {
+    flag = true;
+  } else if (typeof (obj) == 'string') {
+    obj = obj.trim();
+    if (obj == '') {//为空
+      flag = true;
+    } else {//不为空
+      obj = obj.toUpperCase();
+      if (obj == 'NULL' || obj == 'UNDEFINED' || obj == '{}') {
+        flag = true;
+      }
+    }
+  }
+  else {
+    flag = false;
+  }
+  return flag;
+
+//json
+var urlEncode = function (param, key, encode) {
+    if(param==null) return '';
+    var paramStr = '';
+    var t = typeof (param);
+    if (t == 'string' || t == 'number' || t == 'boolean') {
+        paramStr += '&' + key + '=' + ((encode==null||encode) ? encodeURIComponent(param) : param);
+    } else {
+        for (var i in param) {
+            var k = key == null ? i : key + (param instanceof Array ? '[' + i + ']' : '.' + i);
+            paramStr += urlEncode(param[i], k, encode);
+        }
+    }
+    return paramStr;
+};
+
+
+
+    //判断照片大小
+    function checkFileTicket(obj){
+        photoExt=obj.value.substr(obj.value.lastIndexOf(".")).toLowerCase();//获得文件后缀名
+        if(photoExt!='.xls'){
+            window.parent.window.parent.tipObj.showError("请上传xls格式的文件",2);
+            obj.value = '';
+            return false;
+        }
+        var fileSize = 0;
+        var isIE = /msie/i.test(navigator.userAgent) && !window.opera;
+        if (isIE && !obj.files) {
+            var filePath = obj.value;
+            var fileSystem = new ActiveXObject("Scripting.FileSystemObject");
+            var file = fileSystem.GetFile (filePath);
+            fileSize = file.Size;
+        }else {
+            fileSize = obj.files[0].size;
+        }
+        fileSize=Math.round(fileSize/1024*100)/100; //单位为KB
+        if(fileSize>500){
+            window.parent.window.parent.tipObj.showError("文件最大尺寸为500KB，请重新上传!",2);
+            return false;
+        }
+    }
+
+
+php文件大小
+//转换单位
+function setupSize($fileSize) {
+    $size = sprintf("%u", $fileSize);
+    if($size == 0) {
+         return("0 Bytes");
+    }
+    $sizename = array(" Bytes", " KB", " MB", " GB", " TB", " PB", " EB", " ZB", " YB");
+    return round($size/pow(1024, ($i = floor(log($size, 1024)))), 2) . $sizename[$i];
+}
+function byte_format($size, $dec=2){
+    $a = array("B", "KB", "MB", "GB", "TB", "PB");
+    $pos = 0;
+    while ($size >= 1024) {
+         $size /= 1024;
+           $pos++;
+    }
+    return round($size,$dec)." ".$a[$pos];
+ }
+/* Use : echo format_size(filesize("fichier"));
+Example result : 13,37 Ko */
+function format_size($o) {
+    $size = array('Go' => 1073741824, 'Mo' => 1048576, 'Ko' => 1024, 'octets' => 1);
+    foreach ($size as $k => $v)
+        if ($o >= $v) {
+                if ($k == 'octets')
+                        return round($o).' '.$k;
+                return number_format($o / $v, 2, ',', ' ').' '.$k;
+        }
+}
+/**
+ * 文件大小格式化
+ * @param integer $size 初始文件大小，单位为byte
+ * @return array 格式化后的文件大小和单位数组，单位为byte、KB、MB、GB、TB
+ */
+function file_size_format($size = 0, $dec = 2) {
+    $unit = array("B", "KB", "MB", "GB", "TB", "PB");
+    $pos = 0;
+    while ($size >= 1024) {
+        $size /= 1024;
+        $pos++;
+    }
+    $result['size'] = round($size, $dec);
+    $result['unit'] = $unit[$pos];
+    return $result['size'].$result['unit'];
+}
+echo file_size_format(123456789);
+/**
+ * 文件大小单位格式化
+ * @param $bytes 文件实际大小，单位byte
+ * @param $prec 转换后精确度，默认精确到小数点后两位
+ * @return 转换后的大小+单位的字符串
+ */
+ function fsizeformat($bytes,$prec=2){
+    $rank=0;
+    $size=$bytes;
+    $unit="B";
+    while($size>1024){
+        $size=$size/1024;
+        $rank++;
+    }
+    $size=round($size,$prec);
+    switch ($rank){
+        case "1":
+            $unit="KB";
+            break;
+        case "2":
+            $unit="MB";
+            break;
+        case "3":
+            $unit="GB";
+            break;
+        case "4":
+            $unit="TB";
+            break;
+        default :
+
+    }
+    return $size." ".$unit;
+ }
+/**
+ *  容量格式化
+ * @param String   文件名（文件路径）
+ * @return  如果文件存在返回格式化的字符串 如果错误返回错误信息  Unknown File
+ */
+function sizeFormat ($fileName){
+    //获取文件的大小
+    @ $filesize=filesize($fileName);
+    //如果文件不存在返回错误信息
+    if(false==$filesize){
+       return 'Unknown File';
+    }
+    //格式化文件容量信息
+    if ($filesize >= 1073741824) $filesize = round($filesize / 1073741824 * 100) / 100 . ' GB';
+    elseif ($filesize >= 1048576) $filesize = round($filesize / 1048576 * 100) / 100 . ' MB';
+    elseif ($filesize >= 1024) $filesize = round($filesize / 1024 * 100) / 100 . ' KB';
+    else $filesize = $filesize . ' Bytes';
+    return $filesize;
+}
+//测试函数
+echo sizeFormat('config.inc.php');
+/**
+  * 文件大小格式化
+  * @param type $filesize
+  */
+private function sizeCount($filesize)
+{
+    if ($filesize >= 1073741824) {
+        $filesize = round($filesize / 1073741824 * 100) / 100 . ' GB';
+    }
+
+    else if ($filesize >= 1048576) {
+        $filesize = round($filesize / 1048576 * 100) / 100 . ' MB';
+    }
+
+    else if ($filesize >= 1024) {
+        $filesize = round($filesize / 1024 * 100) / 100 . ' KB';
+    }
+    return $filesize;
+}
+
+//该函数最主要的是根据文件的字节数，判断应当选择的统计单位，也就是说一个文件用某一单位比如MB，那么该文件肯定小于1GB，否则当然要用GB作为单位了，而且文件要大于KB，不然的话得用更小的单位统计。该函数代码如下
+//size()  统计文件大小
+function size($byte)
+{
+    if($byte < 1024) {
+      $unit="B";
+    }
+    else if($byte < 10240) {
+      $byte=round_dp($byte/1024, 2);
+      $unit="KB";
+    }
+    else if($byte < 102400) {
+      $byte=round_dp($byte/1024, 2);
+      $unit="KB";
+    }
+    else if($byte < 1048576) {
+      $byte=round_dp($byte/1024, 2);
+      $unit="KB";
+    }
+    else if ($byte < 10485760) {
+      $byte=round_dp($byte/1048576, 2);
+      $unit="MB";
+    }
+    else if ($byte < 104857600) {
+      $byte=round_dp($byte/1048576,2);
+      $unit="MB";
+    }
+    else if ($byte < 1073741824) {
+      $byte=round_dp($byte/1048576, 2);
+      $unit="MB";
+    }
+    else {
+      $byte=round_dp($byte/1073741824, 2);
+      $unit="GB";
+    }
+
+    $byte .= $unit;
+    return $byte;
+}
+//辅助函数 round_up()，该函数用来取舍小数点位数的，四舍五入。
+function round_dp($num , $dp)
+{
+  $sh = pow(10 , $dp);
+  return (round($num*$sh)/$sh);
+}
+
+
+
+//循环实现无限极分类
+$treeData = [];// 保存结果
+foreach ($catList as $item) {
+    if (isset($catList[$item['parent_id']]) && ! empty($catList[$item['parent_id']])) {// 肯定是子分类
+        $catList[$item['parent_id']]['children'][] = &$catList[$item['id']];
+    } else {// 肯定是一级分类
+        $treeData[] = &$catList[$item['id']];
+    }
+}
+
+
+
+
+php ip地址
+
+
+function ClientIp(){
+    $cIP= getenv($_SERVER['REMOTE_ADDR']);
+    $cIP1 = getenv($_SERVER['HTTP_X_FORWORD_FOR']);
+    $cIP2 = getenv($_SERVER['HTTP_CLIENT_IP']);
+    $cIP1?$cIP= $cIP1?null;
+    $cIP2?$cIP = $cIP2?null;
+    return $cIP;
+}
+
+function serverIP(){
+    return gethostbyname($_SERVER['SERVER_NAME']);
+}

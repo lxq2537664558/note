@@ -1,0 +1,537 @@
+$.noop    jquery提供的空函数
+
+
+
+
+
+onclick="$(#cat_list).append($('$cat_list').find('select').eq(0).clone())"
+
+jQuery 一款免费且开放源代码的javascript代码库
+
+优先引入CDN上的jquery,如果失效再引入本地的jquery
+<script src="//ajax.googleapis.com/libs/jquery/1.9.2/jquery.min.js"></script>
+<script>window.jQuery||document.write('<script src="jquery-1.9.2.min.js"><\/script>')</script>
+
+jquery对象转换
+	使用$()形式获取的都是jquery对象,jquery对象只能调用jquery方法,不能调用其它的js方法
+	jquery对象转dom对象
+		jQuery对象[0]  或  jQuery对象.get(0)
+	dom对象转jquery对象
+		$(dom对象)
+	建议:在写程序时,对于jquery对象的变量尽量加$
+
+obj.
+
+	has	()		包含
+
+	index()		当前元素在所有兄弟节点中的位置
+
+	on()			obj加事件
+	off()			obj取消事件
+
+	scrollTop		滚动距离(纵)
+
+选择器(select)
+	基本
+		$('#id')		(id)通过id属性值获取元素
+		$('element')	(标签)通过元素名获取元素
+		$('.class')		(class)获取使用class样式的所有元素
+		$('select1','select2')	获取多种元素
+	层级
+		ancetor descendant	(空格)匹配祖先元素下的后代元素
+		parent > child		(大于)匹配父元素下的子元素
+		prev + next			(加号)匹配上一个元素的后面元素
+		prev~siblings		(波浪)匹配前一个元素的所有平辈元素,在prev元素后面才能匹配
+	简单
+		:first		匹配第一个元素
+		:last		匹配最后一个元素
+		:even		匹配索引为偶数的元素
+		:odd		匹配索引为奇数的元素
+		:eq(index)	匹配索引为指定值的元素
+		:gt(index)	匹配索引大于指定值的元素
+		:lt(index)	匹配索引小于指定值的元素
+		:not(select)匹配除了指定选择器之外的所有元素
+	内容
+		:contains('text')	匹配内容中包含指定内容的元素
+		:has(selector)		匹配内容中包含指定选择器的元素
+		:empty				匹配内容为空的元素
+		:parent				匹配内容不为空的元素
+	可见性
+		:hidden		匹配隐藏的元素
+		:visible	匹配显示的元素
+	属性
+		[attribute]			匹配具有指定属性的元素
+		[attribute=value]	匹配属性等于指定值的元素
+		[attribute!=value]	匹配属性不等于指定值的元素
+		[attribute^=value]	匹配属性值以指定值开始的元素
+		[attribute$=value]	匹配属性值以指定值结束的元素
+		[attribute*=value]	匹配属性值中包含指定值的元素
+		[selector1][selector2]	匹配同时满足所有条件的元素
+	子元素
+		:nth-child(index/even/odd)	匹配指定索引的元素 从1算起
+		:first-child				匹配第一个子元素
+		:last-child					匹配最后一个子元素
+		:only-child					匹配子父元素唯一子元素
+	表单
+		:input		匹配所有表单元素
+		:text		文本框
+		:password	密码框
+		:radio		单选按钮
+		:checkbox	复选框
+		:submit		提交按钮
+		:reset		重置按钮
+		:image		图像按钮
+		:button		按钮
+		:file		文件框
+		:hidden		隐藏域
+	表单对象属性
+		:enabled	匹配状态可用的表单元素
+		:disabled	匹配状态不可用的表单元素
+		:checked	匹配被选中的元素 匹配单选或复选
+		:selected	匹配被选中的元素 匹配的是option
+
+操作属性
+	基本属性
+		attr('name')		获取指定属性的值
+		attr('key','value')	设置指定属性的值
+		attr(properties)	一次设置多个属性的值,要求参数必须是json对象
+		attr(key,fn)		通过一个函数的返回值设置指定属性的值
+		removeAttr(name)	删除指定属性
+
+		prop()				获取指定属性的值
+
+		具有 true 和 false 两个属性的属性，
+		如 checked, selected 或者 disabled 使用prop()，
+		其他的使用 attr()
+
+	CSS
+		addClass(class)		添加样式
+		removeClass(class)	移除样式
+		toggleClass(class)	切换样式 如果有,就删除,如果没有就添加
+		hasClass(class)		判断是否使用了某个样式 返回bool
+	html/文本/值
+		html()			获取
+		html(value)		修改
+		text()			获取
+		text(value)		修改
+		val()			获取
+		val(value)		修改
+
+css操作
+	基本css
+		css(name)		获取指定样式的值
+		css(name,value)	设置指定样式的值
+		css(properties)	一次设置多个css值,要求参数有json对象
+	位置
+		offset()			获取元素的位置,返回json对象,包含left和top属性
+		offset(coordinates)	设置元素的位置,要求参数json对象,必须包含left和top
+	尺寸
+		width()			获取宽
+			$(document)	html文档 $(window)浏览器视口
+		width(value)	设置宽
+		heigth()		获取高
+		heigth(value)	设置高
+		innerWidth()	元素的宽度 包括内边距
+		innerHeight()
+		outerWidth()	元素的宽度 包括内边距和边框
+		outerHeight()
+		outerWidth(true)元素的宽	包括内边距 边框 外边距
+		outerHeight(true)
+
+事件编程
+	页面载入
+		$(document).ready(fn)	$(fn)
+	基本事件
+		focus(fn)		获取焦点
+		blur(fn)		失去焦点
+		change(fn)		内容改变
+		resize(fn)		改变尺寸
+		scroll(fn)		滚动条滚动
+		click(fn)		点击
+		dblclick(fn)	双击
+		keydown(fn)		键盘按下
+		keyup(fn)		键盘抬起
+		keypress(fn)	键盘点击
+		load(fn)		页面载入
+		unload(fn)		页面关闭
+		mousedown(fn)	鼠标按下
+		mouseup(fn)		鼠标抬起
+		mousemove(fn)	鼠标移动
+		mouseover(fn)	鼠标经过
+		mouseout(fn)	鼠标离开
+		select(fn)		选择内容
+		submit(fn)		提交按钮
+	事件切换
+		hover(over,out) 这个方法是针对鼠标经过和离开的事件绑定
+			over 鼠标经过时执行的事件处理程序
+			out  鼠标离开时执行的事件处理程序
+		toggle(fn,fn)	当鼠标点击时的事件绑定 第一次点击时触发第一个事件处理程序 第二次点击时触发第二个事件处理程序
+	事件处理
+		bind(type,[data],fn)	绑定事件
+		bind({type:fn,type:fn})	一次绑定多个事件 要求参数必须是json对象
+		one(type,[data],fn)		绑定事件,之触发一次
+		unbind([type])			移除事件绑定
+			type	事件名	事件名没有on前缀
+			[data]	事件发生时传递的传参数
+			fn		事件处理程序
+
+	function(event){
+		//取消事件冒泡
+		event.stopPropagation();
+		//取消默认行为
+		event.preventDefault();
+	}
+
+效果
+	animate({style})		自定义动画
+	animate({style},speed,easing,callback)
+		easing	动画模式
+	animate(style,options)
+	stop()			停止当前动画
+	stop(true)		停止所有动画
+	stop(true,true)	完成当前动画,并停止
+	基本
+		show()		显示
+		show(speed,[callback])	以动画效果显示
+			speed		动画的持续时间(毫秒)
+				slow	缓慢
+				normal	正常
+				fast	快速
+			[callback]	动画执行完毕后所调用的函数
+		hide()		隐藏
+		hide(speed,[callback])
+		toggle()	显示或隐藏(切换)
+		toggle(switch)	显示或隐藏,要求参数是true或false
+		toggle(speed,[callback]) 以动画效果显示或隐藏
+	滑动
+		slideDown(speed,[callback])		向下滑动
+		slideUp(speed,[callback])		向上滑动
+		slideToggle(speed,[callback])	滑动切换
+	淡入淡出
+		fabeIn(speed,[callback])		淡入 显示
+		fadeOut(speed,[callback])		淡出 隐藏
+		fadeTo(speed,opacity,[callback])
+			opacity 透明度
+
+文档操作
+	插入
+		内部插入
+			append(contentr)		在元素标签内部的后面插入数据
+			prepend(content)		在元素标签内部的前面插入数据
+			appendTo(content)		将匹配到的元素插入到指定内容的后面
+			prependTo(content)		见匹配到的元素插入到指定内容的前面
+		外部插入
+			$Obj.after(内容)		在元素标签外部的后面插入数据
+			before(content)			在元素标签外部的前面插入数据
+			insertAfter(content)	将匹配元素插入到指定内容的后面
+			insertBefore(content)	将匹配元素插入到指定内容的前面
+	删除
+		empty()		清空元素内容
+		remove()	删除元素
+	复制匹配的元素
+		$Obj.clone().插入			复制匹配的元素
+		$("p").clone().appendTo("body");
+		clone([true,true])			复制事件机制,所有子元素附加条件绑定事件
+	替换
+		replaceWith()	将匹配到的元素替换成指定的内容
+	包裹
+		wrap()		对匹配的元素使用指定的内容进行包裹
+		wrapAll()	对匹配的元素使用指定的内容进行包裹(仅包裹一次)
+		wrapInner()	对匹配元素的内容进行包裹
+	查找
+		eq(index)		匹配指定索引的元素
+		filter(expr)	匹配过滤的元素
+		not(expr)		匹配除了指定元素之外的所有元素
+		children([expr])匹配所有子元素
+		find(expr)		查找
+		next([expr]))	匹配相邻的下一个平辈节点
+		prev([expr])	匹配相邻的上一个平辈节点
+		parent([expr])	匹配元素的父节点
+		siblings()		平辈元素
+
+插件机制
+	jQuery.fn.extend({
+		fn1:function(){},
+		fn2:function(){},
+		....
+	});
+	通过jQuery.fn.extend方法对jQuery功能进行扩展,这个方法要求参数是一个json对象 对象的属性名是扩展方法名,属性值就是函数体
+
+each语句		遍历jquery对象
+	each(callback)		each方法只有一个参数,必须是一个函数
+		function ballback(i,item){}
+		jquery对象有几个元素,那么each方法中指定的函数就会自动执行多少次
+		每次遍历时,将当前元素的下标放在参数i中
+		每次遍历时,将当前元素本身放在参数item中
+
+ajax	$=jQuery
+	jQuery.ajax(option)		jQuery中底层的ajax实现,要求参数必须是一个json对象
+		async		是否异步
+		cache		是否缓存	get默认有缓存
+		complete	当ajax对象的状态码为4时执行的函数
+		contentType	请求头
+		data		传递的参数,要求是一个字符串
+		dataType	期望得到的数据类型
+		success		ajax对象状态码为4并且http响应状态码为200时执行的函数
+		timeout     请求时间 (用于长轮循)
+		type		请求类型
+		url			请求地址
+	jQuery.get(url,[data],[callback],[type])	高级ajax实现
+		url			请求地址
+		[data]		参数裂变,要求是一个json对象,如果没有,可以不写
+		[callback]
+		[type]		期望得到的数据类型
+		注:缓存问题可以在data中加时间数据解决
+	jQuery.post(url,[data],[callback],[type])
+
+	解析xml
+		var person = $(msg).find("person");
+		person.children('name').text();
+
+	ajax 提交表单
+		$.ajax({
+	     url : "http://localhost:8080/STS/rest/user",
+	     type : "POST",
+	     data : $( '#postForm').serialize()}).
+	     done(function(data) {
+	          $( '#serverResponse').html(data);
+	     }).
+	     fail(function(data) {
+	          $( '#serverResponse').html(data.status + " : " + data.statusText + " : " + data.responseText);
+	     });
+
+	ajax 上传文件
+		var formData = new FormData($( "#uploadForm" )[0]);
+		$.ajax({
+			url: 'http://localhost:8080/cfJAX_RS/rest/file/upload' ,
+			type: 'POST',
+			data: formData,
+			async: false,
+			cache: false,
+			contentType: false,
+			processData: false}).
+			done(function (returndata) {
+			  alert(returndata);
+			}).fail(function (returndata) {
+			  alert(returndata);
+			});
+
+		processData设置为false。因为data值是FormData对象，不需要对数据做处理。
+		<form>标签添加enctype="multipart/form-data"属性。
+		cache设置为false，上传文件不需要缓存。
+		contentType设置为false。因为是由<form>表单构造的FormData对象，且已经声明了属性enctype="multipart/form-data"，所以这里设置为false。
+
+	使用FormData对象添加字段方式上传文件
+		var formData = new FormData();
+		formData.append('file', $('#file')[0].files[0]);
+		$.ajax({
+			url: '/upload',
+			type: 'POST',
+			cache: false,
+			data: formData,
+			processData: false,
+			contentType: false
+		}).done(function(res) {
+		}).fail(function(res) {});
+
+
+
+CORS
+
+JSONP	跨域请求
+	JSONP是一个非官方的协议,它允许在服务器端继承script tags 返回至客户端,通过javascript callback的形式实现跨域访问
+	Ajax技术由于受到浏览器的限制,该方法不允许跨域通信
+	同源策略阻止从一个域上加载的脚本获取或操作另一个域上的文档属性.也就是说,受到请求的URL的域必须与当前Web页面的域相同.这意味着浏览器隔离来自同源的内容,以防止它们之间的操作.
+	html
+		<script>function callback(mag){ alert(msg); }</script>
+		<script language='jacascript' scr='http://www.xx.com/xx.php?fn='callback'></script>
+	php
+		$fn = $_GET['fn'];
+		echo $fn.'('.$json.')';
+
+	jQuery解决
+		$.ajax		get		dataTyep:'json',url:'http://......a.php?callback=?'
+		$.get		get
+		$.getJSON	get
+			 $.getJSON('http://example.com/data.php?callback=?,function(jsondata)'){});
+
+
+
+节点选择
+	jQuery.parent(expr) 找父亲节点，可以传入expr进行过滤，比如$("span").parent()或者$("span").parent(".class")
+
+	jQuery.parents(expr),类似于jQuery.parents(expr),但是是查找所有祖先元素，不限于父元素
+
+	jQuery.children(expr).返回所有子节点，这个方法只会返回直接的孩子节点，不会返回所有的子孙节点
+
+	jQuery.contents(),返回下面的所有内容，包括节点和文本。这个方法和children()的区别就在于，包括空白文本，也会被作为一个 jQuery对象返回，children()则只会返回节点
+
+	jQuery.prev()，返回上一个兄弟节点，不是所有的兄弟节点
+
+	jQuery.prevAll()，返回所有之前的兄弟节点
+
+	jQuery.next(),返回下一个兄弟节点，不是所有的兄弟节点
+
+	jQuery.nextAll()，返回所有之后的兄弟节点
+
+	jQuery.siblings(),返回兄弟姐妹节点，不分前后
+
+	jQuery.find(expr),跟jQuery.filter(expr)完全不一样。jQuery.filter()是从初始的jQuery对象集合中筛选出一部分，而jQuery.find() 的返回结果，不会有初始集合中的内容，比如$("p"),find("span"),是从 p元素开始找,等同于$("p span")
+
+
+jQuery.validate
+	//form 标签
+	$('#idForm')ready(function(){
+		//验证规则
+		rules: {
+			//单个
+			inputName: 'required',
+			//多个
+			inputName: {
+				required: true,
+				minlength: 5,
+			},
+		}
+		//提示
+		messages: {
+
+		}
+	})
+
+	CDN
+		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+		<script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+
+	默认校验规则
+		required:true		必须输入的字段
+		remote:"check.php"	使用 ajax 方法调用 check.php 验证输入值
+		email:true			必须输入正确格式的电子邮件
+		url:true			必须输入正确格式的网址
+		date:true			必须输入正确格式的日期。日期校验 ie6 出错，慎用
+		dateISO:true		必须输入正确格式的日期（ISO），例如：2009-06-23，1998/01/22。只验证格式，不验证有效性
+		number:true			必须输入合法的数字（负数，小数）
+		digits:true			必须输入整数
+		creditcard:			必须输入合法的信用卡号
+		equalTo:"#field"	输入值必须和 #field 相同
+		accept:				输入拥有合法后缀名的字符串（上传文件的后缀）
+		maxlength:5			输入长度最多是 5 的字符串（汉字算一个字符）
+		minlength:10		输入长度最小是 10 的字符串（汉字算一个字符）
+		rangelength:[5,10]	输入长度必须介于 5 和 10 之间的字符串（汉字算一个字符）
+		range:[5,10]		输入值必须介于 5 和 10 之间
+		max:5				输入值不能大于 5
+		min:10				输入值不能小于 10
+
+	默认提示  如果某个控件没有 message, 将调用默认的信息
+		messages: {
+			required: "This field is required.",
+			remote: "Please fix this field.",
+			email: "Please enter a valid email address.",
+			url: "Please enter a valid URL.",
+			date: "Please enter a valid date.",
+			dateISO: "Please enter a valid date ( ISO ).",
+			number: "Please enter a valid number.",
+			digits: "Please enter only digits.",
+			creditcard: "Please enter a valid credit card number.",
+			equalTo: "Please enter the same value again.",
+			maxlength: $.validator.format( "Please enter no more than {0} characters." ),
+			minlength: $.validator.format( "Please enter at least {0} characters." ),
+			rangelength: $.validator.format( "Please enter a value between {0} and {1} characters long." ),
+			range: $.validator.format( "Please enter a value between {0} and {1}." ),
+			max: $.validator.format( "Please enter a value less than or equal to {0}." ),
+			min: $.validator.format( "Please enter a value greater than or equal to {0}." )
+		}
+
+	//中文提示包
+!function(a){"function"==typeof define&&define.amd?define(["jquery","../jquery.validate.min"],a):"object"==typeof module&&module.exports?module.exports=a(require("jquery")):a(jQuery)}(function(a){a.extend(a.validator.messages,{required:"这是必填字段",remote:"请修正此字段",email:"请输入有效的电子邮件地址",url:"请输入有效的网址",date:"请输入有效的日期",dateISO:"请输入有效的日期 (YYYY-MM-DD)",number:"请输入有效的数字",digits:"只能输入数字",creditcard:"请输入有效的信用卡号码",equalTo:"你的输入不相同",extension:"请输入有效的后缀",maxlength:a.validator.format("最多可以输入 {0} 个字符"),minlength:a.validator.format("最少要输入 {0} 个字符"),rangelength:a.validator.format("请输入长度在 {0} 到 {1} 之间的字符串"),range:a.validator.format("请输入范围在 {0} 到 {1} 之间的数值"),max:a.validator.format("请输入不大于 {0} 的数值"),min:a.validator.format("请输入不小于 {0} 的数值")})});
+
+
+	将校验规则写到 js 代码中
+		$().ready(function() {
+// 在键盘按下并释放及提交后验证提交表单
+
+  $("#signupForm").validate({
+  	//验证规则
+    rules: {
+      firstname: "required",
+      lastname: "required",
+      username: {
+        required: true,
+        minlength: 2
+      },
+      password: {
+        required: true,
+        minlength: 5
+      },
+      confirm_password: {
+        required: true,
+        minlength: 5,
+        equalTo: "#password"
+      },
+      email: {
+        required: true,
+        email: true
+      },
+      topic: {
+        required: "#newsletter:checked",
+        minlength: 2
+      },
+      agree: "required"
+    },
+    //消息
+    messages: {
+      firstname: "请输入您的名字",
+      lastname: "请输入您的姓氏",
+      username: {
+        required: "请输入用户名",
+        minlength: "用户名必需由两个字母组成"
+      },
+      password: {
+        required: "请输入密码",
+        minlength: "密码长度不能小于 5 个字母"
+      },
+      confirm_password: {
+        required: "请输入密码",
+        minlength: "密码长度不能小于 5 个字母",
+        equalTo: "两次密码输入不一致"
+      },
+      email: "请输入一个正确的邮箱",
+      agree: "请接受我们的声明",
+      topic: "请选择两个主题"
+    }
+});
+
+
+
+文件上传
+        //点击上传图片
+/*
+        $('#add-photo').click(function(){
+            $('#uploadImgBtn').click();
+        });
+*/
+
+/*
+        $('input:file').change(function(e){
+            var file = this.files[0];
+            //alert(file.type);
+
+            if(file.type != 'image/png'){
+                alert('图片类型必须是png类型的图片!');
+                return false;
+            }
+
+            if(file.size > 1024*512){
+                alert('图片大小不能超过512KB!');
+                return false;
+            }
+
+            var fr = new FileReader();
+            fr.onloadend = function(e) {
+                $('#add-photo').css('background-image','url('+e.target.result+')');
+                $('#add-photo').css('background-color','#2f4050');
+                $('#add-photo').css('background-size','18px 18px');
+                $('#add-photo').css('background-position','10px 8px');
+            };
+            fr.readAsDataURL(file);
+        });
+*/

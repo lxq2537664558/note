@@ -1,0 +1,131 @@
+安装
+	安装前请务必确保已经正确安装了 PHP。打开命令行窗口并执行 php -v 查看是否正确输出版本号。
+
+	打开命令行并执行下列命令安装最新版本的 Composer (以下指令摘自 https://getcomposer.org/download/ ，请前往查看最新的安装指令)：
+
+	php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php
+
+	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+	php -r "if (hash_file('SHA384', 'composer-setup.php') === '55d6ead61b29c7bdee5cccfb50076874187bd9f21f65d8991d46ec5cc90518f447387fb9f76ebae1fbbacf329e583e30') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+	php composer-setup.php
+	php -r "unlink('composer-setup.php');"
+
+	执行第一条命令下载下来的 composer-setup.php 脚本将简单的检测 php.ini 中的参数设置，如果某些参数未正确设置则会给出警告；然后下载最新版本的 composer.phar 文件到当前目录。
+
+	上述 4 条命令的作用依次是：
+		下载安装脚本（composer-setup.php）到当前目录。
+		验证 composer-setup.php 是否正确
+			Installer verified 为成功
+		执行安装过程。
+		删除安装脚本 -- composer-setup.php 。
+	
+	局部安装
+		上述下载 Composer 的过程正确执行完毕后，可以将 composer.phar 文件复制到任意目录（比如项目根目录下），然后通过 php composer.phar 指令即可使用 Composer 了！
+	全局安装
+		全局安装是将 Composer 安装到系统环境变量 PATH 所包含的路径下面，然后就能够在命令行窗口中直接执行 composer 命令了。
+		Mac 或 Linux 系统：打开命令行窗口并执行如下命令将前面下载的 composer.phar 文件移动到 /usr/local/bin/ 目录下面：
+			curl -sS https://getcomposer.org/installer | php
+			sudo mv composer.phar /usr/local/bin/composer
+		
+	Windows 系统：
+		1 找到并进入 PHP 的安装目录（和你在命令行中执行的 php 指令应该是同一套 PHP）。
+		2 将 composer.phar 复制到 PHP 的安装目录下面，也就是和 php.exe 在同一级目录。
+		3 在 PHP 安装目录下新建一个 composer.bat 文件，并将下列代码保存到此文件中。
+			@php "%~dp0composer.phar" %*
+			
+		最后重新打开一个命令行窗口试一试执行 composer --version 看看是否正确输出版本号。
+
+
+	重命名文件composer.phar 为 composer 
+	$ mv composer.phar composer
+
+	$ chmod +x composer
+
+	使用中国镜像
+		即将配置信息添加到 Composer 的全局配置文件 config.json 中
+		打开命令行窗口（windows用户）或控制台（Linux、Mac 用户）并执行如下命令：
+		已OK的
+			composer config -g repositories.packagist composer http://packagist.phpcomposer.com
+		
+		composer config -g repo.packagist composer https://packagist.phpcomposer.com
+		php composer.phar config -g repostitories.packagist composer https://packagist.phpcomposer.com
+
+
+
+	下载软件包
+		php composer.phar -require 软件名 软件版本
+	安装软件包
+		php composer.phar install
+	全局资源管理插件
+		php composer.phar global require "fxp/composer-asset-plugin:1.1.4"
+
+
+
+	在要安装的文件夹建立 composer.json 
+	//安装二维码包
+	```php
+	{
+		"require": {
+			"endroid/qrcode" : "1.7.3"
+		}
+	}
+	当前文件夹执行 
+
+	composer install
+
+	更新 
+
+	composer update
+
+
+
+	composer self-update
+
+
+	include './vendor/autoload.php';
+
+
+	安装yii2
+
+
+	创建yii2项目 
+		基础包  
+			php composer.phar create-project yiisoft/yii2-app-basic basic 2.0.9
+		高级包
+			php composer.phar create-project yiisoft/yii2-app-advanced advanced 2.0.9
+
+
+	归档文件安装
+		wget https://github.com/yiisoft/yii2/releases/download/2.0.7/yii-basic-app-2.0.7.tgz
+	GitHub托管
+		git clone https://github.com/yiisoft/yii2.git
+
+
+
+
+
+
+	windows
+
+	首先确定安装了php	 		命名窗口执行php -v			环境变量
+	进入官网， 选择download 往下拉
+	找Manual Download	选择最新版本下载
+
+	把下载的composer.phar文件粘贴到你的php的文件目录下面
+	是有php.exe文件的同级目录下
+
+	在新建一个composer.bat  里面写入：
+	@ECHO OFF
+	php "%~dp0composer.phar" %*
+
+	打开命令提示符 输入 composer -v
+
+	安装Yii2
+		1) 首先安装 Composer, 如果已经安装的可以升级下 composerself-update 
+			下载地址：https://getcomposer.org/Composer-Setup.exe 
+		2) 启动 cmd.exe 下载 Yii2 
+			C:\Users\Administrator>cd/dD:\wamp\www 
+			C:\Users\Administrator>composerglobalrequire"fxp/composer-asset-plugin:~1.1.1" 
+			C:\Users\Administrator>composercreate-project--prefer-distyiisoft/yii2-app-basicbasic 
+				下载过程中会使用到 git 账号 ， 没有的到 https://github.com/注册一个
+

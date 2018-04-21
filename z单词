@@ -1,0 +1,1253 @@
+﻿XML|DTD|RSS
+
+channel  ['tʃænl] n. 频道；海峡 (RSS2.0 中<rss>标签下必须的子元素)
+copyright ['kɒpiraɪt] n.版权；著作权 ( ©符号 HTML中的&copy;实体 )
+publish ['pʌblɪʃ] v. 出版；发行；公开发表 ( RSS2.0 pubDate 发布时间)
+implied [ɪm'plaɪd] adj. 含蓄的；暗示的；暗含的
+catalog  ['kætəlɔːg] n. 目录，商品型录
+wholesale ['həʊlseɪl] adj. 批发的；大量的 n. 批发
+standalone ['stændəˌləʊn] adj. 独立的；单独的 (xml声明标签中的属性，取值为yes|no)
+ 
+graphic ['ɡræfɪk] adj. 生动的；图表的 n. 图表
+render ['rendə(r)] vt. 提出；表现; [计]渲染
+rectangle ['rektæŋɡl] n. 长方形；矩形
+generate ['dʒenəreɪt] vt. 产生；发生；引起
+reflection  [rɪ'flekʃn] n. 反射；沉思；考虑 (反射机制：提供在运行时访问类、对象、函数的信息的能力)
+
+
+
+probability [ˌprɒbə'bɪləti] n. 可能性; [统计]概率
+divisor [dɪ'vaɪzə(r)]  n. 除数 ( php.ini中设置触发session的垃圾回收机制 )
+rewind [ˌriː'waɪnd] vt. 倒带；转回；重绕 ( 将迭代器Iterator的指针指向第一个元素 )
+needle ['niːdl] n .针  ( 经常出现在PHP字符串或数组 查找函数中, 如strpos(needle, haystack) )
+haystack  ['heɪstæk] n. 大干草堆，稻草垛 ( search needle in haystack意思为：大海捞针 )
+placeholder ['pleɪshəʊldə(r)] n. 占位符 ( PDOStatement对象中sql语句的?号; <input type=”text”> 标签的placeholder属性 )
+utility [juː'tɪləti] n. 效用；实用；[计]应用程序
+utility function 工具函数；实用程序 ( 常指开发者提炼、封装的以供复用的常用小程序 )
+reverse [rɪ'vɜːs] vt.逆转；倒退 adj.相反的 倒退的 ( JS中Array.reverse() 将一个数组元素的顺序逆转 )
+proxy ['prɒksi] n. 代理人；代理权 adj. 代理的
+reverse proxy 反向代理
+persistent [pə'sɪstənt] adj. 坚持的；连续的；持续的 ( PDO::ATTR_PERSISTENT 用于设置对数据库的长链接 )
+runtime [rʌn'taɪm] n. 运行时 ( runtime error: 运行时错误，比如被0除 )
+omit  [ə'mɪt] vt. 省略；遗漏；忘记；删去 ( 出现在错误提示中 )
+access ['ækses] vt.访问 n. 入口；通道 (如apache的配置文件.htaccess; access to XXX,访问某某 )
+factory 英 ['fæktri]  美[ˈfæktəri] n. 工厂 ( factory design pattern 工厂模式：一种专门用于创建对象的模式 )
+ 
+try  [traɪ] vt. 尝试, 试验
+catch [kætʃ] vt. 赶上；抓住；捕捉；领会
+throw  [θrəʊ] vt. 扔；投；掷；抛 n.抛；投掷
+override [ˌəʊvə'raɪd] vt. 推翻；无视；[计]覆盖,重写
+overload  [ˌəʊvə'ləʊd] vt. 重载
+
+shallow  ['ʃæləʊ] adj. 浅的；薄的 n. 浅处；浅滩
+deep [diːp] adj. 深的；深刻的 adv. 深深地
+shallow copy 浅拷贝 ( 对象拷贝时，新对象中的复合属性是指向被拷贝对象中对应属性的引用 )
+deep copy 深拷贝 ( 对象拷贝时，新对象中的复合属性是被拷贝对象中对应属性的一个副本 )
+singleton ['sɪŋɡltən] n.独生子；单身；(扑克)单张；[计]单例模式
+polymorphism [ˌpɒlɪ'mɔːfɪzəm] n. 多形性；多态性；[计]多态
+public ['pʌblɪk] adj. 公众的；公共的；公开的  (类的访问修饰符)
+protected [prə'tektɪd] adj. 受保护的      (类的访问修饰符)
+private ['praɪvət] adj. 私人的；个人的；私有的(类的访问修饰符)
+inherit [ɪn'herɪt] vt. 继承；遗传
+inheritance [ɪn'herɪtəns] n. 遗传；遗产；继承
+visibility [ˌvɪzə'bɪləti] n. 能见度；可见性 ( 用于描述public, protected, private所造成的效果 )
+extend [ɪk'stend] v. 延伸；扩展；延长  ( 关键字 extends 用于继承 )
+construct [kən'strʌkt]  vt. 构造；构筑；造句 n.构想
+construct method 构造方法 ( 相关方法: __construct() )
+destruct [dɪs'trʌkt] n. 毁灭；自毁 vt. 摧毁；自毁
+destruct method 析构方法 ( 相关方法：__destruct() )
+super class 超类，父类
+abstract ['æbstrækt] adj. 抽象的；理论的 ( 用于声明抽象类和抽象方法的关键字 )
+abstract class 抽象类
+abstract method 抽象方法
+final ['faɪnl] adj. 最终的；最后的；决定性的；不可改变的 ( 用于声明不可继承的类 以及 不可覆写的类方法 )
+self [self] n.自己；本性；自我 ( 关键字self, 在类方法中代表当前类 )
+parent ['peərənt] n. 父母 ( 关键字 parent, 在类方法中表示基类 )
+static ['stætɪk] adj. 静态的; 静止的 ( 关键字static 用于声明类的静态属性和方法 )
+interface ['ɪntəfeɪs] n. 界面；接口 (如: API, UI)
+implement ['ɪmplɪmənt] n. 工具; 器具 vt. 实施；实现( 关键字 implements 用于实现接口 )
+instance ['ɪnstəns] n. 例子；场合 ；实例  ( 操作符 instanceof )
+oriented ['ɔːrɪəntɪd]  adj.以..为方向的; 以..为目的; 面向..的  ( OOP面向对象编程 )
+closure ['kləʊʒə(r)] [计]闭包；关闭；关口；讨论终结；终结
+queue [kjuː]  n. 队列；行列 v. 排列 ( 队列特性：先进先出，相比于栈(后进先出) )
+delimiter [dɪ'lɪmɪtə] n. 定界符；分隔符
+separator  ['sepəreɪtə(r)] n. 分隔符；分离器 ( 例如文件路径分隔符’/’或’\’ )
+leading zero 前导0 (如时间01:02:12中的0 )
+require [rɪ'kwaɪə(r)] vt. 要求；命令；需要；规定   ( require() 和require_once() )
+once  [wʌns]  adv. 一次；曾经 n.一次 conj. 一旦
+merge [mɜːdʒ] vt. 合并；融合； 兼并  ( array_merge() )
+millisecond ['mɪlisekənd] n. 毫秒  ( 10-3秒)
+microsecond  ['maɪkrəʊsekənd]  n. 微妙  ( 10-6秒 )
+traverse  [trə'vɜːs] vt. 横贯；穿越;  [计]遍历
+exception  [ɪk'sepʃn] n. 例外；不合规矩；[计]异常 ( 如PDOException )
+namespace n. 命名空间
+verify ['verɪfaɪ]  vt. 核实；证明
+validation [ˌvælɪ'deɪʃn] vt. 批准；确认；验证
+data validation 数据验证
+explode  [ɪk'spləʊd]  vt. 爆炸；使激增 vt. 使爆炸 ( 对应JS中的String.split() )
+implode  [ɪm'pləʊd]  vt. 内爆；向内聚爆；崩溃；瓦解 ( 对应JS中的Array.join() )
+random  ['rændəm] adj. 任意的；随机的；随意的 n.随意；任意；随机  ( PHP函数 rand() )
+repository [rɪ'pɒzətri] n. 代码库；容器；仓库；贮藏室；智囊 ( Github, SVN中的基本概念 )
+notice ['nəʊtɪs] vt. 注意；留心；通知  n. 通知；注意
+warning  ['wɔːnɪŋ] n.警告；警报 adj. 警告的；告诫的
+fatal  ['feɪtl] adj. 致命的；毁灭性的；决定性的
+fatal error 致命错误
+parse error 解析错误
+syntax error 语法错误
+reserved  [rɪ'zɜːvd] adj. 保留的；预定的；含蓄的
+reserved word 保留字
+interactive  [ˌɪntər'æktɪv] adj. 相互作用的；交互的
+interaction  [ˌɪntər'ækʃn] n. 相互作用；相互影响；互动交流
+reference ['refrəns]  n.引用；参考；参照；推荐人；推荐函
+面向对象词汇
+基本词汇
+( a reference to a variable 变量的引用 )
+
+timezone n. 时区
+storage ['stɔːrɪdʒ] n.仓库；保管；贮藏; [计]存储器
+engine ['endʒɪn] n. 发动机；引擎；机车；火车头
+( zend engine :Zend引擎 ;  storage engine: 存储引擎)
+
+shuffle ['ʃʌfl]  n. 洗牌；搅乱 vt. 洗牌；搅乱 ( 洗牌程序：经典的程序案例; shuffle()函数可以将一个数组乱序 )
+missing  ['mɪsɪŋ] adj .漏掉的；失踪的；失去的 ( 错误提示中指出漏掉XXX )
+primitive ['prɪmətɪv] adj. 原始的；基本的；简陋的
+primitive data type 基本数据类型  ( 整型，浮点型，布尔型，字符串 )
+formal ['fɔːml] adj. 正式的；正规的；形式的
+formal parameter 形式参数
+actual  ['æktʃuəl] adj. 实际的；事实上的
+actual parameter 实际参数
+scope [skəʊp] n. 机会；范围; 眼界; [计]作用域 ( :: 即域操作符，范围(解析)操作符 )
+local scope 局部作用域
+global scope 全局作用域
+callable ['kɔːləbl] adj. 可赎回的；可召唤的；可调用的 ( 函数：is_callable() )
+callback  ['kɔːlbæk] n. 召回；回呼
+callback function 回调函数
+pseudo ['sjuːdəʊ] adj. 假的；冒充的
+pseudo type 伪类型 ( PHP中如: Number, Float等等 )
+pseudo code 伪代码 ( 用自然语言或其他标记形式书写的用于说明程序实现流程的文字 )
+pseudo element 伪元素 ( CSS中的 :first-letter, :first-line )
+numeric  [njuː'merɪk] adj. 数字的；数值的 n. 数；数字 ( 函数 is_numeric() )
+numeric value 数值
+void  [vɔɪd] adj. 空的；无效的；缺乏的 ( 常用于说明函数没有返回值 )
+timestamp  ['taɪmstæmp] n. 时间戳
+
+define  [dɪ'faɪn] v. 规定；限定；定义
+echo ['ekəʊ] vi. 发出回声；回响；回显n. 回声; (Linux 和DOS的回显命令，PHP的echo语言结构)
+print  [prɪnt] v. 印刷；出版；[计]打印 ( PHP的print()函数 )
+format  ['fɔːmæt] n. 版式；设计 vt. 使格式化；安排 ( printf() 格式化输出 )
+memory ['meməri] n. [计]内存；记忆；回忆
+stack  [stæk] n. 堆，一大堆，[计]存储栈  (数据结构中的堆为heap, 栈为stack)
+call stack  n. 调用栈 ( stackoverflow [栈溢出]，一个经典的国外技术论坛 )
+debug  [ˌdiː'bʌɡ]  v. 调试；排除障碍
+error ['erə(r)] n. 错误；过失
+syntax ['sɪntæks] n. 句法，语法
+magic ['mædʒɪk] n. 魔法；魔术 adj. 有魔力的；魔术的
+magic constant 魔术常量 (__FILE__, __METHODS__, __FUNCTION__, __LINE__, __NAMESPACE__ 等)
+file [faɪl] n. 档案；文件 (PHP魔术变量 __FILE__ 当前脚本的绝对路径文件名；PHP函数file()，用于读取文件，返回一个数组，每行为一个元素)
+exclusive [ɪk'skluːsɪv] adj. 排外的；独占的；专用的
+exclusive or  n. 异或  ( ‘^’运算符 )
+associated [ə'səʊʃieɪtɪd] adj. 联合的；相关的 ( 常量PDO::FETCH_ASSOC )
+associated array 关联数组
+mixed [mɪkst] adj. 混合的  (PHP参考手册中经常出现，表示可以是各种类型)
+pair [peə(r)] n. 一对;一双;一副
+key-value pair 键值对
+scalar ['skeɪlə(r)] adj. 标量的，数量的 ( 如：整型，字符串，布尔型，浮点型 )
+vector  ['vektə(r)] n. 向量；矢量 ( 如：数组，对象 )
+expect  [ɪk'spekt] vt. 预期；期待
+unexpected  [ˌʌnɪk'spektɪd] adj. 想不到的；意外的
+convert  [kən'vɜːt]  v.(使)转变；转化；换算
+conversion [kən'vɜːʃn] n. 转变；换算 ( implicitly conversion 隐式转换; explicitly conversion 显示转换 )
+global ['ɡləʊbl] adj. 全球性的；总的；[计]全局的
+request [rɪ'kwest]  n. 请求;要求 (PHP中的全局数组$_REQUEST)
+get [ɡet] v. 得到 ( 表单提交数据的方式GET, method=”GET”; PHP中的全局数组$_GET )
+post [pəʊst] n. 职位;邮件 v. 邮递;通知;派遣 ( 表单提交数据的方式POST, method=”POST”; PHP中的全局数组$_POST )
+resource [rɪ'sɔːs] n. 资源  ( PHP中的特殊数据类型, 如mysql link, mysql result set )
+compound  ['kɒmpaʊnd]  n. 化合物;复合词;复合物 adj. 化合的；[语]复合的
+compound data type 复合数据类型
+special ['speʃl] adj. 特别的；特殊的；专门的
+special data type 特殊数据类型 (如resource, null )
+addition [ə'dɪʃn] n. 增加; 加法；附加物
+substraction [sʌbst'rækʃn] n. 减法
+multiplication [ˌmʌltɪplɪ'keɪʃn] n. 增加；繁殖；乘法运算
+division [dɪ'vɪʒn]  n. 划分；除法；部门
+suppress [sə'pres] vt. 镇压；压制；抑制 ( 错误抑制符 @ )
+recursive [rɪ'kɜːsɪv] adj. 递归的；循环的
+recursion [rɪ'kɜːʃn] n. 循环； [数]递归
+iterate ['ɪtəreɪt] v. 反复说；重做；[计]迭代 ( MySQL中用于while循环结构的continue )
+iterator  [ɪtə'reɪtə] n. 迭代程序；迭代器 (一种常用的数据结构)
+session ['seʃn]  n. 会议；学期；一段时间；会话 ( 相关函数 session_start() )
+cookie ['kʊki] n. 饼干; [计] 不经使用者的认可就由服务器电脑直接写入使用者硬盘中的小型文字档案
+each  [iːtʃ] adj. 每个 ( 如: PHP foreach() 函数 )
+continue  [kən'tɪnjuː] v. 继续；连续 ( 语法结构，结束本次循环，继续下一次循环 )
+break  [breɪk] vt. 打碎；中断；结束；违背 ( 跳出循环 )
+empty  ['empti] adj. 空的 (函数empty() )
+exit ['eksɪt] n.出口 vt.离去；退出( exit()用于退出程序 )
+die  [daɪ] vi. 死；渴望 ( die()用于退出程序 )
+message  ['mesɪdʒ] n. 消息；信息 ( PDOException::getMessage() )
+digest  ['dɑɪdʒɛst] n.摘要 vt.消化；理解
+algorithm  ['ælɡərɪðəm] n. 算法
+
+
+项目开发常用英语
+response [rɪ'spɒns] n. 反应；回答；响应  ( request的对应操作 )
+dispatch [dɪ'spætʃ] v. 派遣；发送
+dispatch request 分发请求
+action  ['ækʃn] n. 行为；活动；事件
+item ['aɪtəm]  n. 项目(注意不是project,是指某项)；条款；一件商品(或物品)
+menu item 菜单项
+leaf  [liːf]  n. 叶子
+inv = inventory ['ɪnvəntɔːri] n. 详细目录；存货(清单) vt. 编制(详细目录)
+seqence  ['siːkwəns] n. 顺序；连续；次序；一些列
+seqence number 序号 ( 如:商品序号 g_sn )
+on sale [ɒn seɪl] 出售；廉价出售
+discount ['dɪskaʊnt] n. 折扣 vt. 打折扣
+thumb [θʌm] n. 拇指 v.翻阅   ??
+thumb image 缩略图
+water mark 水印；水痕；水斑
+trash  [træʃ]  n. 废物；垃圾 vt. 废弃；捣毁
+hyperlink  ['haɪpəlɪŋk] n.超链接
+sample ['sæmpl]  n.样本；采样  v.采样；取样
+resample  [riː'sæmpl] vt. 重新采样
+
+
+view  [vjuː] n. 风景；视野；见解 ；视图 ( MVC )
+controller  [kən'trəʊlə(r)] n. 控制者；管理者；控制器 ( MVC )
+model ['mɒdl]  n. 模范；模型 ( MVC )
+package ['pækɪdʒ] n.包裹；整批交易 vt.把…打包 
+adapter  [ə'dæptə] n. 适配器
+plugin  ['plʌgɪn] n. 插件
+skin [skɪn] n. 皮肤；外皮
+core [kɔː(r)] n. 核心；果心；要点
+prefix ['priːfɪks] n. 前缀 vt. 添加前缀
+suffix ['sʌfɪks] n. 后缀 vt. 添加后缀
+captcha  n.验证码 ( Completely Automated Public Turing test to tell Computers and Humans Apart 全自动区分电脑与人类的图灵测试 )
+template  ['templeɪt] n. 样板；模版
+goods [ɡʊdz] n. 货物；商品
+login  ['lɒɡɪn]  n. 登录
+sign in [saɪn ɪn]  (使)签到，(使)登记, 登录 ( 国外的网站通常使用sign in )
+logout ['lɒɡaʊt]  n. 退出；注销
+article  ['ɑːtɪkl] n. 文章；物品；条款；[语]冠词
+edit  ['edɪt] vt. 剪辑；编辑；校订
+website ['websaɪt] n. 网站
+profile  ['prəʊfaɪl] n. 简介；侧面；轮廓；形象
+department [dɪ'pɑːtmənt] n. 部门；系；科；处；局
+register ['redʒɪstə(r)] v. 登记；记录；注册；挂号
+forget [fə'ɡet] v. 忘记；忽略
+category ['kætəɡəri] n. 种类；类别；范畴
+gallery  ['ɡæləri] n. 美术馆；画廊；走廊;  美术品陈列室
+user  ['juːzə(r)] n. 用户；使用者
+audio ['ɔːdiəʊ] adj. 声音的 n. 音频；音响设备
+video ['vɪdiəʊ] n. 录像；视频 adj. 视频的；录像的 ( 联想：HTML标签 <video> )
+tag [tæɡ] n. 标签
+media ['miːdiə] n. 传播媒介； 媒体
+option ['ɒpʃn] n. 选择权；可选物 (HTML标签<option>,常用于<select>标签之内)
+delta  ['deltə] n. (河流的)三角洲;希腊语第四个字母 (希腊字符Δ，δ数学中常常用来表示增量，js相关, 鼠标滚轮增量 wheelDelta)
+readyState  n. 就绪状态，[计]就绪状态字 (表示已经就绪的标识变量)
+ready ['redi] adj. 准备好的；乐意的；情愿的 (document.readystatechange事件，AJAX操作时会用)
+readonly [reɪ'dɒnlɪ] adj. 只读的 (<input type=”text”>的属性)
+mousewheel n. 鼠标滚轮
+wheel  [wiːl] n.方向盘; 车轮
+propagation [ˌprɒpə'ɡeɪʃn]  n. 传播；增值 (event propagation,事件传播，如子元素上的click事件会触发父元素上绑定的click事件处理函数)
+prevent [prɪ'vent] n. 预防；阻止；防止 (相关函数:event.preventDefault() 阻止事件默认操作)
+stop [stɒp] v. 阻止，停止 (相关函数 event.stopPropagation() 防止事件冒泡等)
+handler ['hændlə(r)] n. 处理程序
+attach [ə'tætʃ] v. 附上；挤上；使附属 ( element.attachEvent() IE8兼容的绑定事件的方法 )
+timer ['taɪmə(r)] n.计时器；定时器
+interval  ['ɪntəvl] n. 间隔  (相关函数: setInterval())
+time interval 时间间隔      (相关函数: setTimeout())
+timeout ['taɪmaʊt] n.超时；过期
+notation  [nəʊ'teɪʃn] n.记号；表示法 (相关:JSON)
+argument  ['ɑːɡjumənt] n.参数
+parameter  [pə'ræmɪtə(r)] n.参数  (如：function funcName( parameter 列表 ){} )
+protocol  ['prəʊtəkɒl] n.协议 (如：window.location.protocol)
+host  [həʊst]  n.主机  (如：window.location.hostname )
+port  [pɔːt] n端口  (如：window.location.port )
+path  [pɑːθ] n.路径  (如：window.location.pathname)
+search [sɜːtʃ] n,v.搜索；查询；查询字符串(url问号后面的部分, window.location.search )
+context ['kɒntekst] n. 上下文；环境；背景
+menu ['menjuː] n.菜单
+context menu 上下文菜单 (单击右键弹出的菜单，鼠标事件Element.oncontextmenu)
+synchronous  ['sɪŋkrənəs] adj. 同时的；同步的 (一种程序执行机制)
+asynchronous  [eɪ'sɪŋkrənəs] adj. 异步的 (一种程序执行机制)
+broswer  ['braʊzə(r)] n. 浏览器
+click [klɪk]  n.点击  (元素鼠标事件属性: element.onclick())
+regular  ['reɡjələ(r)] adj. 有规律的；正规的；规则的; 经常的
+regular expression 正则表达式
+pattern ['pætn] n. 模式
+result [rɪ'zʌlt] n. 结果；成绩  ( result set: MySQL中执行select语句后返回的结果集 )
+line feed   n. 换行  (LF)
+carrigage   ['kærɪdʒ] n. 四轮马车; 托架; (打字机托架)
+return  [rɪ'tɜːn] n.归还；返回  ( 用于函数 )
+carriage return 回车 (CR)
+type [taɪp]  n. 类型 (如: typeof() )
+delete  [dɪ'liːt]  vt. 删除  (操作符：用于删除某个变量)
+integer ['ɪntɪdʒə(r)] n. 整数
+parse [pɑːz] n. 语法分析；解析
+statement  ['steɪtmənt] n. 陈述；声明；[计]语句
+condition  [kən'dɪʃn]  n.条件；情况
+conditional  [kən'dɪʃənl]  adj. 有条件的 n. [语法]条件句
+conditional logic 条件逻辑
+escape  [ɪ'skeɪp]  n. 逃跑；[计]退出键<ESC>
+character  ['kærəktə(r)]  n. 字符; 个性; 品质
+escape character  转义符 (如’\n’, ‘\r’, ‘\t’等等)
+keyword ['kiːwɜːd] n. 关键字 (如’var’, ‘if else’, ‘while’)
+52.   encapsulation [inˌkæpsjuˈleiʃən]  n. 封装(将代码片段组织成函数或类以供复用)；包装；密封
+looping  [luːpɪŋ]  n. 迭代， 循环 (while, do..while, for)
+logic  ['lɒdʒɪk] n. 逻辑；逻辑学；条理性
+looping logic 循环逻辑
+call  [kɔːl]  vt. 打电话；访问；呼叫；调用(函数)
+invoke  [ɪn'vəʊk]  vt. 援引; [计]调用(函数)
+build-in  ['bɪld'ɪn] adj. 内嵌的，内建的 (如js内置函数 Math.random(), String.substr() )
+locale [ləʊ'kɑːl] n. 场所; 区域设置; 语言环境 (如 String1.localeCompare(string2))
+compare [kəm'peə(r)] v. 比较；对比 n. 比较；对照
+pop  [pɒp] v. 发出(砰的响声)；取出 ( 数组操作: Array.pop() )  n. [计] 出栈
+push [pʊʃ] v. 推；按；挤 n.[计]入栈 ( 数组操作:Array.push() )
+location  [ləʊ'keɪʃn] n.位置；定点；地点
+node  [nəʊd] n. 节；结点 ; [计]节点
+expression  [ɪk'spreʃn] n. 表达；表达式
+operator  ['ɒpəreɪtə(r)]  n.操作符
+operand  ['ɒpərænd]  n.操作数
+assignment [ə'saɪnmənt] n.赋值；分配；指派
+identifier  [aɪ'dentɪfaɪə(r)] n.标识符
+class  [klɑːs] n.类
+instance  ['ɪnstəns] n. 实例  （相关函数:instanceof()）
+method  ['meθəd] n. 方法 (从类的角度描述function) 
+matrix ['meɪtrɪks] n. 矩阵 (一种二维数组的表现形式)
+tree [triː] n. 树; 树状物 (HTML文档结构)
+JavaScript常用英语
+通用词汇 (计算机专业通用英语词汇)
+数据类型/系统值
+number  ['nʌmbə(r)]   n.数字,号码;数值类型
+
+string  [strɪŋ]  n.一串；字符串
+
+object ['ɒbdʒɪkt] n. 物体；目标；对象
+
+date [deɪt]  n.日期
+
+boolean  ['buːliən]  n. 布尔值
+
+array   [ə'reɪ]  n. 数组
+
+function  ['fʌŋkʃn] n.功能；函数
+
+defind   [dɪ'faɪn]  v. 规定；定义
+
+undefined [ˌʌndɪ'faɪnd] adj. 未定义的；不明确的
+
+NaN = Not a Number  不是数字
+
+Infinity   [ɪn'fɪnəti] n. 无限；无穷大
+
+false  [fɔːls]  adj.假的， n. 布尔真
+
+true [truː] adj. 真的 n. 布尔假值
+
+null [nʌl] n. 空；零
+
+js相关英语
+var = variable  ['veəriəbl]  n. 变量；易变的东西
+
+caller  ['kɔːlə(r)] n. 调用者(函数中: arguments.caller);打电话的人；来访者；呼叫者
+
+callee  [kɔː'liː] n. 被调用者(函数中: arguments.callee, 用于递归匿名函数); 被呼叫者；被召唤者
+
+previous ['priːviəs] adj. 以前的；先于；前面的 (如 ElementNode.previousSibling())
+
+next [nekst] adj. 下一个; 其次的；下一步 (如 ElementNode.nextSibling())
+
+child  [tʃaɪld] n. 小孩；子女  (如 parentNode.firstChild属性)
+
+parent ['peərənt] n. 父母    (如 ElementNode.pareteNode属性)
+
+sibling  ['sɪblɪŋ] n. 兄弟姐妹 (如 ElementNode.nextSibling())
+
+repalce  [rɪ'pleɪs] v. 取代；替换 (如. parentNode.replaceChild())
+
+collection  [kə'lekʃn] n.收集；聚集；收藏品；某某集合
+
+remove  [rɪ'muːv] v. 移除，消除 (如: parentNode.removeChild(childNode))
+
+append [ə'pend] vt. 附加；添加 (如:parentNode.appendChild(childNode))
+
+app = application [ˌæplɪ'keɪʃn] n.应用;申请;应用程序  (如navigator.appName)
+
+version  ['vɜːʃn] n. 译本；版本  (如:navigator.appVersion)
+
+sort [sɔːt]  n.种类 v.处理；分类；[计]排序
+
+concatenate  [kɒn'kætɪneɪt] v.连结；连锁 (数组函数Array.concat()的前六个字符)
+
+radix ['reɪdɪks] n. [数]基数  (JS中进制转换时：”523”.toString(radix) )
+
+create [kri'eɪt] n. 创造; 造成  (如：document.createElement())
+
+value ['væljuː] n. 价值；价格；数值 (如 element.value )
+
+inner  ['ɪnə(r)] adj. 内部的，内心的，里面的 (如 element.innerHTML)
+
+content  ['kɒntent] n. 内容，目录 (如 element.textContent() )
+
+attribute ['ætrɪbjuːt] n. 属性 vt. 把…归于  ( 同义: property, properties )
+
+client ['klaɪənt] n. 客户，委托人 (如 document.body.clientHeight)
+
+event [ɪ'vent] n. 大事；事件; 项目  (如 mouse event: 鼠标事件)
+
+offset  ['ɒfset] n. [计]偏移量 (如 window.pageXOffset)
+
+mouse  [maʊs] n. 鼠标；老鼠；胆小如鼠的人
+
+load  [ləʊd] v. 装载; [计]装入 n.负荷; 重担; 装载量 (如 window.onload())
+
+press  [pres] v. 按，压 (如 element.onkeypress )
+
+down [daʊn] adv. 向下 (如 element.onmousedown )
+
+up [ʌp] adv. 向上; 起来 (如 element.onmouseup)
+
+move [muːv] n. 移动 (如 element.onmousemove)
+
+out  [aʊt] adv. 出；向外，完 (如 element.onmouseout)
+
+over ['əʊvə(r)]  prep.在..的上方 adv.穿过 (如 element.onmouseover)
+
+double ['dʌbl] adj. 双重的;成倍的;两倍的
+
+n.两倍；[计]双精度浮点类型 (如 element.ondblclick )
+
+select  [sɪ'lekt] v. 选择，挑选 (如：element.onselect)
+
+change [tʃeɪndʒ] n.变化；零钱 v.改变 (如 element.onchange)
+
+focus  ['fəʊkəs] n. 焦点;焦距;中心  v.(使)集中;聚集 (如 element.onfocus)
+
+blur  [blɜː(r)] v.弄脏；使..模糊 n.污点;模糊 [计]失去焦点  (如 element.onblur)
+
+submit [səb'mɪt] vt.提交; 递交; 使服从; 使屈服 (如 formElement.onsubmit)
+
+reset [ˌriː'set] n. 重新设定；重新组合 (如 formElement.onreset )
+
+BOM
+window  ['wɪndəʊ]   n.窗户;窗口，视窗
+
+document  ['dɒkjumənt] n.文档
+
+location  [ləʊ'keɪʃn] n.位置，定位，地点
+
+history ['hɪstri]  n.历史
+
+navigator  ['nævɪɡeɪtə(r)] n.航海家；领航仪 (为纪念网景早期的浏览器Navigator，而以之为名的浏览器对象)
+
+screen [skriːn] n. 屏幕
+
+常用函数
+alert()   [ə'lɜːt]  n. 警戒；警报
+
+confirm()  [kən'fɜːm]  v. 证实；确认
+
+write()  [raɪt]   v.写；书写  ( document.write() )
+
+prompt()  [prɒmpt]  n. 提示；提示符 (window.prompt())
+
+ (例如*Nix系统中的#和$；Windows cmd下的 C:/>)
+
+
+CSS2.1常用英语
+通用词汇
+px  =  pixel  ['pɪksl] n. 像素
+image  ['ɪmɪdʒ] n. 图像
+properties  [p'rɒpətɪz] n. 属性
+font  [fɒnt] n. 字体
+size [saɪz] n. 大小;尺寸  （font-size: 字体大小）
+color ['kʌlə(r)] n. 颜色      (background-color: 背景颜色 border-color: 边框颜色)
+scroll [skrəʊl] v. 卷动, 滚动 (用处：background-attachment取值)
+fixed [fɪkst] adj. 固定的 (用处：background-attachment取值)
+inherit  [ɪn'herɪt] v. 继承 (用处：background-attachment取值)
+none [nʌn] pron. 没有 (用处：list-style-type、border-style取值)
+transparent [træns'pærənt] adj. 透明的 (用处：background-color取值)
+left [left] n. 左边
+background ['bækɡraʊnd] n. 背景
+attachment [ə'tætʃmənt]  n. 附件；附着
+position [pə'zɪʃn] n. 位置 v.定位
+repeat  [rɪ'piːt] n. 重复；反复
+top  [tɒp] n. 顶部；上面
+center  ['sentə] n. 中心
+bottom  ['bɒtəm] n. 底部
+right  [raɪt] n. 右边
+width [wɪdθ] n. 宽度
+height  [haɪt] n. 高度
+
+
+radius ['reɪdiəs] n. 半径
+border ['bɔːdə(r)] n. 边界；边缘；边框
+outline  ['aʊtlaɪn] n 大纲；轮廓
+style [staɪl] n.风格；式样
+solid  ['sɒlɪd] adj. 固体的；实心的 (border-style取值:实线)
+dashed  [dæʃt] adj. 虚线的 (border-style取值：虚线)
+dotted  ['dɒtɪd] adj. 点线的 (border-style取值：点状虚线)
+padding ['pædɪŋ] n.填充；内边距
+margin   ['mɑːdʒɪn] n. 边缘；页边空白; 外边距
+element  ['elɪmənt] n. 元素
+normal ['nɔːml]  adj. 正常的;正规的 n.标准 (font-weight的取值)
+weight  [weɪt] n.重量；体重 (font-weight:字体粗细)
+italic  [ɪ'tælɪk] adj. 斜体的 n. 斜体
+bold [bəʊld] adj.粗体的 n. 粗体 (font-weight取值)
+bolder 更粗的 (font-weight取值)
+lighter 更细的 (font-weight取值)
+inside [ˌɪn'saɪd] n.内部 adj. 里面的 (list-style-position取值)
+outside [ˌaʊt'saɪd] n.外面 adj. 外部的 (list-style-position 取值)
+disc [dɪsk] n. 唱片；圆盘；盘状物；实心圆
+circle ['sɜːkl] n. 圆圈; 空心圆
+square [skweə(r)] n. 正方形
+decimal  ['desɪml] n. 小数；十进制(数)
+leading ['liːdɪŋ] adj. 在前的;主要的
+zero ['zɪərəʊ] n. 零
+lowercase ['ləʊəˌkeɪs] adj. 小写字体的; n. 小写字体
+uppercase ['ʌpəˌkeɪs] adj. 大写的；n.大写字母
+roman  ['rəʊmən] adj.罗马的 n. 罗马字体
+
+
+clear [klɪə(r)] vt. 清除; 清空; 清除浮动
+both [bəʊθ] adj  两者; 两个..都 (clear的取值)
+absolute ['æbsəluːt] adj. 绝对的 (position的取值)
+relative ['relətɪv]  adj. 相对的 (position的取值)
+cursor  ['kɜːsə(r)] n. 光标
+float  [fləʊt] n. 漂浮；浮动
+overflow [ˌəʊvə'fləʊ]  v. 溢出
+index  ['ɪndeks] n. 索引
+spacing  ['speɪsɪŋ] n. 间隔；空间；字距
+direction  [də'rekʃn] n. 方向
+letter ['letə(r)] n. 字母
+line [laɪn] n. 行; 线
+text [tekst] n. 正文；文本
+align [ə'laɪn] vt.调整；排列；对齐
+vertical  ['vɜːtɪkl]  adj. 垂直的；纵向的  (联想<img>的 vspacing属性)
+horizontal [ˌhɒrɪ'zɒntl] adj. 水平的；横向的 (联想<img>的 hspacing属性)
+decoration [ˌdekə'reɪʃn] n. 装饰；装饰品
+indent [ɪn'dent] v. 缩排；缩进
+transform [træns'fɔːm] vt. 改变；转换  (e.g. text-transform)
+white [waɪt] adj. 白色的 n.白色
+space [speɪs] n. 空间；空格
+word  [wɜːd] n. 单词
+display  [dɪ'spleɪ] n. 显示；陈列
+block  [blɒk] n. 块
+inline ['ɪn'laɪn] adj. 成一直线的; 行内的
+auto = automatic [ˌɔːtə'mætɪk]  adj. 自动的
+visibility  [ˌvɪzə'bɪləti] n.可见性；能见度
+visible ['vɪzəbl] adj. 看得见的；可见的
+hidden  ['hɪdn] adj. 隐藏的
+collapse  [kə'læps] v. 折叠; (表格边框)合并 (border-collpase取值)
+separate  ['sepərət] n. 分开；adj. 分开的 (border-collpase取值)
+through [θruː] adv. 通过 prep. 穿过  (line-through)
+underline [ˌʌndə'laɪn] n. 下划线
+overline ['əʊvəlaɪn] n. 上划线
+capitalize  ['kæpɪtəlaɪz] vt. 以大写字母写
+caption ['kæpʃn] n. 标题; 题目
+side [saɪd] n. 边；侧
+ellipsis  [ɪ'lɪpsɪs] n. 省略; 省略号
+static  ['stætɪk] adj.静态的；静止的
+背景属性
+background-attachment 背景附着
+
+取值：scroll [skrəʊl] v. 卷动, 滚动
+
+           fixed [fɪkst] adj. 固定的
+
+inherit  [ɪn'herɪt] v. 继承
+
+background-color 背景颜色
+
+background-position 背景位置
+
+background-image 背景图片
+
+background-repeat 背景重复
+
+边框属性
+border 边框 (复合属性)
+
+border-width 边框宽度(单值属性)
+
+border-style  边框风格(单值属性)
+
+border-color  边框颜色(单值属性)
+
+border-bottom 下边框 (复合属性)
+
+border-bottom-color 下边框颜色(单值属性)
+
+border-bottom-style  下边框样式(单值属性)
+
+border-bottom-width 下边框宽度(单值属性)
+
+内边距属性
+padding-bottom 下内边距
+
+padding-left    左内边距
+
+padding-right 右内边距
+
+padding-top   上内边距
+
+尺寸属性
+height 高度
+
+max-height 最大高度
+
+max-width 最大宽度
+
+min-height 最小高度
+
+min-width 最小宽度
+
+width 宽度
+
+字体属性
+font-family 字体
+
+font-size 字体大小
+
+font-style 字体样式
+
+font-weight 字体粗细
+
+列表属性
+list-style  列表样式
+
+list-style-image 列表项目标记图像
+
+list-style-position 列表项标记放置位置
+
+取值： inside [ˌɪn'saɪd] n.内部 adj. 里面的
+
+   outside [ˌaʊt'saɪd] n.外面 adj. 外部的
+
+ 
+
+list-style-type 列表项标记类型
+
+取值：disc  实心圆
+
+           circle  空心圆
+
+           square  正方形
+
+           decimal  十进制数
+
+           decimal-leading-zero  以0开头的十进制数
+
+           lower-roman  大写罗马数字
+
+           upper-roman  小写罗马数字
+
+           lower-alpha  大写(英文)字母
+
+           upper-alpha  小写(英文)字母
+
+外边距属性
+margin-left 左外边距
+
+margin-right 右外边距
+
+margin-top  上外边距
+
+margin-bottom 下外边距
+
+定位属性
+clear  清除浮动
+
+cursor 光标
+
+取值:  default [dɪ'fɔːlt] n. 默认(值)；缺省(值)
+
+            crosshair ['krɔːsheə] n. 十字准线; 准星
+
+           move [muːv] n. 移动; (移动样式的光标)
+
+            pointer ['pɔɪntə(r)] n. 指针; (手型光标)
+
+            help  [help] n. (问号或球形光标)
+
+            text   n.  (文本型光标)
+
+            wait  [weɪt] n. 等待；等候；(沙漏型光标)
+
+display 用于决定元素的渲染方式(块元素、行内元素或行内块元素等等)
+
+取值:       block 块元素
+
+                   inline 行内元素
+
+                   inline-block  行内块元素
+
+float 浮动
+
+overflow 溢出
+
+取值:        visible 显示在元素框之外
+
+                   hidden 隐藏超出元素框者
+
+                   scroll  显示在元素框之外，并出现滚动条
+
+visibility  可见性
+
+z-index  Z轴坐标
+
+position  定位
+
+取值    static  静态定定位
+
+                   relative  相对定位
+
+                   absolute  绝对定位
+
+                   fixed          固定定位
+
+表格属性
+border-collapse 边框合并
+
+取值:        collapse 合并
+
+                   separate 分开
+
+border-spacing  边框间距
+
+caption-side:  标题所在方位
+
+文本属性
+color                  (文本)颜色
+
+direction          文本方向
+
+取值:        ltr:  left to right 从左至右
+
+                   rtl:    right to left 从右至左
+
+letter-spacing  字母间隔
+
+line-height         行高
+
+text-align                     文本对其
+
+text-decoration  文本装饰
+
+取值:        underline 下划线
+
+                   overline 上划线
+
+                   line-through 删除线
+
+                   none         文本无修饰
+
+text-indent         文本缩进
+
+text-transform         文本转换
+
+取值:        capitalize 单词首字母大写
+
+                   uppercase 大写字母
+
+                   lowercase  小写字母
+
+vertical-align     垂直对齐
+
+white-space      空白符
+
+word-spacing     单词间距
+
+save [seɪv] vt. 救；节省；保存 
+savepoint ['seɪvpɔɪnt] n. 保存点 ( 关键字 )
+enclosed  [ɪn'kləʊzd] adj. 被附上的；围住的 ( MySQL导出格式化 fields enclosed by … )
+lock [lɒk] n. 锁; vt. 锁(住)  ( row lock 行锁; table lock 表锁 )
+terminate ['tɜːmɪneɪt] vt. 结束；终止；期满  ( MySQL导出格式化 fields terminated by … )
+restore [rɪ'stɔː(r)] vt. 恢复；归还；还原
+backup ['bækʌp] n. 后备；[计]备份文件
+dump [dʌmp] vt. 倾倒；[计]转储  ( mysql程序 mysqldump; PHP函数 var_dump() )
+fetch [fetʃ] v. 取来, n. 取得 (PHP函数 mysql_fetch_assoc() )
+refresh  [rɪ'freʃ]  v.更新；刷新；(使)恢复精神  ( header(“refresh:3;url=…”) )
+scan [skæn] vt. 扫描;浏览;细看 ( PHP函数 scandir() )
+temporary ['temprəri] adj. 暂时的；临时的 (1. create temporary table tbName 创建临时表; 2. 视图算法 temptable )
+strict [strɪkt] adj. 严格的；精确的 ( 表示严格模式的常用单词 )
+cascade [kæ'skeɪd] n. 小瀑布；串联; 级联；层叠 ( CSS = cascading style sheet )
+cross [krɒs]  vt. 穿过；交叉 adj. 交叉的 n.十字架；十字形 (  cross jion 交叉连接 )
+underlying [ˌʌndə'laɪɪŋ] adj. 潜在的；隐含的；在下面的；基本的 ( underlying table 基表 )
+subquery [sʌbk'wiərɪ] n. 子查询
+unique  [ju'niːk] adj. 独特的；唯一的 ( 关键字 )
+qualifier ['kwɒlɪfaɪə(r)] n. 限定句; 限定符
+table qualifier 表限定符 ( select tbName.colName from tbName, 红色部分为表限定符 )
+redundant [rɪ'dʌndənt] adj 多余的；过多的；冗余的  ( data redundant 数据冗余 )
+distinct  [dɪ'stɪŋkt] adj. 明显的；不同的；清晰的
+ambiguous [æm'bɪɡjuəs] adj. 模棱两可的；含糊不清的
+clause [klɔːz]  n. 条款；从句；分句
+subclause 子句 ( 五子句: where|group by |having by |order by |limit )
+optional  ['ɒpʃənl] adj. 任选的；可选的
+replace  [rɪ'pleɪs] vt. 取代；替代
+between  [bɪ'twiːn] prep. 在..之间 adv. 在中间  ( 使用：between num1 and num2 )
+natural ['nætʃrəl] adj. 自然的；天然的 ( 使用 natrual join )
+tiny  ['taɪni] adj. 极小的；微小的 ( tinyint : 1个字节 )
+small [smɔːl] adj. 小的; 年幼的 ( smallint: 2个字节 ) 
+medium ['miːdiəm] adj. 中等的；适中的 n. 手段；媒介；媒体 ( mediumint: 3个字节 ) 
+big [bɪɡ] adj. 大的；重要的 ( bigint: 8个字节 )
+positive ['pɒzətɪv] adj. 积极的；肯定的；正数的 
+negative ['neɡətɪv] adj. 否定的；负的；消极的；负面的    
+block [blɒk] n. 街区；木块；[计]块 ; 阻塞物vt. 阻塞  ( block comment 块级注释 )
+master ['mɑːstə(r)] adj.主要的；精通的 n. 主人；专家 vt. 控制；精通
+a master table 主表
+manipulate [mə'nɪpjuleɪt] vt. 操作；操纵；篡改
+manipulation [məˌnɪpju'leɪʃn] n. 操纵；控制；篡改 ( DML=数据操作语言 )
+store  [stɔː(r)] n. 商店；贮藏 vt. 存储；贮藏
+stored [stɔːd] adj. 存信息的；存储的
+a stored function 存储函数
+a stored procedure 存储过程
+view  [vjuː] n. 视图；视野；简介； vt. 考虑；把..视为 ( 使用: create view vName as … )
+union ['juːniən] n. 结合；工会; [数]并；并集 ( 使用: select * from …  union  select * from … )
+trigger  ['trɪɡə(r)] vt. 使发生；触发；使运行 n. 触发器( [insert,update,delete] * [before,after] )
+procedure [prə'siːdʒə(r)] n.程序；手续；步骤  (MySQL关键字)
+declare [dɪ'kleə(r)] vt. 宣布(声明)；申报；声明  ( MySQL存储函数中 声明局部变量 )
+traffic  ['træfɪk] n. 交通量；流量
+database traffic 数据库流量
+quit  [kwɪt] vt. 停止；离开；退出；辞职   ( MySQL关键字, 退出mysql的三种方式:
+quit;   exit;   \q )
+
+implicit [ɪm'plɪsɪt] adj. 含蓄的；绝对的；无疑问的；隐式的；暗示的
+explicit  [ɪk'splɪsɪt] adj. 明确的；清晰的；清楚的；显式的
+schema ['skiːmə] n. 图解；计划；模式；纲要 (系统数据库：information_schema)
+performance  [pə'fɔːməns] n. 表演；实行；表现；性能；业绩 ( 系统数据库：performance_schema )
+integrity [ɪn'teɡrəti] n. 完整
+constraint [kən'streɪnt]  n. 约束；限制；约束条件
+integrity constraint 完整性约束 ( 为保证数据库中数据的正确性和完整性和相容性，对关系模型提出的某种约束条件或规则 )
+exist [ɪɡ'zɪst] vi. 存在；生存；或者
+inner  ['ɪnə(r)] adj. 内心的；内部的；里面的 n.里面
+join [dʒɔɪn] n. 连接；加入；参与 ( inner join 内连接; outer join 外连接; natural join 自然连接; self join 自连接; left join 左连接; right join右连接, cross join 交叉链接 )
+import  ['ɪmpɔːt] n. 进口；进口商品 vt. 进口；输入；[计]导入 
+export ['ekspɔːt] n. 输出；出口 vt. 输出；出口；从存储器输出信息; [计]导出
+spreadsheet  ['spredʃiːt] n. 电子表格软件；电子表格 ( 如excel; 经常会要求将MySQL数据以spreadsheet的格式导出 )
+use [juːs] vt. 使用  (使用数据库 use dbName )
+group [ɡruːp] n. 组，群 vt.把..分类 ( select … group by column [, column] 以指定列分组 )
+transaction  [træn'zækʃn] n. 事务; 交易；办理；处理 ( 开启事务:start trasaction; )
+commit [kə'mɪt] vt.把…提交给; 犯罪；承诺; 委托 ( 事务提交命令:commit; 系统变量 autocommit;   )
+atomicity [ˌætəm'ɪsɪti] n. [计]原子性  ( ACID 见缩略词 )
+consistency [kən'sɪstənsɪ] n. 连贯; [计]一致性  ( ACID 见缩略词 )
+isolation  [ˌaɪsə'leɪʃn] n. 隔离；孤立 ( ACID 见缩略词 )
+durability [ˌdjʊərə'bɪləti] n. 持久性; 耐久性 ( ACID 见缩略词 )
+structured ['strʌktʃəd] adj. 有组织的；有安排的；结构化的 ( SQL 中的 S )
+query ['kwɪəri] vt. 质问；[计]查询
+language ['læŋɡwɪdʒ] n. 语言
+management ['mænɪdʒmənt] n. 管理；管理部门 ( DBMS = 数据库管理系统, 见缩略词 )
+relational [rɪ'leɪʃənl] adj. 有关系的；亲属的；有联系的
+oracle ['ɒrəkl] n. 甲骨文 ( 另指代Oracle公司或其主要产品Oracle数据库 )
+database  ['deɪtəbeɪs] n. 数据库 ( 创建数据库: create database dbName; )
+table ['teɪbl] n.表格；桌子；目录 (联想: HTML标签<table>)
+record  ['rekɔːd] n. 记录；唱片 ( 即数据表中的数据 )
+row [rəʊ] n. 排；行
+column ['kɒləm] n. 专栏；列；柱；柱形物
+field  [fiːld] n. 字段；田地；领域  (列是字段的结构[术语列更倾向于描述结构]，字段是列的表现形式[术语字段更倾向于描述值])
+metadata ['metədeɪtə] n. [计]元数据  (描述数据的数据, 如数据库，数据表的结构信息; 又或 HTML文档中<meta>标签中的内容)
+password ['pɑːswɜːd] n. 口令；密码 ( MYSQL函数 password(), 修改用户密码必须使用此此函数 )
+unsigned ['ʌn'saɪnd] 无符号的；未签约的；未签名的 ( 整数类型列: colName int unsigned …)
+single ['sɪŋɡl] adj. 单个的；单一的
+comment  ['kɒment] n. 注释；评论 ( 多行注释: multiline comment / block comment
+单行注释: single-line comment; 字段属性 comment在字段定义中添加字段注释 )
+
+title ['taɪtl] n. 标题；称号；头衔 vt.加头衔于 ( 测试常用 )
+nickname  ['nɪkneɪm] n. 绰号；昵称  ( 测试常用 )
+charset [t'ʃɑːset] n. 字符集 ( character set 的缩写 )
+collation  [kə'leɪʃn] n. 整理；校对；[计]校对集 (校对集用于对字符形式存储的数据之间大小的比较)
+set [set] n. 集合  ( 同义词 collection, MySQL的SET数据类型 )
+nullable ['nʌleɪbl] adj. [计]可空的
+
+increment ['ɪŋkrəmənt] n. 增量；增加；增值  ( 字段选项：auto_increment )
+definition  [ˌdefɪ'nɪʃn] n. 定义；阐释；清晰度；分辨率
+
+limit  ['lɪmɪt]  n.限度；限制 vt.限制；限定 ( 语句：limit start, num )
+fuzzy ['fʌzi] adj. 模糊的；毛茸茸的 ( fuzzy query: 模糊查询, 如 show variable like ‘charset%’ )
+like  [laɪk] prep. 像 conj. 如同
+index  ['ɪndeks] n. 指数；索引 ( MySQL中为索引，数组中也称下标 )
+root  [ruːt] n. 根；根源；根本  (1. linux 或 mysql的超级用户名 2.代表根目录,如 linux中的'\')
+
+primary ['praɪməri] adj. 首要的；主要的 ( primary key 主键；定义复合主键 primary key(col1, …, colN) )
+foreign ['fɒrən] adj. 外国的；外来的
+foreign key 外键  ( 其他表的主键作为本表的列 )
+retrieve  [rɪ'triːv] vt. 恢复；取回；[计]检索 ( retrieve data 检索数据 )
+senstive ['sensətɪv] adj. 灵敏的；敏感的；感光的；易受伤害的 n. 敏感的人
+case-senstive  adj. 大小写敏感的；区别大小写的 ( uppercase lowercase; 校对集 utf8_general_cs )
+case-insenstive  adj. 大小写不敏感；不区别大小写的 (同上; 校对集 utf8_general_ci )
+skip  [skɪp] vt. 跳过；略过；遗漏 ( 选项：--skip-grant-table 跳过授权表启动mysql服务)
+range [reɪndʒ] n. 范围；射程；[数]值域
+out of range 超出范围
+truncated  ['trʌŋkeɪtɪd] adj. 被截的；缩短的
+duplicate  ['djuːplɪkət] n. 副本 adj. 完全一样的；复制的；重复的
+entry ['entri] n. 条目；入口；进入  ( dupulicate entry 重复的条目 )
+mismatch ['mɪsmætʃ] n. 配错；不相匹配 vi. 配错；配合不当
+match  [mætʃ]  vt.和..相配；匹配(  row matched 匹配的行)
+affected  [ə'fektɪd] adj.受影响的 ( row affected 受影响的行, MySQL中默认指代在一条语句的执行过程中内容发生过实质改变的行)
+unknown [ˌʌn'nəʊn] adj. 未知的；不出名的
+unmatched  [ˌʌn'mætʃt] adj. 不相配的
+correct  [kə'rekt] adj. 正确的；得体的 v. 改正；纠正
+incorrect  [ˌɪnkə'rekt] adj. 不正确的；错误的
+
+insert  [ɪn'sɜːt] vt. 插入；嵌入 n. 插入物  ( 插入行的命令 )
+
+update [ˌʌp'deɪt] vt. 更新；升级 ( 修改行内容 )
+
+drop [drɒp] vt. 落下；跌倒；放弃 ( 用于删除数据库和表 )
+
+show  [ʃəʊ] vt. 显示 ( 显示 数据库或表或列的元数据 )
+
+alter ['ɔːltə(r)] vt. 改变；更改 ( 用于更改表结构 )
+
+rename  [ˌriː'neɪm] v. 重新命令 (重命名表)
+
+set [set] vt. 设置；设定 ( 设置变量 set @var=’var-value’ )
+
+flush  [flʌʃ]  n. [计]冲洗
+
+privilege  ['prɪvəlɪdʒ] n. 特权；荣幸tit
+
+modify ['mɒdɪfaɪ] vt. 修改；更改 ( 修改表结构，配合alter命令使用 )
+
+change [tʃeɪndʒ]  n. 变化；零钱 vt. 改变  ( 修改表名字，配合alter命令使用 )
+
+add  [æd] vt. 加；增加；补充 ( 修改表结构，配合alter命令使用 )
+
+
+revoke [rɪ'vəʊk] vt. 撤回；取消；废除  (MySQL关键字,对应命令grant )
+
+grant [ɡrɑːnt] vt. 授权；同意
+
+rollback  ['rəʊlbæk] vt. [计]回滚; 击退; 回降 (MySQL命令: rollback  相关：事务操作)
+
+
+wizard  ['wɪzəd] n. [计]向导程序; 男巫; 术士
+install  [ɪn'stɔːl] vt. 安装；安置
+installation [ˌɪnstə'leɪʃn] n. 安装；安置 ( installation wizard 程序安装向导 )
+completed  [kəm'pliːtɪd] adj. 已完成的； vi. 完成
+finish  ['fɪnɪʃ] v. 完成；结束
+component  [kəm'pəʊnənt] n.元件；组成部分  adj. 组成的；构成的
+program component 程序组件
+development component 开发组件
+setup  ['setʌp] n. 装备；安装；计划
+feature ['fiːtʃə(r)] n. 特征；特色 vt. 以..为特色
+program features 程序特性
+recommend  [ˌrekə'mend] vt. 推荐；建议
+advanced  [əd'vɑːnst] adj; 高级的；先进的
+back [bæk] n. 后面，后背 vt. 支持；后退 ( 相关: next 下一步 )
+cancel ['kænsl] vt. 取消; 作废; 注销 n. 取消；删除
+typical ['tɪpɪkl] adj. 特有的；典型的；有代表性的
+custom  ['kʌstəm]  adj.定做的；定制的 n. 习惯；风俗；惯例
+status ['steɪtəs] n. 状态；地位；身份
+settings n. 设置
+enterprise ['entəpraɪz] n.企业；事业；进取心
+edition [ɪ'dɪʃn] n. 版本；版
+the MySQL enterprise :MySQL企业版
+
+launch  [lɔːntʃ] vt. 启动；发射；推出(新产品)
+optimal ['ɒptɪməl] adj. 最理想的；最佳的
+detailed  ['diːteɪld] adj. 详细的
+detailed configuration 详细配置
+standard  ['stændəd] n. 标准；规格 adj. 标准的；规范的
+standard configuration 标准配置
+usage ['juːsɪdʒ] n. 使用；利用度；使用度 ( CPU usage: CPU使用度 )
+developer [dɪ'veləpə(r)] n. 开发者
+machine  [mə'ʃiːn] n. 机器
+dedicated ['dedɪkeɪtɪd] adj. 专注的；献身的；专用的
+( dedicated MySQL Server Machine : MySQL专用服务器 )
+
+utilize  ['juːtəlaɪz] vt. 使用；利用
+available  [ə'veɪləbl] adj. 可利用的；可得到的；有空的
+available memory 空闲内存; 可用内存
+connect [kə'nekt] vt. 连接；连通；联系
+connection  [kə'nekʃn] n. 联系；关联；链接
+execute  ['eksɪkjuːt] vt. 执行；实行
+redirect  [ˌriːdə'rekt] v. 重新传入；重新寄送; [计]重定向
+concurrent [kən'kʌrənt] adj. 同时发生的
+concurrent connection 并发连接
+firewall ['faɪəwɔːl] n. 防火墙
+enable [ɪ'neɪbl] vt. 是能够；使可能; [计]启用/开启
+disable [dɪs'eɪbl] v. 使…失去能力; [计]禁用/关闭
+multilingualism  [mʌltɪ'lɪŋɡwəlɪzəm] 多语制；多语现象
+polylingualism ['pɒli:lɪŋɡwəlɪzəm] 多语制
+specify  ['spesɪfaɪ] vt. 详细说明；指定；阐述
+( specify the character set to use : 指定使用的字符集 )
+
+remote  [rɪ'məʊt] adj. 远程的；遥远的；偏僻的 n. 远程操作
+remote host 远程主机
+retype [rɪ'taɪp] vt. 重新打(字) ( retype the password 重新输入密码 )
+anonymous [ə'nɒnɪməs] adj. 匿名的；无名的；没有特色的
+anonymous function 匿名函数
+account  [ə'kaʊnt] n.账户；账目；描述；解释
+anonymous account 匿名账户
+secure  [sɪ'kjʊə(r)] adj. 安全的；牢靠的；稳妥的
+security [sə'kjʊrəti] n. 安全；保证
+insecure [ˌɪnsɪ'kjʊə(r)] adj. 不安全的；不稳妥的；不可靠的；缺乏安全感觉的；缺乏信心的
+
+punctuation [ˌpʌŋktʃu'eɪʃn] n. 标点；强调
+comma ['kɒmə] n. 逗号；停顿；间歇
+colon ['kəʊlən] n. 冒号
+semicolon [ˌsemi'kəʊlən] n. 分号
+period  ['pɪəriəd] n. 句号；一段时期；周期
+parenthesis  [pə'renθəsɪs] n.圆括号；插入语
+bracket  ['brækɪt] n. 括号
+curly  ['kɜːli] adj. 卷曲的
+curly bracket 大括号；波形括号
+square bracket 方括号
+angular  ['æŋɡjələ(r)] adj. 有角的；消瘦的；有尖角的
+angular bracket 尖括号
+quote [kwəʊt] n. 引号；引用；vt.引述；报价
+single quote  n. 单引号
+double quote  n.  双引号
+backtick  n. 反引号 (又作backqoute, 数字键1左边的那个，MySQL中用于包裹含有特殊字符的数据库名,表名 )
+dash n. 破折号 vt. 猛冲
+slash  [slæʃ]  n. 正斜线(/)  vt. 猛砍  (Window下和Linux下的路径分隔符;正则表达式边界)
+backslash ['bækslæʃ] n. 反斜线(\)  (Window下的路径分割；转义符的组成部分)
+ellipsis [ɪ'lɪpsɪs] n. 省略；省略号
+overwrite [ˌəʊvə'raɪt] vt. 重写；写得过多；重叠写在…上面
+extra ['ekstrə] adj. 额外的 n. 额外之物
+virtual ['vɜːtʃuəl] adj. 实质的; [计]虚拟的  ( virtualhost 虚拟主机)
+include [ɪn'kluːd] vt. 包括；包含；列入 (C语言中的#include预处理指令，PHP中的include()函数, apache配置文件中的include指令)
+alias ['eɪliəs] n. 别名；化名 (Apache配置中为外部资源目录设置别名使用alias指令)
+order ['ɔːdə(r)] n. 顺序; 订单；命令 (httpd.conf中的配置：order allow, deny)
+info = information  [ˌɪnfə'meɪʃn] n. 信息；情报；资料
+domain [də'meɪn] n. 领地；领域；范围
+program ['prəʊɡræm] n. 计划；程序 vt. 编制程序; 安排
+operation [ˌɒpə'reɪʃn] n. 操作；运转；手术
+system  ['sɪstəm] n. 系统；体系；制度
+test [test] n. 考验；试验；测试 ( 常用作变量命名、类命名、函数命令，用来输出或执行以测试脚本或程序)
+commercial  [kə'mɜːʃl] adj. 商业的        (顶级域名 .com)
+organization [ˌɔːɡənaɪ'zeɪʃn] n. 机构；组织 (顶级域名 .org)
+government ['ɡʌvənmənt] n.政府；政体；统治
+governmental [ˌɡʌvn'mentl] adj. 政府的；统治的         (顶级域名 .gov)
+entity ['entəti] n. 实体; 机构  ( HTML entity: 比如&nbsp;  &lt; )
+network  ['netwɜːk] n. 网络, 网点
+service ['sɜːvɪs] n. 服务
+center ['sentə] n. 中心；集中点；中心站
+other ['ʌðə(r)] adj. 其他的；另外的
+education [ˌedʒu'keɪʃn] n. 教育
+educational [ˌedʒu'keɪʃənl] n. 教育的；有教育意义的
+institution [ˌɪnstɪ'tjuːʃn] n. 机构
+international [ˌɪntə'næʃnəl] adj.国际的；世界的
+military  ['mɪlətri] adj. 军队的 n. 军事
+united  [ju'naɪtɪd] adj. 联合的；一致的
+state [steɪt] n.州；国家；状态
+
+apache [ə'pætʃi]  n. 一种HTTP服务器; 
+dynamic [daɪ'næmɪk] adj. 动力的；动态的
+link [lɪŋk]  n. 环；联系；链接
+multi 前缀  表示 ”多个，多种” (如 MIME )
+purpose ['pɜːpəs] n. 目的；意图；决心
+internet ['ɪntənet] n. 因特网
+mail  [meɪl] n. 邮件；邮政 vt. 邮寄 ( <a>标签中 mailto )
+development [dɪ'veləpmənt] n. 发展; 开发; [计](程序的)开发版
+production [prə'dʌkʃn] n. 生产; 产量; 结果; [计](程序的)生产版
+log [lɒɡ] n. (航海、飞行)日志; (船)计程仪
+common  ['kɒmən] adj. 常见的；共同的；普通的
+gateway  ['ɡeɪtweɪ] n. 门；通路；[计]网关
+icon  ['aɪkɒn] n.  偶像；象征；[计]图标
+invalid  [ɪn'vælɪd]  adj.无效的 n. 病人；残疾人 ( 如执行’httpd -t’提示 ‘path is invalid’ (路径无效) )
+legal ['liːɡl] adj. 法定的；法律的；合法的
+illegal [ɪ'liːɡl] adj. 非法的；不合法的 n.非法移民 (如：’httpd -t’ 提示 ‘illegal options indexes’)
+manual ['mænjuəl] n.指南；手册 adj. 手工的；体力的
+module  ['mɒdjuːl] n. 组件；单元；模块
+deamon [ˈdi:mən] n.守护进程 (即监听是否有客户程序请求服务，并对请求做出响应的进程；如httpd, mysqld, ftpd)
+allow [ə'laʊ] vt. 允许
+deny [dɪ'naɪ] vt. 拒绝；拒绝承认；拒绝给予
+override [ˌəʊvə'raɪd] v.推翻；无视；[计]覆盖 ( 与overwrite同为面向对象编程中的术语 )
+
+construct	构造
+static		禁止的
+parent		父级
+child		孩子
+public		公众的 
+protected	受保护的
+private		私有的
+extends		继承
+set			设置
+get			获取
+
+create		创造
+select		选择
+insert into	插入
+replace		取代替换(防止冲突)
+update		更新
+delete		删除
+decimal		小数
+unsigned	无符号
+limit		限定
+order		次序
+
+main		主要的
+menu		菜单
+drag		拖拽
+privilege	权限
+login		登录
+sign in		登录
+list		列表
+label		标签
+category	分类
+trash		回收站
+Dispatch	分配
+
+size		大小
+redirect	重定向
+restore		恢复
+remove		去除
+move		移动
+auto		自动
+captcha		验证码
+
+edit		编辑
+attribute	属性
+param		参数
+check		检查
+decscription描述
+start		开始
+over		结束
+open		开始
+close		关闭
+read		读取
+write		写
+level		等级
+hidden		隐藏
+down		下
+up			上
+save		保存
+path		路径
+thumb		缩略图
+water		水
+price		价格
+single		单
+sale		销售
+site		位置
+suffix		后缀
+success		成功
+failure		失败
+
+
+````
+variable 	变量 
+member		成员；会员；部分
+basic		基本；基础训练；
+standard	规范；正常的水平；应达到的标准；行为标准；
+full		完全；极盛时；
+author		作家；作者 vt. 编写；创作
+expire		终止；期满；失效 ( setcookie()的可选参数，用于设置cookie的失效日期 )
+destroy		破坏；消灭；摧毁 ( session_destroy() 销毁session；imagedestroy() )
+garbage		垃圾；废物 ( garbage collection:垃圾回收机制，PHP、JAVA等语言中重要的自动回收(没有连接计数指向的)内存的机制 )
+
+contain		包含  ( 常出现在错误提示语句 )
+
+copy		复制品；副本 vt. 复制；抄写；抄袭
+clone		克隆；复制 ( 操作符clone; 魔术方法 __clone() )
+prepare		准备；预备；[计]预处理
+design		设计；图样 vt. 设计；计划
+pattern		模式；图案；式样
+design pattern 设计模式
+
+
+const	= constant  ['kɒnstənt]  n. 常量；恒量 adj. 不变的；经常的 (PHP的const关键字)
+md5		= message digest algorithm 信息摘要算法5 ( md5()函数 )
+src		= source  [sɔːs] n. 来源；发源地；原始资料  v. 从…中获得
+dst		= destination [ˌdestɪ'neɪʃn]  n. 目的地；重点
+max		= maximun ['mæksɪmən] n. 最大值
+min		= minimum ['mɪnɪməm] adj. 最小的；最少的
+alpha.	= alphabet ['ælfəbet] n.字母表
+JavaEE 	= java enterprise edition: java企业版
+sec		= second ['sekənd] adj.第二的; n.秒 ( 执行语句之后，最后一行显示 如‘0.08 sec’ )
+enum	= enumerator  [ɪ'njuːməreɪtə] n. 计数器 ( MySQL的ENUM数据类型 )
+asc		= ascending  [ə'sendɪŋ] adj. 上升的；升序( select … order by colName asc )
+desc	= descending [dɪ'sendɪŋ] adj. 下降的；降序( select … order by colName desc )
+desc	= describe [dɪ'skraɪb] vt. 描述；形容  ( desc tbName: 显示表tbName的列信息 )
+lib		= library ['laɪbrəri] n.程序库；图书馆; 藏书
+admin	= administrator [əd'mɪnɪstreɪtə(r)] n.  管理员；行政人员
+ext		= extension [ɪk'stenʃn] n. 延长; 扩充; [计]扩展名 ( 如 file.txt中的 .txt )
+conf	= configuration [kənˌfɪɡə'reɪʃn] n.结构; 布局; [计]配置 (如 httpd.conf)
+bin		= binary ['baɪnəri] n. 二进制 adj. 二进制的 ( bin目录，通常存放可执行程序的目录 )
+dir		= directory [də'rektəri] n. 目录；指南 ( Linux和DOS命令，用于列出当前目录下的文件列表)
+cd		= change directory 改变目录 (Linux 和DOS命令，用于改变当前工作目录)
+
+
+缩略词
+RBAC = Role Base Access Controller 基于角色的访问控制功能
+
+RAM  = Random Access Memory 随机存取存储器(即内存)
+
+PDO  = PHP Data Object  ( PHP数据对象 )
+
+EOF  = End Of File 文件终结符
+
+EOL  = End Of Line  行终结符
+
+OOP  = Object Oriented Programming 面向对象编程
+
+PEAR = PHP Extension And Application Repository  ( PHP扩展与应用库 )
+
+SPL  = Standard PHP Library 标准PHP内库
+
+DSN  = Data Source Name 数据源名称
+
+DOM  = Document Object Model  文档对象模型
+
+BOM  = Browser Object Model     浏览器对象模型
+
+JSON = JavaScript Object Notation  javascript对象表示法
+
+AJAX = Asynchronous Javascript And XML  异步javascript和XML
+
+NaN  = Not a Number  不是数字
+
+DDL  = Data Description Language 数据描述语言
+
+DML  = Data Manipulation Language 数据操纵语言
+
+DCL  = Data Control Language 数据控制语言
+
+CSV  = Comma Separated Values 逗号分离值  ( val1,val2,val3 形式的文件，扩展名为.cvs，可以直接使用excel打开 )
+
+SQL  = structured query language 结构化查询语言
+
+DBMS = database management system 数据库管理系统
+
+RDM  = relational database 关系型数据库
+
+CURD = Create Update Read(Retrieve) Delete (数据库的)增删改查操作
+
+ACID = Atomicity/Consistency/Isolation/Durability 原子性/一致性/隔离性/持久性
+
+ISAM = Indexed Sequential Access Method(索引顺序存取方法)
+          (数据库事务正确执行的四个基本要素的缩写)
+
+DLL  = Dynamic Link Library  (Windows下的动态库，类似于Linux的.so文件)
+
+API  = Application Programming Interface 应用编程接口(提供给开发人员的功能函数)
+
+UI   = User Interface 用户接口 (软件中用于和用户交互的部分)
+
+DOS  = Disk Operation System 磁盘操作系统 (微软早期的操作系统，即在Windos的开始菜单中输入”cmd”，弹出的来的东西)
+
+MIME = multipurpose internet mail extension (多用途互联网邮件扩展类型，是设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，该浏览器会自动使用指定的应用程序来打开。例如表单中指定上传文件时enctype=”multipart/form-data”或enctype=”application/x-www-form-urlencoded”。Apache中指定PHP文件的扩展名 AddHandler application/x-httpd-php .php )
+
+DN   = Domain Name 域名
+
+DNS  = Domain Name System 域名系统 (将域名解析为对应IP地址的系统)
+
+.com = Commercial Organizations 商业组织，公司
+
+.gov = Governmental entities 政府部门
+
+.net = Network operations and service centers 网络服务商
+
+.org = Other organizations 非盈利组织 (其他组织)
+
+.edu = Educational institution 教研机构
+
+.int = International organization 国际组织
+
+.mil = Military 美国军部
+
+.cn  = China  ['tʃaɪnə] n. 中国
+
+.us  = United States [ju'naɪtɪd s'teɪts] 美国  ( 州的联合, 统一的多个州 )
+
+.jp  = Japanese [ˌdʒæpə'niːz] n. 日本人；日本

@@ -1,0 +1,127 @@
+xml(Extensible Markup Language) 可扩展标记语言
+xml的作用
+1	程序间通讯的标准
+2	配置文件
+3	小型数据库
+4	规范数据格式
+
+
+文档声明 	<?xml version="1.0" encoding="UTF-8"?>
+	version		版本号
+	encoding	编码格式
+	[standalone]是否依靠外部dtd文件 
+		yes	不依靠任何外部文件直接运行
+		no	默认.可以依靠外部dtd约束文件运行
+		
+元素			xml中元素/标签/节点 都是指<>
+	元素规范
+		一个标签分为起始和结束标签
+		一个标签中可以嵌套若干子标签,但所有标签必须合理的嵌套,不予许有交叉嵌套
+		一个XML文档必须有且仅有一个跟标签,其他标签哦都是这个根标签的子标签
+	元素命名
+		元素的名称可以包含字母,数字,减号,下划线和英文句点
+		严格区分大小写
+		只能以字母或下划线开头
+		不能以xml(或XML,Xml)开头
+		名称字符之间不能有空格或制表符
+
+元素属性
+	一个元素可以有多个属性
+	属性值一定要用引号(单引号或双引号)引起来
+	属性名称的命名规范与袁术的命名规范相同
+	元素中的属性是不允许重复的
+	标签属性所代表的信息也可以被改成用子元素的形式来描述
+
+注释			<!--注释内容-->
+
+XML中,空格会被保留
+
+XML中存储换行
+	windows	回车符(CR) 换行符(LF)
+	Unix	LF
+	Mac		CR
+	
+特殊字符(预定义的实体引用)
+	&lt;	<
+	&gt;	>
+	&amp;	&
+	$apos;	'
+	$quot;	"
+	
+CDATA区段		当特殊字符比较多的时候可以采用CDATA区段进行处理
+<![CDATA[要填写的内容]]>
+
+处理指令		<?xml-stylesheet type="text/css" href="style.css"?>
+	type	文档类型
+	href	连接的外部文件
+	
+文档类型定义	DTD(Document Type Definition)  约束XML的书写规范
+	XML技术中,可以编写一个文档来约束一个XML的书写规范,这个文档称之为约束
+	约束文档定义了在XML中允许出现的元素名称,属性及元素出现的顺序等等
+	格式良好的XML		遵循XML语法的XML
+	有效的XML		遵循DTD约束文档的XML
+
+	引入DTD的方式 3种
+		内部DTD
+			<!DOCTYPE 根元素[元素声明]>
+		外部DTD
+			<!DOCTYPE 根元素 SYSTEM "文件名">
+		公用DTD
+			<!DOCTYEP 根元素 PUBLIC DTD标识名 DTD连接地址>
+	元素
+		<!ELEMENT 元素名 元素类型>
+			元素类型
+				(#PCDATA)		可包含任何字符数据,不包含任何子元素
+				EMPTY			不包含子元素和文本,可有属性<hr /><br />
+				ANY				可包含任何在DTD定义的元素内容(常用于设置根元素)
+			定义规则
+				(子元素)			定义子元素出现的次数为1
+				(子元素1,子元素2)	定义子元素出现的个数和顺序
+				(子元素+)		定义子元素出现1次或多次
+				(子元素*)		定义子元素出现0次或多次
+				(子元素?)		定义子元素出现0次或1次
+				(子元素1|子元素2)	定义子元素1或子元素2只能出现一个,互斥元素
+	属性	
+		<!ATTLIST 元素名称 属性名称 属性类型 默认值>
+			属性类型
+				CDATA			字符数据(character data)
+				(en1|en2|..)	枚举列表中的一个值
+				ID				唯一的id
+				IDREF			另外一个元素的id
+				IDREFS			其他id的列表
+				NMTOKEN			合法的XML名称
+				NMTOKENS		个发的XML名称的列表
+				ENTITY			一个实体
+				ENTITIES		一个实体列表
+				NOTATION		符号的名称
+				xml:			一个预定义的XML值
+			默认值参数
+				值				默认的值
+				#REQUIRED		必须的
+				#IMPLIED		不是必须的
+				#FIXED value	值是固定的
+	实体
+		实体适用于定义引用普通文本或特殊字符的快捷方式的变量
+		实体引用是对实体的引用
+		实体可在内部或外部进行声明
+		
+		一个实体由三部分构成:一个和号(&),一个实体名称,以及一个分号(;)
+		内部实体
+			<!ENTITY 实体名称 "实体的值">
+		外部实体
+			<!ENTITY 实体名称 SYSTEM "URI/URL">
+			
+	IE内置校验器
+		<script language="javascript">
+			var xmlDoc = new ActiveXObject("Microsoft.XMLDOM")
+			xmlDoc.async="false"
+			xmlDoc.validateOnParse="true"
+			xmlDoc.load("note_dtd_error.xml")
+
+			document.write("<br>Error Code: ")
+			document.write(xmlDoc.parseError.errorCode)
+			document.write("<br>Error Reason: ")
+			document.write(xmlDoc.parseError.reason)
+			document.write("<br>Error Line: ")
+			document.write(xmlDoc.parseError.line)
+		</script>

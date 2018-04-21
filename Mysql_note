@@ -1,0 +1,959 @@
+//将某列内容按照用户自定义的顺序排序
+select name from table_name order by field(id,2,1,3);
+//字符串, 号分隔 查询
+WHERE FIND_IN_SET('1',list)
+//字段输出加上字符串
+separtor ''
+//去重
+distinct
+
+多个字段拼接
+	concat()  select concat('1','2','3') from test ;
+				123
+	concat_ws()
+
+group_concat(col)		由属于一组的列值连接组合而成的结果
+GROUP_CONCAT(CAST(B.buyer_id AS char))
+
+
+
+Standard 	推荐大多数用户下载
+Max       	除Standard的所有内容外, 还有一些附加的新特性, 这些特性还没有用过正式的测试发布, 主要用于提升用户的认识和体验
+Debug 		和Standard类似, 但是包括了一些调试信息, 会影响系统性能
+
+安装
+	rpm
+		rpm -ivh MySQL-*
+	yum
+		yum install mysql-server
+
+	大的门户把源码根据企业的需求制作成rpm, 搭建yum仓库, yum install xxx -y
+
+	源码
+
+
+	启动 关闭
+		./usr/bin/mysqld_safa &
+		./use/bin/mysqladmin -uroot shutdown
+
+
+
+
+cmake
+
+php 	mysql
+jsp 	oracle
+ASP.net sqlserver
+
+SQL	, Structured Query Language
+DBMS, Database Management System 数据库管理系统,简单说:就是管理数据的一个大型软件.DBMS主要对数据进行管理,维护等操作,或者对数据的安全性和完整性的处理.
+
+常见的DBMS系统:
+ACCESS:Microsoft公司开发的小型数据库管理系统;
+SQL SERVER:Microsoft公司开发的,面向大中型网站;
+Oracle:美国甲骨文公司开发的,大型或超大型数据方面的应用;
+MySQL:完美组合Linux+Apache+PHP+MySQL,MySQL是瑞典AB公司开发,现在被Oracle收购了.
+
+
+数据保存到文件
+	优点:简单,容易操作
+	缺点:
+		安全性不够
+		不利于保存海量的数据
+		不利于数据的管理(不利于数据的增删改查CRUD)
+		不利于程序php去操作 而且不利大并发处理
+
+
+ddl(数据定义语言)
+	alter create drop
+dml(数据操作语言)
+	insert update delete
+dql(数据查询语言)
+	select
+dcl(数据库控制语言)
+	savepoint commit rollback frant revoke
+
+
+
+
+
+//查看库
+mysqldump --no-data db_name -uroot -p
+//查看表字段信息
+mysql>show full fields from tb_name
+//查看建表语句
+SHOW CREATE TABLE tbName
+//查看所有表
+SHOW TABLE STATUS
+
+
+选择库		use DBName;
+声明字符集	set names gbk;
+关闭连接	exit	quit	\q
+
+新增数据库
+	create database [IF NOT EXISTS] DBName[CHARSET= COLLATE];	新增库
+		字符集设置(charset)	表示以后在当前数据库存储的数据,默认采用utf-8的字符集
+			要保证服务器能够真确识别个户端传过去的数据,只要保证character_set_client的字符集与客户端的字符集一致即可
+				set character_set_client = gbk;
+			要保证服务器能够正确的给客户端提供对应字符集的数据,只要保证character_set_results与客户端的字符集一致即可
+				set character_set_results = gbk;
+			连接器
+				set character_setconnection = gbk;
+		校队集设置(collate)	如何比较大小
+			校对集就是数据库进行比较的时候所采用的比较方式
+				_bin	使用二进制进行比较(区分大小写)
+				_ci(case insensitive)		大小写不敏感,不区分大小写(将某个字符转变成另外一个字符对应的大小写,从而再进行数值的比较)
+				_cs(case sensitive)			大小写敏感,区分大小写
+
+//删除库
+	drop database [IF EXISTS] DBName;
+
+//修改库
+alter database dbName 库属性				
+
+创建表
+	create table tbName(字段名 字段类型)engine=myisam default comment '注释' charset utf8 collate utf8_general_ci;
+	create table 表名 like 要复制的表结构
+//删除表
+	drop table tbName
+	truncate table tbName 		删除内容不删除定义
+
+//修改表字段
+	alter table tablename modify column ;
+//加字段
+	alter table tablename add column ;
+//删除字段
+	alter table tablename drop column ;
+//修改字段名
+	alter table tablename change oldcolumn newcolumn
+
+change和modify都可以修改表的定义, change能改名字
+
+
+
+增加数据
+	基本方式	insert [into] tbName [(字段列表)values(值列表)];
+					   [LOW_PRIORITY] 当数据不是从表格读出时,系统必须等待并且稍后插入
+					   [DELAYED]	  出入的数据将被缓存.如果该服务器繁忙,我们可以继续运行其他查询,而不是等待这个INSERT操作的完成IGNORE
+									[]  唯一键重复将自动忽略
+				insert into tbName [(column1,column2)] values
+				insert into tbName set name='',value='';
+	主键冲突方式	insert into 表名 values(值列表) on duplicate key update 字段 = 值
+	替换插入	replace into 表名 (字段列表) values(值列表)
+	蠕虫复制	insert into 表名 select * from 表名;
+
+
+更新数据
+	UPDATE [LOW_PRIORITY][IGNORE] tbName SET col1=expr1,...[WHERE condition][OEDER BY order_criteria][LIMIT number]
+	基本语法	update 表名 set 字段 = 值[where条件]
+	高级语法	update 表名 set 字段 = 值[where条件] [limit]
+	更新时可以多表操作
+
+删除数据
+	ELETE [LOW_PRIORITY] [QUICK] [IGNORE] FROM table [WHERE condition] [ORDER BY order_cols] [LIMIT munber]
+	基本语法	delete from 表名 [where条件]
+	高级语法	delete from 表名 [where条件] [limit]
+	删除 新建表 truncate
+	删除时可以多表操作
+	delete ls,gl from vc_level_set ls, vc_group_level gl where ls.id = 27 or ls.levelId = gl.levelId;
+
+查询数据
+	基础语法	select 字段列表 from 表名 [where条件]
+	高级语法	select [select选项] 表达式 [from子句][where子句][group by 子句][having 子句][order by子句][limit 子句]
+	语法		select [options] items [INTO file_datails] FROM tables [WHERE conditions][GROUP BY group_type [WITH ROLLUP]][HAVING where_definition][ORDER BY order_type][LIMIT limit_criteria][PROCEEDURE proc_name(arguments)][lock_options];
+	select选项	在查询得到数据是否需要进行合并 all获取所有数据(默认的) distinct将完全一致的记录进行合并
+	select表达式  凡是能够返回值的语句都称之为表达式 可以是字段,可以是运算过程,可以是函数 可以使用*代替所有的字段
+	from子句	用来指定数据源
+		普通:from表名
+		高级:from 表(不是真实存在的表,而是查询得到的结果 子查询)
+	where子句	通过条件来筛选数据
+		运算符
+			比较运算符	> >= < <= = != <> [not]in , brtween , is[not]null , [not]like , regexp
+				in	表示某个字段的值,在某个集合(包含多个数据)中出现
+				between and语法between A and B(A必须小于等于B)表示在某个区间(闭区间)
+			逻辑运算符	! not  && and  || or
+		模糊查询 like
+			语法 where 字段 like 'str通配符'
+			"%" 任意字符  "_" 单个字符
+	group by子句	分组统计(一般情况下group须与统计函数一起使用才有意义)
+ 	select goods(select max(shop_price) form ecs_goods group by cat_id)
+ 		语法 group by 字段
+		group by 字段 [asc|desc] 直接排序 根据分组字段进行排序
+		统计函数
+			AVG(平均值)		指定列的平均值
+			COUNT(项目)		如果指定一列,这将给出本列中非空(NULL)值得列数,如果在列前加DISTINCT单词,将得到本列中不同值得列数.如果指定COUNT(*),将得到包含空置(NULL)的行在内的行数
+			MIN(列)			指定列的最小值
+			MAX(列) 		指定列的最大值
+			STD(列)			指定列的标准背离值
+			STDDEV(列)		与STD(列)相同
+			SUN(列)			指定列的所有值的和
+	having子句	功能与where一样 having可以是
+	order by子句	主要是对字段进行排序,asc默认的,desc降序排序,比较的依据是校对集
+		语法 order 字段1 asc,字段2 desc
+		order by rand()	随机排列,效率不高
+	limit子句	限制数据查询的起始位置和返回数据的条数
+		语法 limit offset,number
+			offset	从查询得到结果中的第几条开始
+			number	一共返回多少记录(返回的记录数不一定完全等于number数量)
+
+
+
+
+
+
+
+
+查看
+	show databases;							查看所有库
+	show tables;							查看当前库下所有表
+	desc tbName;							查看表结构
+	describe tbName
+	show table status 						当前库下 所有表 详细信息
+	show table status WHERE Name LIKE '表名'
+	show full fields from tbName			取出表的所有字段信息
+	show create database dbName				查看建库语句
+	show create table tbName				查看建表语句
+	show collation							查看校对集
+	show character set						查看支持的字符集
+	show variables like 'character_set_%';	查看服务器对客户端的默认识别字符集
+	show databases like '';					模糊查询 %匹配任何内容 _表示匹配一个字符	要查找下划线需要转义字符/
+
+
+
+SELECT LAST_INSERT_ID()		当前id
+
+flush table tbName; 	刷新表
+
+
+
+
+
+别名	对某个数据源所起的简单的用来描述名字
+	语法	数据源 [as] 别名
+
+多表查询
+关联类型
+	笛卡尔乘积	所有表所有行的所有关联.实现方法,在列的名称之间指定一个逗号,而不是指定一个WHERE子句
+	完全关联		同上
+	交叉连接		同上,也可通过在关联的表名之间指定CROSS JOIN关键词而指定
+	内部关联 		如果没有WHERE条件,等价于完全关联.通常需要一个WHERE条件以使它成为真正的内部关联
+	等价关联		在关联中使用一个带'='号的条件表达式匹配来自不同表中的行.在SQL中,这是带WHERE子句的关联
+	左关联		试图匹配表的行并在不匹配的行中填入NULL,在SQL中使用LEFT JOIN关键词.用于查找要避免的值.类似地,可以使用RIGHT JOIN
+
+
+自查询
+子查询
+	where   使用in为多行
+
+
+基本子查询	(把内层查询结果当作外层查询的比较条件)	一个嵌套在另一个查询内部的查询
+		select nameid,amount from orders where amout = (select max(amount) from drders);
+		select nameid,amount from orders order by amout desc limit 1; //大多数RDBMS并不兼容,但是在MYQSL中.它的执行比子查询版本的查询效率高
+子查询操作符
+	ANY		如果子查询中的任何行比较条件为true,返回true
+		SELECT c1 FROM t1 WHERE c1 > ANY (SELECT c1 FROM t2);
+	IN 		等价于 = ANY
+		SELECT c1 FROM t1 WHERE c1 IN (SELECT c1 FROM t2);
+	SOME	ANY的别名;有时候更容易阅读
+		SELECT c1 FROM t1 WHERE c1 > SOME(SELECT c1 FROM t2);
+	ALL 	如果子查询中的所有行比较条件为true,返回true
+		SELECT c1 FROM t1 WHERE c1 > ALL (SELECT c1 FROM t2);
+	EXISTS	在内部查询中使用外部查询的结果  如果子查询中存在任何匹配行,EXISTS操作符将返回true.相反,如果子查询中没有人格匹配行,NOT EXISTS将返回true
+		SELECT isbn,title FROM books WHERE NOT EXISTS (SELECT * FROM order_items where order_items.isbn=books.isbn);
+行子查询	行子查询将返回整行,它可以与外部查询的整行进行比较.
+	SELECT c1,c2,c3 FROM t1 WHERE (c1,c2,c3) IN (SELECT c1,c2,c3 FROM t2);
+子查询作为临时表	可以再一个外部查询的FROM子句中使用子查询 (把内层的查询结果供外层再次查询)
+	SELECT * FROM (SELECT customerid,name FROM customers WHERE city='Box Hill') AS box_hill_customers;
+	//在子查询后面就是结束的括号,必须为子查询的结果定义一个别名.
+
+
+联合查询	将两个查询的结果合并到一起,将记录数合并,而字段数不变
+	语法	select 语句 union[union 选项]select 语句
+		union选项 all和distinct(默认的)
+
+连接查询
+	内连接	如果一张表的记录(有个字段记录另外一张表的主键),能够在另外一张表中匹配上,那么就保存,否则就不保存
+		左表	join关键字左边的表称之为左表
+		右表	join关键字右边的表称之为右表
+		语法	左表[inner]join 右表 on/where 连接条件
+		当在ON中设置的过滤条件列具有相同的名称，我们可以使用USING关键字来简写ON的过滤条件
+			select * from t1 join t2 using(id);
+	外连接	与内链接相似,如果主表(左外联结左表为主表,右外连接右表为主表)的记录在副表中匹配不上,那么该记录依然保留,只是副表字段都置空
+		语法	左表 left/right[outer] join 右表 on 连接条件
+		左外连接	以左表为主表,使用关键字left
+		右外连接	以右表为主表,使用关键字right
+		对于OUTER JOIN，同样的也可以使用USING来简化ON子句
+			select * from t1 left join t2 using(id);
+	交叉连接	笛卡尔积
+		语法	左表 cross join 右表
+	自然连接	两个表之间的连接不需要指定连接条件,系统自动找条件,并按照条件进行处理
+		语法	左表 natural [left/right] join 右表
+				左表 natural join 右表:自然内连接
+				左表 natural [left/right] join 右表:自然外连接
+
+alter table tbName
+ALTER TABLE语句可能完成的修改
+	//添加字段
+	alter table 表名 add 字段名 varchar(10) not Null;
+	//在指定地方添加新列(如果没有指定,就在最后一列后面).注意col_desc需要名称和类型与在CREATE语句中的名称和类型一致
+	ADD[COLUMN]col_desc [FIRST|AFIER col]
+	//在表结尾添加一个或多个新的列
+	ADD[COLUMN](col_desc,col_desc,...)
+	//在指定的一列或几列添加一个表的索引
+	ADD INDEX[index](col,...)
+	//指定一列或几列为主表.CONSTRAINT是针对使用外键的表
+	ADD[CONSTRAINT[symbol]] PRIMARY KEY(col,...)
+	//在指定的一列或几列添加一个唯一的表索引.是针对使用外键的InnoDB表.
+	ADD UNIQUE[CONSTRAINT CONSTRAINT [symbol]][lindex](col,...)
+	//为一个InnoDB表添加外键.
+	ADD[CONSTRAINT[symbol]] FOREIGN KEY [index](index_col,...)[reference_definition]
+	//添加或者删除特定列的默认值
+	ALTER[COLUMN]column{SET DEFAULT value|DROP DEFAULT}
+
+	//修改字段类型
+	alter table tbName modify 字段名称 字段类型 [是否允许非空];
+	//修改字段名称
+	alter table tbName change 旧字段名称 新字段名称 字段类型 [是否允许非空];
+	//修改自增长
+	alter table tbname AUTO_INCREMENT=n
+	//改变名为column的列,添加所列出的描述.注意,这可用于改变列的名称,因为new_column_descroption包含名称
+	CHANGE[COLUMN]column new_column_description
+	//类似于CHANGE.可以用来修改列类型,而不是列名称
+	MODIFY[COLUMN]col_desc
+
+
+
+	//删除字段
+	drop 字段名;
+	//删除指定的列
+	DROP[COLUMN]column
+	//删除主索引(而不是列)
+	DROP PRIMARY KEY
+	//删除指定的索引
+	DROP INDEX index
+	//删除外键(但不是列)
+	DROP FOREIGN KEY key
+
+	//禁用索引更新
+	DISABLE KEYS
+	//开启索引更新
+	ENABLE KEYS
+	//重新命名一个表
+	RENAME[AS]new_table_name
+	//以特定顺序的行重新创建表(请注意,在开始修改表时,行将不会保持顺序)
+	ORDER BY col_name
+	//将所有文本列转换成指定字符集和排序
+	CONVERT TO CHARACTER SET cs
+	COLLATE c
+	//设置默认的字符集和排序
+	[DEFAULT]CHARACTER SET cs
+	COLLATE c
+	//删除InnoDB表的可能表空间文件
+	DISCARD TABLESPACE
+	//为InnoDB表重新创建可能的表空间文件
+	IMPORT TABLESPACE
+	//允许重新设置表选项.就像CREATE TABLE一样使用想用的语法
+	table_options
+
+
+
+//将varchar类型转化成int类型  (不同字符集装换数据)
+SELECT CONVERT('23',SIGNED);
+
+模式schema		关于数据库和表的布局及特性的信息
+数据类型datatype 所容许的数据的类型.每个表列都有相应的数据类型,它限制(或容许)该列中存储的数据
+关键字keyword 	作为SQL组成部分的保留字.关键字不能用作表或列的名字.
+
+数据库database	保存有组织的数据的容器(通常是一个文件或一组文件)
+表table			某种特定类型数据的结构化清单
+列colomn			表中的一个字段.所有表都是由一个或多个列组成的
+行row 			表中的一个记录
+
+主键primary key 	一列(或一组列),其值能够唯一标识表中每个行
+
+
+数据库
+数据库:是存储,管理数据的一个仓库.
+
+数据库:就是存放数据的具体的场所.相当于系统中的不同类型的文件.
+phpMyAdmin:是管理数据库的一个网页软件.
+
+列  :表中的每一列都有唯一的名称,包含不同的数据.此外,每一列都有一个相关的数据类型
+记录:数据表中的一行内容,称为"一条记录"
+字段:一个表中的各个列,就叫"字段",在数据库中的每个字段,都是有规定的.
+数据:行和列的交叉处,
+
+SQL语句不区分大小写,但数据库和标的名称则区分大小写
+如果操作系统区分目录与文件的大小写,那么数据库名称和表名称也会区分大小写.列的名称和别名的名称不区分大小写,但是不能再同一个SQL语句中使用不同的大小写
+
+mysql的标识符	可以使用关键字但必须用``符号包括	唯一的例外是在标识符中不能使用ASCII(0),ASCII(255)或引号字符(实际上,这3个字符不会用到)
+database	64	与操作系统相同	允许在操作系统目录名中出现的任何字符,不包括'/','\'和'.'字符
+table 		64	与操作系统相同	允许在操作系统目录名中出现的任何字符,不包括'/','\'和'.'字符
+column 		64	否 				任何字符
+index 		64	否 				任何字符
+alias 		255	否 				任何字符
+
+连接数据库	mysql -h localhost -u root -p password
+
+
+
+
+新增表
+	字段必须要有字段类型	字段与字段之间使用逗号分隔	最后一个字段不需要使用逗号
+	字段类型 尽可能的空间占用少,使用定长,使用整数
+
+
+查询元数据信息
+	SCHEMATA 
+		该表提供了当前mysql实例中所有数据库的信息, show databases的结构取之此表
+
+	TABLES
+		该表提供了关于数据库中的表的信息(包括视图), 详细表述了某个表属于哪个schema, 表类型, 表引擎, 创建时间等信息. show tables from schemaname 的结果取之此表
+
+	COLUMNS
+		该表提供了表中的列信息, 详细表述了某张表的所有列以及每个列的信息 show columns from schemaname.tablename的结果取之此表
+
+	STATISTICS
+		该表提供了关于表索引的信息 show index from schemaname.tablename 的结果取之此表
+
+
+数据类型
+	整数类型
+		当要在一个数值列内保存一个超出该列允许范围的值时，MySQL的操作取决于此时有效的SQL模式。如果模式未设置，MySQL将值裁剪到范围的相应端点，并保存裁减好的值。但是，如果模式设置为traditional(“严格模式”)，超出范围的值将被拒绝并提示错误，并且根据SQL标准插入会失败
+		
+		tinyint(M)	1字节 8位	迷你整形	-127~128|0~255
+			M:宽度(在zerofill时才有意义)
+			unsigned:无符号类型
+			zerofill:零填充
+		smallint	2字节 16位	小整形		-32768~32767|0~65535
+		mediumint	3字节 24位	中整形		-8388608~8388607|0~16777215
+		int 		4字节 32位	标准整形	    -2E31~2E31-1|0~2E32-1
+		bigint		8字节 		大整形		-2E63~2E63|0~2E64-1
+	浮点数类型
+		float(M,D)	可以精确到小数点后7位	4个字节
+			M:精度(总位数,不包含点)
+			D:标度(小数位)
+		double:可以精确到小数点后15位	8个字节		定长
+	定点数类型
+		dec(M,D)                                        更精准
+		decimal(M,D)	价格	 30位	变长
+	位类型
+		bit(1~64)	按位存储
+	
+	时间日期
+		year类型:1个字节 表示1901-2155[0000,表示错误时选择] 	1个字节
+			如果输入2位,'00-69' 表示2000-2069
+			'70'->'99'表示1970->1999年
+		date类型:典型格式1992-08-02		3个字节
+			日期类型:'1000-01-01'->'9999-12-31'
+		time类型:典型格式 hh:mm:ss		3个字节
+			时间类型:'-838:59:59'->'838:59:59'
+		datetime类型:典型格式 '1989-05-01 14:21:21'		8个字节
+			日期事件类型: 1000-01-01 00:00:00 -> 9999-12-31 23:59:59
+		Timestamp类型:时间戳,使用标准整形储存,表现确实年月日,时分秒	4字节
+			会自动更新
+			默认取出为字符串型, 如果想要获得数字值, 应在 TIMESTAMP 列添加 +0
+		用int型存储时间戳
+
+	字符		获取储存char varchar数据的时候 mysql将过滤多余的空格
+		char(M)	定长:实占M个字符,利用率 i/M<=100%
+			M:字符集的长度
+		varchar	变长:实占i字符+(1-2)字节,利用率i/(i+1-2)<100%
+	文本型
+		TINYBLOB	1个字节
+		TINYTEXT
+		BLOB		2个字节
+		TEXT
+
+		MEDIUMTEXT	3个字节
+		MEDIUMBLOB
+		LONGTEXT	4个字节
+		LONGBLOB
+
+		//二进制字符串
+		VARBINARY(M) 允许长度 0~M 个字节的变长字节字符串, 值得长度 +1 个字节
+		BINARY(M)    允许长度 0~M 个字节的定长字节字符串
+	特殊类型
+		enum	   	枚举类型 65535个元素
+		set	集合,在定义字段之初,为字段值做一系列的限制,实际存储值的时候,可以是集合类型中的多个元素.集合相当于多选框
+			集合是使用8个字节,只能保存64个元素.集合定义的数据类型里面出现的可能的元素的最多个数为64个.
+
+列常用的属性
+
+
+default value ,设置某个列的默认值,默认值可以是字符串或数字
+	例:sex tinyint notnull drfault 1;
+
+auto_increment 	指定某个列自动增长型,一般是指为id字段,可以保证id的值永不重复;
+	如果该字段设置为空,那么mysql将自动产生一个唯一的标识符值,该值比本列中现存的最大值更大 .该列必须是索引列
+
+comment			注释,是一种字段说明
+
+unsigned		只能是0或正整数
+
+约束
+	主键约束(primary key): 当我们将一个字段设置为primary key , 在字段不能为null, 而且不可以重复.
+	唯一约束(unique): 当我们将一个字段设置为唯一约束后，该字段不可以重复，能否为null, 要看你有没有设置 not null .
+	非空约束(not null): 将一个字段设置为not null, 该字段就不可以为 null
+	外键约束(foreign key): 将一个字段设置为foreign key, 该字段的值，就依赖于对应的主表的字段, 即foreign key 的字段的值，就不能随意给. 而是根据业务逻辑在添加.
+	检查约束(check): 一个字段设置为check后，就必须满足check条件，才可以添加成功比如  age  tinyint  check(age >=0 AND age<=120); 在主流的数据库比如sql server ,oracle 等都支持check ,mysql目前支持语法，但是不生效.
+
+外键就是指的是一个表中某个字段的值指向另外一个表的主键
+	外键的字段类型与被指向的表的主键的字段类型一致
+	如果想要实现on delete set null ,外键字段必须可以为空
+
+	创建表的时候指定对应的外键
+	foreign key(当前表中的外键字段)references 外键指向的表(外键指向表的主键)
+	修改表的结构增加外键(指定外键名字)
+	alter table 表名 add constraint 外键名 foreign key(字段) references 父表(主键)
+	删除外键	alter table 表名 drop foreign key 外键名字
+
+	置空 set null	当父表进行更新或删除的时候,对应的字表里的数据应该被设置成null
+	级联 cascade	当父表进行更新或者删除的时候,对应的子表里的数据应该被删除或者被更新
+
+
+
+视图view
+	创建
+	语法 create [algorithm=merge|temptable|undefined] view 视图名 as select语句;
+		merge		合并的执行方式,每当执行的时候,先将我们视图的sql语句与外部查询视图的sql语句,混合在一起,最终执行;
+		temptable	临时表模式,每当查询的时候,将视图所使用的select语句生成一个结果的临时表,再在当前的临时表内部进行查询
+		undefined	mysql将选择所要使用的算法.如果可能,它倾向于merge而不是temptable,这是因为merge通常更有效,而且如果使用了临时表,视图是不可更新
+	修改
+		alter view
+	删除
+		drop view 试图名1,试图名2
+	显示
+		show create view
+	视图能否插入数据全看视图中的字段,是否包含基表中全部不为null的字段,如果包含,那么就可以插入数据;否则不能插入数据.(前提是该视图是单表视图)
+	多表视图不能进行增删操作,改是可以的.
+	所有表或者  视图的权限(增删改查操作),都可以通过用户权限来限定,一般情况下,视图的操作权限,都只有查看.
+
+	with check option	在通过视图进行更新语句的时候,witch check option会进行结果判断
+		cerate view 视图名字 as select 语句 where 字段 = 值 with check option;
+
+	安全 性能 灵活
+
+事务处理
+	事务处理是当一组事务进行时,必须满足全部条件的才算执行成功,任何一个执行失败都将导致整个的事务操作失败.
+	开启事务语法	start/begin transaction
+	提交语法		commit
+	创建回滚点	savepoint 回滚名
+	回滚语法		rollback | rollback to 回滚点
+	只要修改autocommit = OFF 就可以改变系统对于事务的处理模式
+	事务的特点
+		原子性Atomicity	一个事务是一个整体,要么全部成功, 要么全部失败
+		一致性consistency	在数据操作的前后,数据库的数据没有被改变,直到事务提交
+		隔离性Isolation	在事务处理的过程中,其他的客户端数据的操作不受影响(主要指查看)如果在一个事务正在处理的时候,另外一个客户端,对同一条正在事务中处理的数据进行更新的时候,那么需要等待事务的提交之后才能执行
+			set session transaction isolation level 隔离级别
+			select @@tx_isolation;  //查看当前事物
+			隔离级别  					|脏读	|不可重复 	|幻读		|加锁读
+			读未提交(read uncommitted	)	|V 		|V 			|V 			|不加锁
+			读已提交(read committed)		|X 		|V 			|V 			|不加锁
+			可重复读(repeatable read)		|X 		|X 			|X[注释1] 	|不加锁
+			可串行化(serializable	) 		|X 		|X 			|X 			|加锁
+				注释1 [sql92标准有 mysql数据库改进[[=5555了,解决了这个级别的幻读问题]
+			隔离级别带来的为题
+				脏读			dirtyread
+					当一个数据读取另一个事物尚未提交的修改时,产生脏读
+				不可重复读	nonrepeatable read
+					同一查询在同一事物中多次进行,由于其他提交事物所做的修改或删除,每次返回不同的结果集,此时发生非重复读
+				幻读			phantom read
+					同一查询在同一事物中多次进行,由于其他提交事物提交事物做的插入操作,每次返回不同的结果集,此时发生幻读
+		持久性Durability	事务一旦提交,那么整个修改将不可逆转
+
+
+RDBMS 关系型数据库管理系统
+RDBMS提供了比普通文件更快的数据访问.  MySQL在许多方面都拥有比任何RDBMS更快的速度
+RDBMS可以很容易的查找并检索满足特定条件的数据集合
+RDBMS具有内置的处理并发访问的机制.
+RDBMS可以随机访问数据
+RDBMS具有内置的权限系统	MySQL在这一方面具有特别的优势
+
+show grants for '用户名'
+show processlist		查看当前连接
+用户管理
+	创建用户
+	语法	create user 'username'@'host' identified by 'password'
+		username	登录的用户名
+		host		是指定可以访问的主机,可以使用%代替全部
+		password	是明文密码,系统会根据明文进行加密
+	给用户分配权限
+		GRANT privileges [columns]
+		ON item
+		TO user_name [IDENTIFIED BY 'password']
+		[REQUIRE ssl_options]
+		[WITH [GRANT OPTION | limit_options]]
+
+		privileges 属性
+			用户的权限
+			SELECT		表,列 			允许用户从国标中选择行(记录)
+			INSERT		表,列 			允许用户在表中出入新行
+			UPDATE		表,列 			允许用户修改现存表里行中的值
+			DELETE		表 				允许用户删除现存表的行
+			INDEX		表 				允许用户创建和拖动特定表索引
+			ALTER		表 				允许用户该表现存表的结构,例如: 可添加列,重命名列或表,修改列的数据类型
+			CREATE		数据库,表 		允许用户创建新数据库或表.如果在GRANT中指定了一个特定的数据库或表,他们只能够创建该数据库或表,即他们必须首先删除(droop)他
+			DROP		数据库,表 		允许用户拖动(删除)数据库或表
+			管理员的权限
+			CREATE TEMPORARY TABLES 	允许管理员在CREATE TABLE语句中使用TEMPORARY关键字
+			FILE						允许将数据从文件读入表,或从表读入文件
+			LOCK TABLES					允许使用LOCK TABLES语句
+			PROCESS						允许管理员查看属于所有用户的服务器进程
+			PELOAD						允许管理员重新载入授权表,清空授权,主机,日志和表
+			REPLICATION CLIENT 			允许在复制主机(Master)和从机(Slave)上使用SHOW STATUS
+			REPLICATION SLAVE			允许复制从服务器连接到主服务器
+			SHOW DATABASES				允许使用SHOW DATABASES语句查看所有数据库列表.没有这个权限,用户只能看到他们能够看到的数据库
+			SHUTDOWN					允许管理员关闭MySQL服务器
+			SUPER						允许管理员关闭属于任何用户的线程
+			特别的权限
+			ALL 						上面所有的权限 也可以将ALL携程ALL PRIVILEGES
+			USAGE						不授予权限.这创建一个用户并允许他登录,但是不允许进行任何操作,通常在以后会授予该用户更多的权限
+	语法	grant 权限列表 on 库.表 to 'username'@'host'
+	分配全部权限 all privileges
+
+	语法 grant all privileges 库.表 to 'username'@'host';
+	有时候分配权限不会立即到位,需要刷新权限缓存
+	语法 flush privileges
+
+	回收权限
+		revoke 权限列表 on 库.表 from 'username'@'host'
+	删除用户
+		语法 drop user'username'@'host'
+
+	权限信息保存在6个表中	(授权表 grant tables)
+		user host	确定一个用户是否可以连接mysql服务器 以及具该用户是否具有任何管理员权限
+		db			确定用户可以访问哪些数据库
+		tables_priv 用户可以使用数据库中哪些表
+		columns_priv用户可以使用数据库中哪些列
+		procs_priv	用户可以执行哪些过程
+	flush privileges;			权限刷新
+	mysqladmin flushj-privileges
+	mysqladmin reload
+		用户下次在链接的时候,系统将检查全局级别权限
+ mysqladmin -h localhost -u root -p variables
+	然后查询datadir变量		存储位置
+
+
+数据备份
+	数据内容备份
+		将表中的数据值(没有字段名字),通过某种形式保存到外部文件当中
+		语法	select 字段列表 into outfile 文件路径 [fileds 格式][lines 格式] from 表名
+			fileds 格式
+				enclosed by		字段用什么包裹
+				terminated by	字段与字段直接用什么分开,默认是\t
+				escaped by		字段如果碰到特殊符号使用寿命转义,默认\\
+			lines 格式
+				terminated by 	行以什么结束,默认是\r\n
+				starting by		行以什么开始,默认是''
+	数据的还原操作
+		将外部对应的文件信息里面的内容读取出来放到对应的数据表中,所有的数据还原必须与数据备份时使用的格式完全一致.
+		语法 load data infile 文件名字 into table 表名 [fileds 格式][linse 格式]
+
+sql备份
+	将数据表的结构,一句数据进行备份,但是备份的形式是以sql语句的形式存在.
+	mysqldump.exe 连接认证(hPup) 数据库 数据表,数据表 > 数据文件路径.sql
+	mysqldump.exe 连接认证(hPup) -B 数据库 数据表 > 数据文件路径.sql
+	mysqldump -u root -p news > news.sql
+还原数据
+	mysql提供两种还原方式:外部方式,内部方式 GROUP BY agentid
+	外部方式: mysql.exe
+		导入数据 mysql -h localhost -u root -p < 要导入  的文件路径
+		语法	mysql.exe 连接认证 数据库 < 数据源  (数据路径)
+	内部方式:sql语句还原	导入sql语句
+		mysql>source 数据源(数据路径)
+
+
+找回root密码
+	闭mysql服务器	net stop mysql
+	使用mysqld.exe进行重启,重启时需要指定参数 mysqld.exe --skip-grant-tables
+	新开客户端mysql.exe,使用mysql连接进入服务器
+	查看用户及密码 select user,password,host from user;
+	修改密码 update user set password = password('root') where user = 'root' and host = 'localhost';
+	退出服务器重启服务器
+修改密码 mysqladmin.exe -hlocalhost -uroot -p111111 password 123456
+
+在mysql客户端修改自己密码
+mysql > set password=password('新密码');
+修改别人的密码
+set password for 'user'@'host'=password('123');
+
+
+在mysql客户端修改字符集
+mysql > alter database dbname default chatacter set gbk;
+
+
+触发器
+	定义一段代码,给某个数据(一张表的一条记录)给绑定上,当记录对应的时事件发生的时候,这段代码就会被自动的执行.
+	语法	delimiter 临时符号
+		create trigger 触发器名字 触发时间 事件类型 on 表名 for each row
+		begin
+			//触发器内容 可以是各种sql语句,一般是增删改 流程控制符
+		end
+		临时符号
+		delimiter ; --改回语句结束符
+
+		触发时间
+			before	在记录操作前
+			aftre	在记录操作后
+		事件类型	增删改
+		new		新
+		old 	旧
+
+变量
+	查看所有变量	show variables；
+	自定义变量	语法	set @变量名 := 值；   (函数外属于全局变量 @用于区分是自定义变量还是内置变量的一个标识
+	全局变量		set GLOBAL 变量名 = 值;
+	将表赋值给变量	select 字段列表 from 表 into 变量列表;
+	局部变量		declare	变量 数据类型
+
+函数
+	自定义函数	语法 create function 函数名(参数列表) returns 数据类型
+				begin
+					// 函数体 返回值
+				end
+	调用自定义函数语法	select 函数名(参数列表)
+	查看所有函数	show function status;
+	删除函数		drop function 函数名;
+
+定义存储过程
+	定义语法		create procedure 过程名字(参数列表)
+				begin
+					//过程体
+				end
+	调用语法		call 过程名字(参数列表)
+	查看过程		show procedure status;
+	删除过程		drop oricedure 过程名;
+	存储过程的参数与函数有点不同
+		in		该参数只能外部传入,不能从内部传出去,只能读取外部的值
+		out 	只能从内部把数据传出去,不能读取变量在外部定义的值,只能在过程内部对其进行赋值和访问
+		inout	既能从外部传入,又能从内部传出,既可以读取外部的值,又可以在内部进行赋值,从而实现对外部的值的修改.
+
+
+
+预处理	真正执行某条SQL语句之前,先将SQL语句准备好,在执行过程中再绑定数据
+准备预处理	prepare 预处理名字 from '要执行的SLQ语句'
+执行预处理	execute 预处理名字 [using 变量]
+例:	prepare query from 'select * from pro_student where s_id=?';
+	set @id = 11;				//定义变量
+	execute query using @id;	//using就是使用变量的意思,给预处理语句绑定id变量的值,绑定的顺序与问号出现的顺序一致
+
+
+
+
+information_schema 	主要存储系统中的一些数据库对象信息
+cluster  			存储系统的集群信息
+mysql 				存储系统的用户权限信息
+
+
+
+帮助
+	//可提供查询分类
+	? contents
+
+	//查看列出的分类
+	? 分类名
+
+运算符
+	+
+	-
+	*
+	/, DIV
+	%, MOD   3%2  = MOD(3,2)
+
+比较运算符
+	=
+	<>, !=
+	<=> 			null安全的等于
+	<
+	<=
+	>
+	>=
+	BETWEEN
+	IN
+	IS NULL
+	IS NOT NULL
+	LIKE
+	REGEXP, RLIKE    正则
+
+逻辑运算符
+	NOT 或 !
+	AND 或 &&
+	OR  或 ||
+	XOR
+
+位运算
+	&
+	|
+	^
+	~
+	>>
+	<<
+
+函数
+	字符串函数
+		concat(s1,sn)			将s1,sn连接成字符串
+		insert(str,x,y,instr)	将字符串str从第x位置开始,y个字符长的字符串替换为字符串instr,返回结果
+		lcase(str)|lower(str)	将字符串str中所有字符改变为小写后的结果
+		ucase(str)|upper(str)	将字符串str中所有字符转变为大写后的结果
+		left(str,x)				字符串str中最左边的x个字符
+		right(str,x)			字符串str中最右边的x个字符
+		lpad(str,x,y)			左填充,左填充y到str 达到x长度
+		rpad(str,x,y)			右填充,右填充y到str 达到x长度
+		ltrim(str)				字符串str的前导(左边)空格字符去掉
+		rtrim(str)				字符串str与尾部(右边)的空格字符去掉
+		trim(str)				去除字符串首部和尾部的所有空格
+		repeat(str,count)		字符串str重复x次的结果,如果计数小于1,则返回一个空字符串.如果str或count是null,则返回null
+		replace(str,a,b) 		用字符串b替换字符串str中所有出现的字符串a	
+		strcmp(str,str)			比较两个字符串 相等返回0 左大返回-1 右大返回1
+		substring(str,x,y)		截取str字符串,从x开始,获取y个字符
+		
+		ascii(char)				字符的ascii码
+		length(str)				字符串str中的字节长度
+		char_length(str)		字符串str中的字符数
+		bit_length(str)			字符串的比特长度
+		quote(str)				用反斜杠转义str中的单引号
+		reverse(str)			颠倒字符串str的结果
+		concat_ws(sep,s1,sn)	将s1,sn连接成字符串,并用sep字符间隔		
+		find_in_set(str,list)	分析逗号分隔的list列表,如果发现str,返回str在list中的位置
+		position(substr,str)	子串substr在字符串str中第一次出现的位置
+
+	数学函数
+		abs(x)					x的绝对值
+		ceil(x)					大于x的最小整数值
+		floor(x)				小于x的最大整数值
+		mod(x,y) 				模
+		rand()					0到1内的随机值
+		round(x,y)				参数x的四舍五入的有y位小数的值
+		truncate(x,y)			数字x截短为y位小数的结果
+		
+		bin(x)					x的二进制(oct返回八进制,hex返回十六进制)
+		exp(x)					值e(自然对数的底)的x次方
+		greatest(x1,xn)			集合中最大的值
+		least(x1,xn)			集合中最小的值
+		ln(x)					x的自然对数
+		log(x,y)				x 的几次方 =y
+		mod(x,y)				x/y的模
+		pi()					pi的值
+		sign(x)					代表数字x的符号的值
+		sprt(x)					一个数的平方根
+
+	日期时间函数
+		curdate()|current_date()	返回当前的日期
+		curtime()|current_time()	返回当前的时间
+		now()						返回当前的日期和时间
+		unix_timestamp(data)		返回data时间戳  默认当前
+		from_unixtime(ts,fmt)		根据指定的fmt格式,格式化unix时间戳ts
+		week(date)					返回日期date为一年中的第几周(0~53)
+		year(date)					返回日期date的年份(1000~9999)
+		hour(time)					返回time的小时值
+		minte(time)					返回time的分钟值
+		month(date)					返回date的月份至
+		dayofweek(date)				返回date所代表的一星期中的第几天
+		dayofmonth(date)			返回date是一个月的第几天
+		dayofyear(date)				返回date是一年的第几天
+		dayname(date)				返回date的星期名, 如:select dayname(current_date);
+		quarter(date)				返回date在一年中的季度(1~4),如:select quarter(current_date);
+		monthname(date)				返回date的月份名,如:select monthname(current_date);
+		date_format(date,fmt)		依照指定的fmt格式格式化日期date值  (格式化数据输出)
+		data_add(date,interval int keyword)	返回日期date加上间隔时间int的结果(int必须按照关键字进行格式化),如:select date_add(current_date,interval 6 month);
+		datadiff(expr,expr2)   		返回两个时间的间隔的时间值
+		date_sub(date,interval int keyword)	返回日期date加上间隔时间int的结果(int必须按照关键字进行格式化),如:select date_sub(current_date,interval 6 month);
+		
+
+	聚合函数(常用于group by从句的select查询中)
+		avg(col)				指定列的平均值
+		count(col)				指定列中非null值的个数
+		min(col)				指定列的最小值
+		max(col)				指定列的最大值
+		sum(col)				指定列的所有值之和
+		group_concat(col)		由属于一组的列值连接组合而成的结果
+
+	系统函数
+		database()				返回当前操作的库名
+		version()				返回mysql服务器的版本
+		user()|system_user()	返回用户及所在主机
+		inet_aton(IP) 			ip地址的数字表示
+		inet_ntoa(num) 			数字代表的ip地址
+		password(str) 			加密
+		MD5() 					md5
+		connection_id()			返回当前客户的连接id
+		found_rows()			返回最后一个select查询进行检索的总行数
+		benchmark(count,expr)	将表达式expr重复运行count次
+
+流程函数
+	if(条件,真,假)
+	ifnull(表达式1,表达式2)	判断第一个表达式是否为nill,如为null,返回第二个表达式的值 不为null 返回自身
+	CASE 字段 WHEN 值1 THEN 返回值 WHEN 值2 THEN 返回值2 ELSE 返回值3 END
+	//case when plan_type_cde=1 then 1 else 0 end
+	iF 条件 THEN //语句 ELSE //语句 END IF;
+	while名字:while 条件 do //循环体 end while;
+	iterate:continue
+	leave:break
+	iterate|leave 循环名字
+
+
+
+存储引擎	engine	指定的数据存储格式
+	一种用来储存mysql中对象(记录和索引)的一种特定的结构(文件结构)
+	存储引擎处于mysql的最底层,直接储存数据.导致上层的操作,依赖于储存引擎的选择
+	show engines\G		查看存储引擎
+		事物安全
+		innoDB	(5.5后默认引擎)只会创建一个表结构文件,其他的索引和数据存放在ibdata1文件中
+			提供事务,行级锁定,外键约束的储存引擎
+			事务安全性存储引擎.更加注重数据的完整性和安全性
+			data/mysql/.frm		结构文件
+			data/ibdata1		表空间文件(数据和索引)  默认所有的innodb都在同一个空间中
+				show variables like 'innodb_file_per_table';  查看innodb空间文件储存配置
+				set global innodb_file_per_table=1;	通过配置 实现每个innodb表 一个表空间文件的目的
+			数据按照主键顺序存储  插入时做排序工作,效率低
+			并发性处理  innodb擅长处理并发
+				行级锁定 row-level locking 实现了行级锁定,在一定情况下,可以选择行级锁来提升并发性.也支持表级锁定,innodb根据操作选择
+				多版本并发控制,MVCC 效果达到无阻塞读操作
+		BDB
+		非事物安全
+		myisam	(5.5前默认引擎)会创建三个文件,一个是结构文件,一个是数据文件,一个是索引文件
+			.frm	结构
+			.MYD	数据
+			.MYI	索引
+			数据按照存储顺序储存 插入速度快 占用空间小
+			擅长于处理 高速读与写
+			数据的压缩存储 .MYD文件的压缩存储	节省磁盘空间,减少磁盘IO开销  压缩表为只读表
+				在数据表文件夹内执行 压缩工具
+					myisampack 表名
+				注 压缩后,需要重新修复索引
+					myisamchk -rq 表名
+				如需更新表,则需要解压后更新,在压缩(重新索引)
+					myisamchk -unpack 表名
+			并发性 仅仅支持表级锁定
+				支持并发插入  写操作中的插入操作 不会阻塞读操作(其他操作)
+		Archive	存档型
+			仅提供了插入和查询操作.非常高效 无阻塞的插入和查询
+		Memory	内存型
+			数据存储于内存中,存储引擎.缓存型存储引擎
+		插件式存储引擎
+
+		优化   OPTIMIZE TABLE tbl_name
+			对于MyISAM表，OPTIMIZE TABLE按如下方式操作：
+			1.如果表已经删除或分解了行，则修复表。
+			2.如果未对索引页进行分类，则进行分类。
+			3.如果表的统计数据没有更新（并且通过对索引进行分类不能实现修复），则进行更新。
+
+
+
+
+
+
+mysql 5.7 报错
+#1055 - Expression of SELECT list is not in GROUP BY clause and contains nonaggregated column this i
+
+这个sql语句违背了sql_mode=only_full_group_by 。
+
+解决办法:
+
+set @@sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+
+去掉ONLY_FULL_GROUP_BY即可正常执行sql.
+
+

@@ -1,0 +1,591 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+
+
+<header>页眉 网站标志 主导航 搜索</header>
+<nav>标记导航</nav>
+<main>页面主要内容</main>
+<article>文档</article>
+<section>具有相似主题的一组内容</section>
+<aside>广告 友情链接</aside>
+<footer>页脚</footer>
+<small>免责声明</small>
+<strong>表示内容重要</strong>
+<em>标记内容着重点</em>
+<mark>突出显示文本</mark>
+<figure>创建图</figure>
+<figcaption>figure的标题</figcaption>
+<cite>指明引用或者参考</cite>
+<blockquote>引用文本</blockquote>
+<q>短的引述</q>
+<time>标记时间</time>
+<abbr></abbr>
+<dfn>定义术语元素</dfn>
+<address>作者</address>
+<del>移除的内容</del>
+<ins>添加的内容</ins>
+<code>标记代码</code>
+<pre>欲格式化</pre>
+<progress value="" max="">完成进度
+
+
+整体标签
+html		根元素
+head		文档头部信息
+title		文档标题信息
+meta		元信息定义
+body		文档主体
+address		作者的联系信息
+div			通用块级元素
+span		通用行内元素
+h1~6		标题级别元素
+hr			水平线
+br			拆行
+p			段落
+
+文本格式化标签
+em!			定义着重文字
+strong!		定义加重语气
+b			定义粗体文本
+biq			定义大号字
+i			定义斜体字
+small		定义小号字
+sub			定义下标字
+sup			定义上标字
+ins			定义插入字
+del			定义删除字
+
+计算机输出标签
+code!		定义计算机代码
+kbd!		定义键盘码
+samp!		定义计算机代码样本
+var!		定义变量
+tt			定义打字机代码
+pre			定义预格式文本
+
+引用和术语定义
+abbr!		定义缩写
+acronym!	定义首字母缩写
+cite!		定义引用,引证
+dfn!		定义一个定义项目
+address		定义地址
+bdo			定义文字方向
+blockquote	定义长的引用
+q			定义短的引用语
+
+
+
+链接元素
+a			锚元素
+	href		url			规定链接指向的页面url
+	hreflang	语言名称	说明href属性定义的url(所指向的文档)所有的基础与语言
+	name		name名		为当前锚定位设置一个名称,以便它能够被其他连接所定位
+	type		MIME类型	这个属性给出目标连接地址的内容类型
+	charset		字符集		定义链接目标的字符编码
+	rel			连接类型	描述从当前文档到连接资源(href属性的属性值)的关系,可复数指定,属性值之间以空格隔开
+	rev			连接类型	描述从链接资源(href属性的属性值)到当前文档的反向链接,可复数指定,属性之间以空格隔开
+	shape		预定义值	规定链接的形状.默认值为default,
+		rect表示矩形
+		circle表示圆形
+		poly表示多边形
+	coords		坐标值		根据shape属性定义的图像映射形状, coord属性可以定义相应的坐标值
+	target		目标框架名	指定超链接打开的目标框架名,框架名可以在设置框架时指定.
+	tabindex	0~32767		设置页面中超链接的Tab键获得焦点的顺序
+	accesskey	任一字符	指定获得焦点快捷键的文字.
+
+link		文件资源关联
+base		文件链接基准
+
+列表元素
+ul			无序列表
+ol			有序列表
+	reversed	reversed	规定列表顺序为降序
+	start		number		规定有序列表的起始值
+	typr		规定在列表中使用的标记类型
+		type=“A、a、I、i、1”
+li			列表项目
+dl			定义列表
+dt			定义列表的项目
+dd			定义列表的说明
+
+图像与对象元素
+img			插入图片
+	alt			text		规定图像的替代文本
+	src			url			规定显示图像的url
+	heiqht		px|%		定义图像的高度
+	width		px|%		定义图像的宽度
+	ismap		url			将图像定义为服务器端图像映射
+	longdesc	url			指向包含长的图像描述文档的url
+	usemap		url			将图像定义为客户端图形映射
+map			客户端映射
+	name
+	id
+area		图像映射的区域
+	coords		坐标值		定义可点击区域(对鼠标敏感的区域)的坐标
+	href		url			定义此区域的目标url
+	nohref		nohref		从图像映射排除某个区域
+	shape		定义区域的形状
+		default
+		rect
+		circ
+		poly
+target		规定在何处打开href属性指定的目标trl
+
+
+area永远嵌套在map里面
+object		嵌入对象
+param		对象的函数
+applet		嵌入Java小程序
+
+
+表格元素
+table		建立表壳
+	summary		字符串			用于说明建立表格的目的
+	width		长度值			表格的宽度,属性设置可为正整数像素或百分比
+	frame		字符串			控制表格外部边框,只有在表格的border属性设置大于0时才有效,默认不显示边框
+		border		显示所有的四个外部边框;
+		box			显示所有的四个外部边框;
+		void		表示表格不显示人格边框,此为默认值;
+		above		显示顶端边框
+		below		显示底部边框
+		hsides		显示上下两侧即水平边框;
+		lhs			只显示左边框
+		rhs			只显示右边框
+	rules		字符串			控制表格的内部边框(单元格边框)的显示,只有在表格的border设置大于0时才有效,默认不显示边框
+		all			显示所有内部边框
+		groups		表示只在列编组或列之间显示边框
+		rows		只显示行之间水平方向边框
+		cols		只显示列之间垂直方向边框
+		none		不显示任何单元格边框
+	border		整数|默0		指定表格外边框的宽度
+	cellpading	长度值			指定单元格里面的内容个单元格边框之间的间隔,即填充距离,属性值可以为整数的像素值或百分比值
+	cellspacing	长度值			指定单元格里面的内容和单元格边框之间的间隔,即填充距离,也包括表格外边框与单元格的四边间距,属性值可以整数的像素值或百分比值
+	height		长度值			指定表格的整体宽度.
+	background	URL				指定表格的背景图案
+	bordercolor	颜色值			定义表格整体的框线色.
+	bordercolordark  颜色值		指定表格整体暗面框线色
+	bordercolorlight 颜色值		指定表格整体亮面框线色
+tr			表格行
+	align		默left|字符串	设置单元格内数据的水平对齐方式
+	valign		默middle|字符串	设置单元格内数据的垂直对齐方式
+	char		任一个字符		align属性值为char时,指定文字片段中的某一个字符做为单元格的水平对齐的中心线,默认值是数值的小数点
+	charoff		number			规定第一个对齐字符的偏移量
+th			表格标题单元格
+	abbr		text			规定单元格中内容的缩写版本
+	arign		规定单元格的水平对齐方式
+		left
+		tight
+		center
+		justify
+		char
+	axis		category_name	对单元格进行分类
+	char		character		规定根据那个字符来进行内容的对齐
+	charoff		number			规定对齐字符的偏移量
+	colspan		number			设置单元格可横跨的列数
+	rowspan		number			规定单元格可横跨的行数
+	headers		idrerfs			由空格分隔的表头单元格ID列表,为数据单元格提供表头信息.
+	scope		定义将表头数据与单元数据相关联系的方法
+		col
+		colgroup
+		row
+		rowgroup
+	valign		规定单元格内容的垂直排列方式
+		top
+		middle
+		bottom
+		baseline
+td			表格单元格
+	属性与th一致
+caption		表格的标题
+thead		表格表头
+	属性与tr一致
+tbody		表格主体
+	属性与tr一致
+tfoot		表格页底
+	属性与tr一致
+col			表格列属性设置
+colgroup	表格列编组
+
+
+表单元素
+form		建立表单
+	action		URI				表单处理目标URI
+	method		默get|post		将表单数据提交发送http服务器的方法
+	enctype		MIME类型
+		只有在method属性设置为post时才有效.默认值为application/x-www-form-urlencoded.
+		如果表单包含用于文件上传的控件那么这个属性值必须设为multipart/form-data
+	name		name名
+	accept-charset   字符集		指定服务器处理处理表单时所能接受的字符编码类型,可指定多个,中间以逗号或空格隔开.如果不指定,则默认为可使用的字符编码与当前表单所使用的字符编码相同.默认值为保留字符串"UNKNOWN".
+	accept		MIME类型		指定服务器处理器处理表单时所能接受的正确的MIME类型,可指定多个内容类型值,中间以逗号隔开.
+	target		目标框架名		指定表单提交后载入的新文档打开的位置.
+	autocomplete on|off			规定是否启用表单的自动完成功能
+	novalidate	novalidate		如果使用该属性,则提交表单时不进行验证
+input		表单输入域
+	accept 		mime_type		规定通过文件上传来提交的文件的类型
+	type		默text
+		text		单行文本输入框
+		password	密码输入框
+		checkbox	复选框
+		radio		单选框
+		submit		提交按钮
+		image		图片提交按钮
+		reset		重置按钮
+		button		普通按钮
+		hidden		隐藏式控件
+		file		文件选择控件
+	name		name名
+	value		任意字符串		radio,checkbox不能省略
+	size		整数			text,password为文字宽度其它为像素
+	maxlength	整数			用于text,password
+	checked		空值|checked	用于radio,checkbox
+	readonly	空值|readonly	可获得焦点的只读状态 表单会传输数据
+	disabled	空值|disabled	不能获得焦点,不可用状态 表单不会传输数据
+	src			url				image时图片来源
+	alt			任意字符串		图片无法显示的替换文字
+
+button		按钮
+select  	选择列表
+	autofocus	autofocus		规定在页面加载后文本区域自动获得焦点
+	disabled	disabled		规定禁用该下拉列表
+	form 		form_id			规定文本区域所属的一个或多个表单
+	multiple	multiple		规定可选择多个选项
+	name
+	required	required		规定文本区域是必填的
+	size		number			规定下拉列表中可见选项的数目
+option		选择列表的项目
+	disabled	disabled		规定此选项应在首次加载时被禁用
+	label		text			定义当使用<optgroup>时所使用的标注
+	selected	selected		规定选项(在首次显示在列表中时)表现为选中状态
+	value		text			定义送往服务器的选项值
+optgroup	选项的分组
+	label		text			为选项组规定描述
+	disabled	disabled		规定禁用该选项组
+textarea	多行文本框
+	autofocus	autofocus		规定在页面加载后文本区域自动获得焦点
+	cols 		number			规定文本区内的可见宽度
+	disabled	disabled		规定禁用该文本区
+	form		form_id			规定文本区域所属的一个或多个表单
+	maxlength	number			规定文本区域的最大字符数
+	name
+	placeholder	text			规定描述文本区域预期值的简短提示
+	readonly	readonly		规定文本区为只读
+	required	reuired			规定文本区域是必填的
+	rows 		number			规定文本区内的可见行数
+	wrap		hard|soft		规定当在表单中提交时,文本区域中的文本如何换行
+label		标签为input元素定义标注(标记)
+	for 		id				规定label绑定到哪个表单元素
+	form 		formid			规定label字段所属的一个或多个表单
+fieldset	表单区域分组
+legend		表单区域组标题
+
+框架元素
+frameset	定义框架
+	cols		px|%|*			定义框架集中列的数目和尺寸
+	rows		px|%|*			定义框架集中行的数目和尺寸
+frame		定义frameset中的一个特定的窗口('框架)
+	frameborder		0|1			规定是否显示框架周围的边框
+	longdesc		url			规定一个包含有关框架内容的长描述的页面
+	marignheight	px			定义框架的上方和下方的边距
+	marginwidth		px			定义框架的左侧和右侧的边距
+	name
+	noresize		noresize	规定无妨调整框架的大小
+	scrolling		yes			规定是否在框架中显示滚动条
+					no
+					auto
+	src				url			规定在框架中显示的文档url
+noframes	不支持框架时的替换内容
+iframe		内嵌式框架
+	frameborder		1|0			规定是否显示框架周围的边框
+	height			px|%		规定iframe的高度
+	longdesc		url 		规定一个页面,该页面包含了有关iframe的较长描述
+	marginhright	px 			定义iframe的顶部和底部的边距
+	marginwidth		px			定义iframe的左侧和右侧的边距
+	name
+	sandbox			""			启用一系列对<iframe>中内容的额外限制
+					allow-forms
+					allow-same-origin
+					allow-scripts
+					allow-top-navigation
+	scrolling		yes			规定是否在iframe中显示滚动条
+					no
+					auto
+	seamless		seamless	规定<iframe>看上去像是包含文档的一部分
+	src				url 		规定在iframe中显示的文档的url
+	srcdoc			HTML_code	规定在<iframe>中显示的页面的HTML内容
+	width			px|%		定义iframe的宽度
+注音标注元素
+ruby		注音标注
+rb			注音标注的对象
+rt			标注文字
+rp			标注无法对应时显示的括号
+
+其他元素
+noscript	不支持脚本时的替换内容
+bdo			改变文字显示方向
+bobr		禁止断行
+wbr			可以断行处
+marquee		跑马灯
+blink		闪烁文字
+bgsound		背景音乐
+embed		内嵌对象
+	heiqht			px			设置嵌入内容的高度
+	width			px			设置嵌入内容的宽度
+	src 			url 		嵌入内容的url
+	type	appliacion/x-shouckwave-flash	一个flash动画
+noembed		不支持embed时的替换内容
+comment		HTML的注释
+
+播放音频
+<!DOCTYPE html>
+<audio controls="controls" height="100" width="100">
+  <source src="song.mp3" type="audio/mp3" />
+  <source src="song.ogg" type="audio/ogg" />
+<embed height="100" width="100" src="song.mp3" />
+</audio>
+上面两个不同的音频格式.HTML5<audio>元素会尝试以MP3或ogg来播放音频.如果失败,代码将回退尝试<embed>元素
+
+<a href="song.mp3">Play Sound</a>
+<script type="text/javascript" src="http://mediaplayer.yahoo.com/js">
+</script>
+使用雅虎媒体播放器
+
+播放视频
+HTML 5 + <object> + <embed>
+<video width="320" height="240" controls="controls">
+  <source src="movie.mp4" type="video/mp4" />
+  <source src="movie.ogg" type="video/ogg" />
+  <source src="movie.webm" type="video/webm" />
+  <object data="movie.mp4" width="320" height="240">
+    <embed src="movie.swf" width="320" height="240" />
+  </object>
+</video>
+
+<embed src="http://player.youku.com/player.php/sid/XMzI2NTc4NTMy/v.swf"
+width="480" height="400"
+type="application/x-shockwave-flash">
+</embed>
+使用优酷等网站
+
+文档类型
+HTML5
+<!DOCTYPE html>
+HTML4.01
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+XHTML1.0 transitional
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+XHTML 1.0 Frameset
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+
+HTML元素
+<html>		文档根元素
+	manifest		url 		定义一个url,在这个url上描述了文档的缓存信息
+	xmlns		http://www.w3.org/1999/xhtml	定义XMLnamespace属性
+
+HTML头部元素
+<head>		定义关于文档的信息
+	profile			url 		一个由空格分割的URL列表,这些url包含着有关页面的元数据信息
+<title>		定义文档的标题
+	dir				rtl|ltr		规定元素中内容的文本方向
+	lang			language_code	规定元素中内容的语言代码
+	xml:lang		language_code	规定XHTML文档中元素内容的语言代码
+<base>		为页面上的所有链接规定默认地址或默认目标(target)
+	href			url				规定页面中所有相对链接的基准url
+	target							在何处打开页面中所有的链接
+<link>		定义文档与外部资源之间的关系
+	href 			url 			规定被链接文档的位置
+	media			media_qurey		规定被链接文档被显示在什么设备上
+	rel			规定当前文档与被链接文档之间的关系
+		alternate		文档的替代版本(如打印页,翻译或镜像)
+		stylesheet		文档的外部样式表
+		next			集合中的下一个文档
+		prev			集合中的上一个文档
+		copyright		包含版权信息的文档
+		help			帮助文档
+		boolmark		相关文档
+		author			文档的作者
+		icon			文档的图标
+		licence			链接到该文档的版权信息
+		pingback		指向pingback服务器的url
+		prefetch		规定应该对目标文档进行缓存
+		search			链接到针对文档的搜索工具
+		sidebar			链接打牌应该显示在浏览器侧栏的文档
+		tag				描述当前文档的标签(关键词)
+	sizes		规定被链接资源的尺寸.仅适用于rel="icon"
+		heightxwidth	为被链接的图标贵i的那个一个或多个以像素计的高度/宽度值对.高度与宽度之间"x"或"X"分割
+		any				规定图标是可伸缩的(比如SVG图像)
+	type			MIME_type		规定被链接文档的MIME类型
+<meta>		定义关于HTML文档的元数据
+	content			some_text		定义与http-equiv或name属性相关的元信息
+	http-equiv 		把content属性关联到HTTP头部
+		expires			＜meta http-equiv="expires" content="Wed, 20 Jun 2007 22:33:00 GMT"＞
+			可以用于设定网页的到期时间。一旦网页过期，必须到服务器上重新传输。
+		pargma			＜meta http-equiv="Pragma" content="no-cache"＞
+			是用于设定精致浏览器从本地机的缓存中调阅页面内容,设定后一档离开网页就无法从cache中再调出
+		refresh			＜meta http-equiv="Refresh" content="2；URL=http://www.net.cn/"＞
+			自动刷新并指向新网页
+		set-cookie		＜meta http-equiv="Set-Cookie" content="cookievalue=xxx;expires=Wednesday, 20-Jun-2007 22:33:00 GMT； path=/"＞
+			如果网页过期,那么存盘的coolie将被删除
+		window-target	＜meta http-equiv="Window-target" content="_top"＞
+			强制页面在当前窗口一独立页面显示
+		content-type	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+			设定页面使用的字符集
+		pics-label		<meta http-equiv="pics-label" contect="">
+			网页等级评定
+		page_enter,page_exit	<meta http-equiv="page-enter" contect="revealTrans(duration=1.0,transtion=12)">
+			进入,离开网页时的特殊效果
+			duration的值为网页动态过渡的时间,单位为秒
+			transition是过渡方式,它的值为0到23,分别对应24中过渡方式
+			0  盒状收缩				1  盒状放射
+			2  圆形收缩				3  圆形放射
+			4  由下往上				5  由上往下
+			6  由左往右				7  由右往左
+			8  垂直百叶窗			9  水平百叶窗
+			10 水平格状百叶窗		11 垂直格状百叶窗
+			12 随意溶解				13 从左右两端向中间展开
+			14 从中间向左右两端展开 15 从上下两端向中间展开
+			16 从中间向上下两端展开 17 从右上角向左下角展开
+			18 从右下角向左上角展开 19 从左上角向右下角展开
+			20 从左下角向右上角展开 21 水平线状展开
+			22 垂直线状展开			23 随机产生一种过渡方式
+		清除缓存(再次访问网站要重新下载)	<meat http-equiv="cache-control" content="no-cache">
+		设定网页过期时间					<meat http-equiv="expires" content="0">
+		关键字,给搜索引擎用的				<meat http-equiv="keywords" content="keyword1,keyword2,keyword3">
+		网页描述							<meat http-equiv="description" content="This is page">
+		每隔10s时间进行刷新				<meat http-equiv="refresh" content="10">
+	name 			把content属性关联到一个名称
+		generator		content=""			用以说明生成工具
+		keywords		content=""			向搜索引擎说明你的网页的关键词
+		description		content=""			告诉搜索引擎你的站点的主要内容
+		author			content=""			告诉搜索引擎你的站点的制作的作者
+		copuright		content=""			告诉搜索引擎你的网页的版权
+		robots			告诉搜索机器人那些网页需要索引
+			all 	文件将被检索,且网页上的链接可以被查询
+			none	文件将不被检索,且页面上的链接不可以被查询
+			index	文件将被检索
+			follow	页面上的链接可以被查询
+			noindex	文件将不被检索,但页面上的链接可以被查询
+			nofollow文件将不被检索,页面上的链接可以被查询
+	scheme			some_text		定义用于翻译content属性值的格式
+<script>	定义客户端脚本
+	type		MIME-type			指定脚本的MIME类型
+	async		async				规定异步执行脚本(使用与外部脚本)
+	charset		charset				规定在外部脚本文件中使用的字符编码
+	defer		defer				规定是否对脚本执行进行延迟,直到页面加载为止
+	src 		url 				规定外部脚本文件的url
+	xml:space	preserve			规定是否保留代码中的空白
+<style>		定义文档的样式信息
+	type		text/css			规定样式表的MIME类型
+
+target
+_blank:在新浏览器窗口中打开网页。比较常用。
+_parent:将要链接的文件载入含有该链接框架的父框架集中或父窗口中。如果含有该链接的框架不是嵌套的，则在浏览器全屏窗口中载入链接的文件，就像_self参数一样。
+_self:在同一框架或窗口中打开所链接的文档。此参数为默认值，通常不用指定。
+_top:在当前的整个浏览器窗口中打开所链接的文档，因而会删除所有框架。
+#name:指向name属性为name的a标签。
+
+title=“”		提示
+
+target="_blank"
+
+HTML Basic Document
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>无标题文档</title>
+	</head>
+	<body>
+	</body>
+</html>
+Text Elements
+	<p>This is a paragraph</p>
+	<br> (line break)
+	<hr> (horizontal rule)
+	<pre>This text is preformatted</pre>
+Logical Styles
+	<em>This text is emphasized</em>
+	<strong>This text is strong</strong>
+	<code>This is some computer code</code>
+Physical Styles
+	<b>This text is bold</b>
+	<i>This text is italic</i>
+Links, Anchors, and Image Elements
+	<a href="http://www.example.com/">This is a Link</a>
+	<a href="http://www.example.com/"><img src="URL"
+	alt="Alternate Text"></a>
+	<a href="mailto:webmaster@example.com">Send e-mail</a>A named anchor:
+	<a name="tips">Useful Tips Section</a>
+	<a href="#tips">Jump to the Useful Tips Section</a>
+Unordered list
+	<ul>
+		<li>First item</li>
+		<li>Next item</li>
+	</ul>
+Ordered list
+	<ol>
+		<li>First item</li>
+		<li>Next item</li>
+	</ol>
+Definition list
+	<dl>
+		<dt>First term</dt>
+		<dd>Definition</dd>
+		<dt>Next term</dt>
+		<dd>Definition</dd>
+	</dl>
+Tables
+	<table border="1">
+		<tr>
+		  <th>someheader</th>
+		  <th>someheader</th>
+		</tr>
+		<tr>
+		  <td>sometext</td>
+		  <td>sometext</td>
+		</tr>
+	</table>
+Frames
+	<frameset cols="25%,75%">
+	  <frame src="page1.htm">
+	  <frame src="page2.htm">
+	</frameset>
+Forms
+	<form action="http://www.example.com/test.asp" method="post/get">
+		<input type="text" name="lastname"
+		value="Nixon" size="30" maxlength="50">
+		<input type="password">
+		<input type="checkbox" checked="checked">
+		<input type="radio" checked="checked">
+		<input type="submit">
+		<input type="reset">
+		<input type="hidden">
+		<select>
+			<option>Apples
+			<option selected>Bananas
+			<option>Cherries
+		</select>
+		<textarea name="Comment" rows="60" cols="20">
+		</textarea>
+	</form>
+Entities
+	& ; is the same as <
+	&gt; is the same as >
+	&#169; is the same as ©
+Other Elements
+	<!-- This is a comment -->
+	<blockquote>
+		Text quoted from some source.
+	</blockquote>
+	<address>
+		Address 1<br>
+		Address 2<br>
+		City<br>
+	</address>

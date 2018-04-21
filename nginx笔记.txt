@@ -1,0 +1,213 @@
+nginx配置 
+
+master_process on|off;
+//是否以master/worker模式工作，默认on（就像上图那样）。如果设置为off，则由master进程亲自处理请求，不启动worker；否则master只起管理worker进程的作用。
+
+worker_processes xxx;
+//Nginx worker的进程个数，默认为auto(1.9.10之后）。通常被设定为cpu（逻辑）核心数，这样可以发挥多核并行的优势。如果设置为auto，则nginx会自动设置为cpu核数。
+
+worker_cpu_affinity xxx;
+//worker绑定cpu选项，默认不设置。如果不设置，则不同worker进程可能会分配到不同的cpu核心执行，这样会降低并发的效果。如果设置为auto（1.9.10之后），系统自动绑定到合适的cpu核心。也可以手动使用掩码设置，如四个worker的情况下设置 worker_cpu_affinity 0001 0010 0100 1000;
+
+worker_priority xxx;
+//worker的优先级，linux在新一轮调度中，执行顺序和时间片分配长短都跟优先级有关。此配置默认值是0，取值范围是-20~20 （越小优先级越高）。
+
+worker_rlimit_nofile number;
+//设置每个worker最多可以打开的文件数
+
+events { 
+
+	worker_connections number; 
+	//每个worker可以同时处理的最大连接数，默认1024。这个值的大小不能超过worker_rlimit_nofile的大小；另外如果nginx作为反向代理服务器，通常要耗费两倍的连接（服务器+客户端）
+
+	accept_mutex on|off;
+	//1.11.3前默认值是on，之后默认值是off。此选项是为了负载均衡设计的，若此选项打开，nginx会使worker一个一个地接受请求，而不是一起被唤醒去争抢这个请求（惊群问题）。但是实际上，在负载比较大的情况下，关闭选项能够加快tcp连接的建立速度，而且处于休眠状态的worker也并不多，所以之后这个选项被默认关闭了。在之前陶辉的《深入理解Nginx》中阐述“当某一个worker进程建立的链接数量打到worker_connections的7/8的时候，会大大减小这个worker建立tcp连接的机会”，但是随着nginx版本迭代，这个策略似乎已经变了，之后待我搞清楚会单独写一个东西出来讨论一下
+
+	accept_mutex_delay number; 
+	//当accept_mutex开启时，若尝试accept失败，worker会最多等待number秒来重试。默认值500ms（个人感觉有点大）
+
+	use method;
+	//使用什么方法管理连接，默认不同系统使用不同方法（文档），一般linux 2.6以后使用epoll
+
+	multi_accept on|off;
+	//默认off。如果打开，则一个worker会同时accept多个连接。关于这个的讨论比较少，个人觉得是打开这个选项可能会导致负载很不平衡，但是对效率应该是有提高的
+}
+
+keepalive_timeout
+适当的调整长连接的持续时间, 保证链接的有效性
+不要超过, 应用程序处理时间 30s
+
+
+
+php-fpm配置
+php-fpm也是master/worker的工作方式，它有两个配置文件，一个php-fpm.conf，另一个是php-fpm.d/www.conf。安装后创建的默认配置文件中有详细的注释。只有几个www.conf中的配置需要注意一下。
+
+pm = dynamic|static
+//选择是以何种方式管理，static静态模式，启动的子进程个数是固定的；dynamic动态模式，会在一个区间内动态变化，在这个模式下后面很多参数才会起作用。
+
+pm.max_children = number
+//必填，最大子进程数（至少为1）。一定要注意php-fpm是阻塞模型，这个参数决定了服务器的服务能力。假设这个值设为1，某个请求请求了一个很耗时的php文件，那么其他的所有请求都会被挂起，直到这个请求被处理完才会被处理。
+
+pm.start_servers = number
+//启动时启动的进程数。pm=dynamic下才有效，必须小于max_children。
+
+pm.max_requests = number
+//默认0（不限制），当一个子进程处理了number个request之后会重启。这是因为php（或者第三方插件）可能发生内存泄漏，重启就把内存重置了= =||||  还是设置一下比较好，但是这个值不要太小，否则可能出现某一时刻多个process都在重启，服务能力下降严重。
+
+
+tengine是nginx的变种
+
+nginx服务强大的方面
+www (web 服务) , 邮件服务 邮件代理
+负载均衡 (反向代理 proxy)
+web cache (web缓存), 相当于 squid
+
+nginx特点
+配置简单, 灵活, 轻量
+高并发 (静态小文件) , 静态几万的并发
+
+安装默认路径 /usr/share/nginx/
+nginx.conf
+
+/etc/nginx/sites-available
+default
+
+
+server {
+
+	#端口
+	sten			80
+	#域名
+	server_name 	www.shop.com
+	#欢迎页
+	index index.html index.htm index.php default.html default.htm default.php
+	#根目录
+	root 			/root/dev/course/yii/we
+
+}
+
+在www文件下 放入网站文件 shop.com
+
+1 在 /etc/nginx 下创建 vhosts 目录 
+mkdir /etc/nginx/vhosts
+
+2 创建一个shop.com.conf的文件    
+server {
+	listen 80;
+	server_name shop.com www.shop.com;
+	access_log /www/access_ shop.log main;
+	location / {
+		root /var/www/shop.com;
+		index index.php index.html index.htm;
+	}
+	error_page 500 502 503 504 /50x.html;
+	location = /50x.html {
+		root /usr/share/nginx/html;
+	}
+	# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+	location ~ \.php$ {
+		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_index index.php;
+		fastcgi_param SCRIPT_FILENAME /var/www/shop.com/$fastcgi_script_name;
+		include fastcgi_params;
+	}
+	location ~ /\.ht {
+		deny all;
+	}
+}
+
+3 打开 /etc/nginix.conf 文件，在相应位置加入 include 把以上2个文件包含进来
+user nginx;
+worker_processes 1;
+# main server error log
+error_log /var/log/nginx/error.log ;
+pid /var/run/nginx.pid;
+events {
+	worker_connections 1024;
+}
+# main server config
+http {
+	include mime.types;
+	default_type application/octet-stream;
+	log_format main ‘$remote_addr – $remote_user [$time_local] $request ‘
+	‘”$status” $body_bytes_sent “$http_referer” ‘
+	‘”$http_user_agent” “$http_x_forwarded_for”‘;
+	sendfile on;
+	#tcp_nopush on;
+	#keepalive_timeout 0;
+	keepalive_timeout 65;
+	gzip on;
+	server {
+		listen 80;
+		
+		server_name _;
+		
+		access_log /var/log/nginx/access.log main;
+		
+		server_name_in_redirect off;
+		
+		location / {
+			root /usr/share/nginx/html;
+			index index.html;
+
+			etag off;
+			expires 1d;
+			有效期
+		}
+	}
+	# 包含所有的虚拟主机的配置文件
+	include /usr/local/etc/nginx/vhosts/*;
+}
+
+4 重启 Nginx
+/etc/init.d/nginx restart
+
+跨域代理
+	location ~ \.josn{
+		proxy_pass www.keyide.cn;
+	}
+
+负载均衡
+	加权轮循
+	upstream web_list{
+		server 192.168.91.1 weight=2;
+		server 192.168.91.1 weight=2;
+	}
+
+	server {
+
+		server_name www.keyide.cn;
+
+		location / {
+			proxy_pass http://web_list;
+		}
+	}
+
+	ip_hash     相同的ip地址请求
+
+	least_conn  上次访问的
+
+
+
+tp实现
+
+C('MEMCACHE_HOST', '127.0.0.1');
+C('MEMCACHE_PORT', '11211')
+session(['type' => 'Memcache']);
+
+session(['name'=>'session_id', 'expire'=>3600]);
+
+上传驱动
+
+'FILE_UPLOAD_TYPE' => 'Ftp',
+'UPLOAD_TYPE_CONFIG' => [
+	'host' => '192.168.1.200',
+	'port' => 21,
+	'timeout' => 90,
+	'username' => 'ftp_user',
+	'password' => 'ftp_pwd'
+]
+
+
+proxy_buffering  代理缓冲
+允许临时在代理服务器上, 去缓存响应资源

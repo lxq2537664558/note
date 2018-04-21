@@ -1,0 +1,431 @@
+HTTP协议是无状态
+
+HTTP:hyper-text transfer protocol,超文本传输协议,超文本(html)在网络间(电脑与电脑之间)传输过程中所遵循的一些规则
+
+超文本转移协议 !!!
+
+
+
+
+两台电脑之间要实现数据传输
+ 两台电脑必须要互联(用过网线:TCP/IP)
+ 数据的传输要遵循HTTP协议(b/s结构的系统)
+
+HTTP协议特点
+支持客户/服务器模式:不限于b/s结构,凡是b/s结构都不许遵循HTTP协议
+简单快速[只需请求方法和路径]
+灵活[任意数据]	可以传输任意数据
+无连接[每次连接只处理一个请求] 每次请求只会处理一次,返回一个结果,需要在获取其他数据就必须重新请求
+无状态[事务处理没有记忆能力]	服务器在处理两次请求的时候区分不出来是否两个请求来自同一个浏览器(session和cookie)
+URL Uniformed Resource Locator,同意资源定位,指的是通过http协议以及服务器的域名加上对应文件的路径组成的一个网络绝对路径
+URI uniformed resource identifier,同意资源标识,指的是一个文件在网站服务器相对网站根目录的路径
+
+HTTP1.1 和 HTTP1.0区别
+HTTP1.1 重点是修复HTTP设计中的缺陷, 从可扩展性, 缓存处理, 宽带优化, 持久链接, HOST头, 错误通知, 消息传递, 内容协商几个方面左了相关改进
+http://blog.csdn.net/forgotaboutgirl/article/details/6936982
+
+
+http协议分为两个部分:http请求(浏览器发出),http响应(服务器发出)
+
+http请求[报文]分为四个部分
+	请求行:包含三个内容 它们之间使用空格隔开
+		请求方式:
+			GET 	获取资源
+			POST 	传输实体主体
+			HEAD	(和GET基本一致,只是返回内容) 只请求响应报文中的HTTP首部  判断uri 有效性
+			PUT 	传输文件
+			DELETE	请求服务器删除指定的资源
+			OPTIONS (返回可用的方法)..
+			TRACE	追踪路径  在 Max-Forwards 中填入数值, 每经过一个服务器端就将该数字减 1, 当数值减到0 时, 就停止据需传输
+			CONNECT 要求用隧道协议连接代理 
+			LINK 	建立和资源之间的联系    1.1被遗弃
+			UNLINE  断开连接关系			1.1被遗弃
+			MOVE 	请求服务器将指定的页面移至另一个网络地址
+			 
+		url:要请求的文件路径
+		协议版本:http/1.1
+
+	请求头:请求头就是一箱一箱的规范(协议的真正内容),一个内容占一行
+		Host: /							所请求的主机地址
+		
+		Accept: text/html,image/* 		浏览器可以接受服务器返回的数据类型
+		Accept-Charset:
+		Accept-Encoding: gzip,deflate 	可以接受的数据的编码,是什么流文件(文件内容)
+		Accept-Language: en-us,zh-cn 	可以接受的语言
+		Content-Language:
+
+		If-Modified-Since(get):			表示浏览器当前已经访问过某个界面,而进行再次访问,该时间是上次请求缓存文件的时间
+		Max-Forwards: 数值   			配合 TRACE 方法使用
+		Referer:						引用,值从那个界面过来的(跳转过来)
+		User-Agent:						浏览器信息
+		Connection: keep-alive			连接,在本次请求的过程中,知道服务器吧数据全部交还给浏览器,两者之间一直保持连接状态
+		Cookie:							浏览器接待提供给服务器的cookie数据(保存在浏览器cookie中的数据)
+		Content-Length(post):			浏览器提交给服务器的数据的长度
+		Content-Type(post):				提交的文件的类型
+			multipart/form-data
+				在web 表单文件上传时使用
+			multipart/byteranges
+				状态码206 (partial Content, 部分内容) 响应报文包含了多个范围的内容时使用
+			boundary 字符串来划分多部分对象集指明各类实体
+		Range:5001- 					范围请求  请求5001字节之后的全部	
+
+
+	空行:空行,用来区分请求头和请求主体
+
+	请求主体:只有post提交数据的时候才会有信息
+		注:使用post时必须指明content-length长度和content-type
+			content-type:application/x-www-form-urlencoded
+
+http响应[报文]
+http响应也包含四个部分
+	响应行
+		协议版本:http/1.1
+		状态码:200
+			1XX		通知			接收到请求,继续处理
+				100 Continue 		 	告诉客户端应该继续请求
+			2XX		成功			请求正常处理完毕
+				200 OK 				 	服务器成功返回网页
+				204 No Content 			请求成功 但没有资源可返回
+				206 Partial Content  	请求部分的资源    配合Content-Range 
+			3XX		重定向			需要进行附加操作以完成请求
+				301	Moved Permanently 	永久重定向
+				302 Found 			  	临时重定向
+				303 See Other 			确定重定向
+				304	Not Modified      	未修改(取缓存)  资源已找到 但未符合条件请求
+				307	Temporary Redirect	重定向中保持原有的请求数据  和302相似
+			4XX		客户端错误		服务器无法处理请求
+				400 Bad Request 		服务器无法理解请求
+				401	Unauthorized 		第一次 认证  第二次 认证失败
+				403	Forbidden	      	禁止访问
+				404	Not Found 	 	  	请求资源不存在
+			5XX		服务端错误		服务器处理请求出错
+				500	Internal Server Error服务器内部错误
+				502 Bad Gateway		     坏网关
+				503	Service Unavailable  服务器暂时不可用
+				504	Gateway Timeout      超时
+		状态描述:对状态的说明
+
+	响应头:与请求相似,用来规范数据(数据说明)
+		Server:				服务器信息
+		Date:				响应的时间
+		Content-Type:		响应主体的数据类型
+		Connection: 		keep-alive 	长连接
+		Keep-Alive: 		timeout=10,max=100
+		Location:			重定向,立即重定向
+		Last-Modified:		文件最后被修改的时间
+		Content-Length:		响应主体的数据长度
+		Refresh:			刷新,指定时间后重定向
+		Content-Encodeing:	数据内容的编码
+		Cache-Control:		缓存控制,no-cache表示告诉浏览器不要缓存当前请求的界面
+		Set-Cookie: 		告诉客户端保存cookie
+
+	空行:用来区分响应头个响应主体
+
+	响应主体:具体的响应数据
+
+
+
+首部字段类型
+	通用首部字段(General Header Fields)
+		请求报文和响应柏爱文两方都会使用的首部
+
+		Cache-Control 		控制缓存的行为
+			缓存请求指令
+				no-cache 			无 		强制向源服务器再次验证
+				no-store 			无 		不缓存请求或响应的任何内容
+				max-age = [ 秒] 	必需 	响应的最大Age值
+				max-stale( = [ 秒]) 可省略 	接收已过期的响应
+				min-fresh = [ 秒] 	必需 	期望在指定时间内的响应仍有效
+				no-transform 		无 		代理不可更改媒体类型
+				only-if-cached 		无 		从缓存获取资源
+				cache-extension		- 		新指令标记（token）
+			缓存响应指令
+				public 				无 		可向任意方提供响应的缓存
+				private 			可省略 	仅向特定用户返回响应
+				no-cache 			可省略 	缓存前必须先确认其有效性
+				no-store 			无 		不缓存请求或响应的任何内容
+				no-transform 		无 		代理不可更改媒体类型
+				must-revalidate 	无 		可缓存但必须再向源服务器进行确认
+				proxy-revalidate 	无 		要求中间缓存服务器对缓存的响应有效性再进行确认
+				max-age = [ 秒] 	必需 	响应的最大Age值
+				s-maxage = [ 秒] 	必需 	公共缓存服务器响应的最大Age值
+				cache-extension     -  		新指令标记（token）
+
+		Connection 			逐跳首部、 连接的管理
+			不在转发的首部字段名  Upgrade
+			close  		服务器返回关闭持久连接
+			keep-Alive  持久化连接
+				Keep-Alive: 		timeout=10,max=100
+		Date 				创建报文的日期时间
+		Pragma 				报文指令     兼容http 1.0
+		Trailer 			报文末端的首部一览
+		Transfer-Encoding 	指定报文主体的传输编码方式   chunked(分块传输)
+		Upgrade 			升级为其他协议
+		Via 				代理服务器的相关信息
+		Warning 			错误通知
+			110 Response is stale（响应已过期） 					代理返回已过期的资源
+			111 Revalidation failed（再验证失败） 					代理再验证资源有效性时失败（服务器无法到达等原因）
+			112 Disconnection operation（断开连接操作） 			代理与互联网连接被故意切断
+			113 Heuristic expiration（试探性过期） 					响应的使用期超过24小时（有效缓存的设定时间大于24小时的情况下）
+			199 Miscellaneous warning（杂项警告） 					任意的警告内容
+			214 Transformation applied（使用了转换） 				代理对内容编码或媒体类型等执行了某些处理时
+			299 Miscellaneous persistent warning（持久杂项警告） 	任意的警告内容
+	
+	请求首部字段(Request Header Fields)
+		从客户端向服务器端发送请求报文时使用的首部
+		补充了请求的附加内容, 客户端信息, 响应内容相关优先级等信息
+
+		Accept 				用户代理可处理的媒体类型
+		Accept-Charset 		优先的字符集
+		Accept-Encoding 	优先的内容编码
+		Accept-Language 	优先的语言（自然语言）
+		Authorization 		Web认证信息
+		Expect 				期待服务器的特定行为
+		From 				用户的电子邮箱地址
+		Host 				请求资源所在服务器
+		If-Match 			比较实体标记（ETag）
+		If-Modified-Since 	比较资源的更新时间
+		If-None-Match 		比较实体标记（与 If-Match 相反）
+		If-Range 			资源未更新时发送实体 Byte 的范围请求
+		If-Unmodified-Since 比较资源的更新时间（与If-Modified-Since相反）
+		Max-Forwards 		最大传输逐跳数
+		Proxy-Authorization 代理服务器要求客户端的认证信息
+		Range 				实体的字节范围请求
+		Referer 			对请求中 URI 的原始获取方
+		TE 					传输编码的优先级
+		User-Agent HTTP 	客户端程序的信息
+	
+	响应首部字段(Response Header Fields)
+		从服务器端向客户端返回响应报文时使用的首部
+		补充了响应的附加内容, 也会要求客户端附加额外的内容信息
+
+		Accept-Ranges 		是否接受字节范围请求
+		Age 				推算资源创建经过时间
+		ETag 				资源的匹配信息
+		Location 			令客户端重定向至指定URI
+		Proxy-Authenticate 	代理服务器对客户端的认证信息
+		Retry-After 		对再次发起请求的时机要求
+		Server 				HTTP服务器的安装信息
+		Vary 				代理服务器缓存的管理信息
+		WWW-Authenticate 	服务器对客户端的认证信息
+
+	实体首部字段(Entity Header Fields)
+		针对请求报文和响应报文的实体部分使用的首部
+		补充了资源内容更新时间等与实体有关的信息
+
+		Allow 				资源可支持的HTTP方法
+		Content-Encoding 	实体主体适用的编码方式
+		Content-Language 	实体主体的自然语言
+		Content-Length 		实体主体的大小（单位： 字节）
+		Content-Location 	替代对应资源的URI
+		Content-MD5 		实体主体的报文摘要
+		Content-Range 		实体主体的位置范围
+		Content-Type 		实体主体的媒体类型
+		Expires 			实体主体过期的日期时间
+		Last-Modified 		资源的最后修改日期时间
+
+	set-Cookie
+		NAME=VALUE 		赋予 Cookie 的名称和其值（必需项）
+		expires=DATE 	Cookie 的有效期（若不明确指定则默认为浏览器关闭前为止）
+		path=PATH 		将服务器上的文件目录作为Cookie的适用对象（若不指定则默认为文档所在的文件目录）
+		domain=域名 	作为 Cookie 适用对象的域名 （若不指定则默认为创建 Cookie的服务器的域名）
+		Secure 			仅在 HTTPS 安全通信时才会发送 Cookie
+		HttpOnly 		加以限制， 使 Cookie 不能被 JavaScript 脚本访问
+
+	X-Frame-Options
+		frame 标签内的显示问题
+
+		DENY ： 拒绝
+		SAMEORIGIN ： 仅同源域名下的页面
+
+		apache2.conf 的配置实例
+		<IfModule mod_headers.c>
+			Header append X-FRAME-OPTIONS "SAMEORIGIN"
+		</IfModule>
+
+
+内容协商
+	服务器驱动协商(Server-driven Negotiation)
+		由服务器端进行内容协商
+		以请求的首部字段为参考, 在服务器端自动处理
+		但对用户来说, 以浏览器发送的信息作为判定的依据, 并不一定能筛选出最优内容
+	客户端驱动协商(Agent-driven Negotiation)
+		由客户端进行内容协商的方式
+		用户从浏览器显示的可选项列表中手动选择
+		还可以利用 JavaScript 脚本在 Web 页面上自动进行上述选择
+		比如按 OS 的类型或浏览器类型， 自行切换成 PC 版页面或手机版页面
+	透明协商(Transparent Negotiation)
+		是服务器驱动和客户端驱动的结合体
+		是由服务器端和客户端各自进行内容协商的一种方法
+
+
+
+
+
+
+	php.ini output_buffering = 4096 程序 缓存
+
+
+win telnet客户端
+telnet客户端能够发出请求去连接姐远程电脑的服务器(模拟浏览器)
+使用telnet之前,需要开启telnet客户端 控制面板--程序--打开或关闭windows功能--telnet客户端
+
+tenlnet 模拟浏览器发出http请求 打开telnet客户端:进入控制台
+连接apache服务器 telnet host port
+数据回显	ctrl+左中括号--回车
+
+php模拟http请求
+```php
+clitent.php
+<?php
+	$fp = fsockopen(host, port, $errno, $errstr, $time)
+	//$time 超时时间
+
+	//检测
+	if(!$fp){
+		echo $errstr;die();
+	}
+
+	//拼接http请求报文
+	$http = '';
+
+/*get
+	//请求报文包括  请求行 请求头 空行 请求体
+	$http .= "GET /server.php?id=10 HTTP/1.1\r\n";
+	//请求形式 (web服务器根目录)绝对路径 协议版本
+
+	//请求头信息
+	$http .= "Host: localhost\r\n";
+	$http .= "Connection: close\r\n";
+
+	//空行
+	$http .= "\r\n";
+
+	//请求体 get为空
+*/
+
+/*post
+	//请求行
+	$http .= "POST /server.php HTTP/1.1\r\n";
+
+	//请求头
+	$http .= "Host: localhot\r\n";
+	$http .= "Connection: close\r\n";
+	$http .= "Cookie: username=amdin;uid=200\r\n";
+	$http .= "User-agent: firefox-chrome-safari-ios-adnroid\r\n";
+	$http .= "Content-type: application/x-www-form-urlencoded\r\n";
+	$http .= "Content-length: 32\r\n";
+
+	//换行
+	$http .= "\r\n";
+
+	//请求体
+	$http .= "email=irnp@qq.com&username=admin\r\n";
+*/
+	//发送请求
+	fwrite($fp, $http);
+
+	//获取结果
+	$res = '';
+	while(!feof($fp)){
+		$res .= $fgets($fp);
+	}
+
+	//输出
+	echo $res;
+?>
+
+server.php
+<?=
+	echo 'hello';
+?>
+```
+
+一般使用 curl 扩展
+$ch = curl_init($url);
+curl_setopt($ch, ...);
+$res = curl_exec($ch);
+
+
+php模拟浏览器的动作
+	parse_url(url)		解析一个URL并返回一个关联数组,包含在URL中出现的各种组成部分
+		scheme  	如http
+		host
+		port
+		user
+		pass
+		path
+		query 	在问号?之后
+		fragment在散列符号#之后
+	http_build_query($data)	生成URL-encode之后的请求字符串
+	连接apache服务器
+		fsockopen('localhost',80,$errno,@errstr);
+	写入http协议
+		fwrite	向指定(fsockopen)资源写入内容
+	接受返回数据
+		数据接收后背存放在fsockopen的资源中
+	解析数据
+		fgets,fgetc
+
+
+
+错误代码解释
+　　"100" : Continue
+　　"101" : witching Protocols
+　　"200" : OK 													请求数据成功
+　　"201" : Created 											新建或修改数据成功
+　　"202" : Accepted
+　　"203" : Non-Authoritative Information
+　　"204" : No Content 											删除数据成功
+　　"205" : Reset Content
+　　"206" : Partial Content
+　　"300" : Multiple Choices
+　　"301" : Moved Permanently
+　　"302" : Found
+　　"303" : See Other
+　　"304" : Not Modified
+　　"305" : Use Proxy
+　　"307" : Temporary Redirect
+　　HTTP 400 - 请求无效                     					请求错误
+　　HTTP 401.1 - 未授权：登录失败
+　　HTTP 401.2 - 未授权：服务器配置问题导致登录失败
+　　HTTP 401.3 - ACL 禁止访问资源
+　　HTTP 401.4 - 未授权：授权被筛选器拒绝
+　　HTTP 401.5 - 未授权：ISAPI 或 CGI 授权失败
+　　HTTP 403 - 禁止访问
+　　HTTP 403 - 对 Internet 服务管理器 (HTML) 的访问仅限于 Localhost
+　　HTTP 403.1 禁止访问：禁止可执行访问
+　　HTTP 403.2 - 禁止访问：禁止读访问
+　　HTTP 403.3 - 禁止访问：禁止写访问
+　　HTTP 403.4 - 禁止访问：要求 SSL
+　　HTTP 403.5 - 禁止访问：要求 SSL 128
+　　HTTP 403.6 - 禁止访问：IP 地址被拒绝
+　　HTTP 403.7 - 禁止访问：要求客户证书
+　　HTTP 403.8 - 禁止访问：禁止站点访问
+　　HTTP 403.9 - 禁止访问：连接的用户过多
+　　HTTP 403.10 - 禁止访问：配置无效
+　　HTTP 403.11 - 禁止访问：密码更改
+　　HTTP 403.12 - 禁止访问：映射器拒绝访问
+　　HTTP 403.13 - 禁止访问：客户证书已被吊销
+　　HTTP 403.15 - 禁止访问：客户访问许可过多
+　　HTTP 403.16 - 禁止访问：客户证书不可信或者无效
+　　HTTP 403.17 - 禁止访问：客户证书已经到期或者尚未生效
+　　HTTP 404.1 - 无法找到 Web 站点
+　　HTTP 404 - 无法找到文件
+　　HTTP 405 - 资源被禁止
+　　HTTP 406 - 无法接受
+　　HTTP 407 - 要求代理身份验证
+　　HTTP 410 - 永远不可用
+　　HTTP 412 - 先决条件失败
+　　HTTP 414 - 请求 - URI 太长
+		 422   当创建一个对象时, 发生一个验证错误
+　　HTTP 500 - 内部服务器错误
+　　HTTP 500.100 - 内部服务器错误 - ASP 错误
+　　HTTP 500-11 服务器关闭
+　　HTTP 500-12 应用程序重新启动
+　　HTTP 500-13 - 服务器太忙
+　　HTTP 500-14 - 应用程序无效
+　　HTTP 500-15 - 不允许请求 global.asa
+　　Error 501 - 未实现
+　　HTTP 502 - 网关错误
+

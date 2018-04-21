@@ -1,0 +1,1494 @@
+tp5
+├─application 应用目录
+├─extend 扩展类库目录（可定义）
+├─public 网站对外访问目录
+├─runtime 运行时目录（可定义）
+├─vendor 第三方类库目录（Composer）
+├─thinkphp 框架核心目录
+│ ├─lang 语言包目录
+│ ├─library 框架核心类库目录
+│ │ ├─think think 类库包目录
+│ │ └─traits 系统 traits 目录
+│ ├─tpl 系统模板目录
+│ │
+│ ├─.htaccess 用于 apache 的重写
+│ ├─.travis.yml CI 定义文件
+│ ├─base.php 框架基础文件
+│ ├─composer.json composer 定义文件
+│ ├─console.php 控制台入口文件
+│ ├─convention.php 惯例配置文件
+│ ├─helper.php 助手函数文件（可选）
+│ ├─LICENSE.txt 授权说明文件
+│ ├─phpunit.xml 单元测试配置文件
+│ ├─README.md README 文件
+│ └─start.php 框架引导文件
+├─build.php 自动生成定义文件（参考）
+├─composer.json Composer定义文件
+├─LICENSE.txt 授权说明文件
+├─README.md README 文件
+├─think 命令行工具入口
+
+
+tp5 项目根目录 				ROOT_PATH
+tp5/application 应用目录 	APP_PATH
+tp5/thinkphp 框架核心目录 	THINK_PATH
+tp5/exend 应用扩展目录 		EXTEND_PATH
+tp5/vendor Composer扩展目录 VENDOR_PATH
+
+
+
+
+数据库入口类 db
+	所有的数据库操作都是经过Db类调用，并且Db类是一个静态类，但Db类自身只有一个公共方法connect
+
+
+连接器类 Connection
+	数据库连接都是惰性的，只有最终执行SQL的时候才会进行连接。
+
+
+查询器类 Query
+	所有的数据库查询都使用了 PDO的预处理和参数绑定机制。你所看到的大部分数据库方法都来自于查询类而并非 Db类，这一点很关键，也就是说虽然我们始终使用 Db类操作数据库，而实际上大部分方法都是由查询器类提供的方法
+
+
+生成器类 Builder
+	生成类一般不需要自己调用，而是由查询类自动调用的。也可以这么理解，生成类和查询类是一体的，事实上它们合起来就是通常我们所说的查询构造器（因为实际的查询操作还是在连接器中执行的）
+
+
+数据库配置
+	数据库配置文件中配置的是默认的数据库连接配置，如果你有多个数据库连接，额外的数据库连接是在应用配置文件中完成的（参考后面的动态数据库连接）
+
+	自定义连接类的时候，请注意设置数据库配置中的  builder参数避免找不到对应生成器类
+
+
+
+plgroups
+	playedId
+PlayedPlGroup
+	pl_group_id
+PlayedPl
+
+
+
+
+打印最后的sql
+	1
+		UserModel::all();
+		UserModel::getLastSql();
+	2
+		$userModel = new UserModel();
+		$userModel->select();
+		$userModel->getLastSql();
+
+
+加密 验证
+password_hash()
+password_verify()
+
+use app\service\Str;
+	Str::contains	//包含
+	Str::lower		//小写
+
+container() //容器
+
+E:\www\a.dd788799.com\application\required\container_alias.php
+	服务别名
+
+
+
+验证
+$rules = [  $this->username() ?? 'username' => 'require',
+                    'password' => 'require',];
+        $validate = new Validate($rules);
+        if(!$validate->check([
+            'username'  =>  trim($request->param('username')),
+            'password'  =>  trim($request->param('password')),
+        ])){
+            throw new \Exception($validate->getError());
+        }
+
+
+
+
+创建模块
+php think build --module demo
+
+
+控制器  application/模块/controller/控制器.php
+<?php
+namespace app\index\controller;
+use think\Controller;
+
+class Index extends Controller
+{
+	public function index()
+	{
+		//读取数据
+		$data = Db::name('data')->find();
+		//渲染视图
+		$this->assign('name', $name);
+		return $this->fetch();
+		
+		return 'Hello,World！';
+	}
+}
+
+	操作方法必须为public
+
+
+视图	application/模块/view/控制器/方法.html
+	{$result.id}
+	{$result.data}
+
+	\think\Controller类
+		模板赋值
+		assign()
+		模板渲染
+		return $this->fetch() 	第二个参数可以是要传入的参数 数组
+		return view()  		同上
+
+	视图模板文件
+		{$name}
+		系统变量
+		{$Think.server} 
+		{$Think.post} 
+		{$Think.get} 
+		{$Think.cookie} 
+		{$Think.session} 
+		//常量
+		{$Think.APP}
+		//配置
+		{$Think.config}
+		//函数输出
+		{$time|date="Y-m-d","###"|md5
+		{:md5(date('Y-m-d', $time))} 
+
+		原样输出
+		{lteral}{/lteral}
+
+		注释
+		{// 内容}
+		{/*内容*/}
+
+		内置标签
+		<include>
+		循环
+		<volist name="list" id='vo' offset='0' length='3'>
+			{vo.id}
+		</volist>
+		{foreach $list as $vo}
+		{/foreach}
+		{for start='1' end='100'}
+		</for>
+		{php}{/php}
+
+
+路由
+
+
+			
+Db::connect('mysql://root@127.0.0.1/demo#utf8')
+
+事物
+	自动
+		Db::transaction(function () {
+			sql语句
+		});
+	手动
+		Db::startTrans();
+		Db::commit();
+		Db::rollback();
+
+sql日志
+// 开启应用调试模式
+    'app_debug'              => true,
+    // 开启应用Trace
+    'app_trace'              => true,    
+    'log'                    => [
+        // 日志记录方式
+        'type'  => 'File',
+        // error和sql日志单独记录
+        'apart_level'   =>  ['error','sql'],
+    ],
+
+    // 数据库调试模式
+    'debug'       => true,
+
+创建查询类
+	Db::table('data');    
+	$db = db('data');
+	db助手函数默认每次调用都会重新连接数据库（目的是确保你的每次 db函数调用不会相互影响），你可以使用 db('data',[],false)方式解决
+
+curd操作
+	辅助查询
+	table	指定查询数据表
+	field	指定查询字段
+	where	指定查询条件
+	order	指定结果排序
+	limit	指定查询结果数
+	真正查询
+	find	查询一条记录
+	select	查询数据集
+	insert	写入数据
+	update	更新数据
+	delete	删除数据
+
+
+	$data = Db::table('data');
+	创建
+		单条
+		->insert(['id' => 8]);
+		多条
+		->insert([
+			['id' => 9]
+			['id' => 7]
+		]);
+		返回值也是影响（新增）的记录数，并不会返回主键值
+		// 获取上次写入的自增Id
+		Db::getLastInsID();
+		//返回主键
+		->insertGetId(['id' => 6]);
+		//忽略错误
+		->strict(false)
+
+	更新
+		$data = Db::table('data')->where('id', 8);
+		
+		$data->update(['name' => 'xxx'])
+		Db::table('data')->update(['id' => 8, 'name' => 'yyy'])
+		//过滤 只更新name字段 辅助
+		$data->field(['name'])->update(['name' => 'xxx'])
+		//跟新单个字段 调用的update()
+		$data->setField('name', 'zzz')
+		
+		$data->setInc('score')          //递增1
+		$data->setInc('score', 5);    	//递减5
+		$data->setDec('score')          //递减1
+		$data->setDec('score', 5);    	//递减5
+		$data->setDec('score', 5, 10);  //延时10秒写入
+
+	读取		
+		//单条
+		$data->where('id', 8)->find()
+		$data->find(8)  				//主键查询
+		//多条
+		$data->where('id','in', [1, 5, 8])->select();
+		$data->select([1,5,8]); 		//主键 in
+		
+		$data->where('id', 1)->value('name')  //某个字段
+		$data->where('status', 1)->column('name')  //某列
+		$data->where('status', 1)->column('name', 'id')  //某列 id为索引
+		column的返回类型永远都是数组，不受 resultset_type参数的影响	
+
+	删除
+		$data->delete(18)      //单条
+		$data->delete([1,2,3]) //多条
+		$data->delete(true); 	//无条件删除
+
+	链式方法
+		where*		用于AND查询	字符串、数组和对象
+		whereOr*	用于OR查询	字符串、数组和对象
+		whereXor*	用于XOR查询	字符串、数组和对象
+		whereTime*	用于时间日期的快捷查询	字符串
+		table		用于定义要操作的数据表名称	字符串和数组
+		alias		用于给当前数据表定义别名	字符串和数组
+		field*		用于定义要查询的字段（支持字段排除）	字符串和数组
+		order*		用于对结果排序	字符串和数组
+		limit		用于限制查询结果数量	字符串和数字
+		page		用于查询分页（内部会转换成limit）	字符串和数字
+		group		用于对查询的group支持	字符串
+		having		用于对查询的having支持	字符串
+		join*		用于对查询的join支持	字符串和数组
+		union*		用于对查询的union支持	字符串、数组和对象
+		view*		用于视图查询	字符串、数组
+		distinct	用于查询的distinct支持	布尔值
+		lock		用于数据库的锁机制	布尔值
+		cache		用于查询缓存	支持多个参数
+		relation*	用于关联查询	字符串
+		with*		用于关联预载入	字符串、数组
+		bind*		用于数据绑定操作	数组或多个参数
+		comment		用于SQL注释	字符串
+		force		用于数据集的强制索引	字符串
+		master		用于设置主服务器读取数据	布尔值
+		strict		用于设置是否严格检测字段名是否存在	布尔值
+		sequence	用于设置Pgsql的自增序列名	字符串
+		failException	用于设置没有查询到数据是否抛出异常	布尔值
+		partition	用于设置分表信息	数组 字符串
+		data*		用于设置写入数据（ 5.0.5+）	数组
+		inc*		用于设置字段递增 （ 5.0.5+）	字符串
+		dec*		用于设置字段递减（ 5.0.5+）	字符串
+		exp*		用于设置SQL表达式（ 5.0.5+）	字符串
+		其中带*标识的表示支持多次调用
+
+	where
+		where('字段名','表达式','查询条件')
+		where('字段名','查询条件（等于）')
+		where('字符串查询条件','参数绑定（数组）')	
+
+		=				等于	字符串或者数字
+		<>				不等于	字符串或者数字
+		>				大于	字符串或者数字
+		>=				大于等于	字符串或者数字
+		<				小于	字符串或者数字
+		<=				小于等于	字符串或者数字
+		[not] like		模糊查询	字符串
+		[not] between	（不在）区间查询	字符串或者数组
+		[not] in		（不在）IN 查询	字符串、数组或闭包
+		[not] null		查询字段是否（不）是NULL	空
+		[not] exists	EXISTS查询	字符串或者闭包
+		exp				表达式查询，支持SQL语法	字符串
+		> time			时间比较	字符串或者数字
+		< time			时间比较	字符串或者数字
+		>= time			时间比较	字符串或者数字
+		<= time			时间比较	字符串或者数字
+		between time	时间比较	字符串或者数字
+		notbetween time	时间比较	字符串或者数字
+
+		下面的几种都是等效的
+		not like			notlike
+		not null			notnull
+		not in				notin
+		not between			notbetween
+		not exists			notexists
+		not between time	notbetween time
+
+		->where('id', '<>', 8)
+    	->where('id', 'between', [1, 20])
+    	->whereOr('name', 'like', '%thinkphp')
+
+    	//一个where 里面多个条件
+    	where([
+			'字段名1'=>['表达式','查询条件'],
+			'字段名2'=>['表达式','查询条件'],
+			'字段名2'=> '条件（等于）',
+			...
+		])
+
+		//闭包
+		->where(function ($query) {
+	        $query->where('id', 1)->whereOr('id', '>', 2);
+	    })
+	    ->whereOr(function ($query) {
+	        $query->where('name', 'like', '%think%')->where('id', '<>', 8);
+	    })
+
+	    查询字段用 &分割表示对多个字段使用 AND查询；
+		查询字段用 |分割表示对多个字段使用 OR查询；
+ 
+	获取查询SQL  fetchSql
+		// 有实际查询 返回数组
+		$result = Db::table('user')
+		->fetchSql(true)
+		->where('id', 1)
+		->find();
+		dump($result);
+
+	返回PDOStatement对象 
+		$pdo = Db::table('user')
+			->where('id', 1)
+			->field('name')
+			->getPdo();
+
+	聚合查询
+		count 			统计数量, 参数是要统计的字段名(可选)
+		max 			获取最大值, 参数是要统计的字段名(必须)
+		min 			获取最小值, 参数是要统计的字段名(必须)
+		avg 			获取平均值, 参数是要统计的字段名(必须)
+		sum 			获取总分, 参数是要统计的字段名(必须)
+
+	快捷查询方法
+		whereNull  		查询字段是否为null
+		whereNotNull 	查询字段是否不为null
+		whereIn 		字段 IN 查询
+		whereNotIn 		字段 NOT IN 查询
+		whereBetween 	字段 BETWEEN 查询
+		whereNotBetween 字段 NOT BETWEEN 查询
+		whereLike 		字段 LIKE 查询
+		whreNotLike  	字段 NOT LIKE 查询
+		whereExists 	EXISTS 条件查询
+		whereNotExists  NOT EXISTS 条件查询
+		whereExp 		表达式查询
+
+		系统并没有分装whereOr 的快捷查询, 只需要在最后一个参数传入 OR 即可实现
+		->where('id', [1,2,3], 'or')
+
+	动态查询
+		$user = Db::table('user')
+		//根据邮箱查找
+		->getByEmail('qq@qq.com')
+		//根据 NickName 查找
+		->getByNickName('流年')
+		//根据 昵称 查询有幸
+		->getByNickName('流年', 'email')
+
+
+路由
+	标准   http://serverName/index.php/模块/控制器/操作
+
+	// 关闭URL自动转换（支持驼峰访问控制器）
+	'url_convert' => false
+
+	// 按照参数顺序获取
+	'url_param_type' => 1,
+
+	定义路由 
+		// 添加路由规则 路由到 index控制器的hello操作方法
+		'hello/:name' => 'index/index/hello',
+	
+		route.php
+			Route::rule('hello/:name', 'index/hello');
+
+			Route::get('hello/:name', 'index/hello');
+
+		:   参数
+		[]  可选
+		$   结尾时  完整匹配
+
+		闭包定义
+			'hello/[:name]' => function ($name) {
+				return 'Hello,' . $name . '!';
+			},
+
+			Route::rule('hello/:name', function ($name) {
+				return 'Hello,' . $name . '!';
+			});
+
+		约束url 条件
+		// 定义路由的请求类型和后缀
+		'hello/[:name]' => ['index/hello', ['method' => 'get', 'ext' => 'html']],
+		// 约束变量
+		['id' => '\d+']
+		['name' => '\w+']
+		['year' => '\d{4}']
+
+		blog打头
+		'[blog]' => [
+			':year/:month' => ['blog/archive', ['method' => 'get'], ['year' => '\d{4}', 'month' => '\d{2}']],
+			':id' => ['blog/get', ['method' => 'get'], ['id' => '\d+']],
+			':name' => ['blog/read', ['method' => 'get'], ['name' => '\w+']],
+		],
+
+		// 全局变量规则
+		'__pattern__' => [
+			'name' => '\w+',
+			'id' => '\d+',
+			'year' => '\d{4}',
+			'month' => '\d{2}',
+		],
+
+
+	// 设置pathinfo分隔符
+	'pathinfo_depr' => '-',
+
+	生成URL地址
+	Url::build('blog/archive', ['year' => '2015', 'month' => '05']);
+	url('blog/read', 'name=thinkphp');
+
+	//设置了  生成的url会带后缀
+	'url_html_suffix' => 'html'
+
+
+请求响应   think\Request
+	//实例化请求Request对象
+	$request = Request::instance();
+
+	继承了 think\Controller 
+	$this->request->url() 
+
+	//通过依赖注入
+	public function hello(Request $request
+
+	//助手函数
+	request()->method()  	//请求方法
+			   ip()   		//访问ip
+			   isAjax() 	//是否Ajax请求
+			   param() 		//请求参数
+			   only(['name']) 	//包含
+			   except(['name']) //排除
+
+			   module() 	//模块
+			   controller() //控制器
+			   action() 	//方法
+
+			   routeInfo() 	//路由信息
+			   dispatch() 	//调度信息
+
+			   	domain	 	获取当前的域名
+				url 		获取当前的	完整URL地址
+				baseUrl 	获取当前的URL地址，不含QUERY_STRING
+				baseFile 	获取当前的SCRIPT_NAME
+				root 		获取当前URL的root地址
+				pathinfo 	获取当前URL的pathinfo地址
+				path 		获取当前URL的pathinfo地址，不含后缀
+				ext 		获取当前URL的后缀
+				type 		获取当前请求的资源类型
+				scheme 		获取当前请求的scheme
+				query 		获取当前URL地址的QUERY_STRING
+				host 		获取当前URL的host地址
+				port 		获取当前URL的port号
+				protocol 	获取当前请求的SERVER_PROTOCOL
+				remotePort 	获取当前请求的REMOTE_PORT
+				url、 baseUrl、 baseFile、 root方法如果传入true，表示获取包含域名的地址
+
+	//获取所有请求
+	$request->param()      input()
+	$request->get()
+
+	input('get.')
+	input('post.')
+		路由变量 > 当前请求变量（$_POST变量） > $_GET变量
+
+	param 	获取请求变量
+	get 	获取$_GET变量
+	post 	获取$_POST变量
+	put 	获取PUT请求变量
+	delete 	获取DELETE请求变量
+	patch 	获取PATCH请求变量
+	request 获取$_REQUEST变量
+	route 	获取路由（URL）变量
+	session 获取$_SESSION变量
+	cookie 	获取$_COOKIE变量
+	server 	获取$_SERVER变量
+	env 	获取$_ENV变量
+	file 	获取上传文件信息
+
+	除了file方法之外，其它方法都支持默认值和过滤方法
+
+
+	// 设置默认的全局过滤规则 多个用数组或者逗号分隔
+	'default_filter' => 'htmlspecialchars ',
+
+	response 响应对象
+		// 默认输出类型
+		'default_return_type' => 'json',
+		'default_return_type' => 'xml',
+
+		默认的自动响应输出会自动判断是否 AJAX 请求，如果是的话会自动输出 default_ajax_return 配置的输出类型。
+
+		//手动输出
+		return json(['name' => 'hugo']]);
+
+		//返回状态码
+		return json($data, 201);
+
+		//响应头信息
+		return json($data, 201, ['Cache-control' => 'no-cache,must-revalidate']);
+
+		return json($data)->code(201)->header(['Cache-control' => 'no-cache,must-revalidate']);
+
+		渲染模板输出 	view
+		JSON输出 		json
+		JSONP输出 		jsonp
+		XML输出 		xml
+		页面重定向 		redirect
+
+		return xml($data, 201);
+
+
+	页面跳转
+		use \traits\controller\Jump;
+
+		$this->success('欢迎使用ThinkPHP5.0','hello');  	//成功页面 2秒后跳转到hello方法
+		$this->error('错误的name','guest'); 				//失败页面 2秒后跳转到guest方法
+
+		如果你的控制器类是继承的\think\Controller 的话，系统已经自动为你引入了 \traits\controller\Jump ，无需再次引入。
+
+	页面重定向
+		$this->redirect('http://thinkphp.cn', 301);
+		redirect 方法默认使用 302 跳转，如不需要可以使用第二个参数进行301跳转。
+
+		助手函数
+		redirect('http://thinkphp.cn')
+
+数据库
+	数据库配置
+		database.php
+		可以在每个模块里面加入配置文件 database.php
+
+		// 数据库连接参数
+		'params' => [
+			// 使用长连接
+			\PDO::ATTR_PERSISTENT => true,
+		],
+
+		模块的数据库配置文件中只需要配置和全局数据库配置文件差异的部分，相同的不需要重复配置。
+
+
+	数据库原生查询（SQL查询）； 		use think\Db;
+		// 插入记录
+		$result = Db::execute('insert into think_data (id, name ,status) values (5, "thinkphp",1)');
+
+		// 更新记录
+		$result = Db::execute('update think_data set name = "framework" where id = 5 ');
+
+		// 查询数据
+		$result = Db::query('select * from think_data where id = 5');
+		query方法返回的结果是一个数据集（数组），如果没有查询到数据则返回空数组
+		
+		// 删除数据
+		$result = Db::execute('delete from think_data where id = 5 ');
+
+		//参数绑定   预处理
+		Db::query('select * from think_data where id = ?', [8]);
+		//命名占位符绑定
+		 Db::query('select * from think_data where id=:id', ['id' => 10]);
+
+		可以执行一些其他的数据库操作，原则上，读操作都使用 query 方法，写操作使用 execute 方法即可
+
+		query 方法用于查询，默认情况下返回的是数据集（二维数组）， execute 方法的返回值是影响的行数。
+
+		切换数据库
+		$result = Db::connect([
+			// 数据库类型
+			'type' => 'mysql',
+			// 服务器地址
+			'hostname' => '127.0.0.1',
+			// 数据库名
+			'database' => 'thinkphp',
+			// 数据库用户名
+			'username' => 'root',
+			// 数据库密码
+			'password' => '123456',
+			// 数据库连接端口
+			'hostport' => '',
+			// 数据库连接参数
+			'params' => [],
+			// 数据库编码默认采用utf8
+			'charset' => 'utf8',
+			// 数据库表前缀
+			'prefix' => 'think_',
+		])->query('select * from think_data');
+
+		字符串方式定义
+		$result = Db::connect('mysql://root:123456@127.0.0.1:3306/thinkphp#utf8')->query('select * from think_data where id = 1');
+
+		//常用方法  在config.php文件中加入
+		'db2' => [
+			// 数据库类型
+			'type' => 'mysql',
+			// 服务器地址
+			'hostname' => '127.0.0.1',
+			// 数据库名
+			'database' => 'test',
+			// 数据库用户名
+			'username' => 'root',
+			// 数据库密码
+			'password' => '',
+			// 数据库连接端口
+			'hostport' => '',
+			// 数据库连接参数
+			'params' => [],
+			// 数据库编码默认采用utf8
+			'charset' => 'utf8',
+			// 数据库表前缀
+			'prefix' => 'test_',
+		],
+
+		$result = Db::connect('db2')->query('select * from think_data where id = 1');
+
+	数据库链式查询（查询构造器）；
+		//插入记录
+		Db::table('think_data')
+		->insert(['id' => 18, 'name' => 'thinkphp', 'status' => 1]);
+
+		// 更新记录
+		Db::table('think_data')
+		->where('id', 18)
+		->update(['name' => "hello"]);
+
+		// 查询数据
+		$list = Db::table('think_data')
+		->where('id', 18)
+		->select();
+
+		// 删除数据
+		Db::table('think_data')
+		->where('id', 18)
+		->delete();
+
+		由于我们在数据库配置文件中设置了数据表的前缀为 think_ ，因此， table 方法可以改成 name 方法
+		Db::name('data')
+		->insert(['id' => 18, 'name' => 'thinkphp']);
+
+		db 助手函数默认会每次重新连接数据库，因此应当尽量避免多次调用
+
+		链式操作
+		Db::name('data')
+		->where('status', 1)
+		->field('id,name')
+		->order('id', 'desc')
+		->limit(10)
+		->select();
+
+		select 		查询数据集
+		find 		查询单个记录
+		insert 		插入记录
+		update 		更新记录
+		delete 		删除记录
+		value 		查询值
+		column 		查询列
+		chunk 		分块查询
+		聚合
+		count
+		max('score')
+		min
+		avg
+		sum
+
+		事务
+		// 启动事务
+		Db::startTrans();
+		try {
+			Db::table('think_user')
+			->delete(1);
+			
+			Db::table('think_data')
+			->insert(['id' => 28, 'name' => 'thinkphp', 'status' => 1]);
+			// 提交事务
+			Db::commit();
+		} catch (\Exception $e) {
+			// 回滚事务
+			Db::rollback();
+		}
+
+		查询表达式
+		Db::name('data')
+		->where('id', 1)
+		->where('id', '=', 1)
+		->where('id', 'between', [5, 8])
+		->where('name', 'like', '%think%')
+		//多个字段相同的操作
+		->where('id&status', '>', 0)
+		->where('id > :id AND name IS NOT NULL', ['id' => 10])
+		->where('id', ['in', [1, 2, 3]], ['between', '5,8'], 'or')
+		->where([
+		'id' => ['between', '1,3'],
+		'name' => ['like', '%think%'],
+		])
+
+		//日期查询
+		->whereTime('create_time', '>', '2016-1-1')
+		//本周
+		->whereTime('create_time', '>', 'this week')
+		//近2天
+		->whereTime('create_time', '>', '-2 days')
+		//区域
+		->whereTime('create_time', 'between', ['2016-1-1', '2016-7-1'])
+		//今天
+		->whereTime('create_time', 'today')
+		//昨天
+		->whereTime('create_time', 'yesterday')
+		//本周
+		->whereTime('create_time', 'week')
+		//上周
+		->whereTime('create_time', 'last week')
+		
+		->find();
+
+		find成功返回一维数组没有满足默认返回null
+
+		where( 字段名，条件表达式，查询值 )
+		EQ、 = 			等于（=）
+		NEQ、 			不等于（）
+		GT、 > 			大于（>）
+		EGT、>= 		大于等于（>=）
+		LT、 < 			小于（<）
+		ELT、 <= 		小于等于（<=）
+		LIKE 			模糊查询
+		[NOT] BETWEEN 	（不在）区间查询
+		[NOT] IN 		（不在）IN 查询
+		[NOT] NULL 		查询字段是否（不）是NULL
+		[NOT] EXISTS 	EXISTS查询
+		EXP 			表达式查询，支持SQL语法
+
+		其中条件表达式不区分大小写
+
+		闭包查询 find和select方法都可以使用闭包查询
+		$result = Db::name('data')->select(function ($query) {
+			$query->where('name', 'like', '%think%')
+			->where('id', 'in', '1,2,3')
+			->limit(10);
+		});
+
+		Query对象
+		$query = new \think\db\Query;
+		$query->name('city')->where('name', 'like', '%think%')
+		->where('id', 'in', '1,2,3')
+		->limit(10);
+		$result = Db::select($query);
+		使用 Query 对象的话， select 方法之前调用的任何的链式操作都是无效
+
+		获取数值  一个
+		->value('name');
+
+		获取列数据  多个
+		->column('name');
+		//以id为键值
+		->column('name', 'id');
+
+		分块查询
+		把1万条记录分成 100 次处理，每次处理 100 条记录
+		Db::name('data')
+		->where('status', '>', 0)
+		->chunk(100, function ($list) {
+			// 处理100条记录
+			foreach($list as $data){
+				// 返回false则中断后续查询
+				return false;
+			}
+		});
+
+		你不希望使用主键进行查询，或者没有主键的话，则需要指定查询的排序字段（但必须是唯一的）
+		Db::name('user')
+		->where('status', '>', 0)
+		->chunk(100, function ($list) {
+		// 处理100条记录
+			foreach($list as $data){
+			}
+		}, 'uid');
+
+	模型的对象化查询；
+		namespace app\index\model;
+		use think\Model;
+		class User extends Model
+		{
+
+		}
+
+		use app\index\model\User as UserModel;
+		$user = new UserModel;
+
+		新增数据
+
+			$user->nickname = '流年';
+			$user->save();
+			//如果你需要实例化执行save执行数据库的update操作 请在save方法之前调用isUpdate
+			$user->isUpdate()->save()   
+
+			$user['nickname'] = '看云';
+			UserModel::create($user);			
+
+		批量增加
+			$list = [
+				['nickname' => '张三', 'email' => 'zhanghsan@qq.com', 'birthday' => strtotime('1988-01-15')],
+				['nickname' => '李四', 'email' => 'lisi@qq.com', 'birthday' => strtotime('1990-09-19')],
+			];
+			$user->saveAll($list)
+
+		查询数据 一条
+			$user = UserModel::get($id); 			//没有传值得话返回第一条
+			$user = UserModel::getByEmail('thinkphp@qq.com')
+			$user = UserModel::get(['nickname'=>'流年']);
+			
+			echo $user->name;
+			echo $user['name'];
+
+		查询数据 多条
+			$list = UserModel::all();
+			$list = UserModel::all(['status'=>1]);
+
+		更新数据
+			$user = UserModel::get($id);
+			$user->nickname = '刘晨';	
+			$user->save()
+
+			默认情况下，查询模型数据后返回的模型示例执行 save 操作都是执行的数据库 update 操作，如果你需要
+实例化执行 save 执行数据库的 insert 操作，请确保在save方法之前调用 isUpdate 方法：
+			$user->isUpdate(false)->save();
+
+			$user['id'] = (int) $id;
+			$user['nickname'] = '刘晨';
+			$result = UserModel::update($user);
+
+		删除数据
+			$user = UserModel::get($id);
+			$user->delete();
+
+			$result = UserModel::destroy($id);
+
+		读取器  读数据时执行
+			模型里面  get + 属性名的驼峰命名+ Attr  方法($fdata)
+			getBirthdayAttr($birthday){
+				return 要返回的样式;			
+			}
+
+			读取器还可以定义字段中不存在的字段
+			getUserBirthdayAttr($value,$data)
+			{
+				return date('Y-m-d', $data['birthday']);
+			}
+			//原始数据没有  所以要使用第二个参数
+
+		修改器  修改数据时执行
+			set + 属性名的驼峰命名+ Attr
+			setBirthdayAttr($value){
+				return strtotime($value);
+			}
+
+		类型转换 自动完成
+			protected $dateFormat = 'Y/m/d';
+			protected $type = [
+				// 设置birthday为时间戳类型（整型）
+				'birthday' => 'timestamp',
+				'birthday' => 'timestamp:Y/m/d',
+			]
+
+				支持的类型
+				integer 	整型
+				float 		浮点型
+				boolean 	布尔型
+				json 		JSON类型
+				object 		对象
+				datetime 	日期时间
+				timestamp 	时间戳（整型）
+				serialize 	序列化
+
+
+			// 开启自动写入时间戳字段  配置文件
+			'auto_timestamp' => true,	
+
+			// 定义时间戳字段名
+			protected $createTime = 'create_at';
+			protected $updateTime = 'update_at';	
+
+			// 关闭自动写入时间戳
+			protected $autoWriteTimestamp = false;
+
+			// 指定自动写入时间戳的类型为dateTime类型
+			protected $autoWriteTimestamp = 'datetime';
+
+			// 定义自动完成的属性
+			protected $insert = ['status' => 1];
+
+		查询范围
+			scope + 查询范围名称
+			protected function scopeEmail($query){
+				$query->where('email', 'thinkphp@qq.com');
+			}
+
+			控制器
+			UserModel::scope('email')
+			->scope('status')
+			->scope(function ($query) {
+				$query->order('id', 'desc');
+			})
+			->all();
+
+			// email查询
+			protected function scopeEmail($query, $email = ''){
+				$query->where('email', $email);
+			}
+
+			$list = UserModel::scope('email','thinkphp@qq.com')->all();
+
+			// 全局查询范围
+			protected static function base($query){
+				// 查询状态为1的数据
+				$query->where('status',1);
+			}
+			每次查询都会自动带上全局查询范围的查询条件。
+
+		表单输入
+			<FORM method="post" class="form" action="{:url('index/user/add')}">
+			<input type="hidden" name="__token__" value="{$Request.token}" />
+
+			助手函数 快速渲染模板
+			return view();
+			return view('user/create');
+
+			// allowField(true) 是为了避免表单令牌验证的字段被写入数据表
+			$user->allowField(true)->save(input('post.'))
+
+		表单验证
+			User 验证器（位于 application/index/validate/User.php ）
+			<?php
+				namespace app\index\validate;
+				use think\Validate;
+				class User extends Validate
+				{
+
+			// 验证规则
+			protected $rule = [
+				'nickname' => 'require|min:5|token',
+				'email' => 'require|email',
+				'birthday' => 'dateFormat:Y-m-d',
+			];
+
+			// 验证规则
+			protected $rule = [
+				['nickname', 'require|min:5', '昵称必须|昵称不能短于5个字符'],
+				['email', 'email', '邮箱格式错误'],
+				['birthday', 'dateFormat:Y-m-d', '生日格式错误'],
+			]
+			验证规则里面使用了| 为了避免混淆必须使用数组方式
+			在 save 方法之前添加一个 validate 方法即可
+			$user->allowField(true)->validate(true)->save(input('post.'))
+
+			自定义验证规则
+			// 验证邮箱格式 是否符合指定的域名
+			protected function checkMail($value, $rule){
+				return 1 === preg_match('/^\w+([-+.]\w+)*@' . $rule . '$/', $value);
+				return '错误信息';
+				return true; //成功
+			}
+
+			// 数据验证
+			$result = $this->validate($data,'User');
+
+			// 验证birthday是否有效的日期
+			$check = Validate::is($data['birthday'],'date');
+			if (false === $check) {
+				return 'birthday日期格式非法';
+			}
+
+		关联  在模型里面
+			// 定义关联方法 一对多关联
+			public function books(){
+				return $this->hasMany('Book');
+			}
+
+			$user = User::get(5);
+			// 获取User对象的nickname属性
+			echo $user->nickname;
+			// 获取User对象的Book关联对象
+			dump($user->books);
+			// 执行关联的Book对象的查询
+			$user->books()->where('name','thinkphp')->find();
+
+			关联关系包括：
+				一对一关联： HAS_ONE 以及相对的 BELONGS_TO
+				一对多关联： HAS_MANY 以及相对的 BELONGS_TO
+				多对多关联： BELONGS_TO_MANY
+
+			//关联定义
+			// 定义关联方法
+			public function profile(){
+				// 用户HAS ONE档案关联
+				return $this->hasOne('Profile');
+			}
+
+			hasOne('关联模型名','关联外键','主键','别名定义','join类型')
+				默认的外键是：当前模型名_id，主键则是自动获取
+
+			// 关联admin模块下面的模型对象
+			return $this->hasOne('\app\admin\Profile');
+
+			// 用户HAS ONE档案关联
+			return $this->hasOne('Profile','user_id','id',['user'=>'member','profile'=>'info']);
+
+			// 档案 BELONGS TO 关联用户
+			return $this->belongsTo('User');
+
+			belongsTo('关联模型名','关联外键','关联模型主键','别名定义','join类型')
+
+			// 关联写入
+			$user->nickname = '流年';
+			$user->save()
+			$profile->truename = '刘晨';
+			$user->profile()->save($profile);
+			关联方法 profile() ，该方法返回的是一个 Relation 对象
+
+			//关联查询
+			$user = UserModel::get($id,'profile');
+
+			//关联更新
+			$user->profile->save();
+			//关联删除
+			$user->profile->delete();
+
+			// 定义关联 一对多关联
+			public function books(){
+				return $this->hasMany('Book');
+			}
+
+			hasMany('关联模型名','关联外键','关联模型主键','别名定义')
+
+			关联查询
+				// 查询有写过书的作者列表
+				$user = UserModel::has('books')->select();
+				// 查询写过三本书以上的作者
+				$user = UserModel::has('books', '>=', 3)->select();
+				// 查询写过ThinkPHP5快速入门的作者
+				$user = UserModel::hasWhere('books', ['title' => 'ThinkPHP5快速入门'])->select();
+
+			关联更新
+				$user = UserModel::get($id);
+				$book = $user->books()->getByTitle('ThinkPHP5开发手册');
+				$book->title = 'ThinkPHP5快速入门';
+				$book->save();
+
+			// 删除部分关联数据
+				$book = $user->books()->getByTitle('ThinkPHP5开发手册');
+				$book->delete();
+
+			/多对多关联
+				$this->belongsToMany('Role', 'think_access');
+				belongsToMany('关联模型名','中间表名称','关联外键','关联模型主键','别名定义')
+				现在给另外一个用户增加编辑角色，由于该角色已经存在了，所以只需要使用 attach 方法增加枢纽表的关联数据
+				$user = UserModel::getByNickname('张三');
+				$role = Role::getByName('editor');
+				
+				// 添加枢纽表数据
+					// 给当前用户新增多个用户角色
+					$user = UserModel::getByNickname('张三');
+
+					$user->roles()->saveAll([
+						['name' => 'leader', 'title' => '领导'],
+						['name' => 'admin', 'title' => '管理员'],
+					]);
+
+					$user->roles()->attach($role);
+					或者直接使用角色Id添加关联数据
+					$user->roles()->attach(1);
+
+					//关联删除
+					$role = Role::getByName('admin');
+					// 删除关联数据 但不删除关联模型数据
+					$user->roles()->detach($role);
+					// 删除关联数据 并同时删除关联模型数据
+					$user->roles()->detach($role,true);
+
+
+		模型输出
+			//把当前模型对象输出为数组
+			$user->toArray() 	
+			//隐藏输出
+			$user->hidden(['create_time','update_time'])->toArray()
+			//指定属性
+			$user->visible(['id','nickname','email'])->toArray()
+			//追加输出   输出不存在的字段  读取器已准备好getUserStatusAttr()
+			$user->append(['user_status'])->toArray()
+			//输出json
+			$user->toJson();
+			echo UserModel::get($id);   
+
+	视图模板
+		模板输出
+			$list = UserModel::all();
+			$this->assign('list', $list);
+			$this->assign('count', count($list));
+			return $this->fetch();
+
+			fetch()
+			渲染模板文件
+			display()
+			渲染内容
+			engine()
+			初始化模板引擎
+
+			{volist name="list" id="user"}
+				{$user.birthday}
+			{/volist}
+
+		//分页输出
+			$list = UserModel::paginate(3);
+			{$list->render()}
+
+		//公共模板
+			{include file="user/footer" title="查看用户列表"  /}
+			<title>[title]</title>
+
+		//布局
+			view/layout.html  布局文件
+			{include file="user/header" /}
+			{__CONTENT__}
+			{include file="user/footer" /}
+
+			{layout name="layout" replace="{__CONTENT__}" /}
+			// 动态使用布局
+			$this->view->engine->layout('layout','[__REPLACE__]');
+			// 临时关闭布局
+			$this->view->engine->layout(false);
+
+			模板文件的开头加上 {__NOLAYOUT__} 标签
+
+		//模板配置
+		'template' => [
+			// 模板引擎类型 支持 php think 支持扩展
+			'type' => 'Think',
+			// 模板路径 根目录，如果没有设置的话系统会默认使用当前模块的视图目录view
+			'view_path' => '',
+			// 模板后缀
+			'view_suffix' => '.html',
+			// 模板文件名分隔符
+			'view_depr' => DS,
+			// 模板引擎普通标签开始标记
+			'tpl_begin' => '{',
+			// 模板引擎普通标签结束标记
+			'tpl_end' => '}',
+			// 标签库标签开始标记
+			'taglib_begin' => '{',
+			// 标签库标签结束标记
+			'taglib_end' => '}',
+			//布局
+			'layout_on' => true,
+			'layout_name' => 'layout',
+			'layout_item' => '[__REPLACE__]'
+		],
+
+		//输出替换
+			$this->view->replace(['__PUBLIC__' => '/static',]);
+			<link charset="utf-8" rel="stylesheet" href="__PUBLIC__/common.css">
+
+		//渲染内容
+			$this->display('<h1>{$user}</h1>')
+			和直接使用 echo 输出的区别是 display 方法输出的内容支持模板标签的解析
+
+		//助手函数
+			return view('模板表达式', ['user' => $user], ['__PUBLIC__' => '/static']);
+
+	调试和日志
+		//页面Trace
+			// 开启应用Trace调试
+			'app_trace' => true,
+			// 设置Trace显示方式
+			'trace' => [
+				// 在当前Html页面显示Trace信息
+				'type' => 'html',
+				// 使用浏览器console显示页面trace信息
+				'type' => 'console',
+			]
+			// 是否需要进行SQL性能分析
+			'sql_explain' => true,
+
+		//日志
+			Log::error('错误信息');
+			Log::info('日志信息');
+			
+			'log' => [
+				'type' => 'file',
+				// error和sql日志单独记录
+				'apart_level' => ['error','sql'],
+			]
+
+	API开发
+		//版本
+			Route::rule(':version/user/:id','api/:version.User/read');
+			http://tp5.com/v1/user/10
+			http://tp5.com/v2/user/10
+
+		RESTFul
+			//资源路由 
+			Route::resource('blogs','index/blog');
+				index 	GET blogs index 显示博客列表
+				create 	GET blogs/create create 新增博客页面
+				save 	POST blogs save 保存博客内容
+				read 	GET blogs/:id read 查看博客内容
+				edit 	GET blogs/:id/edit edit 编辑博客页面
+				update 	PUT blogs/:id update 更新博客内容
+				delete 	DELETE blogs/:id delete 删除博客
+
+
+
+命令行工具
+	// 定义项目路径
+	define('APP_PATH', './application/');
+	// 加载框架命令行引导文件
+	require './thinkphp/console.php';
+
+	//查看支持的命令
+	php think
+	php think list
+
+
+	//生成模块
+		首先需要在 application 目录下面创建一个 build.php 定义文件
+
+		return [
+			// 定义test模块的自动生成
+			'test' => [
+				'__dir__' => ['controller', 'model', 'view'],
+				'controller' => ['User', 'UserType'],
+				'model' => ['User', 'UserType'],
+				'view' => ['index/index', 'index/test'],
+			],
+		];
+
+		php tink build
+
+	//生成控制器
+		php think make:controller test/Blog
+		php think make:controller test/Blog --plain  //空的控制器
+
+	//生成模型
+		php think make:model test/Blog
+
+	//生成类库映射文件
+		php think optimize:autoload
+		执行完毕，会在 RUNTIME_PATH 目录下面生成一个 classmap.php 文件，包括了系统和应用的所有类库文件的映射列表
+
+	//生成路由缓存文件
+		php think optimize:route
+		执行完毕，会在 RUNTIME_PATH 目录下面生成一个 route.php 文件，包括了应用的所有路由规则定义列表
+
+	//生成数据表字段缓存文件
+		php think optimize:schema
+
+	//代码里执行命令
+		Console::call('build',['--module', 'demo']);
+
+
+
+
+	//快速生成控制器
+	php think make:controller index/Blog
+
+
+session
+	// 赋值（当前作用域）
+	Session::set('name','thinkphp');
+	// 赋值think作用域
+	Session::set('name','thinkphp','think');
+	// 判断（当前作用域） 是否赋值
+	Session::has('name');
+	// 判断think作用域下面是否赋值
+	Session::has('name','think');
+	// 取值（当前作用域）
+	Session::get('name');
+	// 取值think作用域
+	Session::get('name','think');
+	// 指定当前作用域
+	Session::prefix('think');
+	// 删除（当前作用域）
+	Session::delete('name');
+	// 删除think作用域下面的值
+	Session::delete('name','think');
+	// 清除session（当前作用域）
+	Session::clear();
+	// 清除think作用域
+	Session::clear('think');
+	// 赋值（当前作用域）
+	Session::set('name.item','thinkphp');
+	// 判断（当前作用域） 是否赋值
+	Session::has('name.item');
+	// 取值（当前作用域）
+	Session::get('name.item');
+	// 删除（当前作用域）
+	Session::delete('name.item');
+	
+	// 赋值（当前作用域）
+	session('name', 'thinkphp');
+	// 赋值think作用域
+	session('name', 'thinkphp', 'think');
+	// 判断（当前作用域） 是否赋值
+	session('?name');
+	// 取值（当前作用域）
+	session('name');
+	// 取值think作用域
+	session('name', '', 'think');
+	// 删除（当前作用域）
+	session('name', null);
+	// 清除session（当前作用域）
+	session(null);
+	// 清除think作用域
+	session(null, 'think');
+
+	模板中输出
+	{$Request.session.user_name}
+
+Cookie
+	设置
+		// 设置Cookie 有效期为 3600秒
+		Cookie::set('name','value',3600);
+		// 设置cookie 前缀为think_
+		Cookie::set('name','value',['prefix'=>'think_', 'expire'=>3600]);
+		// 支持数组
+		Cookie::set('name',[1,2,3]);
+	判断
+		Cookie::has('name');
+		// 判断指定前缀的cookie值是否存在
+		Cookie::has('name','think_');
+	获取
+		Cookie::get('name');
+		// 获取指定前缀的cookie值
+		Cookie::get('name','think_');
+	删除
+		//删除cookie
+		Cookie::delete('name');
+		// 删除指定前缀的cookie
+		Cookie::delete('name','think_');
+		清空
+		// 清空指定前缀的cookie
+		Cookie::clear('think_');
+
+	// 初始化
+	cookie(['prefix' => 'think_', 'expire' => 3600]);
+	// 设置
+	cookie('name', 'value', 3600);
+	// 判断
+	cookie('?name');
+	// 获取
+	echo cookie('name');
+	// 删除
+	cookie('name', null);
+	// 清除
+	cookie(null, 'think_');
+
+
+config 配置参数
+	Config::get('配置参数1'); 		//获取
+	config('配置参数1'); 			//获取
+	Config::get();					//获取所有
+	config();
+	Config::has('配置参数1'); 		//判断是否存在
+	config('?配置参数1'); 			
+	
+
+
+
+cache缓存
+	设置缓存
+		Cache::set('name',$value,3600);		有效期一个小时 成功返回true，否则返回false。
+		Cache::set('name',$value,new DateTime('2017-10-1 12:00'));
+	缓存自增
+		Cache::inc('name'); 				name自增（步进值为1）
+		Cache::inc('name',3); 				3
+	缓存自减
+		Cache::dec('name');
+		Cache::dec('name',3);
+	获取缓存
+		Cache::get('name') 					name值不存在，则默认返回 false
+		Cache::get('name','')  				默认值  name值不存在 返回''
+	删除缓存
+		Cache::rm('name'); 
+	获取并删除缓存
+		Cache::pull('name'); 				name值不存在，则返回null
+	清空缓存
+		Cache::clear(); 
+	不存在则写入缓存数据后返回（v5.0.2+）
+		Cache::remember('name',function(){return time();});
+	助手函数
+		$options = [
+		     // 缓存类型为File
+		    'type'   => 'File', 
+		     // 缓存有效期为永久有效
+		    'expire' => 0,
+		     // 指定缓存目录
+		    'path'   => APP_PATH . 'runtime/cache/', 
+		];
+		cache($options); 					//初始化
+		cache('test', $value, $options);  		
+		cache('name', $value, 3600);		// 设置缓存数据
+		cache('name') 						// 获取缓存
+		cache('name', NULL); 				// 删除缓存
+
+Env系统环境变量
+	Env::get('database.username');
+	Env::get('database.password');
+	// 同时下面的方式也可以获取
+	Env::get('database_username');
+	Env::get('database_password');
+
+	Env::get('database.username','root'); 	// 获取环境变量 如果不存在则使用默认值root
+	助手函数
+		env('database.username','root')
+
+
+
+
+ThinkPHP5快速入门
+
+验证码
+文件上传
+图片处理
+单元测试
+助手函数

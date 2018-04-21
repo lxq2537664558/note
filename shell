@@ -1,0 +1,142 @@
+系统引导
+	1  BIOS 加电自检  
+	2  引导系统  硬盘 第0柱面 第0磁道 第一个扇区中读取 MBR(主引导记录)
+		一个扇区 512 字节 存放的内容:  
+		446字节 引导程序
+		64字节  磁盘分区表DPT
+		2字节   MBR的结束位
+		写入了Grub的地址
+	3  运行Grub   根据配置文件加载镜像
+		执行/sbin/init 会根据/etc/inittab来进行初始化工作 
+		读取runlevel的数值
+	4  根据/etc/inittab  中定义的系统初始化配置 si::sysinit  执行 /etc/rc.sysinit脚本
+		设置系统变量 网络配置 启动swap 设定/proc 加载用户自定义模块 加载内核设置
+	5  根据第3步读到的 runlevel值来启动对应的服务    
+		为3 会运行 /etc/rc3.d/下所有脚本
+	6   运行 /etc/rc.local 
+	7  生成终端或 X Window 来等待用户登录
+
+系统运行级别  runlevel
+	0 	关机
+	1	单用户模式   	忘记密码时使用
+	2 	多用户模式   	没有网络连接
+	3 	完全多用户模式  
+	4 	保留未使用
+	5 	窗口模式
+	6 	重启
+
+Grub          Grand Unified Bootloader
+
+帮组
+	man  			查看参数 说明
+	man -f ls 		查看ls 命令属于哪一类
+		1  常见命令的说明
+		2  可调用的系统
+		3  函数库
+		4  设备文件
+		5  文件格式
+		6  游戏说明
+		7  杂项
+		8  系统管理员可用的命令
+		9  与内核相关的说明
+
+	info page 		info工具
+		基于菜单的超文本系统
+
+	/usr/share/doc 有大量的帮组和说明文档
+
+
+
+终端又叫 tty
+linux下定义了6个tty
+ctrl+alt+f1 到 ctrl+alt+f6
+ctrl+alt+f7 返回桌面
+
+
+用户
+	id 			查看自己uid
+	groups  	确认自己所属的用户组
+	who         查看在线的用户
+
+
+	/etc/passwd 用户信息
+		1 	用户名 				是UID的字符串标记方式, 
+		2 	密码 				在旧的UNIX系统中, 该字段是用户加密后的密码, 现在已经不再使用, 而是将密码放在 /etc/shadow中, 所以此处都只是一个字母x
+		3 	UID 				系统用来区分不同用户的整数
+		4 	GID 				系统用来区分不同用户组的整数
+		5  	说明栏 				类似于'注释', 现在已经不使用
+		6 	家目录				用户登陆后, 所处的目录, 即用户家目录
+		7 	登录Shell	 		用户登录后, 所使用的Shell
+	/etc/shadow 密码
+		1   用户名  			是UID的字符串标记方式
+		2 	密码 				经过加密后的密码
+		3 	密码最近修改日		这个数字是从1970年1月1日至面密码修改日的天数
+		4 	密码不可修改的天数	修改密码之后, 几天内不可修改密码, 如果是0, 则随时可以修改
+		5 	密码重新修改的天数 	考虑到密码使用一段时间后可能会泄露, 可以设置一个修改时间, 在密码到期之前系统会提醒用户修改面
+		
+
+
+		useradd 新用户
+		useradd -r 新用户  		系统用户
+		useradd -r -s  /sbin/nologin httpd  阻止登录
+		passwd 用户名			给用户设置密码
+		userdel 用户名 			删除用户
+		userdel -r 用户名		删除用户信息同时 家目录 也删除
+		useradd -g 组编号 -d 家目录 -u 编号 用户名						创建用户
+		usermod	-g 组编号 -d 家目录(手动创建) -u 编号 -l newname 用户名 	修改用户
+
+	组操作
+		/ect/group 组信息
+
+		groupadd 组名						创建组
+		groupadd -r 组名 					系统组的确认
+		groupmod -g 编号 -n new组名 组名		修改组
+		groupdel 祖名 						删除组  组里边存在用户信息禁止删除
+
+权限操作
+	主人User  同组用户Group  其他组用户Other
+	读Read    写Write      执行eXecute
+
+	字母相对方式设置权限
+		>chomd u+/-rwx,g+/-rwx,o+/-rwx filiename
+		组别每次可以设置一个或多个
+		+/-增加,减少权限需要分别设置
+		可以统一为各个组别设置上统一的权限
+		普通用户只能给自己 家目录 的文件设置
+
+	数字绝对方式设置权限
+		>chmod 777 filename
+		读4 写2 执行1
+
+文件主人,组别设置 change owner
+	chown 主人 filename
+	chown 主人.组别 filename
+	chown .组别 filename
+	chown -R 主人.组别 dirname	递归方式设置目录属组
+	chmod -R 777 dirname		递归方式设置目录权限
+
+
+
+启动图形桌面
+startx
+
+
+登录界面提示语
+/etc/issue
+
+
+date			显示日期
+date +%Y%m%d 	格式化输出日期
+
+
+ls 				列出目录内容
+ls -l 			详细
+
+cat 			查看文件内容
+
+
+
+#!/bin/bash
+#一个bash脚本开始的标记, 必须是用 "#!/bin/banse"开头, 含义是提示系统在运行该脚本时使用
+#/bin/bash 作为执行该文件的解释器
+

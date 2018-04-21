@@ -1,0 +1,120 @@
+host '0.0.0.0' 监听所有的ip
+
+TCP服务器
+
+$event = new swoole_server(string $host, int $port, int $mode = SWOOLE_PROCESS, int $sock_type = SWOOLE_SOCK_TCP);
+
+bool swoole_server->on(strint $event, mixed $callback);
+	$event->on('connect', function($serv, $fd){})
+		connect  建立连接的时候
+			$serv   服务器   句柄
+			$fd 	客户端   获取到的用户的信息
+		receive  当接受到数据
+			$serv
+			$fd
+			$from_id  客户端id
+			$data     传递的数据
+		close 	 关闭连接
+			$serv
+			$fd			
+	$event->start()   //启动服务器	
+
+bool swoole_server->start()  //开启TCP服务器
+
+bool swoole_server->end(int $fd, string $data, int $reactorThreadld = 0);  //发送数据
+
+function swoole_server->set(array $setting);
+
+UDP服务器
+
+$serv = new swoole_server();
+	$cock_type = SWOOLE_SOCK_UDP
+
+//监听数据的事件
+$serv->on('packet', function($serv, $data, $fd){
+	//发送数据
+	$serv->sendto($fd['address'], $fd['port'], "server:$data")
+})
+
+onPacket(swoole_server $server, string $data, array $client_info);
+
+
+bool swoole server->sendto(string $ip, int $port, string $data, int $service
+
+
+web_socket
+
+new swoole_websocket_server()
+swoole_websocket_server 继承swoole_http_server
+on/start 函数
+open/message/close
+push() 发送数据
+
+服务端
+$ws = new swoole_websocket_server($host, $port);
+
+//建立连接  $ws服务器, $request客户端信息
+$ws->on('open', function($ws, $request){})
+
+//接收信息
+$ws->on('message', function($ws, $request){
+	$request->data
+	$ws->push($request->fd)
+})
+
+
+//关闭连接
+$ws->on('close', function($ws, $request){})
+
+$ws->start()
+
+客户端
+js
+	var wsServer = 'ws://192.168.50.133:9501';
+	var webSocket = new WebSocket(wsServer);
+	webSocket.onopen = function(evt){}
+	webSocket.onclose = function(evt){}
+	webSocket.onmessaage = function(evt){}
+	webSocket.onerror = function(evt){}
+
+定时器
+	循环触发 swoole_timer_tick
+		参数1 int $after_time_ms 指定时间 毫秒
+		参数2 mixed $callback function 执行的函数
+		参数3 mixed $user_param 用户参数
+		
+		清除定时器
+		bool swoole_timer_clear
+
+	单次触发 swoole_timer_after
+		
+
+
+	wsoole_timer_tick(2000, function($timer_id){})
+	swoole_timer_after(3000, function($timer_id){})
+
+
+异步TCP服务器
+	task() 	 投递异步任务
+	on('事件', function(){}) 处理函数  执行异步函数
+	finish() 任务处理完成后结果
+
+//创建tcp服务器	
+$serv = new swoole_server('0,0,0,0', 9501);
+//设置异步 进程工作数
+$serv->set(['task_worker_num'] => 4);
+//投递异步任务
+$serv->on('receive', function($serv,$fd,$from_id,$data){
+	$task_id = $serv->task($data); //异步id
+})
+//处理异步任务
+$serv->on('task', function($serv,$task_id,$from_id,$data){
+	$serv->finish('ok');
+}
+//处理结果
+$serv->on('finish',function($ser,$task_id,))
+
+
+tcp客户端
+//创建tcp客户端
+new swoole_client(SWOOLE_SOCK_TCP)

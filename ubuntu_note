@@ -1,0 +1,455 @@
+	查看内存占用 CPU
+	top|free
+	
+	查看已经连接的服务端口（ESTABLISHED）
+	netstat -a
+	查看所有的服务端口（LISTEN，ESTABLISHED）
+	netstat -ap
+	//查看端口
+	netstat -anp
+	若要关闭使用这个端口的程序，使用kill + 对应的pid
+	kill -9 PID号
+	
+	//关闭防火墙
+	ufw disable
+	//开启
+	ufw enable
+	//永久禁用IPv6 
+	sudo vim /etc/sysctl.conf
+		net.ipv6.conf.all.disable_ipv6 = 1
+	sudo sysctl -p /etc/sysctl.conf
+
+	//解决依赖包
+	apt-get -f install
+
+	//查看进程
+	ps aux | grep "apt-get"
+	sudo kill 3213				//结束进程
+	sudo apt-get remove 		//卸载
+
+卸载
+	sudo apt-get purge <programname>
+	sudo apt-get remove --purge <programname>
+	删除已安装包（不保留配置文件)。 
+	如软件包a，依赖软件包b，则执行该命令会删除a，而且不保留配置文件
+
+	apt-get autoremove 
+	删除为了满足依赖而安装的，但现在不再需要的软件包（包括已安装包），保留配置文件。
+
+	apt-get remove 
+	删除已安装的软件包（保留配置文件），不会删除依赖软件包，且保留配置文件。
+
+
+设置root密码
+sudo passwd root
+
+卸载LibreOffice
+	sudo apt-get purge libreoffice* 
+	sudo apt-get autoremove
+
+删除不常用的软件
+	sudo apt-get remove thunderbird totem rhythmbox empathy brasero simple-scan gnome-mahjongg aisleriot 
+	sudo apt-get remove gnome-mines cheese transmission-common gnome-orca webbrowser-app gnome-sudoku  landscape-client-ui-install  
+
+	sudo apt-get remove onboard deja-dup 
+
+删除Amazon的链接：sudo apt-get remove unity-webapps-common
+
+
+主题 gnome3
+
+美化软件
+unity tweak tool+numix+docky
+	sudo apt-get install unity-tweak-tool 
+	//sudo apt-get install gnome-tweak-tool
+
+主题
+Flatabulous主题	(卡哇伊)
+	sudo add-apt-repository ppa:noobslab/themes
+	sudo apt-get update
+	sudo apt-get install flatabulous-theme
+配套图标
+	sudo add-apt-repository ppa:noobslab/icons
+	sudo apt-get update
+	sudo apt-get install ultra-flat-icons
+主题	(扁平化)
+	sudo add-apt-repository ppa:numix/ppa
+	sudo apt-get update
+	sudo apt-get install numix-gtk-theme
+图标 (卡哇伊)
+	sudo add-apt-repository ppa:numix/ppa
+	sudo apt-get update
+	sudo apt-get install numix-icon-theme-circle
+进入Theme，修改为Flatabulous
+1在此界面下进入Icons栏，修改为Ultra-flat:	
+
+
+字体
+	sudo apt-get install fonts-wqy-microhei
+
+安装Git：sudo apt-get install git
+
+安装vim编辑器。sudo apt-get install vim
+
+安装unrar。sudo apt-get install rar unrar
+
+shutter 截图
+	sudo apt-get install shutter
+	设置快捷键
+		1 Keyboard		 键盘设置
+		2 shortcuts		 快捷键
+		3 custom shortcuts 自定义快捷键
+		4 添加 自定义快捷键
+		5 name 		名称		Shutter Select
+		6 command	命令		shutter -s 
+		7 定义快捷键
+	
+	里面的快捷键命令用：shutter -s 或者shutter –select
+	截取当前活动窗口：shutter -a （a表示active）
+	截取拖拉区域：shutter -s （s是select之意），拖拉出矩形区域后按Enter。
+
+
+终端zsh和oh-my-zsh
+	安装zsh
+		sudo apt-get install zsh
+	安装Oh-My-Zsh
+		sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+	zsh --version确认是否安装成功
+	
+	sudo chsh -s $(which zsh)设置zsh为默认shell
+	注销重新登录
+
+查看shell
+	cat /etc/shells
+	chsh -l
+当前使用的shell
+	echo $SHELL
+切换shell
+	chsh -s /bin/bash
+	chsh -s /bin/zsh
+
+	bash
+shell执行的目录
+	/etc/passwd
+是否有权执行sudo命令
+	/etc/sudoers
+
+
+
+ -l | grep qq查看已安装软件
+sudo dpkg -r qq-for-wine 或 sudo dpkg -P qq-for-wine 卸载
+
+解决时差问题
+timedatectl set-local-rtc true
+
+启动器移动到屏幕下方
+gsettings set com.canonical.Unity.Launcher launcher-position Bottom
+  （Bottom改为Left可重新移动到左侧，输入Right无效）
+
+调整启动器图标大小。系统设置——外观，底部可看见“启动器图标大小”选项，默认是48，调整到30
+
+
+
+安装Chrome浏览器。http://www.cnblogs.com/deitymon/p/5926450.html
+
+xmind
+	一款思维导图软件，再xmind官网下载deb安装包
+	sudo dpkg -i xmind-7.5-linux_amd64.deb
+
+安装WPS for Linux。下载地址：http://community.wps.cn/download/。选择alpha版deb包。
+
+   Linux 64 bit需要通过安装32 bit的库来获得支持。
+
+   #sudo apt-get install ia32-libs
+
+   但是输入命令后系统提示ia32-libs软件包缺失，需要用lib32ncurses5和lib32z1代替。于是运行
+
+   #sudo apt-get install lib32ncurses5
+
+   #sudo apt-get install lib32z1
+
+   再dpkg安装程序安装包
+
+   #sudo dpkg -i wps-office_10.1.0.5672~a21_amd64.deb
+
+   提示wps-office 依赖于 libpng12-0；然而：未安装软件包 libpng12-0。该软件包已丢失可用ttf-mscorefonts-installer代替。
+
+   要先运行下面的命令将已安装的wps-office卸载：
+
+   #apt-get -f install
+
+   然后安装依赖关系：
+
+   #sudp apt-get install ttf-mscorefonts-installer
+
+   之后libpng12-0依赖关系还是出错，到下面的地址下载libpng12-0然后安装：
+
+   https://packages.debian.org/zh-cn/wheezy/amd64/libpng12-0/download。
+
+   #sudo dpkg -i libpng12-0_1.2.49-1+deb7u2_amd64.deb
+
+   安装好后到Dash中搜索WPS启动并锁定到启动器，会报错显示缺失字体：
+
+   Symbol，Wingdings，Wingdings2，Wingdings3，MT-Extra
+
+   进入home文件夹，按Ctrl+h显示所有文件夹，查看有没有.fonts文件夹，如果没有就创建一个，然后到网上下载相关字体放入该文件夹中
+
+
+
+
+为知笔记
+	sudo add-apt-repository ppa:wiznote-team
+	sudo apt-get update
+	sudo apt-get install wiznote
+
+
+
+安装xCHM或kchmViewer阅读CHM文档
+	sudo apt-get install xchm
+	sudo apt-get install kchmviewer
+	sudo apt-get install gnochm  
+	sudo apt-get install chmsee
+		chmsee: error while loading shared libraries: libxul.so: cannot open shared object file: No such file or directory
+		的错误就作如下处理：
+		cd /usr/lib 
+		sudo ln -s xulrunner-1.9/libxul.so libxul.so 
+		sudo ln -s xulrunner-1.9/libxpcom.so libxpcom.so 
+		sudo ln -s xulrunner-1.9/libsqlite3.so libsqlite3.so 
+		sudo ln -s xulrunner-1.9/libmozjs.so libmozjs.so
+	chmreader 火狐插件
+
+百度云盘
+	安装后解决网络问题
+		Step1：sudo gedit /usr/lib/python3/dist-packages/bcloud/auth.py
+		Do：在get_bdstoken函数的if req:前一行添加"cookie.load_list(req.headers.get_all('Set-Cookie'))"
+
+		Step2：sudo gedit /usr/lib/python3/dist-packages/bcloud/pcs.py
+		Do：把所有cookie.sub_output()的参数添加上'SCRC','STOKEN'
+		例：'Cookie': cookie.sub_output('BAIDUID', 'BDUSS', 'PANWEB', 'cflag', 'SCRC', 'STOKEN'),
+
+		Step3：删除配置数据和缓存
+		sudo rm -rf ~/.config/bcloud/*
+		sudo rm -rf ~/.cache/bcloud/*
+
+		Step4：重新运行Bcloud
+
+	下载地址：http://www.ubuntukylin.com/application/show.php?lang=cn&id=279
+	下载后解压得到wine-qqintl文件夹，里面有三个deb包：fonts-wqy-microhei_0.2.0-beta-2_all.deb、ttf-wqy-microhei_0.2.0-beta-2_all.deb、wine-qqintl_0.1.3-2_i386.deb
+
+	安装：
+		1、在wine-qqintl目录下打开终端输入：sudo dpkg -i fonts-wqy-microhei_0.2.0-beta-2_all.deb ttf-wqy-microhei_0.2.0-beta-2_all.deb wine-qqintl_0.1.3-2_i386.deb
+		2、如果报依赖错误，输入：sudo apt-get install -f
+		3、自动解决依赖后再执行步骤1
+
+蓝灯	http://blog.csdn.net/xu__cg/article/details/52612199
+
+phpstorm	https://www.jetbrains.com/phpstorm/download
+	下载完成后，打开一个终端窗口．将工作目录切换到下载目，然后解压下载好的tar.gz文件．
+	tar xvf PhpStorm-2016.1.tar.gz
+
+	在当前的工作目录下会生成一个新的目录，PhpStorm-145.258.2．为了保持系统整洁有序，我们把这个目录移到/opt/目录下．
+	sudo mv PhpStorm-145.258.2/ /opt/phpstorm/
+
+	现在，创建一个软链接．
+	sudo ln -s /opt/phpstorm/bin/phpstorm.sh /usr/local/bin/phpstorm
+
+	然后，在终端里输入phpstorm命令来启动PhpStorm程序．
+	
+	激活 http://idea.lanyus.com/
+	
+	汉化
+		lib目录中resources_en.jar复制一份并修改为resources_cn.jar 
+		将汉化包对应目录中messages文件夹替换掉，重新打开就已经汉化了 
+	
+webstorm
+	
+
+sublime
+	安装		https://www.sublimetext.com/3
+		sudo add-apt-repository ppa:webupd8team/sublime-text-3
+		sudo apt-get update 
+		sudo apt-get install sublime-text-installer
+	sublime text 2的安装命令，与3稍有不同：
+		sudo add-apt-repository ppa:webupd8team/sublime-text-2   
+		sudo apt-get update  
+		sudo apt-get install sublime-text-dev 
+	subl
+	安装Package Control		
+		https://packagecontrol.io/installation 
+	
+	Linux: ~/.config/sublime-text-3
+	启用 Vim 模式
+		在菜单栏中： Preferences -> Setting - User ，即可打开配置文件进行编辑，将 ignored_packages 项的[]里面内容清空：
+			"ignored_packages":
+　			[
+　			]
+	下载主题		
+	Spacegray
+		"theme": "Spacegray Eighties.sublime-theme",
+		"color_scheme": "Packages/Theme - Spacegray/base16-eighties.dark.tmTheme"，
+	Afterglow     666
+		"tabs_small": true,
+		"theme": "Afterglow-magenta.sublime-theme"	
+	Brogrammer
+		"theme": "Brogrammer.sublime-theme",
+		"color_scheme": "Packages/Theme - Brogrammer/brogrammer.tmTheme"
+	将sublime设置为默认文本编辑器：将下面的那个文件中的所有gedit.desktop替换为sublime-text.desktop,重启配置生效
+		sudo subl /etc/gnome/defaults.list 
+
+mpv
+	sudo apt-get install mpv
+	
+  关闭com.ubuntu.apport.apport-gtk-root出错提示
+        不知道什么原因，ubuntu后台老是提示这个错误，每次登进图形界面就提示一次，很烦人。
+        下面是解决办法： sudo vi /etc/default/apport  将里面的enable修改为0
+
+        网络上的说明：
+        apport就是ubuntu上的"crash report"服务，就是当有程序崩溃时弹出的那个发送error report的程序。
+       个人觉得此功能无用，本着给我的老本子节省资源的思想我决定关闭它。方法有几个：
+             1、可以删除upstart的配置文件 /etc/init/apport.conf （记得备份）
+             2、你可以修改 /etc/init/apport.conf  文件，在以下两行前加上注视符号 #
+                      start on runlevel [2345]
+                      stop on runlevel [!2345]
+             3、（推荐）修改/etc/default/apport
+                      浏览下/etc/init/apport.conf 内容你会发现，控制此服务是否启动的是/etc/default/apport
+                      所以把/etc/default/apport的enabled修改为0就ok了。
+
+修改中文文件夹名称
+	方法1
+	gedit ~/.config/user-dirs.dirs
+		XDG_DESKTOP_DIR="$HOME/Desktop"
+		XDG_DOWNLOAD_DIR="$HOME/Download"
+		XDG_TEMPLATES_DIR="$HOME/Templates"
+		XDG_PUBLICSHARE_DIR="$HOME/Public"
+		XDG_DOCUMENTS_DIR="$HOME/Documents"
+		XDG_MUSIC_DIR="$HOME/Music"
+		XDG_PICTURES_DIR="$HOME/Pictures"
+		XDG_VIDEOS_DIR="$HOME/Videos"
+	方法2
+		打开终端，在终端中输入命令:  
+			选择更改为英文
+        	export LANG=en_US
+        	xdg-user-dirs-gtk-update
+		跳出对话框询问是否将目录转化为英文路径,同意并关闭.
+		在终端中输入命令:`
+			export LANG=zh_CN
+
+设置环境变量
+	sudo vi /etc/environment
+
+
+有道词典		http://cidian.youdao.com/index-linux.html
+  1 从官方下载Ubuntu版本的deb包：youdao-dict_1.1.0-0-ubuntu_amd64.deb
+  2 创建youdao-dict目录，把该deb包解压到youdao目录：
+  	sudo mkdir youdao
+	sudo dpkg -X ./youdao-dict_1.1.0-0-ubuntu_amd64.deb  youdao
+  3 解压deb包中的control信息（包的依赖就写在这个文件里面）：
+	sudo dpkg -e ./youdao-dict_1.1.0-0-ubuntu_amd64.deb youdao/DEBIAN
+  4 编辑control文件，删除Depends里面的gstreamer0.10-plugins-ugly。
+	sudo vi youdao/DEBIAN/control
+5. 重新打包：
+	sudo dpkg-deb -b youdao youdaobuild.deb
+6. 安装重新打包的安装包
+	sudo dpkg -i youdaobuild.deb
+	
+安装virtualbox	
+	sudo apt-get install virtualbox
+
+	使用usb接口
+		$ cat /etc/group
+		vboxusers:x:125:
+
+		$ sudo usermod -G vboxusers -a tony
+
+		$ cat /etc/group
+		vboxusers:x:125:tony
+
+		ubuntu系统注销，重新登陆，再看vbox的USB设备分配，有设备了
+
+安装genymotion
+	ornp@qq.com 5280131
+	官方下载软件
+	chmod +x genymotion-2.2.2_x64.bin
+	./genymotion-2.2.2_x64.bin -d /home/irnp
+	同意安装 y
+	进入 /home/irnp/genymotion目录 运行genymotion文件
+
+	Files successfully copied to: /sdcard/Download
+		进入命令行模式
+		./genyomtion-shell
+			1. adb shell
+			2. cd /sdcard/Download/
+			3. sh /system/bin/flash-archive.sh  /sdcard/Download/Genymotion-ARM-Translation_v1.2.zip
+			//Genymotion_Google Apps_for_4.3.zip
+			4, 重启模拟器。
+			
+traceroute 路由追踪
+
+安装xflux   护眼软件
+	安装依赖文件
+		sudo apt-get install git python-appindicator python-xdg python-pexpect python-gconf python-gtk2 python-glade2 libxxf86vm1
+	下载xflux-gui归档
+		cd /tmp
+		git clone "https://github.com/xflux-gui/xflux-gui.git"
+		cd xflux-gui
+		python download-xflux.py
+	全局安装
+		sudo python setup.py install
+	或安装在主目录
+		python setup.py install --user
+
+	run flux
+		fluxgui
+
+	uninstall
+		sudo rm -rf /usr/local/lib/python2.7/dist-packages/{fluxgui/,f.lux_indicator*}
+		sudo rm /usr/local/share/icons/hicolor/scalable/apps/fluxgui.*
+		sudo rm /usr/local/share/applications/fluxgui.desktop
+		sudo rm /usr/local/bin/{xflux,fluxgui}
+		rm -rf ~/.gconf/apps/fluxgui/
+
+亮度
+	sudo add-apt-repository ppa:indicator-brightness/ppa
+	sudo apt-get update
+	sudo apt-get update && sudo apt-get install indicator-brightness
+
+
+MarkDown编辑器-Retext
+	sudo apt-get install retext
+
+安装天联
+	一、安装步骤：
+
+	1. 解压文件
+	tar -zxvf ./teamlink_linux_3.3.1.tar.gz
+
+	注意：安装后，请勿删除解压目录中的文件，否则天联将不能运行
+
+	2. 进入解压目录
+	cd teamlink_linux_3.3.1
+
+	3. 加参数执行脚本进行安装，安装过程中需要输入组名用户名等信息，请按提示输入
+	./GNLanCtl install
+
+	二、脚本参数说明
+	./GNLanCtl install      安装天联
+	./GNLanCtl uninstall        卸载天联
+	./GNLanCtl status       检查天联的状态
+	./GNLanCtl config       修改登录的组名用户名等信息
+	./GNLanCtl start        启动天联
+	./GNLanCtl stop         退出天联
+
+	/home/irnp/ubuntu/teamlink_linux_3.3.1
+
+
+
+
+
+
+
+
+
+
+
+
+

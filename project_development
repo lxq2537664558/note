@@ -1,0 +1,575 @@
+<div class="btn-group pull-right open" style="margin-top:-40px;margin-right:40px">
+            <button class="" type="button" data-toggle="dropdown" aria-expanded="true" style="background:url(/osp2016/images/agent2016/setting1.png) no-repeat;height:20px;width:37px;"></button>
+            <ul class="dropdown-menu" role="menu" style="background:transparent;min-width:0;box-shadow:none;width:140px;">
+            <!--<ul class="dropdown-menu" role="menu" style="background:red;min-width:0;box-shadow:none;width:140px;">-->
+                <li>
+                    <div style="line-height:80px;position:relative; padding:20px 20px;text-align:right;background:url(/osp2016/images/agent2016/set_list.png) no-repeat;min-width:0;box-shadow:none;width:140px;">
+                    	<a href="sendOrderFields.php"><span style="display:block;position:absolute;top:28px ;left:45px;line-height:0px">设置自定义字段</span></a>
+                    	<!-- <a href="servicerToDoorAuthorityManage.php"><span style="display:block;position:absolute;top:38px ;left:45px;line-height:45px">设置上门权限</span></a> -->
+                    </div>
+                    <!-- <a href="servicerToDoorAuthorityManage.php" style="line-height:40px;text-align:right;background:url(/osp2016/images/agent2016/setting_selector.png) no-repeat;min-width:0;box-shadow:none;width:140px;">设置上门权限</a> -->
+                    <!--<a href="sendOrderFields.php"></a>-->
+                </li>
+                <!--<li>-->
+                    <!--<a href="clientManageAuth.php">客户管理权限</a>-->
+                <!--</li>-->
+            </ul>
+</div>
+
+<div class="btn-group pull-right open" style="margin-top:-40px;margin-right:40px">
+    <button class="" type="button" data-toggle="dropdown" aria-expanded="true" style="background:url(/osp2016/images/agent2016/setting1.png) no-repeat;height:20px;width:37px;"></button>
+    <ul class="dropdown-menu" role="menu" style="background:transparent;min-width:0;box-shadow:none;width:140px;">
+  
+        <li>
+            <div style="line-height:80px;position:relative; padding:20px 20px;text-align:right;background:url(/osp2016/images/agent2016/set_list.png) no-repeat;min-width:0;box-shadow:none;width:140px;">
+            	<a href="userGroup.php"><span style="display:block;position:absolute;top:28px ;left:45px;line-height:0px">设置客户分组</span></a>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<i class="glyphicon glyphicon-cog"></i>
+
+userGroup.php
+
+<div class="pull-right">
+    <a title="客户高级查询器" href="userGroup.php" style="color:#333;">
+    	<i class="fa fa-cog"></i>
+	</a>
+</div>
+
+
+<div class="popover fade top in" role="tooltip" id="popover134279" style="top: 60px; left: 130.945px; display: block;">
+<div class="arrow" style="left: 50%;"></div>
+<div class="popover-content">顶部的 Popover 中的一些内容</div>
+</div>
+
+
+
+<div class="btn-group">
+	<button class="" type="button" data-toggle="dropdown" aria-expanded="false" style=""><i class="glyphicon glyphicon-cog"></i></button>
+	<ul class="dropdown-menu" role="menu" style="background:transparent;min-width:0;box-shadow:none;width:140px;left:-93px;top:15px">
+		<li>
+			<div style="line-height:80px;position:relative; padding:20px 20px;text-align:right;background:url(/osp2016/images/agent2016/set_list.png) no-repeat;min-width:0;box-shadow:none;width:140px;">
+				<a href="userGroup.php"><span style="display:block;position:absolute;top:28px ;left:45px;line-height:0px">设置客户分组</span></a>
+			</div>
+		</li>
+	</ul>
+</div>
+
+
+
+laravel5blog  
+yii2blog
+admin_yii2blog
+
+tp3shop
+
+
+teamviewer
+
+商品模块
+	商品分类 category
+		id
+		name
+		goods_id
+
+	商品 	goods
+		id
+		name
+		price
+		true_price
+		img        			//
+		small_img			//50
+		middle_img 			//350
+		big_img 			//700
+		jifen_int					
+		is_del
+		is_hot
+		is_show
+		is_
+		create_time
+		cate_id				//分类id
+	
+	商品品牌 brand
+		id
+		name
+		goods_id			
+
+	商品类型 type
+		id
+		name
+		goods_id
+
+	商品属性
+		id
+		name
+		value
+		tpye_id
+
+
+	商品评论
+		id
+		desc
+		user_id
+		goods_id
+		create_time
+
+	商品积分		
+		id
+		goods_id
+
+
+shop_goods
+
+id
+goods_name
+goods_title
+market_price
+shop_price
+goods_desc
+logo
+sm_logo			50
+mid_logo		150	
+big_logo		350	
+mbig_logo		700
+is_on_sale
+is_delete
+createtime
+
+shop_brand
+id
+brand_name
+site_url		官方网址
+logo 			图片
+ 
+
+
+
+shop_member_level
+
+id
+level_name
+integral_down
+intrgral_up
+
+shop_member_price
+
+price
+level_id
+goods_id
+
+
+shop_category
+id
+cate_name
+parent_id
+
+shop_goods_cat
+id
+cat_idx
+goods_id
+
+shop_type
+id
+type_name
+
+shop_attribute
+id
+attr_name
+attr_type
+attr_options
+type_id
+
+shop_goods_attr
+id
+attr_id
+attr_value
+goods_id
+
+shop_goods_number
+id
+goods_id
+goods_number
+goods__attrlist
+
+
+RBAC	基于角色的访问权限控制	
+	3 表
+	mg  用户表(管理员)
+		mg_id
+		mg_name
+		mg_pwd
+		 mg_time		时间
+		mg_role_id		角色id
+	role  角色表
+		role_id
+		role_name		角色名称
+
+		role_auth_ids	权限ids,1,2,5
+		role_auth_ac	控制器-操作方法
+	auth  权限表
+		auth_id
+		auth_name		名称
+		auth_pid		父id
+		module       	模块
+		auth_c			控制器
+		auth_a			操作方法
+		
+		auth_path		全路径
+			① 顶级权限：为当前记录的id值
+			② 非顶级权限：为"父级全路径-本身记录id值"
+		auth_level		级别
+			表示权限的等级管理，从“0”开始计数
+	5表
+	mg  用户表(管理员)   manager
+		id
+		mg_name
+		mg_pwd
+		mg_time		时间
+	mg_role  关联表
+		mg_id
+		role_id
+	role  角色表
+		id
+		role_name		角色名称
+	role_auth  关联表
+		auth_id 
+		role_id
+	auth  权限表
+		id 	
+		auth_name		名称
+		auth_pid		父id
+		module       	模块
+		auth_c			控制器
+		auth_a			操作方法
+
+是否上架|1-有,0-没
+
+
+
+
+商品相册
+
+
+
+
+会员  注册  登录
+shop_user
+id
+title
+password
+ 
+
+
+ajax退出非
+
+
+购物车 car
+
+id 
+goods_id 
+goods_attr_id
+goods_number
+member_id
+
+
+cookie 存入购物车
+用户登录时加入数据库
+
+用户登录时将cookie加入数据库
+
+购物车列表
+
+ajax 显示购物车列表
+
+
+下订单
+订单表
+shop_order
+id
+member_id
+addtime
+pay_status
+pay_time
+total_price
+shr_name
+shr_tel
+shr_province
+shr_city
+shr_area
+shr_address
+post_status  
+post_number
+
+
+订单商品表
+shop_order_goods
+id
+order_id
+goods_id
+goods_attr_id
+goods_number
+price 
+
+是否登录
+库存量判断
+
+购物车中的商品插入到订单表中
+减库存量
+清空购物车
+
+锁
+事物
+startTrans()
+$this->rollback();
+commit()
+
+没有登录 跳转到登录 登录完跳回来 
+session存一个地址
+
+提交提单 插入数据 验证数据 
+
+购买页面 
+
+ab.exe 压力测试
+
+
+我的订单  
+
+
+搜索页面
+分类
+搜索按钮
+
+面包屑 对应url
+
+商品的推荐
+促销价格 促销开始时间 促销结束时间
+是否热销 是否热卖 是否精品
+
+
+Ajax 排序 修改 is 状态
+
+
+静态化首页 
+
+加锁解决高并发
+
+商品页面
+
+面包屑
+
+静态化商品 
+
+
+
+浏览历史
+
+
+输出 后台菜单栏
+
+会员 
+
+商品图片
+
+菜单栏图标
+
+图片上传 html
+
+search();
+
+jqzoom
+
+
+ajax 是否上架 删除 状态 排序
+
+
+tp缓存与原理
+2017年04月11日02:59:59
+
+
+百度编辑器
+
+UM
+	<script>
+		UM.getEditor('goods_desc',(
+			initialFrameWidth : '100%',
+			initialFrameHeight: 350,
+		))
+	<script>
+
+
+过滤script xss
+
+	html Purifier
+	library  放在网站根目录
+	定义一个函数
+
+	function removeXSS($data){
+		require_once CORE_PATH . 'HtmlPurifier/HTMLPurifier.auto.php';
+		$_clean_xss_config = HTMLPurifier_Config::createDefault();
+		$_clean_xss_config->set('Core.Encoding', 'UTF-8');
+		$_clean_xss_config->set('HTML.Allowed','div,b,strong,i,em,a[href|title],ul,ol,li,p[style],br,span[style],img[width|height|alt|src]');
+		$_clean_xss_config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
+		$_clean_xss_config->set('HTML.TargetBlank', TRUE);
+		$_clean_xss_obj = new HTMLPurifier($_clean_xss_config);
+		return $_clean_xss_obj->purify($data);
+	}
+
+时间插件
+datatimepicke
+
+<link href="__PUBLIC__/datetimepicker/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/datetimepicker/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/datetimepicker/datepicker-zh_cn.js"></script>
+<link rel="stylesheet" media="all" type="text/css" href="__PUBLIC__/datetimepicker/time/jquery-ui-timepicker-addon.min.css" />
+<script type="text/javascript" src="__PUBLIC__/datetimepicker/time/jquery-ui-timepicker-addon.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/datetimepicker/time/i18n/jquery-ui-timepicker-addon-i18n.min.js"></script>
+
+<input type="text" id="st" />
+
+<script>
+	$.timepicker.setDefaults($.timepicker.regional['zh-CN']);
+	$("#st").datepicker({ dateFormat: "yy-mm-dd" });
+</script>
+
+
+
+
+
+sql 注入
+
+xss
+
+
+
+shop_user
+
+id
+username
+userpass
+useremail
+createtime
+
+shop_profile
+id
+truename
+age
+sex
+birthday
+nickname
+company
+userid
+
+
+修改密码
+
+
+
+前台
+	会员模块
+		列表
+			分页
+		详细信息列表		note: 添加编辑功能
+		添加
+		登录
+		注册
+		退出
+	商品模块
+	购物车模块
+	订单模块
+	支付模块
+	快递模块
+后台
+	管理员模块
+		后台登录
+			管理员数据表的建立
+			管理员登录和退出(账号密码的校验,记住登录状态)
+			找回密码(发送电子邮件)
+				验证邮箱
+				发送邮件    
+					生成邮件 (token标记 时间 user 验证是否为当前ip)	跳转到email修改密码
+		管理员账户
+			email修改密码
+	会员模块
+		会员列表
+			分页  
+		添加会员
+			注册  邮箱注册
+		删除会员
+		编辑会员
+			修改当前登录用户邮箱
+			修改当前登录用户密码
+		会员登录 
+		会员退出
+	分类模块
+		分类列表		note: js实现分类折叠
+		分类添加
+	商品模块
+	订单模块
+
+
+模板 引入
+
+导航
+
+门面方法view共享数据
+
+主页 
+
+配置信息文件
+
+
+Connect.qq.com
+op.open.qq.com
+
+
+qq登录
+connect.qq.com
+
+APP ID1105898943
+APP KEYpyTT6Bp9jt9XFQCa
+
+添加千牛
+
+composer.json
+	"require" : {
+		"crazyfd/yii2-qiniu" : "development-master"
+
+	}
+
+
+./composer.phar update
+
+vendor/crazyfd/yii2-qiniu/Qiniu.php
+	cont UP_HOST = 'http://up-z1.quniu.com'
+
+
+use crazyfd\qiniu\Qiniu;
+
+
+##Yii2 Blog
+###前台
+* 文章列表
+* 阅读文章
+* 发表评论
+* 注册
+* 登录和退出
+
+###后台管理
+* 文章对增删查改
+* 评论的审核
+* 会员用户管理
+* 管理员用户管理
+* 管理员权限设置
+* 登录和退出
+
+###其它需求
+* 系统的首页应显示最新的帖子列表
+* 可以以分页的方式显示
+* 在显示文章的同时显示此文章的评论
+* 可以按照制定的 Tag 列出相应的文章
+* 展示可以表名标签使用频率的标签云
+* 一个最新评论列表
+

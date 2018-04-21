@@ -1,0 +1,24 @@
+CentOS6.5
+
+
+yum锁
+rm -rf /var/run/yum.pid	//删除yum.pid强行解除锁定即可
+
+安装tools
+解压光驱
+# ./vmware-install.pl 
+
+安装virtualbox增强包
+	1.如果你的CentOS 版本早于 6，那么需要在 /etc/grub.conf 中添加一行 divider=10，以将这个参数传递给核心，以减少 idle CPU load。
+	2.#yum update 
+	3.#yum install gcc
+	4.#yum install kernel-devel
+	5.#reboot
+    #sh ./VBoxLinuxAdditions.run
+
+
+
+
+
+
+

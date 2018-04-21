@@ -1,0 +1,727 @@
+
+只查看目录
+ls -ld */
+
+nmap
+
+apropos 'directory'  列出帮助文档里面包含了 directory 字符的所有命令
+
+
+
+重启php-fpm
+kill -USR2 1480
+
+
+
+//启动快捷方式
+sudo /etc/init.d/
+
+开机自动启动服务
+	vi /etc/rc.local
+/usr/local/http2/bin/apachectl start
+/usr/local/mysql/bin/mysqld_safe --user=mysql &
+service vsftpd start
+
+设置开机默认"命令"模式启动
+	vi /etc/inittab
+	修改id:3:initdefault:
+
+
+cURL
+	//获取页面的内容
+	curl http://www.codebelief.com
+
+	//显示 HTTP 头
+	curl -I http://www.codebelief.com
+
+	// HTTP 头和文件内容
+	curl -i http://www.codebelief.com
+
+	//将链接保存到文件
+	curl http://www.codebelief.com > index.html
+		-o（小写的 o）：结果会被保存到命令行中提供的文件名
+		-O（大写的 O）：URL 中的文件名会被用作保存输出的文件名
+		curl -o index.html http://www.codebelief.com
+		curl -O http://www.codebelief.com/page/2/
+
+	//同时下载多个文件
+	curl -O http://www.codebelief.com/page/2/ -O http://www.codebelief.com/page/3/
+	curl -o page1.html http://www.codebelief.com/page/1/ -o page2.html http://www.codebelief.com/page/2/
+
+	//使用 -L 跟随链接重定向
+	curl -L http://codebelief.com
+
+	//使用 -A 自定义 User-Agent
+	curl -A "Mozilla/5.0 (Android; Mobile; rv:35.0) Gecko/35.0 Firefox/35.0" http://www.baidu.com
+
+	//使用 -H 自定义 header
+	curl -H "Referer: www.example.com" -H "User-Agent: Custom-User-Agent" http://www.baidu.com
+	curl -H "Cookie: JSESSIONID=D0112A5063D938586B659EF8F939BE24" http://www.example.com
+
+	//使用 -c 保存 Cookie
+	curl -c "cookie-example" http://www.example.com
+	//使用 -b 读取 Cookie
+	curl -b "JSESSIONID=D0112A5063D938586B659EF8F939BE24" http://www.example.com
+	curl -b "cookie-example" http://www.example.com
+
+	//使用 -d 发送 POST 请求
+	curl -d "userName=tom&passwd=123456" -X POST http://www.example.com/login
+	curl -d "userName=tom&passwd=123456" http://www.example.com/login
+
+	//强制使用 GET 方式
+	curl -d "somedata" -X GET http://www.example.com/api
+	curl -d "somedata" -G http://www.example.com/api
+
+	//从文件中读取 data
+	curl -d "@data.txt" http://www.example.com/login
+
+	//带 Cookie 登录
+	curl -c "cookie-login" -d "userName=tom&passwd=123456" http://www.example.com/login
+	再次访问该网站时，使用以下命令：
+	curl -b "cookie-login" http://www.example.com/login
+
+
+Systemdctl 是一个 systemd 工具, 主要负责控制 systemd 系统和服务管理器
+	systemd --version		查看版本
+	systemd-analyze blame	启动时各个进程耗时
+
+	列出所有可用单元
+		systemctl list-unit-files
+		systemctl list-unit-files --type=service 列出所有服务 (包括启用的和禁用的)
+		systemctl list-unit-files --type=mount	 列出所有系统挂载点
+
+	启动 重启 停止 重载服务 以及 检查服务 (Note: 根据后缀不一样可以操作其它的  如 .mount 挂载)
+		systemctl start httpd.service
+		systemctl restart httpd.service
+		systemctl stop httpd.service
+		systemctl reload httpd.service
+		systemctl status httpd.service
+
+	激活服务并在启动时启用或禁用服务 (即系统启动时自动启动服务) (Note: 根据后缀不一样可以操作其它的  如 .mount 挂载)
+		systemctl is-active httpd.service
+		systemctl enable httpd.service
+		systemctl disable httpd.service
+
+	屏蔽 (让它不能启动) 或显示服务 (Note: 根据后缀不一样可以操作其它的  如 .mount 挂载)
+		systemctl mask httpd.service
+		systemctl unmask httpd.service
+
+	使用systemctl 命令杀死服务
+		systemctl kill httpd
+
+	检查某个服务的所有配置细节
+		systemctl show httpd
+
+	按等级列出控制组
+		systemd-cgls
+
+命令
+	pwd				查看当前操作目录位置
+
+	tree
+
+	history 		历史命令
+		!200 (历史命令号)  执行200号的命令
+
+	ls				查看当前目录里面的文件内容
+	ls -a			查看所有(隐藏文件)
+	ls -l 			查看详细信息 ll
+	ls -al			查看所有文件详细信息
+	ls [-al]目录		查看制定目录的文件信息
+	ls -img			查看索引
+
+	-rwxrwxrwx  1  root  root  1121  1月 1 10:10  install.log
+	类型  权限      所有者 所属组  大小   修改时间    文件名
+
+	-  普通文件
+	d  目录
+	l  符号链接文件
+
+	cd 目录名字		目录切换
+	cd ..			上一级
+	cd .			当前
+	cd 或 cd ~		直接切换到用户目录
+	cd - 			上次工作目录
+
+	su -或su - root	切换到root超级管理员
+	su 普通用户名		切换到普通用户
+	exit			退回到原用户
+	用户切换时候会造成叠加效果,因此不要重复su动作(su和exit配对使用)
+
+	whoami			显示当前正在操作系统的用户
+	who am i		显示登陆系统的用户信息(与su没有关系)
+
+	# init 0 		关机
+	# init 3		切换到命令界面
+	# init 5		切换到图形界面
+	# init 6 		重启
+
+	reboot  		重启
+	poweroff  		关机
+
+	ifconfig		查看本机IP
+
+	clear			清空屏幕
+ 	ctrl+l
+
+	man 指令			查看指令可以使用的参数
+		f 	下一页
+		b 	上一页
+
+	目录操作
+		创建目录 make directory
+			mkdir 目录名
+			mkdir -p newdir1/newdir2/newdir3	递归创建多级目录
+		移动 改名 move
+			mv dir1 dir2				dir1移动到dir2的目录下
+			mv dir1 newdir				mv指令的第二个参数是新名字就是改名操作
+			mv dir1/dir2 dir3/newdir 	把dir2移动到dir3目录下改名为newdir
+		复制 改名 copy
+			-R recursive 				复制目录
+			cp dir1 dir2				dir1复制到dir2下
+			cp dir1/dir2 dir3/newdir	dir2复制到dir3下,并改名为newdir
+
+	删除 remove  delete file|dir
+		-f force强制的
+		rm file			删除文件
+		rm -r dir		删除目录
+		rm -rf filename 递归强制删除
+
+	文件操作
+		文件内容查看
+			cat filename		直接输出文件全部内容到终端
+			more filename		通过敲回车方式逐行查看 q 结束查看  空格 下一页 ctrl+b 上一页
+			less filename		上下左右 键方式查看   q 结束查看
+			head -n 5 filename	查看文件的前5行内容
+			tail -n 5 filename	查看文件的后5行内容
+			wc filename			查看文件内容行数
+		创建文件
+			touch filename		在当前目录创建文件
+		给文件追加那内容 echo	文件如果不存在会自动创建该文件
+			echo 内容 > 文件 		把内容以覆盖方式添加到文件中
+			echo 内容 >> 文件		把内容以追加方式添加到文件中
+
+	文件查找
+	find 被查找目录 选项 选项值[选项 选项值 选项 选项值]
+		-name		文件名字
+			find / -name passwd
+			通配符写法
+				* 		任何数量的任意字符
+				? 		一个任意字符
+				[xyz]	xyz其中一个
+				[4-8] 	4到8  任意一个
+				[^xyz]  除了 xyz
+		-size		大小 +大于 -小于 c字节 默认为K
+			find / -size +8K
+		-mtime 		时间 +3|3|-3
+			find / -mtime -3  3天内 修改的
+		-maxdepth	最多层次
+		-mindepth	最少层次
+		-perm		权限
+		-user 		主人名字
+		-group 		组名字
+		-type 		f 文件 d 目录
+
+		find /要查找的文/件/夹/ -name ".*" -print
+		find /要查找的文/件/夹/ -name ".*" -ls
+		find /要查找的文/件/夹/ -type f -iname ".*" -ls
+		find /要查找的文/件/夹/ -type d -iname ".*" -ls
+		find host -name ".*" -ls > foo.txt
+
+		查找后操作
+		find . -name "install.log" -exec rm -rf {} \;
+			-exec 	执行的命令
+			{} 		占位,找到的文件
+			\ 		命令结束
+
+	Locate filename 查找文件
+
+
+	grep 内容\ 文件	显示文件里存在内容的行
+
+	管道	|
+	前者的输出是后者的输入
+
+
+软链接 link
+	定义 就是windows系统的快捷方式
+	作用 可以对硬盘空间进行合理分配
+	ln -s 源文件 软连接
+		设置软链接,如果软链接和源文件不在同一级目录,源文件需要设置为绝对路径方式
+		普通文件和目录都可以设置软链接
+		源文件被删除,对应的软链接就变为 无效链接,如果在创建一个同名源文件,软链接又恢复为有效链接文件
+	rm -rf file1soft
+
+硬链接
+	定义 系统里面文件的名称(引用)就是硬链接 给文件增加名称(引用)的过程就是创建"硬链接" 一个文件有多个名字,他们互为硬链接
+	作用 防止重要的文件被误删除 如果有多人需要操作同一个文件,就给他们创建许多硬链接即可
+	ln [-d] 源文件 硬链接
+		设置硬链接的时候,源文件不需要使用绝对路径
+		只有普通文件可以设置硬链接,目录不可以
+		同一个源文件的所有硬链接文件必须在同一个硬盘,同一个分区里面
+
+
+
+	ps -A			查看系统活跃进程 process
+	kill -9 pid		杀死制定进程号的进程
+
+	source命令也称为(点命令),也就是一个点符号(.),是bash的内部命令
+	功能: 使shell读入指定的shell程序文件并依次执行文件中的所有语句
+	source命令通常用于重新执行刚修改的初始化文件,使之立即生效,而不必注销并重新登录
+
+
+	date			查看系统时间
+	date -s "2015-09-09 20:20:20"	给系统设置时间
+
+	setup			系统设置
+
+	netstat -lntp  	查看监听端口
+
+	查看软件安装路径
+		which name		查看运行文件
+		whereis name 	查看安装文件
+
+
+
+任务调度指令设置
+	定义 规定系统在指定的时间完成制定的任务过程
+	crontab -e	编辑任务调度指令
+		分钟 小时 日期 月份 星期 执行命令
+		*  /每隔多久  ,指定
+	crontab -l	查看任务调度指令
+
+环境变量
+	vi /etc/profile
+
+	export PATH="$PATH:/usr/llocal/php:"
+
+	source /etc/profile
+
+
+linux系统分区
+	挂载
+		操作系统盘符与硬盘分区建立联系的过程就是挂载
+
+	挂载点
+		与硬盘分区建立联系的系统盘符称为'挂载点'
+
+	挂载类型
+		自动 系统安装的时候创建的分区以后都自动挂载
+		手动 系统运行中临时添加的光盘,u盘,移动硬盘需要手动挂载
+
+	根目录
+		/
+
+	磁盘占用情况
+		文件会占据其上边与其挨着最近挂载点对应分区的空间
+		普通目录可以与新硬盘分区建立联系
+			把挂载点目录的文件释放出来
+			和新硬盘形成联系
+			把释放出去的文件在复制回来
+
+ /              根目录
+├── bin     存放用户二进制文件			存放系统许多可执行程序文件
+├── boot    存放内核引导配置文件
+		/boot/initramfs-2.6.32-.. .img 是系统内核文件
+├── dev     存放设备文件				系统把全部的硬件映射为文件储存在此目录
+		/dev/cdrom用于指向'光驱'
+├── etc     存放系统配置文件
+		/etc/passwd 存放系统用户信息
+		/etc/group	存放系统用户组信息
+├── home    用户主目录				每给系统增加一个用户,都会在此目录下创建一个'同名'的文件目录作为该用户的家目录使用,该用户对家目录拥有绝对权限
+├── lib     动态共享库
+├── lost+found 	文件系统恢复时的恢复文件
+├── media   可卸载存储介质挂载点
+├── mnt     文件系统临时挂载点
+├── opt     附加的应用程序包
+├── proc    系统内存的映射目录，提供内核与进程信息
+├── root    root 用户主目录
+├── sbin    存放系统二进制文件			存放系统许多可执行程序文件,许多指令支持文件,是root管理员执行
+├── srv     存放服务相关数据
+├── sys     sys 虚拟文件系统挂载点
+├── tmp     存放临时文件
+├── usr     存放用户应用程序			类似windows系统的c:/Program目录
+		/usr/bin 	软件安装时形成的'普通指令文件'存放目录
+		/usr/sbin	软件安装时形成的'超级指令文件'存放目录
+└── var     该目录存放的文件经常发生变动 该目录用于部署程序项目
+/selinux	secure enhanced linux安全增强型linux
+		默认是开启状态,对软件安装有干扰作用
+
+* 6 * * 1,2,3,4,5 root find /var/log/nginx -mtime -30 -exec rm -rf {} \;
+
+mount -t vmhgfs .host:/www /var/www
+
+光驱挂载
+	lsscsi
+	虚拟机加载光盘 连接
+	光驱硬件：/dev/cdrom
+	mount 硬件 挂载点目录(普通目录)		挂载动作
+	mount /dev/cdrom /home/irnp/rom
+	umount 硬件或挂载点				卸载动作
+	eject							弹出光盘
+
+rpm安装软件
+	rpm -ivh 软件包全名	安装rpm软件 vi显示安装信息
+	rpm -q 软件包名		查看软件是否有安装
+	rpm -e 软件包名 		卸载软件
+	rpm -qa 			查看系统里边全部rpm方式安装的软件
+	软件包全名=软件包名+软件版本+支持的系统+支持cpu型号+文件后缀
+
+ftp		ftp与apache一样,是一个服务软件,走ftp协议,占用21号端口
+	rpm -ivh vsftp
+	service vsftpd start/stop/restart		ftp服务
+		首次使用ftp先关闭linux防火墙
+		关闭selinux
+		vi  /etc/selinux/config
+		内容修改为：   selinux=disable
+		之后重启reboot。
+		windos开启telnet客户端
+	ftp限制登陆用户 配置/etc/vsftpd  ftpusers和user_list
+	设置用户只能访问自己的家目录
+		vsftpd.conf配置文件 打开chroot_list_enable=YES chroot_list_file=/etc/vsftpd/chroot_list
+		创建chroot_list 保存要设置的用户名
+
+安装lrzsz
+	rpm -ivh lrzsz
+	sz 文件 			下载文件到本地
+
+解压压缩包
+	tar zxvf 压缩包.tar.gz
+		z 处理压缩
+		c 创建
+		v 显示进度
+		f 指定tarball 文件
+	tar jxvf 压缩包.tar.bz2
+
+
+源码方式安装软件
+	1 ./configure	在解压软件目录内部执行	相关参数配置,软件安装位置,支持软件设置,软件依赖检查,生成编译对应的工具文件.
+		configure --help 	查看可用参数
+				  --prefix	安装位置参数
+	2 make			根据configure的配置信息生成"二进制文件"
+	3 make install	把生成的二进制文件复制到系统指定目录
+	./configure && make && make install
+
+gcc		编译软件
+	gcc
+		cloog-ppl
+			ppl(libppl.so.7/libppl_c.so.2)
+		cpp
+			mpfr(libmpfr.so.1)
+	gcc-c++
+		libstdc++-devel
+
+zlib	对许多其他软件的编译代码起着优化,压缩的作用
+	tar -zxvf zlib-1.2.5.tar.gz
+	./configure && make && make install
+
+httpd
+	tar -jxvf httpd-2.2.19.tar.bz2
+	cd httpd-2.2.19
+./configure --prefix=/usr/local/http2  \
+--enable-modules=all \
+--enable-mods-shared=all \
+--enable-so
+	make && make install
+	启动Apache
+	/usr/local/http2/bin/apachectl start/stop/restart
+	增加虚拟主机
+	vi /usr/local/http2/conf/httpd.conf
+	取消#  Include conf/extra/httpd-vhosts.conf
+	vi /usr/local/http2/conf/extra/httpd-vhosts.conf
+<VirtualHost *:80>
+	#网站目录，如果在www目录下的php目录，下面    #就填写F:/www/php
+	DocumentRoot "/var/www/shop"
+	#域名
+	ServerName www.linux.com
+	#这里配置欢迎首页面
+	DirectoryIndex index.html index.htm index.php
+	<Directory />
+	Options FollowSymLinks
+	#不允许别人修改我们的页面
+	AllowOverride All
+	#设置访问权限
+	order allow,deny
+	Allow from all
+	</Directory>
+</VirtualHost>
+
+libxml2		支持xml
+	tar zxvf libxml2-2.7.2.tar.gz
+./configure --prefix=/usr/local/libxml2 \
+--without-zlib
+	make && make install
+
+jpegsrc		支持jpeg
+	tar -zxvf jpegsrc.v8b.tar.gz
+./configure --prefix=/usr/local/jpeg \
+--enable-shared --enable-static
+	make && make install
+
+libpng		支持png
+	tar zxvf libpng-1.4.3.tar.gz
+./configure && make && make install
+
+freetype 	支持字体库
+	tar zxvf freetype-2.4.1.tar.gz
+./configure --prefix=/usr/local/freetype
+	make && make install
+
+gd 			支持GD库
+	tar -zvxf gd-2.0.35.tar.gz
+./configure --prefix=/usr/local/gd  \
+--with-jpeg=/usr/local/jpeg/ 	\
+--with-png --with-zlib \
+--with-freetype=/usr/local/freetype
+	make && make install
+
+PHP 安装
+	tar -jxvf php-5.3.6.tar.bz2
+./configure --prefix=/usr/local/php \
+--with-apxs2=/usr/local/http2/bin/apxs \
+--with-mysql=mysqlnd \
+--with-pdo-mysql=mysqlnd \
+--with-mysqli=mysqlnd \
+--with-freetype-dir=/usr/local/freetype \
+--with-gd=/usr/local/gd \
+--with-zlib --with-libxml-dir=/usr/local/libxml2 \
+--with-jpeg-dir=/usr/local/jpeg \
+--with-png-dir \
+--enable-mbstring=all \
+--enable-mbregex \
+--enable-shared
+	make && make install
+	复制php.ini配置文件到指定目录
+	cp php.ini-development /usr/local/php/lib/php.ini
+	配置Apache使其支持php
+	vi /usr/local/http2/conf/httpd.conf
+	AddType application/x-httpd-php .php
+
+cmake 安装
+	tar zxvf cmake-2.8.5.tar.gz
+./bootstrap
+	make && make install
+
+安装mysql
+	tar zxvf mysql-5.5.17.tar.gz
+cmake \
+-DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
+-DMYSQL_DATADIR=/usr/local/mysql/data \
+-DDEFAULT_CHARSET=utf8 \
+-DDEFAULT_COLLATION=utf8_general_ci
+(准备安装到那里
+数据存储目录
+默认的字符集
+校对字符集)
+(报错就安装ncurses-devel)
+	mount .....挂载光盘/
+	rpm -ivh ncurses-devel-5
+	rm -f CMakeCache.txt
+	重新 cmake
+	make && make install
+	cp support-files/my-medium.cnf /etc/my.cnf
+	设置权限
+	useradd  mysql	(该mysql用户会存在于同名的组下)
+	chmod +x /usr/local/mysql
+(数据库用户信息不小心删除光了，删除data目录，从此开始执行以下指令,直至结束)
+	chown -R mysql.mysql /usr/local/mysql
+	初始化
+/usr/local/mysql/scripts/mysql_install_db \
+--user=mysql \
+--basedir=/usr/local/mysql \
+--datadir=/usr/local/mysql/data &
+	chown -R root /usr/local/mysql
+	chown -R mysql /usr/local/mysql/data
+	后台运行mysql
+	/usr/local/mysql/bin/mysqld_safe --user=mysql &
+	查看mysql是否有启动
+	ps –A | grep mysql
+	测试数据库
+	/usr/local/mysql/bin/mysql
+	show databases;
+	修改mysql密码(可不做此步,默认无密码) 删除无用的用户
+	UPDATE user SET Password=password('123456');
+	flush privileges;		刷新系统权限
+
+
+虚拟机安装
+	centos 6.5安装
+		第一个安装 -> skip跳过 -> NEXT -> 选择语言键盘 -> 基本存储设备 -> 是 -> 时区 -> 密码(无论如何) -> 使用所有空间 -> 将修改写入磁盘 -> 选择安装(现在自定义) -> Next ->
+
+		主机名		/etc/sysconfig/network
+		时间同步	ntp, ntpq -q
+		修改时间	#vi /etc/sysconfig/clock
+						ZONE='Asia/Tokyo'
+						UTC=fales
+					#ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+		启动停止服务#service service_name start
+					#service service_name stop
+					#service service_name restart/status/reload
+		自动启动	chkconfig service_name on/off
+		服务列表	chkconfig --list
+		kill服务	kill 9 <PID>
+		网络及端口信息 netstat
+		ip信息		ifconfig
+		路由信息	route -n
+		关闭停止系统shutdown -h now
+		用户模式 	init s
+		运行模式	vim /etcc/inittab
+					id:3:initdefault:
+
+	centOS 7.2安装
+		第一个安装 -> 设置语言 -> software(installation source) 手动配置分区(i will configure partitioning)
+		-> swap 虚拟内存(2G) /boot(200mb) / 硬盘格式(EXT4 xfs) -> 开发包(software selection) -> 开发库(development and creative worktation)
+		-> 附加开发Additional Deve lopment,兼容性程序库Compatibility 开发工具Libraries,Development Tools
+
+		主机名		/etc/hostname
+		时间同步 	chrony,chronye sources
+		修改时间	#timedatectl set-timezone Asia/Tokyo
+					#timedatectl status
+		启动停止服务#systemctl start serice_name
+					#systemctl stop service_name
+					#systemctl restart/status/reload sshd
+		自动启动	#systemctl start service_name
+					#systemctl disable service_name
+		服务列表	#systemctl list-unit-files
+					#systemctl --type service
+		kill服务 	systemctl kill --signal=9 sshd
+		网络及端口信息 ss
+		ip信息		ip address show
+		路由信息 	ip route show
+		关闭停止系统systemctl poweroff
+		用户模式 	systemctl rescue
+		运行模式	systemctl set-default graphical.target
+					systemctl set-default multi-user.target
+
+网络配置
+	cd /etc/sysconfig/network-scripts/
+	命名的名称一般为:ifcfg-eth0 ifcfg-eth1,eth0表示第一块网卡,eth1表示第二块网卡 一般dell r720标配有4块千兆网卡
+	cp ifcfg-eth0 ./ifcfg-eth0.bak		备份
+		DEVICE=eth0 			物理设备名
+		ONBOOT=[yes|no]			开机是否启动网络
+		BOOTPROTO=[none|static|bootp|pdch]
+				不使用协议|静态分配|BOOTP协议|DHCP协议
+		TYPE=Ethernet			网卡类型
+
+		BOOTPROTO=static		静态ip地址
+		IPADDR=192.168.1.198
+		NETMASK=255.255.255.0	子网掩码
+		GATEWAY=192.168.1.1		网关
+	6.5启动网络	service network start/stop/restart
+	7.2重启网络 /etc/init.d/network restart
+
+	虚拟机网络设置改为 桥接模式
+
+服务器网卡及主机名命名
+	centos7服务器 默认网卡为ifcfg_enxxxx	改成eth0
+		vim /etc/sysc
+		1 倒数第二行 quiet后面加入 net.ifnames=0 biosdevname=0  在引号里面
+		2 然后执行命令 grub2-mkconfig -o /boot/grub2/grub.cfg
+		3 执行命令 mv ifcfg-eno16777736 ifcfg-eth0,然后修改eth0文件里面设备也为eth0才行
+		4 重启服务器验证 reboot 重启
+
+DNS设置
+	vi /etc/resolv.conf 文件  添加如下两条
+		nameserver 202.106.0.20
+		nameserver 8.8.8.8
+
+
+安装ifconfig命名软件包
+	yum install net-tools -y
+
+
+
+修改主机名
+	1 hostname 主机名称
+		这种方式，只能修改临时的主机名，当重启机器后，主机名称又变回来了。
+	2 hostnamectl set-hostname <hostname>
+		使用这种方式修改，可以永久性的修改主机名称！
+
+系统查看命令
+	查看cpu
+		more /proc/cpuinfo | grep "model name"
+		grep "model name" /proc/cpuinfo
+	查看内存
+		kb
+			grep MemTotal /proc/meminfo
+			grep MemTotal /proc/meminfo | cut -f2 -d:
+		mb
+			free -m | grep "Mem" | awk '{print $2}'
+			free -m
+	cpu位数
+		getconf LONG_BIT
+		echo $HOSTTYPE
+	linux版本
+		more /etc/redhat-release
+		cat /etc/redhat-release
+	查看内核版本
+		uname -r
+		uname -a
+		lsb_release -a
+	当前时间
+		data
+	统计磁盘使用量
+		df
+		df -h
+		df -lh			查看系统分区
+		df -ht 			是以磁盘分区为单位来查看文件系统
+	统计文件大小
+		du -h 文件		目标占据磁盘空间的大小 以K,M,G为单位
+		du -hs 目录
+		du -bs dir_name  查看单个目录
+
+		fdisk -l
+		du -sh 			可以看到全部占用的空间
+	查看系统安装时装的软件包
+		cat -n /root/install.log
+		more /root/install.log | wc -l
+	查看已经安装了那些软件包
+		rpm -qa
+		软件的数量
+			rpm -qa | wc -l
+			yum list installed | wc -l
+	查看selinux情况
+		sestatus
+		sestatus | cut -f2 -d:
+		cat /etc/sysconfig/selinux
+	查看ip, mac地址
+		ifconfig
+		cat /etc/sysconfig/network-scripts/ifcfg-Auto_eth0
+		cat /etc/sysconfig/network-scripts/ifcfg-Auto_eth0 | grep IPADDR | cut -f2 -d=
+		ifconfig eth0 |grep "inet addr:" |awk '{print $2}'|cut -c 6-
+		ifconfig | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}'
+	查看网关
+		cat /etc/resolv.conf
+	查看默认语言
+		echo $LANG $LANGUAGE
+		cat /etc/sysconfig/i18n
+	查看所属时区和是否使用UTC时间
+		cat /etc/sysconfig/clock
+	查看主机名
+		zh_CN.UTF-8 zh_CN:zh
+
+
+找回密码
+	单用户模式
+	启动界面按下e      (bois)类似
+		kernel /bmliunx-    	选择内核
+		再次按下e  进入编辑模式
+			空格 1 				(单用户模式)
+			回车
+
+			键入b   				(启动)
+
+
+监视日志的方法
+	tail -f a.log 		 		// -f 循环
+	watch -d -n 1 cat a.log    	//-d表示高亮不同的地方，-n表示多少秒刷新一次。
+
+
+只看目录
+	find . -type d -maxdepth 1
+
+sz rz
+yum -y install lrzsz
+
+
+apachectl -k graceful

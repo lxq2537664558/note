@@ -1,0 +1,801 @@
+<style type="text/css"></style>
+<link rel="stylesheet" type="text/css" href="mystyle.css">	引入css文件
+@import url("")			CSS内引入CSS
+img{border:none;}		图片边框
+列表:list-style:style|position|image
+列表:list-style:符号|定位|图像
+填充:margin	padding		auto
+浮动:float	none	clear 	both
+字体:font : style || variant || weight || size/line-height || family
+字体:font : 斜体 italic| 小型的大写字母 | bold | 尺寸/行高 | 名称
+背景:background :color ||image ||repeat ||attachment || position
+背景:background : 颜色 || url() 图片||no-repeat repeat-x y 平铺||attachment 滚动|| 水平 垂直
+边框:border : width || style || color
+边框:border : 厚度 || solid 实线 dashed 虚线 dotted 点状 || 颜色
+display: none | inline | block
+visibility:visible|hidden
+超链接:a:link a:visited a:hover a:active
+text-decoration：line || style  ||color   none
+text-decoration：underline下划线 |solid 实线 |颜色
+text-indent	首行缩进   text-align	对齐
+定位:position: static | absolute | relative| fixed
+定位:position: 静态   | 对于父级 | 对于自己| 浏览器
+oveerflow:visible|auto|hidden|scroll
+		默认值|必须时显示|不显示|始终显示
+filter:alpha(opacity:30);opacity:0.3;
+透明度
+
+列表:list-style: none outside nonse;
+list-style:none;		去列表符号
+border-collapse:collapse 表格相邻边被合并  separate 默认值
+cursor:pointer hand 光标变小手			auto 默认值
+
+注：chrome 浏览器最小的字体为 12px,如果设置 10px 也会渲染成 12px
+
+
+实体字符
+http://blog.csdn.net/u013778905/article/details/53177042
+https://www.cnblogs.com/fml1com/p/5149269.html
+
+单位
+	绝对
+	px
+	in
+	pt
+	cm
+	mm
+	相对
+	%
+	em
+	rem
+	vw
+	vh
+	vmin
+	vmax
+
+	calc(100% / 2)   	单位运算
+
+颜色
+	transparent 从字面上就可以知道是透明
+	currentColor 关键字表示使用该元素 color 的计算值如果该元素设置了 color 颜色值,则使用该 color；如果该元素没有设置 color,则继承父级元素的 color
+
+
+选择器
+	E,F				多元素选择器,同时匹配所有E元素或F元素,E和F之间用逗号分隔
+	E F				后代元素选择器,匹配所有属于E元素后代的F元素,E和F之间用空格分隔
+	E>F				子元素选择器,匹配所有E元素的子元素F(第一层后代)
+	E+F				毗邻元素选择器,匹配所有紧随E元素之后的同级元素F
+	E~F				同级元素通用选择器,匹配任何在E元素之后的同级F元素
+	E[att]			匹配所有具有att属性的E元素,不考虑他的值.(注意:E在此处可以省略,比如"[characked]",一下同)
+	E[att=val]		匹配所有att属性等于'val'的E元素
+	E[att~=val]		匹配所有att属性具有多个空格分隔的值,其中一个值等于'val'的E元素
+	E[att|=val]		匹配所有att属性具有多个连字号分隔(hyphen-separated)的值,其中一个值以'val'开头的E元素,主要用于lang属性,比如'en','en-us','en-gb'等等
+	E[att^='val']	属性att的值以'val'开头的元素
+	E[att$='val']	属性att的值以'val'结尾的元素
+	E[att*='val']	属性att的值包含'val'字符串的元素
+
+伪类选择器
+	:first-line				第一行
+	:first-letter			第一个字母
+	:before					开头
+	:after					最后
+	:root					将样式绑定到页面的根元素中.所谓根元素,是指位于文档树中最顶层结构的元素,在html页面中就是指包含着整个页面的<html>部分
+	E:not()					相对某个结构元素使用样式,但想排除这个结构元素下的子结构元素,就是用not样式
+	E:empty					指定当元素内容为空白时使用的样式
+	E:target				对页面中某个target元素指定样式,该样式只在用户点击了页面中的链接,并且跳转到target元素后生效
+	E:first-child			对一个父元素中的第一个子元素指定样式
+	E:last-child			对一个父元素中的最后
+	E:nth-child(n)			对指定序号的子元素设置样式(正数)
+							:nth-child(even)所有正数下来第偶数个子元素
+							:nth-child(odd)所有正数下来第奇数个子元素
+	E:nth-last-child(n)		对指定序号的子元素设置样式(倒数)
+							:nth-last-child(even):所有倒 数上去第偶数个子元素
+							:nth-last-child(odd):所有倒数上去第奇数个子元素
+	E:nth-of-type(n)		与:nth-child()作用类似,但是仅匹配使用同种标签的元素
+	E:nth-last-of-type(n)	与:nth-last-child()作用类似,但是仅匹配使用同种标签的元素
+	E:nth-child(an+b)		a表示每次循环中共包括几张样式;b表示指定的样式在循环中所在的位置
+	E:only-child			匹配父元素下仅有的一个子元素 等同于:first-child:last-child或:nth-child(1):nth-last-child(1)
+	E:only-of-type			匹配父元素下使用同种标签的唯一一个子元素 等同于:first-of-type:last-of-type或:nth-of-type(1):nth-last-of-type(1)
+	E:enabled				匹配表单中激活的元素
+	E:disabled				匹配表单中禁用的元素
+	E:checked				匹配表单中被选中的radio(单选框)或checkbox(复选框)元素
+	E::selection			匹配用户当前选中的元素
+
+
+链接属性
+a:link					普通的,未被访问的链接
+a:visited				用户已访问的链接
+a:hover					鼠标指针位于链接的上方
+a:active				链接被点击的时刻
+
+伪类
+:focus					向拥有键盘输入焦点的元素添加样式
+:first-child			向元素的第一个子元素添加样式
+:lang					向带有指定lang属性的元素添加样式
+:first-letter			向文本的第一个字母添加特殊样式
+:first-line				向文本的首行添加特殊样式
+:before					在元素之前添加内容
+:after					在元素之后添加内容
+
+属性
+	-webkit-	代表chrome safari
+	-moz-		代表firefox
+	-ms-		代表ie
+	-o-			代表opera
+
+	border-radius											圆角
+	border-image:url() 图像大小/边框宽度 水平 垂直			边框图片
+	background:url(),url()									背景图片
+
+	text-shadow:水平偏移 垂直偏移 模糊度 rgba(0,0,0,透明度)	文字阴影
+	box-shadow:水平偏移 垂直偏移 模糊度 宽度 rgba()			边框阴影
+	word-wrap:break-word;									强制单词换行
+	resize: 												文本框大小
+		IE透明度	filter:alpha(opacity=40)
+	transform:rotate(90deg)									倾斜角度
+	transition:padding 1s 方式 延时							1s后执行padding命令
+	animation:name 2s ease-out
+		@-webkit-keyframes name {from{opacity:0}to{opacity:1}}
+	渐变
+		backfround-image:-moz-linear-gradient(top,#444444,#999999);
+		background-image:-webkit-gradient(linear,left top, left bottom,color-stop(0,#444444),color-stop(1,#999999);
+		filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#444444',endColorstr="#999999',GradientType='0')"
+
+		background:-webkit-linear-gradient(top,red,blue);
+		background:-moz-linear-gradient(top,red,blue);
+		线性
+		background:-webkit-linear-gradient(top,red 50%,green 75%,blue 100%)
+			渐变的颜色位置 都是从起始位置开始计算长度,不是按比例计算
+		background:-webkit-linear-gradient(-45deg,orange,purple)
+			可以使用角度设置渐变方向 角度单位deg 范围0-360 负数也可以
+		径向
+		background:-webkit-radial-gradient(20px 70px,#000,#fff)
+			设定径向渐变的位置可以使用位置单词或者像素表示的单位
+		background:-webkit-radial-gradient(center center,circle,red,green)
+			默认的渐变方式是椭圆(如果元素是正方形,将显示圆形渐变),可以设定为圆形
+		background:-webkit-repeating-radial-gradient(center center,circle,red,green,red 10%)
+		球
+		width:200px;height:200px;border-radius:100px;box-shadow:-5px 5px 15px #000;
+		background:-webkit-radial-gradient(140px 60px,circle,#fff,#666)
+	倒影
+		-webkit-box-reflect:below 5px	底部倒影
+		-webkit-box-reflect:above		顶部倒影
+							left		左
+							right		右
+		font-size:36px;-web-box-reflect;below -10px -webkit-linear-gradient(top,transparent 20%,#fff)
+			文字倒影
+	布局
+		-webkit-columns:150px 3				分为3列 150px
+		-webkit-column-gap:30px				间隔30px
+		-webkit-column-rule:5px dotted green 分隔线
+	服务器端字体
+		@font-face{
+			font-family:YH;
+			src:utl(http://domain/fonts/MSYH.TTF);
+		}
+		body{font-family:'YH';}
+
+less css框架
+
+盒子大小
+width
+min-width
+max-width
+height
+min-height
+max-height
+box-sizing
+
+空间位置相关
+display
+float
+clear
+position
+top
+right
+bottom
+left
+transform
+z-index
+opacity
+
+
+背景属性
+background-attachment	背景图像是否固定或者随着页面的其余部分滚动
+	scroll			默认值.背景图像会随着网页其余部分的滚动而移动
+	fixed			当网页的其余部分滚动时,背景图像不会移动
+background-color		设置元素的背景颜色
+	color_name		规定颜色值为颜色名称的背景颜色 如red
+	hex_number		规定颜色值为十六进制值的背景颜色 如#ff0000
+	rgb_number		规定颜色值为rgb代码的背景颜色 如rgb(0,0,255)
+	transparent		默认.背景颜色为透明
+background-image		把图像设置为背景
+	url("")				指向图像的路径
+	none				默认值.不显示背景图像
+background-position		设置背景图像的起始位置
+	关键字 关键字	如果仅规定了一个关键词,那么第二个值将是"center" 默认值 0% 0%
+	x% y%			第一个值是水平位置,第二个值是垂直位置 如果仅规定了一个值,另一个将是50%
+	xpos ypos		同上 单位为像素
+background-repeat		设置背景图像是否及如何重复
+	repeat			默认.背景图像将在垂直方向个水平方向重复
+	repeat-x		背景图像将在水平方向重复
+	repeat-y 		背景图像将在垂直方向重复
+	no-repeat		背景图像将仅显示一次
+background-size		背景图片大小
+	Xpx|X% Ypx|Y%
+	cover   			超出部分剪裁
+	contain 			显示整张图片
+background-clip		背景图片绘制区域
+background-origin	背景图片的定位区域
+
+
+文本属性
+color 					设置文本颜色
+	color_name		规定颜色值为颜色名称的背景颜色 如red
+	hex_number		规定颜色值为十六进制值的背景颜色 如#ff0000
+	rgb_number		规定颜色值为rgb代码的背景颜色 如rgb(0,0,255)
+	transparent		默认.背景颜色为透明
+direction				设置文本方向
+	ltr				默认.文本方向从左到右
+	rtl				文本方向从右到左
+line-height				设置行高
+	normal			默认.设置合理的行间距
+	number			设置数字,此数字会与当前字体尺寸相乘来设置行间距
+	length			设置固定的行间距
+	%				基于当前字体尺寸的百分比行间距
+letter-spacing			设置字符间距
+	normal			默认.规定字符间没有额外的空间
+	length			定义字符间的固定空间(允许使用负值)
+text-align				对齐元素中的文本
+	left			把文本排列到左边.默认值:由浏览器和direction属性决定
+	right			把文本排列到右边
+	center			把文本排列到中间
+	justify			实现两端对齐文本效果
+text-decoration			向文本添加修饰
+	none			默认.定义标准的文本
+	underline		定义文本下的一条线
+	overline		定义文本上的一条线
+	line-through	定义穿过文本下的一条线
+	blink			定义闪烁的文本(仅FF支持)
+text-indent				缩进元素中文本的首行
+	length			定义固定的缩进.默认值:0
+	%				定义基于父元素宽度的百分比的缩进
+text-transform			控制元素中的字母
+	none			默认.定义带有小写字母和大写字母的标准的文本
+	capitalize		文本中的每个单词以大写字母开头
+	uppercase		定义仅有大写字母
+	lowercase		定义无大写字母,仅有小写字母
+white-space				设置元素中空白的处理方式
+	normal			默认.空白会被浏览器忽略
+	pre				空白会被浏览器保留.其行为方式类似HTML中的<pre>标签
+	nowrap			文本不会换行,文本会在同一行上继续,直到遇到<br>标签为止
+	pre-wrap		保留空白符序列,但是正常的进行换行
+	pre-line		合并空白符序列,但是保留换行符
+word-spacing			设置字间距
+	normal			默认.定义单词间的标准空间
+	length			定义单词间的固定空间
+text-shadow				文本的阴影效果
+	text-shadow: 0 0 5px #ff0000;
+
+
+字体属性
+font-family				设置字体系类
+	family-name		用于某个元素的字体族名或/及类族名称的一个优先表 默认值取决与浏览器
+	generic-family
+font-size				设置字体的尺寸
+	xx-small		最小
+	x-small			较小
+	small			小
+	medium			正常(默认值),根据字体进行调整
+	large			大
+	x-large			较大
+	xx-large		最大
+	smaller			把font-size设置为比父元素更小的尺寸
+	larger			把font-size设置为比父元素更大的尺寸
+	length			把font-size设置为一个固定的值
+	%				把font-size设置为基于父元素的一个百分比值
+font-style				设置字体风格
+	normal			默认值.浏览器显示一个标准的字体样式
+	italic			浏览器会显示一个斜体的字体样式
+	oblique			浏览器会显示一个倾斜的字体样式
+font-variant			以小型大写字体或者正常字体显示文本
+	normal			默认值.浏览器会显示一个标准的字体
+	small-caps		浏览器会显示小型大写字母的字体
+font-weight				设置字体粗细
+	normal			默认值.定义标准的字符
+		bold			定义粗体字符
+		bolder			定义更粗的字符
+		lighter			定义更细的字符
+		100~900			400等同于normal,而700等同于bold
+
+
+列表属性
+list-style-image		将图像设置为列表项标志
+	url				图像的路径
+	none			默认.无图形被显示
+list-style-position		设置列表中列表项标志的位置
+	inside			列表项目标记放置在文本以内,且环绕文本根据标记对齐
+	outside			默认值.保持标记位于文本的左侧.列表项目标记放置在文本以外,且环绕文本不根据标记对齐
+list-style-type			设置列表项标志的类型
+	none			无标记
+	disc			默认.标记是实心园
+	dircle			标记是空心圆
+	square			标记是实心方块
+	decimal			标记是数字
+	lower-roman		小写罗马数字(i,ii,iii~)
+	upper-roman		大写罗马数字(I,II,III~)
+	lower-alpha		小写英文字母
+	upper-alpha		大写引文字母
+	hebrew			传统的希伯来编号方式
+	cjk-ideographic	简单的表意数字
+	hiragana		标记是:a,i,u,e,o,ka等(日文片假名)
+	katakana		同上大写
+	hiragana-iroha	标记是:i,ro,ha,ni,ho等(日文片假名)
+	katakana-iroha	同上大写
+
+表格属性
+border-collapse			设置是否把表格边框合并为单一的边框
+	separate		默认值.边框会被分开.不会忽略border-spacing和empty-cells属性
+	collapse		如果可能,边框会合并为一个单一的边框.会忽略border-spacing和empty-cells属性
+border-spacing			设置分割单元格边框的距离
+	length length	规定相邻单元的边框之间的距离.使用px,cm等单位.不允许使用负值
+					如果定义一个length参数,那么定义的是水平和垂直间距
+					如果定义两个length参数,那么第一设置水平间距,而第二个设置垂直间距
+caption-side			设置表格标题的位置ie8下不支持
+	top				默认值.把表格标题定位在表格之上
+	bottom			把表格标题定位在表格之下
+empty-cells				设置是否显示表格中的空单元格ie8下不支持
+	hide			不在空单元格周围绘制边框
+	show			在空单元格周围绘制边框.默认.
+table-layout			设置显示单元,行和列的算法
+	automatic		默认.列宽度由单元格内容设定
+	fixed			列宽度表格宽度和列表宽度设定
+
+轮廓属性IE8一下不支持
+outline:color|style|width
+outline-color			设置轮廓的颜色
+	color_name		规定颜色值为颜色名称的背景颜色 如red
+	hex_number		规定颜色值为十六进制值的背景颜色 如#ff0000
+	rgb_number		规定颜色值为rgb代码的背景颜色 如rgb(0,0,255)
+	invert			默认.执行颜色反转(逆向的颜色).可使轮廓在不同的背景颜色中都是可见.
+outline-style			设置轮廓的样式
+	none			默认.定义无轮廓
+	dotted			定义点状轮廓
+	dashed			定义虚线轮廓
+	solid			定义实线轮廓
+	double			定义双线轮廓.双线的宽度等同于outine-width的值
+	groove			定义3D凹槽轮廓.此效果取决于outline-color值
+	ridge			定义3D凸槽轮廓.此效果取决于outline-color值
+	inset			定义3D凹边轮廓.此效果取决于outline-color值
+	outset			定义3D凸边轮廓.此效果取决于outline-color值
+outline-width			设置轮廓的宽度
+	thin			规定细轮廓
+	medium			默认.规定中等的轮廓
+	thick			规定粗的轮廓
+	length			允许规定轮廓粗细的值
+
+内边距
+padding:top|right|bottom|right
+	auto 			浏览器计算内边距
+	length			规定以具体单位计的内边距,比如像素,厘米等.默认是0px
+	%				规定基于父元素的宽度的百分比的内边距
+padding-top				设置元素的上内边距
+	length			规定以具体单位计固定的上内边距,比如像素,厘米等.默认是0px
+	%				规定基于父元素的宽度的百分比的上内边距,此值不会如预期地那样工作于所有的浏览器中
+padding-right			设置元素的右内边距
+	length			规定以具体单位计固定的右内边距,比如像素,厘米等.默认是0px
+	%				规定基于父元素的宽度的百分比的右内边距,此值不会如预期地那样工作于所有的浏览器中
+padding-bottom			设置元素的下内边距
+	length			规定以具体单位计固定的下内边距,比如像素,厘米等.默认是0px
+	%				规定基于父元素的宽度的百分比的下内边距,此值不会如预期地那样工作于所有的浏览器中
+padding-left			设置元素的左内边距
+	length			规定以具体单位计固定的左内边距,比如像素,厘米等.默认是0px
+	%				规定基于父元素的宽度的百分比的左内边距,此值不会如预期地那样工作于所有的浏览器中
+
+边框
+border-style			用于设置元素所有边框的样式,或者单独地为各边设置样式
+	none			定义无边框
+	hidden			与"none"相同.不过应用于表是除外,对于表,hidden用于解决边框冲突
+	dotted			定义点状边框.在大多数浏览器中呈现为实线
+	dashed			定义虚线.在大多数浏览器中呈现为实线
+	solid			定义实线
+	double			定义双线.双线的宽度等于border-width的值
+	groove			定义3D凹槽边框.其效果取决于border-color的值
+	ridge			定义3D垄状边框.其效果取决于border-color的值
+	inset			定义3Dinset边框.其效果取决于border-color的值
+	outset			定义3Doutset边框.其效果取决于border-color的值
+border-width 			简写属性,用于为元素的所有边框设置宽度,或者单独地为各边边框设置款短
+	thin			定义细的边框
+	medium			默认.定义中毒的边框
+	thick			定义粗的边框
+	length			允许自定义边框的宽度
+border-color			简写属性,设置元素的素有边框中可见部分的颜色,或为4个边分别设置颜色
+	color_name		规定颜色值为颜色名称的边框颜色
+	hex_number		规定颜色值为十六进制的变宽颜色
+	grb_number		规定颜色值为rgb代码的边框颜色
+	transparent		默认值.边框颜色为透明(IE6不支持)
+
+外边距
+margin:top|right|bottom|right
+	auto 			浏览器计算外边距
+	length			规定以具体单位计的外边距值,如像素,厘米等.默认值是0px
+	%				规定基于父元素的宽度的百分比的外边距
+margin-top 				设置元素的上外边距
+	auto 			浏览器设置的上外边距
+	length			定义固定的上外边距.默认值是0
+	%				定义基于父对象总高度的百分比上外边距
+margin-right			设置元素的右外边距
+	auto 			浏览器设置的右外边距
+	length			定义固定的右外边距.默认值是0
+	%				定义基于父对象总高度的百分比右外边距
+margin-bottom			设置元素的下外边距
+	auto 			浏览器设置的下外边距
+	length			定义固定的下外边距.默认值是0
+	%				定义基于父对象总高度的百分比下外边距
+margin-left				设置元素的左外边距
+	auto 			浏览器设置的左外边距
+	length			定义固定的左外边距.默认值是0
+	%				定义基于父对象总高度的百分比左外边距
+
+定位属性
+position 				把元素放置到一个静态的,相对的,绝对的,或固定的位置中
+	absolute		生成绝对定位的元素,相对于static定位以外的第一个父元素进行定位
+	fixed			生成绝对定位的元素,相对于浏览器窗口进行定位
+	relative 		生成相对定位的元素,相对于其正常位置进行定位
+	static			默认值.没有定位,元素出现在正常的流中(忽略top等属性)
+top 					定义了一个定位元素的上外边距边界与其包含块上边界之间的偏移
+	auto 			默认值.通过浏览器计算上边缘的位置
+	%				设置以包含元素的百分比计的上边位置.可使用负值
+	length			使用px,cm等单位设置元素的上边位置.可使用负值
+right 					定义了定位元素右外边距边界与其包含块右边界之间的偏移
+	auto 			默认值.通过浏览器计算右边缘的位置
+	%				设置以包含元素的百分比计的右边位置.可使用负值
+	length			使用px,cm等单位设置元素的右边位置.可使用负值
+bottom					定义了定位元素下外边距边界与其包含块下边界之间的偏移
+	auto 			默认值.通过浏览器计算下边缘的位置
+	%				设置以包含元素的百分比计的下边位置.可使用负值
+	length			使用px,cm等单位设置元素的下边位置.可使用负值
+left					定义了定位元素左外边距边界与其包含块左边界之间的偏移
+	auto 			默认值.通过浏览器计算左边缘的位置
+	%				设置以包含元素的百分比计的左边位置.可使用负值
+	length			使用px,cm等单位设置元素的左边位置.可使用负值
+overflow(溢出,滚动条)	设置当元素的内容溢出其区域时发生的事情
+	visible 		(没有)默认值.内容不会被修剪,会呈现在元素框之外
+	hidden 			(没有)内容会被修剪,并且其余内容是不可见的
+	scroll			(始终有)内容会被修剪,但是浏览器会显示滚动条以便查看其余的内容
+	auto			(根据内容)如果内容被修剪,则浏览器会显示滚动条以便查看其余的内容
+clip					设置元素的形状.元素被剪入这个形状之中,然后显示出来
+	shape			设置元素的形状.唯一合法的形状值是:rect(top,right,bottom,left)
+	auto			默认值,不应用任何剪裁
+vertical-align			设置元素的垂直对齐方式
+	baseline		默认.元素放置在父元素的基线上
+	sub				垂直对齐文本的下标
+	super			垂直对齐文本的上标
+	top 			把元素的顶端与行中最高元素的顶端对齐
+	text-top 		把元素的顶端与父元素字体的顶端对齐
+	middle			把此元素放置在父元素的中部
+	bottom			把元素的顶端与行中最低的元素的顶端对齐
+	text-bottom 	把元素的低端与父元素字体的低端对齐
+	length			允许为负值
+	%				使用"line-height"属性的百分比值来排列此元素.允许使用负值
+z-index					设置元素的堆叠顺序
+	auto 			默认.堆叠顺序与父元素相等
+	number			设置元素的堆叠顺序
+
+浮动
+float					定义元素在那个方向浮动.
+	left			元素向左浮动
+	right 			元素向右浮动
+	none			默认值.元素不浮动,并会显示在其在文本中出现的位置
+clear					规定元素的哪一侧不允许其他浮动元素
+	left			在左侧不允许浮动元素
+	right			在右侧不允许浮动元素
+	both			在左右两侧均不允许浮动元素
+	none			默认值.允许浮动元素出现在两侧
+
+
+光标
+cursor					规定要显示的光标的类型
+	url				需使用的自定义光标的url
+	default			默认光标(通常是一个箭头)
+	auto			默认.浏览器设置的光标
+	crosshair		光标呈现为十字线
+	pointer			光标呈现为指示链接的指针(一只手)
+	move			此光标指示莫对象可被移动
+	e-resize		此光标指示矩形框的边缘可被向右移动
+	ne-resize		此光标指示矩形框的边缘可被向上及向右移动
+	nw-resize		此光标指示矩形框的边缘可被向上及向左移动
+	n-resize		此光标指示矩形框的边缘可被向上移动
+	se-resize		此光标指示矩形框的边缘可被向下及向右移动
+	sw-resize		此光标指示矩形框的边缘可被向下及向左移动
+	s-resize		此光标指示矩形框的边缘可被向下移动
+	w-resize		此光标指示矩形框的边缘可被向左移动
+	text			此光标指示文本
+	wait			此光标指示程序正忙
+	help			此光标指示可用的帮组
+
+display				规定元素应该生成的框的类型
+	none				此元素不会被显示
+	block				此元素将显示为块级元素,此元素前后会带有换行符
+	inline				默认.此元素会被显示为内联元素,元素前后没有换行度
+	inline-block		行内块元素
+	list-item			此元素会做为列表显示
+	run-in				此元素会根据上下文做为块级元素或内联元素显示
+	table				此元素会做为块级表格来显示(类似<table>),表格前后带有换行符
+	inline-table		此元素会做为内联表格来显示(类似<table>),表格前后没有换行符
+	table-row-group		此元素会做为一个或多个行的分组来显示(类似<tbody>)
+	table-header-group	此元素会做为一个或多个行的分组来显示(类似<thead>)
+	table-footer-group	此元素会做为一个或多个行的分组来显示(类似<tfoot>)
+	table-row			此元素会做为一个表格行显示(类似<tr>)
+	table-column-group	此元素会做为一个或多个列的分组来显示(类似<colgroup>)
+	table-column 		此元素会做为一个单元格显示(类似<col>)
+	table-cell 			此元素会做为一个表格单元格显示(类似<td>和<th>)
+	table-caption		此元素会做为一个表格标题显示(类似<caption>)
+
+visibility			规定元素是否可见
+	visible 			默认值.元素是可见的
+	hidden 				元素是不可见的
+
+
+响应式
+	viewport 	视窗
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	宽度为设备宽度, 缩放为1.0
+
+
+媒体查询
+@media				规则使你有能力在相同的样式表中,使用不同的样式规则对不同的媒介
+	all					用于所有的媒介设备
+	aural				用于语言和音频合成器
+	braille				用于盲人用点字法触觉回馈设备
+	embossed			用于分页的盲人用点字法打印机
+	handheld			用于小的手持的设备
+	print				用于打印机
+	projetion			用于方案展示,比如幻灯片
+	screen				用于电脑显示器
+	tty					用于使用福鼎密度字母栅格的媒介,比如电传打字机和终端
+	tv					用于电视机类型的设备
+
+@media csreen and (min-width: 768px) and (max-width: 1024px){
+	.demo {
+		color: red;
+	}
+}
+
+<link rel="stylesheet" href="style.css" media="(min-width: 1024px)"
+
+480px 		手机横屏
+768px 		平板竖屏
+1024px 		平板横屏 pc窄屏
+1200px 		pc宽屏
+1380px 		pc超大屏
+
+
+<img src='img/small.png'
+	 srcset='img/large.png 960w, img/medium.png 640w, img/small.png 320w'
+	 sizes='(max-width: 414px) 100vw, 640px'
+	 alt='响应式图片' />
+
+gradient 渐变背景
+
+线性
+background: linear-gradient(to right | 135deg, orange, red 70%, rgba(0,0,255,1));
+
+重复平铺
+background：repeating-linear-gradient(-45deg, blue, blue 5px, white 5px, white 10px);
+
+半径
+background：radial-gradient(red 5%, yellow 15%, rgb(30, 133, 255) 60%);
+
+重复
+background: repeating-radial-gradient(red, orange 10%, yellow 25%);
+
+动画相关属性
+
+动画部分我们第三章会讲到,可以先大概了解
+
+transition
+
+transition用于过渡动画,跟background差不多,transition属性也是由几个属性组成,如下：
+
+transition-property：应用过渡效果的CSS属性名称
+transition-duration：过渡效果花费的时间
+transition-timing-function：过渡效果的时间曲线
+transition-delay：过渡效果何时开始
+其简写语法为：
+
+transition: property duration timing-function delay;
+
+animation
+
+animation用于帧动画,在属性组成上,只是比transition多了几个而已
+
+animation-name：@keyframes 动画的名称
+animation-duration：动画完成一个周期所花费的秒或毫秒
+animation-timing-function：动画的速度曲线
+animation-delay：动画何时开始
+animation-iteration-count：动画被播放的次数
+animation-direction：动画是否在下一周期逆向地播放
+animation-play-state：动画是否正在运行或暂停
+animation-fill-mode：动画时间之外的状态
+其简写语法为：
+
+animation: name duration timing-function delay iteration-count direction play-state fill-mode;
+
+
+
+
+注：inherit关键字用于显式地指定继承性,可用于继承性/非继承性属性
+
+initial 使用初始值
+
+
+
+flex container
+    flex-direction          主轴的方向
+        row(默认值) 			主轴为水平方向,起点在左端
+		row-reverse 			主轴为水平方向,起点在右端
+		column 					主轴为垂直方向,起点在上沿
+		column-reverse 			主轴为垂直方向,起点在下沿
+    flex-wrap               如果一条轴线排不下,如何换行
+        nowrap					(默认)不换行
+        wrap 					换行,第一行在上方
+        wrap-reverse			换行,第一行在下方
+    flex-flow  				flex-flow属性是flex-direction属性和flex-wrap属性的简写形式,默认值为row nowrap
+    justify-content         主轴上的对齐方式 		如果水平方向有空间，怎么分配
+        flex-start(默认值) 	左对齐
+		flex-end 				右对齐
+		center 					居中
+		space-between 			两端对齐,项目之间的间隔都相等
+		space-around 			每个项目两侧的间隔相等所以,项目之间的间隔比项目与边框的间隔大一倍
+		space-evenly 			平均分
+    align-items             交叉轴的对齐方式   		垂直方向
+        flex-start 				交叉轴的起点对齐
+		flex-end 				交叉轴的终点对齐
+		center 					交叉轴的中点对齐
+		baseline 				项目的第一行文字的基线对齐
+		stretch(默认值) 		如果项目未设置高度或设为auto,将占满整个容器的高度
+    align-content           多根轴线的对齐方式 		多行布局怎么分配空间
+        flex-start 				与交叉轴的起点对齐
+		flex-end 				与交叉轴的终点对齐
+		center 					与交叉轴的中点对齐
+		space-between 			与交叉轴两端对齐,轴线之间的间隔平均分布
+		space-around 			每根轴线两侧的间隔都相等所以,轴线之间的间隔比轴线与边框的间隔大一倍
+		stretch(默认值) 		轴线占满整个交叉轴
+
+
+flex-items
+    order                   属性定义项目的排列顺序。数值越小，排列越靠前，默认为0。
+    flex-grow               属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。
+    flex-shrink             属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。
+    flex-basis              item所占主轴空间
+    flex                    flex-grow, flex-shrink, flex-basis 的简写
+    align-self              对齐方式, 覆盖 align-items 属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的
+
+
+grid布局
+	wrapper 	父元素
+		//3列2行
+		grid-template-columns: 100px 100px 100px;
+	    grid-template-rows: 50px 50px;
+
+	items 		子元素
+		//列  第一条线到第四条
+		grid-column-start: 1
+	    grid-column-end: 4
+	    //简写
+	    grid-column: 1 / 4
+
+
+
+
+
+动画
+    补间动画       fransition
+        transition: all 2s;
+        transition-property             属性
+            all
+            background
+        transition-duration             持续时间
+            2s
+        transition-timing-function      动效
+            ease            规定慢速开始,然后变快,然后慢速结束的过渡效果(cubic-bezier(0.25,0.1,0.25,1))
+            linear          规定以相同速度开始至结束的过渡效果(cubic-bezier(0,0,1,1))
+            ease-in         规定以慢速开始的过渡效果(cubic-bezier(0.42,0,1,1))
+            ease-out        规定以慢速结束的过渡效果(subic-bezier(0,0,0.58.1))
+            ease-in-out     规定以慢速开始和结束的过渡效果(cubic-bezier(0.42,0,0.58,1))
+            cubic-bezier(n,n,n,n)
+        transition-delay                延迟时间
+
+        transform
+            translate(550px, 0)         偏移  x y
+            translateX
+            translateY
+            scale(1.2)                  等比例缩放
+            scaleX
+            scaleY
+            rotate(15deg)               顺时针
+            skew(30deg)                 倾斜
+            matrix(a,b,c,d,e,f)         矩形变换
+
+        transform-origin                变换圆心
+            200px 80%
+            left top
+
+    三维变换
+        transform: translate3d(12px, 50%, 3em);
+        transform: translateZ(2px);
+        transform: scale3d(2.5, 1.2, 0.3);
+        transform: scaleZ(0.3);
+        transform: rotate3d(1, 2.0, 3.0, 10deg);
+        transform: rotateX(10deg);
+        transform: rotateY(10deg);
+        transform: rotateZ(10deg);
+        transform: perspective(17px);
+        transform: matrix3d(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0);
+
+    帧动画         animation
+        animation-name: circleRun;              名称
+        animation-duration: 1s;                 持续时间
+        animation-timing-function: ease;        动效
+        animation-delay: 2s;                    延时时间
+        animation-iteration-count               循环次数
+            2
+            infinite      一直
+        animation-direction: alternate;         是否返回 方向
+        animation-fill-mode: none;              初始位置
+        animation-play-state: running;          执行状态
+
+        关键字
+        @keyframes circleRun{
+            from {}
+            33% {
+                transform: translate(150px, 75px);
+            }
+            66% {
+                transform: translate(400px, -75px);
+            }
+            100% {
+                transform: translate(550px, 0);
+                background: red;
+            }
+            to {}
+        }
+        .class {
+            animation: circleRun 2s ease infinite
+        }
+
+<img src="img/l.png" alt="响应式图片"
+    srcset="img/xl.png 1920">
+
+
+
+sass
+		变量
+		$blue: #188eee;
+
+		.tt{
+			color: $blue;
+
+			&:hover {
+				color: #333;
+			}
+
+			@include box-shadow(3px 4px #ccc);
+
+		}
+
+		@mixin box-shadow($shadow...){
+			-moz-box-shadow: $shadow;
+			-webkit-box-shadow: $shadow;
+			box-shadow: $shadow;
+		}
+
+		@for $i from 1 to 3 {
+			.item-#($i){
+				background-image: url(xxx/#{$i}.png);
+			}
+		}
+
+less

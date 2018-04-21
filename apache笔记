@@ -1,0 +1,148 @@
+apache 是一种b/s结构的软件，apache属于s服务端
+apache诸多工作都是通过模块进行加载的
+
+bin	可执行文件
+	httpd.exe 
+		-M：apache 可以加载的模块
+		-l：当前apache 已经加载的模块
+		-t：验证配置文件
+cgi-bin	cgi可执行文件
+conf 配置文件夹
+	httpd.conf
+		ServerRoot		服务器根目录
+		DocumentRoot	网站根目录
+		DirectoryIndex	默认首页的文件名
+
+		<Directory Firectory-path>目录访问权限</Directory> 
+		Options			设置目录的一些特性
+			none	禁止目录
+			Indexes	显示目录
+		AllowOverride	允许.htaccess中的配置覆盖apache的主配置
+			none	不允许覆盖
+			all		允许
+		Deny			禁止那些ip访问
+		 	Deny FromAll	所有的ip都禁止访问
+			Deny From ip	禁止指定的ip访问
+		Allow			允许那些ip访问
+			Allow Form All	允许所有ip访问
+			Allow Form ip 	允许指定的ip访问
+		Order			Allow生效的顺序
+error 错误日志
+htdocs 网站的根目录
+modules apache可以加载的各种模块
+
+
+DOS 
+net stop ****	启动服务
+net start ****  停止服务
+netstat -an		来查看机器有哪些端口在监听
+netstat -anb	查找是那个程序在监听端口
+
+apache
+Listen			监听端口
+当apache启动后,要绑定所有的IP地址和端口,等待请求的进入
+命令格式:Listen[IP地址:]端口号
+
+
+虚拟主机的配置
+将一台服务器划分若干个'小空间',每个空间放一个小网站,这个小网站具有所有的功能
+第一种:是局域域名的虚拟主机,一个ip上可以有N个域名
+第二种:是局域ip的虚拟主机,多个ip,多个网卡
+
+NameVirtualHost命令,是配置基于域名打的虚拟主机的命令之一
+语法格式:NameVirtualHost[ip地址:]端口号
+	NameVirtualHost *:80		所有ip的80端口
+	Include conf/vhosts.conf 虚拟主机的配置文件
+
+vhosts.conf的格式
+<VirtualHost *:80>
+    #网站目录，如果在www目录下的php目录，下面    #就填写F:/www/php
+    DocumentRoot "D:/WALP/www" 
+    #域名
+    ServerName www.linux.com
+    #这里配置欢迎首页面
+    DirectoryIndex index.html index.htm index.php
+    <Directory />
+    Options FollowSymLinks
+    #不允许别人修改我们的页面
+    AllowOverride All
+    #设置访问权限
+    order allow,deny
+    Allow from all
+    </Directory>   
+</VirtualHost>
+虚拟主机的配置会覆盖主配置
+
+
+Alias别名目录
+Alias命令可以将本网站之外的其他目录'挂载'到当前
+设置别名目录要设置别名目录权限
+
+apache虚拟目录
+<IfModule dir_module>
+	#directory相当于是欢迎页面
+	DirectoryIndex index.html index.htm index.php
+	#你的站点别名 映射
+	Alias /myblog "D:/myblog"
+	#这是访问权限设置
+	<Directory d:/myblog>
+	#先允许所有的ip访问 deny拒绝所有
+	Order allow,deny
+	#允许所有
+	Allow from all
+	</Directory>
+</IfModule>
+注销DocumentRoot路径
+
+虚拟主机
+启用
+# Virtual hosts		
+Include conf/extra/httpd-vhosts.conf
+配置vhosts.conf 
+<VirtualHost 127.0.0.1:80>
+	#域名
+	serverName www.shop.com
+	#网站根目录
+	DocumentRoot "d:/www/shop"
+	#设置目录访问权限
+	<Directory "d:/www/shop">
+		#服务器允许在此目录中使用符号连接
+		Options FollowSymLinks
+		#不允许别人修改我们的页面
+		Allowoverride None
+		#设置顺序
+		Order allow,deny
+		Allow from all
+		#需要权限
+		Require all granted
+		
+		#欢迎页
+		DirectoryIndex index.html index.htm index.php
+	</Directory>
+</VirtualHost>
+修改hosts
+
+压力测试	ab(apache benchmark 基准测试,压力测试)
+ab.exe -c 100(并发) -n 5000(总请求数量) URL
+
+
+URL重写	
+	rewrite_module		开启
+	配置 虚拟 conf
+		Allowoverride All
+
+<Directory>
+	//打开重写引擎
+	RewriteEngine on
+	//如果请求的文件或目录不存在就重写
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RweriteCond %{REQUEST_FILENAME} !-deny
+	//重写的规则是把请求转给index.php
+	RewriteRule . index.php
+</Directory>
+
+在web根目录
+新建 .htaccess 文件  
+文件立写入重写  当有权限时能设置重写
+
+检测apache是否有语法错误

