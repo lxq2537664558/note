@@ -51,8 +51,6 @@ Vue.js 提供了 MVVM 数据绑定和一个可组合的组件系统，具有简�
 	v-bind指令可以缩写为一个冒号，v-on指令可以缩写为@符号。
 
 
-
-
 当两个name一样的表单存在 key属性抹掉数据
 
 v-if
@@ -68,12 +66,23 @@ v-for="(v,k,index) of news"
 v-bin:class="hd"
 :class="{color:false,font:true}"   //判断给
 :class="['color', 'font']"     //直接给类
+:lists.sync="goods" 			//子组件 同步父组件数据
 
 v-on:click
 v-on:keyup.enter  //回车时执行  
+@submit
+@click.self 	  //点自己才触发
+@click.capture    //捕获     冒泡的反方向
+@submit.prevent   //取消提交默认行为
+@click.left 		//鼠标左键
+@contextmenu 		//鼠标右键 
+@click.stop      //阻止冒泡
 
 //绑定数据
 v-model="hd"
+v-model.number    //数值类型
+v-model.trim      //去掉空格
+v-model.lazy      //懒加载   失去焦点
 
 //只绑定一次
 v-once
@@ -85,11 +94,13 @@ v-html
 
 //方法   执行时间
 methods: {
-	
+	sum(){
+		this.$emit('sum')    //子组件呼叫  主组件 绑定方法
+	}
 }
 
 
-//实例   返回数据  计算属性
+//实例   返回数据  计算属性   变量改变时
 computed: {
 	sum(){
 		return 
@@ -101,6 +112,10 @@ watch: {
 	word: function(newV, oldV){
 		app.result
 	}
+}
+//挂载点   页面渲染完执行
+mounted(){
+	
 }
 
 
@@ -118,15 +133,56 @@ watch: {
 	reverse
 
 
-插件
-	axios     //http请求
-		axios.get('php').then(function()response{
+axios     //http请求
+	axios.get('php').then(function()response{
 
-		})
+	})
 
-	lodash    //延时执行
-		_.debounce(function(){}, 1000)
+lodash    //延时执行
+	_.debounce(function(){}, 1000)
 
+
+
+组件
+
+	Vue.component('hdSlie',{
+		template: '123'
+		props: ['hd']     // 获取组件标签属性 给data  
+		props: {
+			list : {
+				required: true  //必须
+				type: false   //指定类型
+				default: false  //默认值
+				validator(v)    //验证函数
+					return true;
+				}
+				default(){
+					return [{'title':'abc'}];
+				}
+			}
+		}
+	}) 			子组件  全局的	
+	new Vue({
+		el: '',
+		components:{
+			hdSlies:{
+				template: '321'
+			}
+		} //局部组件
+	})    根组件
+
+
+<hd-slie>
+	<div :is="">使用的组件</div>
+	<p slot="body">内容分发</p>
+	<template scope="v">{{v}}</template>  //接收slot的属性
+</hd-slie>
+<script type="text/x-template" id="hdSlie">
+	<div>
+		<slot name="body">没有传递内容</slot>
+		<slot name="head">没有传递内容</slot>
+	</div>
+</script>
 
 
 
