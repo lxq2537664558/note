@@ -1,6 +1,5 @@
 概述
 
-
 sql层面
 - 避免使用select *
 - count(1)或count(列) 代替 count(*)

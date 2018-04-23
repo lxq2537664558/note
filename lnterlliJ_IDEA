@@ -1,3 +1,48 @@
+插件
+	IdeaVim
+
+	// 输出时有动画效果
+	Power Mode II
+
+	// 代码地图
+	CodeGlance
+
+	// 背景图
+	Background Image Plus
+
+	// 光标跳转
+	AceJump
+
+	// 快捷键提示
+	Key promoter
+
+	// 单词上一个下一个  改成ctrl + alt + e | + d
+	BrowseWordAtCaret
+
+	// 让编辑器支持 ignore 的高亮与错误提示
+	.ignore
+
+	// 可以书写.sh脚本，且同样可以在书写时有对应的语法提示功能
+	BashSupport
+
+	// ui
+	Material Theme UI
+
+	Dash
+
+	WakaTime
+
+
+	php
+	
+	// 可以在env函数使用是提示.env文件中所有的key值的自动完成功能
+	.env files support
+
+	// 在做php组件开发时，编辑composer.json文件时有对应的属性和值的自动完成功能
+	PHP composer.json support
+
+phpstorm快捷键
+
 ESC   				光标返回编辑框
 SHIFT+ESC  			光标返回编辑框,关闭无用的窗口
 Ctrl + Tab			键切换选项卡和工具窗口
