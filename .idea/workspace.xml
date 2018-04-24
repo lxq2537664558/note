@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1d773dad-6c02-4b14-a65c-4652c98bdd8a" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vim_keys" beforeDir="false" afterPath="$PROJECT_DIR$/Vim_keys" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hosts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sublime" beforeDir="false" afterPath="$PROJECT_DIR$/sublime" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sublime快捷键" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue" beforeDir="false" />
-    </list>
+    <list default="true" id="1d773dad-6c02-4b14-a65c-4652c98bdd8a" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -109,7 +102,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="x" value="20" />
     <option name="y" value="43" />
     <option name="width" value="1400" />
@@ -160,16 +153,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1524534018401</updated>
-      <workItem from="1524534021300" duration="551000" />
+      <workItem from="1524534021300" duration="766000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="551000" />
+    <option name="totallyTimeSpent" value="766000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="20" y="43" width="1400" height="837" extended-state="1" />
-    <editor active="true" />
+    <frame x="20" y="43" width="1400" height="837" extended-state="0" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
