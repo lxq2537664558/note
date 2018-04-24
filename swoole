@@ -1,4 +1,7 @@
-host '0.0.0.0' 监听所有的ip
+swool
+
+
+'0.0.0.0' 监听所有的ip
 
 TCP服务器
 
@@ -40,6 +43,23 @@ onPacket(swoole_server $server, string $data, array $client_info);
 
 
 bool swoole server->sendto(string $ip, int $port, string $data, int $service
+
+
+web服务器
+new swoole_http_server();
+swoole_http_server  集成来自 swoole_server
+	参数1:string $host   监听ip地址
+	参数2:int $port 		监听端口
+on/start函数
+
+$serv = new swoole_http_server('0.0.0.0', 9501);
+//$request   请求信息
+//$response  返回信息 
+$serv->on('request', function($request, $response){
+	$response->header('Content-Type', 'text/html;charset=utf-8');
+	$response->end('hello world');
+});
+$serv->start();
 
 
 web_socket
@@ -118,3 +138,31 @@ $serv->on('finish',function($ser,$task_id,))
 tcp客户端
 //创建tcp客户端
 new swoole_client(SWOOLE_SOCK_TCP)
+
+
+异步tcp客户端
+new swoole_client()
+SWOOLE_SOCK_TCP			//TCP协议
+SWOOLE_SOCK_ASYNC 		//异步支持
+
+//创建异步TCP客户端
+$client = new swoole_client(SWOOLE_SOCK_TCP, SWOOLE_SOCK_ASYNC);
+//注册链接成功的回调
+$client->on('connet', function($cli){
+	$cli->send("hello");
+})
+//注册数据接收
+$client->on('reseive', function($cli, $data){
+	echo $data;
+})
+//注册链接失败
+$client->on('error', function($cli){
+	echo '失败';
+})
+//注册关闭函数
+$client->on('close', function($cli){
+	
+})
+//发起链接
+$client->connet('192.168.50.1', 8080, 10)
+

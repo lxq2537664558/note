@@ -1,3 +1,22 @@
+设置
+	//用户设置
+	
+	"gutter": false,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"line_numbers": false,
+	"margin": 0,
+	
+	//快捷键设置
+
+	//设置快捷键保存所有
+	{ "keys": ["ctrl+shift+s"], "command": "save_all" },
+	//侧边栏显示 
+	{ "keys": ["option+1"], "command": "toggle_side_bar" }
+
+
 常用快捷键
 
 Ctrl+Shift+P 打开命令面板
