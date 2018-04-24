@@ -16,7 +16,7 @@ syntax on
 "增量式搜索 
 set incsearch 
 "高亮搜索 
-set hlsearch 
+set hlsearch
 "有时中文会显示乱码，用一下几条命令解决 
 let &termencoding=&encoding 
 set fileencodings=utf-8,gbk 

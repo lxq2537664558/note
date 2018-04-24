@@ -1,6 +1,9 @@
 /webpack-dev-server.js
 
 
+安装node
+
+安装npm
 
 安装cnpm
 	npm install -g cnpm --registry=https://registry.npm.taobao.org
@@ -13,6 +16,15 @@ npm install --no-optional
 npm install live-server
 live-server  直接启动本地的一个服务器
 npm init 项目初始化
+
+
+
+// 初始化vue 工程
+vue init webpack appname
+
+// 运行开发者模式
+npm run dev
+
 
 
 安装vue环境
@@ -47,8 +59,25 @@ Vue.js 提供了 MVVM 数据绑定和一个可组合的组件系统，具有简�
 	v-on
 		和v-bind 类似  绑定方法  <a v-on:click="doSomething">
 	v-model
+		绑定数据
 
 	v-bind指令可以缩写为一个冒号，v-on指令可以缩写为@符号。
+
+
+	定义指令
+		bind 
+		绑定的时候
+		inserted
+		新增的时候
+		update
+		更新的时候
+
+		//绑定和更新都有的时候使用一个匿名函数就可以了
+		Vue. directive('stat', {
+			bind(el, bind){
+				console.log(bind);
+			}
+		})
 
 
 当两个name一样的表单存在 key属性抹掉数据
@@ -68,6 +97,8 @@ v-bin:class="hd"
 :class="['color', 'font']"     //直接给类
 :lists.sync="goods" 			//子组件 同步父组件数据
 
+:css 								//禁止css
+
 v-on:click
 v-on:keyup.enter  //回车时执行  
 @submit
@@ -78,6 +109,11 @@ v-on:keyup.enter  //回车时执行
 @contextmenu 		//鼠标右键 
 @click.stop      //阻止冒泡
 
+//velocity.org    动画js类库 
+@beforeEnter 	//动画  进来的之前    第一个参数 元素
+@enter 			//进来  第一个参数 元素   第二个回调  
+@leave  		//出去 
+
 //绑定数据
 v-model="hd"
 v-model.number    //数值类型
@@ -87,10 +123,21 @@ v-model.lazy      //懒加载   失去焦点
 //只绑定一次
 v-once
 
-
 //引入数据
 v-text
 v-html
+
+animate.css   //过度动画类库
+//过度动画   配合taransition   样式类名
+	hd-enter 				//开始
+		hd-enter-active		//过程
+			hd-enter-to     //结束
+
+	hd-leave
+		hd-leave-active
+			hd-leave-to
+
+
 
 //方法   执行时间
 methods: {
@@ -168,7 +215,13 @@ lodash    //延时执行
 			hdSlies:{
 				template: '321'
 			}
-		} //局部组件
+		}, //局部组件
+		//绑定命令    
+		directive: {
+			stat:{
+				bind(el,bid){}
+			}
+		}
 	})    根组件
 
 
@@ -176,6 +229,13 @@ lodash    //延时执行
 	<div :is="">使用的组件</div>
 	<p slot="body">内容分发</p>
 	<template scope="v">{{v}}</template>  //接收slot的属性
+
+	<transition name=hd>
+		<h1 v-if="type">过度动画显示</h1>
+	</transition>
+	<transition enter-active-class="">
+		<h1 v-if="type">css过度动画显示</h1>
+	</transition>
 </hd-slie>
 <script type="text/x-template" id="hdSlie">
 	<div>
@@ -238,3 +298,7 @@ lodash    //延时执行
         })
     </script>
 </html>
+
+
+
+//路由   router
