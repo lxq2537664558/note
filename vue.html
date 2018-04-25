@@ -1,5 +1,8 @@
 /webpack-dev-server.js
 
+const   常量
+
+
 
 安装node
 
@@ -229,6 +232,54 @@ lodash    //延时执行
 	})    根组件
 
 
+
+
+//路由   router
+	const php = {
+		template: '<h1>123</h1>'
+	}
+	let route = new VueRoute({
+		routes: [
+			{path: '/phpedit/:id(a\\d{2})?', compnent: php, name: phpe}
+
+			// 多组件
+			{path: '/', components: {
+				default: menu,
+				news:news
+			}}
+
+			{path: '/php/', compnent: php, children:[
+				//子路由
+			]}
+
+			//重定向
+			{path: '/about', redirect: {name: 'content', params: {id: 3}}}
+
+			//别名
+			{path: '/conent/2', alias: ['/about']}
+
+			//其他的路由  如404
+			{path: '*', compnent: NotFound}
+		]
+	})
+
+
+	this.$route.params    //参数
+	this.$router.push('')  //跳转到
+	this.$router.replace('')  //没有历史记录  直接替换url
+	this.$router.go(-1)  //
+	
+//路由监听
+watch: {
+	'$route'(to, from){
+
+	}
+}
+
+
+路由切换就是控制组件显示隐藏   可以使用动画
+
+
 <hd-slie>
 	<div :is="">使用的组件</div>
 	<p slot="body">内容分发</p>
@@ -240,6 +291,12 @@ lodash    //延时执行
 	<transition enter-active-class="">
 		<h1 v-if="type">css过度动画显示</h1>
 	</transition>
+
+	<router-link to="/php">1</router-link>
+	<router-link to="{name:'phpe', params{id:v.id}}">1</router-link>
+	<router-view name="news" class="news">
+		{{$route.params.id}}  接收参数
+	<router-view>
 </hd-slie>
 <script type="text/x-template" id="hdSlie">
 	<div>
@@ -298,11 +355,23 @@ lodash    //延时执行
             },
 			components: {
 				//局部注册
-			}
+			},
+			router: route
         })
     </script>
 </html>
 
 
 
-//路由   router
+单页面去掉#
+	apache
+		.htaccess
+			RewiteEngine On
+			RewriteCond ${REQUEST_FILENAME} !-d
+			RewriteCond ${REQUEST_FILENAME} !-f
+			RewiteRule ^ index.html [L]
+
+		new VueRouter({
+			mode: 'history'
+		})	
+
