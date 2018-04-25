@@ -483,7 +483,7 @@ BOM对象
 			arr.map(fun);
 
 			reduce  //适用于 求数组合计的操作
-			function fun(x,y){  //最少要有两个参数
+			function fun(count, value, index, array){  //最少要有两个参数
 				return x + y;
 			}
 			reduce(fun)
