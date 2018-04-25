@@ -15,6 +15,7 @@
 	{ "keys": ["ctrl+shift+s"], "command": "save_all" },
 	//侧边栏显示 
 	{ "keys": ["option+1"], "command": "toggle_side_bar" }
+	{ "keys": ["alt+1"], "command": "toggle_side_bar" }
 
 
 常用快捷键

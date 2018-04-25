@@ -33,6 +33,45 @@ hugo=f7aa37fcd991195620ee7066a104f566
 
 
 
+
+转盘
+Turntable
+
+抽奖配置
+LotteryConfig
+
+
+/home/lotteryConfig/list
+
+
+
+zp_lottery_config
+
+
+ny_lottery
+
+
+CREATE TABLE `zp_lottery_config` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '抽奖配置id',
+  `limit` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '额度',
+  `number` int(10) unsigned DEFAULT NULL COMMENT '抽奖次数',
+  `one` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '一等奖中奖概率',
+  `two` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '二等奖中奖概率',
+  `three` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '三等奖中奖概率',
+  `four` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '四等奖中奖概率',
+  `five` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '五等奖中奖概率',
+  `six` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '六等奖中奖概率',
+  `seven` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '七等奖中奖概率',
+  `eight` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '八等奖中奖概率',
+  `nine` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '九等奖中奖概率',
+  `ten` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '十等奖中奖概率',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='转盘抽奖配置表'
+
+
+
+
+
 twig
 
 yaml
@@ -61,6 +100,8 @@ create table member(
 create table member(
     id int unsigned not null auto_increment,
     username varchar(32) not null default '' comment '用户名',
+    password varchar(32) not null default '' comment '密码',
+ 
     level_id int unsigned not null default '' comment '层级id',
     sc_id int unsigned not null default '' comment '股东id',
     app_id varchar(32) not null default '' comment '设备id', 
@@ -299,64 +340,8 @@ nodejs
 程序员的数学
 2018年4月21日20:47:31
 
-百度网盘 3个qq  和2个手机
-
-做一个在线工具的网站   无限优先
-
-
-搭建服务器
-
-支付模板 代码生成
-
-每天学半小时
-
-C程序设计语言、
-
-大话 PHP 设计模式
-
-php设计模式
-
-
-
-
-请发送PW#旧密码#新密码#确认新密码#到10086
-
 request
 response
-
-
-shell 编程
-
-
-C语言数据结构和算法、
-TCP/IP网络通信详解。
-
-深入理解计算机系统、
-编译原理
-现代操作系统、操作系统原理
-
-
-Unix环境高级编程、
-unix编程艺术
-
-
-Java面向对象编程
-Java编程思想
-J2EE这些书
-
-
-
-深入理解计算机系统
-现代操作系统
-C程序设计语言
-C语言数据结构和算法
-Unix环境高级编程
-
-计算机组成原理
-
-Promise、Future、Yield/Generator、Async/Awai
-
-
 
 新编中学解题方法1000招丛书——数列
 高考数学你真的掌握了么 数列
@@ -368,11 +353,31 @@ Promise、Future、Yield/Generator、Async/Awai
 概率统计
 2017年11月28日00:17:15
 
+编译原理
+2017年11月28日00:46:45
 
+现代操作系统 操作系统原理
+2017年11月28日00:47:15
+
+计算机组成原理
+2017年11月28日00:47:32
+
+操作系统原理
+2017年11月28日00:49:42
 
 JavaScript忍者秘籍
 2017年11月8日15:45:19
 
+封装自己的curl  方便调试
+2017年7月12日15:54:46
+
+
+做一个在线工具的网站   无限优先
+2017年6月22日11:10:48
+
+
+shell 编程
+2017年6月24日17:18:23
 
 Elasticsearch
 2017年6月23日09:17:06
@@ -417,6 +422,9 @@ http 就用简单的PHP，tcp udp websocket用swoole,后台任务运算交给pyt
 2017年7月7日14:09:38
 
 
+segmentfault.com  35
+
+
 
 python
 go
@@ -429,6 +437,9 @@ rxjs
 redux-observable
 ts
 
+tp3.2 开发商城
+
+二次开发
 
 正则
 
@@ -441,9 +452,18 @@ ts
 
 	算法结构
 
+	php7特性  麦子学院
+
+	Shell
+
+	依赖注入
+
+
 
 
 trigger_error();
+
+linux 上使用 ftp
 
 in_array_case
 
@@ -453,7 +473,18 @@ ArrayAccess 接口
 
 注册公司
 
+
+markdown  一个表格 显示多行
+
+::1 代表本地地址吗
+
+nginx 设置脚本执行最大值时间
+
+
 时间流 事件流  图形
+
+
+查看表的外键关系
 
 
 
@@ -493,8 +524,148 @@ s.Run(cmd);
 </script>
 
 
+disabled	  	bootstrap表单内容不可修改
+badge			  徽章
+glyphicon		图标
+
+console 		控制台
+log				  输出
+variant			变量
+prompt 			提示
+
+protected		保护
+extends			继承
+method			方法
+mt_rand()		比rand()快4倍  获取随机数
+trim()			去除收尾空白字符 或 其它字符
+explode()		将字符串分隔为数组
+implode()		将数组分隔为字符串
+preg_split()  	正则分隔一个字符串为数组
+child			子级
+
+field
+exists			存在
+tinyint			1个字节的数值类型
+mediumint 		3个字节的数值类型
+unsigned 		无符号
+auto_increment	自增长
+primary key 	主键约束
+engine			引擎
+modify			修改
+decimail		比较精确的小数类型
+rr
+route			路线
+blade			刀片 叶片
+with
+			将
+compact			紧凑
+artisan			工匠
+
+ActiveRecord	AR类
+layout			布局
+attributeLabels	字段映射
+attribute 		属性
+validate		验证
+integer			整型
+rules			规则
+required		必须
+unique			唯一
+scenario		场景
+compare			比较
+Pagination		分页
+before			前
+after			后
+filter			过滤
+label 			标签
+
+Active 			有效的
+micro			微
+prefix			前缀
+profile			人物介绍
+birthday		生日
+nickname		昵称
+company			公司
+product 		产品
+position		位置 定位 姿态
+article			文章
+
+message			信息
+annotation		注释
+exrp 			表达式
+encoding		编码
+format			格式
+
+memo			备忘录
+project			项目
+development		开发
+manual			手册
+practice		实践
+dependencies	依赖性
+directory		目录
+helper			帮助
+base 			基础
+strengthen   	强化
+advanced		高级
+plugin			插件
+Recommend 		推荐
 
 
+
+
+
+
+牙
+电动牙刷
+手表  黑  皮
+
+
+背包
+
+
+
+
+洁面
+    NOESA洗面奶
+    资生堂盼丽风姿洁面膏
+    旁氏米粹
+    清妃柔白洗面奶
+    Estee Lauder红石榴洁面
+
+
+身体乳
+    Alpha Hydrox12% AH果酸
+    郁美净
+    凡士林粉嫩透白润体乳（粉色款）
+    玉兰油7重功效润肤乳
+
+磨砂膏
+    oh！baby
+
+防嗮
+    Elta MD UV Shield SPF45无油防晒乳 夏季，日常使用
+    SHISEIDO ANESSA资生堂安耐晒金瓶超强防水防晒霜SPF50 PA++++  防水抗汗的防晒霜一定要摇匀后使用
+    嘉娜宝ALLIE极致防水药用防晒霜 防水抗汗，媲美安耐晒金瓶  涂改液剂型，摇匀后使用
+    碧柔清爽防晒乳液SPF50 PA+++
+    碧柔水活防晒保湿凝蜜SPF30+PA+++
+    Cetaphil/丝塔芙控油保湿防晒乳SPF30
+    美加净细嫩柔白防晒乳SPF30
+
+美白
+    Olay旗舰 玉兰油Pro-X纯白方精华液  适合夏季，日常使用
+    Elings Orange 20% Vitamin C L-Ascorbic Acid Serum   秋冬使用
+    THE BODY SHOP美体小铺VC 28天美白精华胶囊  VC胶囊，每次一到两粒，配合PHA精华，价格便宜啊，不错的东西
+    高丝雪肌精（泡纸膜）
+    Olay美白淡斑精华（美版小白瓶）
+    利维肤美白淡斑日霜
+
+润唇膏
+    Blistex Lip Medex 即时修复润唇膏
+
+日立N3000美容仪
+
+芦荟胶 睡前
+
+php设计模式
 溜课
 四脚猫
 laravist  lara优先
@@ -545,6 +716,11 @@ PHP技术内幕
 深入PHP
 开发高质量PHP框架与应用的实际案例解析
 
+深入理解计算机系统
+现代操作系统
+C程序设计语言
+C语言数据结构和算法
+Unix环境高级编程
 
 
 
@@ -553,7 +729,16 @@ Node 学习指南
 深入浅出 Node.js
 
 
+
+unix高级环境编程
+unix编程艺术
+
 掌握python, shell,
+
+建议看
+Java面向对象编程、
+Java编程思想、
+J2EE这些书
 
 
 
@@ -584,3 +769,50 @@ barrels stop here   问题如果到我这，那就是问题的终点
 
 真正的幸福在于明白生活不是由一串成就组成的. 你的资质和简历,那些都不是生活.  生活是艰难的, 复杂的, 不受任何人控制的. 知道这一点会让你度过人生的跌宕起伏.   J·K·罗琳
 
+
+
+
+
+
+
+
+前端       HTML/XHTML, div+CSS, bootstrap, Javascript, Ajax, jQuery
+框架/开源系统 thinkphp, yii2, lavavel | Discuz, DedeCMS, PHPCMS
+SQL        MySQL, Memcache, Redis, Mongodb
+web服务器  Apache, Nginx, LVS
+操作系统   CentOS, Ubuntu(日常使用)
+工具       Git, SVN, Postman, Firebug, Xdebug, PhpStorm, Flash, Ps
+其它       数据库优化, PHP缓存技术, 微信开发
+
+
+熟悉微信开发。
+熟悉ThinkPHP 、CI、yii框架，Smarty模板引擎进行项目开发，app接口编写，API对接。
+熟练使用javascript、jQuery,编写动态效果。
+熟悉phpcms,dedecms建站以及二次开发。
+熟悉OneThink的网站建设。
+
+
+yii2 商城qq登录  开始  前台登录完成
+
+yii2-blog 登录设置
+
+nginx rewrite  设置
+
+'<controller:\w+>/<id:\d+>' => '<controller>/datail',
+'posts' => 'post/index'
+
+'<controller:(post|comment)>s' => '<controller>/index',
+'<controller:\w+>/<id:\d+>' => '<controller>/wiew',
+'<controller:\w+>/<id:\d+>/<action:(create|update|delete)>' => '<controller>/<action>'
+
+
+HtmlPurifier
+
+<?= Breadcrumbs::widget([
+    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+]) ?>
+<?= Alert::widget() ?>
+
+
+
+ssh root@123.206.55.98
