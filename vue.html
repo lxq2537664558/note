@@ -14,11 +14,16 @@ const   常量
 安装vue-cli
 	cnpm install -g vue-cli
 
+
 npm install --no-optional
 
 npm install live-server
 live-server  直接启动本地的一个服务器
 npm init 项目初始化
+
+//安装插件到项目
+npm install less --save-dev
+
 
 
 /webpack-dev-server.js
@@ -295,11 +300,28 @@ watch: {
 verx
 	store
 
+
+const caetModule = {
+	// 命名空间
+	namespaced: true
+
+	this.$store.getters['cart/goods']
+	this.$store.dispatch('cart/loadGoods')
+}
+
 let store = new Vuex.Store({
+	//定义模块
+	modules: {
+		cart: cartModule
+	}
+	this.$store.state.cart.goods
+
 	// 数据
 	state: {
 		number: 1
 	},
+
+	属性 获取
 	// 获取仓库
 	getters: {
 		total:state=>{
@@ -307,15 +329,31 @@ let store = new Vuex.Store({
 			return number
 		}
 	},
+
+	属性获取
 	// 修改仓库
 	mutaions: {
 		del(state, param){
 			
+		},
+		setData(state, param){
+			state.goods = param
 		}
 	}
+
+	this.$store.commit('del', {id: id})
+
+	// 抓取数据  发异步
+	actions: {
+		loadGoods(store){
+			//异步
+			store.commit('setData',{goods:response.data})
+		}	
+	}
+
+	this.$store.dispatch('loadGoods')
 })
 
-this.$store.commit('del', {id: id})
 
 <hd-slie>
 	<div :is="">使用的组件</div>
@@ -412,3 +450,9 @@ this.$store.commit('del', {id: id})
 			mode: 'history'
 		})	
 
+
+
+
+<style lang="less" scoped="">
+	scoped 作用域
+</style>
