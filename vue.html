@@ -285,6 +285,31 @@ watch: {
 路由切换就是控制组件显示隐藏   可以使用动画
 
 
+verx
+	store
+
+let store = new Vuex.Store({
+	// 数据
+	state: {
+		number: 1
+	},
+	// 获取仓库
+	getters: {
+		total:state=>{
+			let number = state.number;
+			return number
+		}
+	},
+	// 修改仓库
+	mutaions: {
+		del(state, param){
+			
+		}
+	}
+})
+
+this.$store.commit('del', {id: id})
+
 <hd-slie>
 	<div :is="">使用的组件</div>
 	<p slot="body">内容分发</p>
