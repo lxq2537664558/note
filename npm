@@ -1,0 +1,95 @@
+lockr.js  本地存储localstorage
+	// 前缀  设置一个字符串用于标记相关的值  
+	Lockr.prefix - String
+		Lockr.prefix = 'lockr';
+		Lockr.set('username', 'Coyote'); 
+		localStorage.getItem('username');
+		> null
+		localStorage.getItem('lockr_username');
+		> 'Coyote'
+
+	// 设置  给本地储存写入值
+	Lockr.set - : [ key, value ] {String, Number, Array or Object}
+		Lockr.set('username', 'Coyote'); // String
+		Lockr.set('user_id', 12345); // number
+		Lockr.set('users', [{name: 'John Doe', age: 18}, {name: 'Jane Doe', age: 19}]);
+
+		Lockr.get('username');
+		> "Coyote"
+
+		Lockr.get('user_id');
+		> 12345
+
+		Lockr.get('users');
+		>  [{name: 'John Doe', age: 18}, {name: 'Jane Doe', age: 19}]
+
+	// 获取  读取本地储存的值，如果获取到的数值为null/undefined  则返回设置的默认值
+ 	Lockr.get - : [ key  /  hash_key ， 默认值 ]
+		Lockr.get('score', 0):
+		> 0
+		//不存在返回设置的默认值0
+		Lockr.set('score', 3):
+		Lockr.get('score', 0):
+		> 3
+
+		Lockr.set('username', 'Coyote');
+		Lockr.get('username');
+		> "Coyote"
+		Lockr.rm('username');
+		Lockr.get('username');
+		> undefined
+
+	// 获取所有数据
+	Lockr.getAll - arguments: null
+		// 二维数组
+		Lockr.getAll();
+		> ["Coyote", 12345, [{name: 'John Doe', age: 18}, {name: 'Jane Doe', age: 19}]]
+
+		// json
+		Lockr.getAll(true);
+		> [{"username": "Coyote"}, {"user_id": 12345}, {"users": [{name: 'John Doe', age: 18}, {name: 'Jane Doe', age: 19}]}]
+
+	// 删除  从本地储存中移除相关数据
+	Lockr.rm - arguments: [ key ] {String}
+		Lockr.set('username', 'Coyote');
+		Lockr.get('username');
+		> "Coyote"
+		
+		Lockr.rm('username');
+		Lockr.get('username');
+		> undefined
+
+	// 清空本地储存所有数据
+	Lockr.flush() - arguments: null
+		localStorage.length;
+		> 3
+		
+		Lockr.flush();
+		localStorage.length;
+		> 0
+
+	
+	// 给hash key添加指定值（持续添加类似push 但具备set 自动过滤重复）
+	Lockr.sadd - arguments [ key, value ]{String, Number, Array or Object}
+		Lockr.sadd("wat", 1); // [1]
+		Lockr.sadd("wat", 2); // [1, 2]
+		Lockr.sadd("wat", 1); // [1, 2]
+
+	// 判断某hash key 是否包含某个值  返回Boolean true false
+	Lockr.sismember - arguments [ key, value ]
+		Lockr.sadd("wat", 1);
+		Lockr.sismember("wat", 1); // true
+		Lockr.sismember("wat", 2); // false	
+
+	// 返回hash key下的值
+	Lockr.smembers - arguments [ key ]
+		Lockr.sadd("wat", 42);
+		Lockr.sadd("wat", 1337);
+		Lockr.smembers("wat"); // [42, 1337]	
+
+	// 移除hash key下的指定数值
+	Lockr.srem - arguments [ key, value ]
+		Lockr.sadd("wat", 1);
+		Lockr.sadd("wat", 2);
+		Lockr.srem("wat", 1);
+		Lockr.smembers("wat"); // [2]	

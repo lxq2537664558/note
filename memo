@@ -41,6 +41,46 @@ Turntable
 LotteryConfig
 
 
+抽奖时间管理
+LotteryTime
+
+奖品管理
+prize
+
+会员
+member
+
+中奖管理
+Winning
+
+自定义中奖
+custWinning
+
+
+global_config
+
+create table global_config(
+    id int unsigned not null auto_increment,
+
+    config_name varchar(32) not null default '' comment '参数名',
+    config_type tinyint unsigned not null default 0 comment '数据类型 0 字符串 1 数值 2 对象',
+    config_value text  comment '参数值',
+
+    agent_id int unsigned not null default 0 comment '服务商id',
+
+    state TINYINT not null default 0 comment '状态 0关闭 1开启',
+    order_id int not null default 0 comment '排序',
+    create_time int unsigned not null default 0,
+    update_time int unsigned null default 0,
+
+    key config_name (config_name),
+    key agent_id (agent_id),
+    key order_id (order_id),
+    PRIMARY key (id)
+)ENGINE=INNODB  DEFAULT CHARSET=utf8 comment='全局配置'
+
+
+
 /home/lotteryConfig/list
 
 
@@ -48,7 +88,6 @@ LotteryConfig
 zp_lottery_config
 
 
-ny_lottery
 
 
 CREATE TABLE `zp_lottery_config` (
@@ -65,9 +104,17 @@ CREATE TABLE `zp_lottery_config` (
   `eight` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '八等奖中奖概率',
   `nine` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '九等奖中奖概率',
   `ten` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '十等奖中奖概率',
+
+  agent_id int unsigned not null default 0 comment '服务商id',
+
+  key agent_id (agent_id),  
+  
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='转盘抽奖配置表'
 
+INSERT INTO `ny_lottery` (`id`, `limit`, `number`, `one`, `two`, `three`, `four`, `five`, `six`, `seven`, `eight`, `nine`, `ten`) VALUES (11, 3000, 1, 0, 50, 0, 5, 40, 0, 2, 0, 3, 0);
+INSERT INTO `ny_lottery` (`id`, `limit`, `number`, `one`, `two`, `three`, `four`, `five`, `six`, `seven`, `eight`, `nine`, `ten`) VALUES (12, 30000, 2, 0, 55, 0, 5, 35, 0, 2, 0, 3, 0);
+INSERT INTO `ny_lottery` (`id`, `limit`, `number`, `one`, `two`, `three`, `four`, `five`, `six`, `seven`, `eight`, `nine`, `ten`) VALUES (13, 100000, 3, 0, 50, 0, 10, 30, 0, 4, 0, 6, 0);
 
 
 
@@ -815,4 +862,31 @@ HtmlPurifier
 
 
 
-ssh root@123.206.55.98
+
+
+
+前端书
+
+HTML、CSS 类别书籍，都是大同小异，在当当网、卓越网搜索一下很多推荐。如果感觉学的差不多了，可以关注一下《CSS禅意花园》，这个很有影响力。
+
+　　Javascript 的书籍 推荐看老外写的，国内很多 Javascript 书籍的作者对 Javascript 语言了解的都不是很透彻。
+
+　　这里推荐几本 Javascript 书籍：
+
+　　初级读物：
+　　《JavaScript高级程序设计》：一本非常完整的经典入门书籍，被誉为JavaScript圣经之一，详解的非常详细，最新版第三版已经发布了，建议购买。
+　　《JavaScript王者归来》百度的一个Web开发项目经理写的，作为初学者准备的入门级教程也不错。
+
+　　中级读物：
+　　《JavaScript权威指南》：另外一本JavaScript圣经，讲解的也非常详细，属于中级读物，建议购买。
+　　《JavaScript.The.Good.Parts》：Yahoo大牛，JavaScript精神领袖Douglas Crockford的大作，虽然才100多页，但是字字珠玑啊！强烈建议阅读。
+　　《高性能JavaScript》：《JavaScript高级程序设计》作者Nicholas C. Zakas的又一大作。
+　　《Eloquent JavaScript》：这本书才200多页，非常短小，通过几个非常经典的例子（艾米丽姨妈的猫、悲惨的隐士、模拟生态圈、推箱子游戏等等）来介绍JavaScript方方面面的知识和应用方法。
+
+　　高级读物：
+　　《JavaScript Patterns 》：书中介绍到了各种经典的模式，如构造函数、单例、工厂等等，值得学习。
+　　《Pro.JavaScript.Design.Patterns》：Apress出版社讲解JavaScript设计模式的书，非常不错。
+　　《Developing JavaScript Web Applications》：构建富应用的好书，针对MVC模式有较为深入的讲解，同时也对一些流程的库进行了讲解。
+　　《Developing Large Web Applications》：不仅有JavaScript方面的介绍，还有CSS、HTML方面的介绍，但是介绍的内容却都非常不错，真正考虑到了一个大型的Web程序下，如何进行JavaScript架构设计，值得一读。
+
+　　要做优秀的前端工程师，还需要继续努力：《高性能网站建设指南》、《Yahoo工程师的网站性能优化的建议》、“YSLOW”性能优化建议、《网站重构》、《Web开发敏捷之道》、“ jQuery 库”、“前端框架”、“HTML5”、“CSS3”。。。 这些都要深入研究！
