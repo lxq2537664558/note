@@ -1,3 +1,10 @@
+PHP合并数组+与array_merge
+1）键名为数字时，array_merge()不会覆盖掉原来的值，但＋合并数组则会把最先出现的值作为最终结果返回，而把后面的数组拥有相同键名的那些值“抛弃”掉（不是覆盖） 
+
+2）键名为字符时，＋仍然把最先出现的值作为最终结果返回，而把后面的数组拥有相同键名的那些值“抛弃”掉，但array_merge()此时会覆盖掉前面相同键名的值 
+
+
+
 get_object_vars
 
 file_get_contents();
@@ -314,8 +321,6 @@ array_pop($arr)				删除最后一个元素  并返回
 range(1,9[,步幅])			按照ASCII码能够指定范围,自动生成数组元素的函数
 range(10,1,-1)				创建10到1的数组
 array_rand($arr,4)			从数组中随机取出指定个数的元素下标
-数组合并:+和array_merge()
-$a+$b						$a和$b联合.数组$b将被附加到$a中,但是任何关联字冲突的元素将不会被添加
 
 
 array_key_exists($key,$search)	检查给定的键名或索引是否存在于数组中		$key 要检查的键 $search 一个数组,包含带检查的键
@@ -864,7 +869,7 @@ session_set_cookie_params($lifetime);
 			session.use_trans_sid = 1		//将SID透明 sessionID放到a标签后面
 		自定义session机制
 			session_set_save_handler(开启session机制函数,关闭session机制函数,读取session数据函数,写入session函数,销毁session函数,回收过期session函数)
-
+			
 	cookie  技术指的是将数据保存在浏览器上,也可以在不同的脚本之间共享浏览器上的cookie数据
 		setcookie(name,value,[expire],[path],[domain],[secure])	将服务器端的数据保存到浏览器端
 			name		名称

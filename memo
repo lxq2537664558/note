@@ -66,6 +66,10 @@ create table global_config(
     config_type tinyint unsigned not null default 0 comment '数据类型 0 字符串 1 数值 2 对象',
     config_value text  comment '参数值',
 
+    desc text comment '描述',
+    need_auth tinyint unsigned null not default 0 comment '验证登录  0 不验证 1 验证',
+
+
     agent_id int unsigned not null default 0 comment '服务商id',
 
     state TINYINT not null default 0 comment '状态 0关闭 1开启',
@@ -151,6 +155,7 @@ create table member(
  
     level_id int unsigned not null default '' comment '层级id',
     sc_id int unsigned not null default '' comment '股东id',
+
     app_id varchar(32) not null default '' comment '设备id', 
     
     clock_in_score int unsigned not null default 0 comment '签到积分',
@@ -185,6 +190,31 @@ create table clock_in_log(
 )ENGINE=INNODB  DEFAULT CHARSET=utf8
 
 
+积分记录表
+    id
+    uid
+    时间
+    积分状态  122  
+    type 1 2
+    desc
+
+
+兑换奖品表
+    id
+    积分
+    奖品
+    状态
+    排序
+
+
+彩金兑换记录表
+    用户id
+    兑换奖品id
+    申请时积分
+    兑换时间
+    状态    申请中
+    审核人 
+
 // 推荐人关系表 recommender
 create table recommender(
     id int unsigned not null auto_increment,
@@ -200,7 +230,47 @@ create table recommender(
 )ENGINE=INNODB  DEFAULT CHARSET=utf8
 
 
+vip_level
+    id
+    name
+    限额
+
+    送的
+
+
+反馈
+Feedback
+    id
+    uid
+    phone
+    text
+    imgs uuu,jjjhh,ggfff
+    type 0 建议
+
+
+
+
+返水表 记录表
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     sc_name int not null default '' comment '股东名',
+
+
+
+
 
 
 create table vc_rqcode(

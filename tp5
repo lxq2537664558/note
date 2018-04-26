@@ -1,73 +1,8 @@
-tp5
-├─application 应用目录
-├─extend 扩展类库目录（可定义）
-├─public 网站对外访问目录
-├─runtime 运行时目录（可定义）
-├─vendor 第三方类库目录（Composer）
-├─thinkphp 框架核心目录
-│ ├─lang 语言包目录
-│ ├─library 框架核心类库目录
-│ │ ├─think think 类库包目录
-│ │ └─traits 系统 traits 目录
-│ ├─tpl 系统模板目录
-│ │
-│ ├─.htaccess 用于 apache 的重写
-│ ├─.travis.yml CI 定义文件
-│ ├─base.php 框架基础文件
-│ ├─composer.json composer 定义文件
-│ ├─console.php 控制台入口文件
-│ ├─convention.php 惯例配置文件
-│ ├─helper.php 助手函数文件（可选）
-│ ├─LICENSE.txt 授权说明文件
-│ ├─phpunit.xml 单元测试配置文件
-│ ├─README.md README 文件
-│ └─start.php 框架引导文件
-├─build.php 自动生成定义文件（参考）
-├─composer.json Composer定义文件
-├─LICENSE.txt 授权说明文件
-├─README.md README 文件
-├─think 命令行工具入口
 
 
-tp5 项目根目录 				ROOT_PATH
-tp5/application 应用目录 	APP_PATH
-tp5/thinkphp 框架核心目录 	THINK_PATH
-tp5/exend 应用扩展目录 		EXTEND_PATH
-tp5/vendor Composer扩展目录 VENDOR_PATH
-
-
-
-
-数据库入口类 db
-	所有的数据库操作都是经过Db类调用，并且Db类是一个静态类，但Db类自身只有一个公共方法connect
-
-
-连接器类 Connection
-	数据库连接都是惰性的，只有最终执行SQL的时候才会进行连接。
-
-
-查询器类 Query
-	所有的数据库查询都使用了 PDO的预处理和参数绑定机制。你所看到的大部分数据库方法都来自于查询类而并非 Db类，这一点很关键，也就是说虽然我们始终使用 Db类操作数据库，而实际上大部分方法都是由查询器类提供的方法
-
-
-生成器类 Builder
-	生成类一般不需要自己调用，而是由查询类自动调用的。也可以这么理解，生成类和查询类是一体的，事实上它们合起来就是通常我们所说的查询构造器（因为实际的查询操作还是在连接器中执行的）
-
-
-数据库配置
-	数据库配置文件中配置的是默认的数据库连接配置，如果你有多个数据库连接，额外的数据库连接是在应用配置文件中完成的（参考后面的动态数据库连接）
-
-	自定义连接类的时候，请注意设置数据库配置中的  builder参数避免找不到对应生成器类
-
-
-
-plgroups
-	playedId
-PlayedPlGroup
-	pl_group_id
-PlayedPl
-
-
+结构集转为数组
+$user = USERR::where('id',1)->select();
+$user = collection($user)->toarray();
 
 
 打印最后的sql
@@ -573,7 +508,7 @@ curd操作
 		//响应头信息
 		return json($data, 201, ['Cache-control' => 'no-cache,must-revalidate']);
 
-		return json($data)->code(201)->header(['Cache-control' => 'no-cache,must-revalidate']);
+		return json($data)->code(201)->header(['cache-control' => 'no-cache,must-revalidate']);
 
 		渲染模板输出 	view
 		JSON输出 		json
@@ -1481,6 +1416,70 @@ Env系统环境变量
 	Env::get('database.username','root'); 	// 获取环境变量 如果不存在则使用默认值root
 	助手函数
 		env('database.username','root')
+
+
+
+tp5
+├─application 应用目录
+├─extend 扩展类库目录（可定义）
+├─public 网站对外访问目录
+├─runtime 运行时目录（可定义）
+├─vendor 第三方类库目录（Composer）
+├─thinkphp 框架核心目录
+│ ├─lang 语言包目录
+│ ├─library 框架核心类库目录
+│ │ ├─think think 类库包目录
+│ │ └─traits 系统 traits 目录
+│ ├─tpl 系统模板目录
+│ │
+│ ├─.htaccess 用于 apache 的重写
+│ ├─.travis.yml CI 定义文件
+│ ├─base.php 框架基础文件
+│ ├─composer.json composer 定义文件
+│ ├─console.php 控制台入口文件
+│ ├─convention.php 惯例配置文件
+│ ├─helper.php 助手函数文件（可选）
+│ ├─LICENSE.txt 授权说明文件
+│ ├─phpunit.xml 单元测试配置文件
+│ ├─README.md README 文件
+│ └─start.php 框架引导文件
+├─build.php 自动生成定义文件（参考）
+├─composer.json Composer定义文件
+├─LICENSE.txt 授权说明文件
+├─README.md README 文件
+├─think 命令行工具入口
+
+
+tp5 项目根目录 				ROOT_PATH
+tp5/application 应用目录 	APP_PATH
+tp5/thinkphp 框架核心目录 	THINK_PATH
+tp5/exend 应用扩展目录 		EXTEND_PATH
+tp5/vendor Composer扩展目录 VENDOR_PATH
+
+
+
+数据库入口类 db
+	所有的数据库操作都是经过Db类调用，并且Db类是一个静态类，但Db类自身只有一个公共方法connect
+
+
+连接器类 Connection
+	数据库连接都是惰性的，只有最终执行SQL的时候才会进行连接。
+
+
+查询器类 Query
+	所有的数据库查询都使用了 PDO的预处理和参数绑定机制。你所看到的大部分数据库方法都来自于查询类而并非 Db类，这一点很关键，也就是说虽然我们始终使用 Db类操作数据库，而实际上大部分方法都是由查询器类提供的方法
+
+
+生成器类 Builder
+	生成类一般不需要自己调用，而是由查询类自动调用的。也可以这么理解，生成类和查询类是一体的，事实上它们合起来就是通常我们所说的查询构造器（因为实际的查询操作还是在连接器中执行的）
+
+
+数据库配置
+	数据库配置文件中配置的是默认的数据库连接配置，如果你有多个数据库连接，额外的数据库连接是在应用配置文件中完成的（参考后面的动态数据库连接）
+
+	自定义连接类的时候，请注意设置数据库配置中的  builder参数避免找不到对应生成器类
+
+
 
 
 
