@@ -75,11 +75,15 @@ Vue.js 提供了 MVVM 数据绑定和一个可组合的组件系统，具有简�
 
 	定义指令
 		bind 
-		绑定的时候
+		// 绑定的时候
 		inserted
-		新增的时候
+		// 新增的时候
 		update
-		更新的时候
+		// 更新的时候
+		componentUpdated
+		// 被绑定于元素所在的模板更新时调用, 而无论绑定值是否变化
+		unbind
+		// 只调用一次 指令与元素解绑时调用
 
 		//绑定和更新都有的时候使用一个匿名函数就可以了
 		Vue. directive('stat', {
@@ -87,6 +91,8 @@ Vue.js 提供了 MVVM 数据绑定和一个可组合的组件系统，具有简�
 				console.log(bind);
 			}
 		})
+
+		app.$destroy() 销毁
 
 
 当两个name一样的表单存在 key属性抹掉数据
@@ -137,6 +143,83 @@ v-text
 v-html
 
 
+
+// extend 扩展
+<exten></exten>
+let exten = Vue.extend({
+	template: "<h1>123</h1>"
+})
+
+new exten().$mount('exten');
+
+// set 全局操作
+var outData = {
+	count: 1
+}
+Vue.set(outData, 'count', 2)
+
+var app = new Vue({
+	data: outData
+})
+
+// template 模板
+<template id="d">
+	<div>第二种模板</div>
+</template>
+<script type="x-template" id="d">
+	<div>第三种模板</div>
+</script>
+
+var app = new Vue({
+	template:`
+		<h1>第一种模板</h1>
+	`,
+	template: "#d"
+
+})
+
+// component 组件
+<jspang></jspang>
+<panda :a="aaa"></panda>
+<component :is="city"> 动态绑定组件 </component>
+
+Vue.component('jspang', {
+	template: `<div>全局组件 可以在任何vue实例范围里面</div>`
+})
+
+var panda = {
+	template: `<div>1</div>`
+}
+var city = {
+	template: `
+	<div>
+		<panda></panda>
+	</div>
+	`,
+	components: {'panda': panda}
+}
+
+var app = new Vue({
+	data: {
+		message: '啊'
+	},
+
+	components:{
+		// 第一种
+		'panda': {
+			template:`<div>局部组件 {{ a }}</div>`
+			peops: ['a']    // 注册
+		}
+
+		// 第二张
+		'panda': panda
+
+	}
+})
+
+
+
+
 //
 $refs  表单    this.$refs.表单的ref值
 
@@ -153,11 +236,6 @@ animate.css   //过度动画类库
 		hd-leave-active
 			hd-leave-to
 
-
-// vue实例被生成后的一个生命周期钩子函数。(页面初始化数据加载一般写这里);
-Created：{
-
-}
 
 //方法   执行时间
 methods: {
@@ -180,14 +258,33 @@ watch: {
 		app.result
 	}
 }
-//挂载点   页面渲染完执行
-mounted(){
-	
-}
+
 // 组件激活的时候使用
 activated(){
 	
 }
+
+
+
+生命周期
+	beforeCreate
+	// 初始化之前
+	created
+	// 创建完成
+	beforeMount
+	// 挂载前
+	mounted
+	// 被挂载之后   页面渲染完执行
+	beforeUpdate
+	// 数据更新前
+	updated
+	// 更新之后
+	activated
+	deactivated
+	beforeDestroy
+	// 销毁之前
+	destroyed
+	// 销毁之后
 
 
 //追加数据
