@@ -34,6 +34,7 @@ hugo=f7aa37fcd991195620ee7066a104f566
 
 
 
+
 转盘
 Turntable
 
@@ -57,6 +58,71 @@ Winning
 custWinning
 
 
+
+Domain
+多域名管理
+
+create table oa_domain(
+    id int unsigned not null auto_increment,
+
+    title varchar(32) not null default '' comment '域名',
+    type tinyint unsigned not null default 0 comment '域名类型 0 综合 1 快速充值 2 大转盘 3 自助客服 4 验证中心 5 线路检测',
+    https tinyint unsigned not null default 0 comment '是否为 https 0 否 1 是',
+    description varchar(256) not null default '' comment '描述',
+
+    create_id int unsigned not null default 0 comment '创建者id  除了管理员只有自己可以删除自己域名',
+
+
+    status TINYINT unsigned not null default 1 comment '状态 0关闭 1开启   域名关闭后前台将拿不到数据',
+    order_id int not null default 0 comment '排序',
+    create_time int unsigned not null default 0,
+    update_time int unsigned not null default 0,
+
+
+    key title (title),
+    key type (type),
+    key order_id (order_id),
+    PRIMARY key (id)
+)ENGINE=INNODB  DEFAULT CHARSET=utf8
+
+
+
+
+
+
+web_tyep
+网站类型
+    1 => '快速充值',
+    2 => '大转盘',
+    3 => '自助客服',
+    4 => '验证中心',
+    5 => '线路检测',
+
+
+
+
+
+
+系统用户
+    添加 可以管理的的域名
+
+
+
+   type 1
+
+
+多域名
+
+一个用户可以管理  多个域名
+
+域名标签
+    all
+    888.com
+
+
+
+
+
 global_config
 
 create table global_config(
@@ -72,7 +138,7 @@ create table global_config(
 
     agent_id int unsigned not null default 0 comment '服务商id',
 
-    state TINYINT not null default 0 comment '状态 0关闭 1开启',
+    status TINYINT not null default 0 comment '状态 0关闭 1开启',
     order_id int not null default 0 comment '排序',
     create_time int unsigned not null default 0,
     update_time int unsigned null default 0,
@@ -137,12 +203,12 @@ create table member(
     id int unsigned not null auto_increment,
 
 
-    state TINYINT not null default 0 comment '状态 0关闭 1开启',
+    status TINYINT unsigned not null default 0 comment '状态 0关闭 1开启',
     order_id int not null default 0 comment '排序',
     create_time int unsigned not null default 0,
     update_time int unsigned null default 0,
 
-    key (),
+    key order_id (order_id),
     PRIMARY key (id)
 )ENGINE=INNODB  DEFAULT CHARSET=utf8
 
