@@ -33,6 +33,12 @@ hugo=f7aa37fcd991195620ee7066a104f566
 
 
 
+顶级菜单
+
+
+
+
+
 
 
 转盘
@@ -71,9 +77,10 @@ create table oa_domain(
     description varchar(256) not null default '' comment '描述',
 
     create_id int unsigned not null default 0 comment '创建者id  除了管理员只有自己可以删除自己域名',
-
+    agent_id int unsigned not null default 1 comment '服务商id  1 海洋  2 金沙', 
 
     status TINYINT unsigned not null default 1 comment '状态 0关闭 1开启   域名关闭后前台将拿不到数据',
+    
     order_id int not null default 0 comment '排序',
     create_time int unsigned not null default 0,
     update_time int unsigned not null default 0,
@@ -118,8 +125,6 @@ web_tyep
 域名标签
     all
     888.com
-
-
 
 
 
