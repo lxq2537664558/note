@@ -33,10 +33,16 @@ hugo=f7aa37fcd991195620ee7066a104f566
 
 
 
+
+汇海
+
+
+
+
+
+
+
 顶级菜单
-
-
-
 
 
 
@@ -313,6 +319,13 @@ alter table vc_rqcode modify type varchar(32) not null default '' comment '根�
 
 
 
+E:\www\qq7819.com\guanli\menu.php
+E:\www\qq7819.com\guanli\RQcode_list.php
+E:\www\qq7819.com\guanli\RQcode_add.php
+E:\www\qq7819.com\guanli\RQcode_set.php
+E:\www\qq7819.com\data\recode.php
+
+56378590
 
 api模板生成
 
