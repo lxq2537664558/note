@@ -93,55 +93,18 @@ create table oa_domain(
 )ENGINE=INNODB  DEFAULT CHARSET=utf8
 
 
-
-
-
-
-web_tyep
-网站类型
-    1 => '快速充值',
-    2 => '大转盘',
-    3 => '自助客服',
-    4 => '验证中心',
-    5 => '线路检测',
-
-
-
-
-
-
-系统用户
-    添加 可以管理的的域名
-
-
-
-   type 1
-
-
-多域名
-
-一个用户可以管理  多个域名
-
-域名标签
-    all
-    888.com
-
-
-
-global_config
-
+// 全局参数
 create table global_config(
     id int unsigned not null auto_increment,
 
     config_name varchar(32) not null default '' comment '参数名',
     config_type tinyint unsigned not null default 0 comment '数据类型 0 字符串 1 数值 2 对象',
-    config_value text  comment '参数值',
+    config_default_value text comment '全局配置默认参数',
+    description text comment '描述',
 
-    desc text comment '描述',
-    need_auth tinyint unsigned null not default 0 comment '验证登录  0 不验证 1 验证',
+    web_type_id tinyint unsigned not null default 0 comment '所属网站类型',
 
-
-    agent_id int unsigned not null default 0 comment '服务商id',
+    need_auth tinyint unsigned not null default 0 comment '验证登录  0 不验证 1 验证',
 
     status TINYINT not null default 0 comment '状态 0关闭 1开启',
     order_id int not null default 0 comment '排序',
@@ -149,59 +112,39 @@ create table global_config(
     update_time int unsigned null default 0,
 
     key config_name (config_name),
-    key agent_id (agent_id),
+    key web_type_id (web_type_id),
     key order_id (order_id),
     PRIMARY key (id)
 )ENGINE=INNODB  DEFAULT CHARSET=utf8 comment='全局配置'
 
 
+// 全局 参数数据
+create table global_config_value(
+    id int unsigned not null auto_increment,
 
-/home/lotteryConfig/list
+    config_id int unsigned not null default 0 comment '配置id',
+    config_value text comment '参数的值',
+    domain_id int unsigned not null default 0 comment '域名id',
+    create_id int unsigned not null default 0 comment '创建者',
 
+    status TINYINT not null default 0 comment '状态 0关闭 1开启',
+    order_id int not null default 0 comment '排序',
+    create_time int unsigned not null default 0,
+    update_time int unsigned null default 0,
 
-
-zp_lottery_config
-
-
-
-
-CREATE TABLE `zp_lottery_config` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '抽奖配置id',
-  `limit` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '额度',
-  `number` int(10) unsigned DEFAULT NULL COMMENT '抽奖次数',
-  `one` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '一等奖中奖概率',
-  `two` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '二等奖中奖概率',
-  `three` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '三等奖中奖概率',
-  `four` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '四等奖中奖概率',
-  `five` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '五等奖中奖概率',
-  `six` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '六等奖中奖概率',
-  `seven` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '七等奖中奖概率',
-  `eight` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '八等奖中奖概率',
-  `nine` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '九等奖中奖概率',
-  `ten` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '十等奖中奖概率',
-
-  agent_id int unsigned not null default 0 comment '服务商id',
-
-  key agent_id (agent_id),  
-  
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='转盘抽奖配置表'
-
-INSERT INTO `ny_lottery` (`id`, `limit`, `number`, `one`, `two`, `three`, `four`, `five`, `six`, `seven`, `eight`, `nine`, `ten`) VALUES (11, 3000, 1, 0, 50, 0, 5, 40, 0, 2, 0, 3, 0);
-INSERT INTO `ny_lottery` (`id`, `limit`, `number`, `one`, `two`, `three`, `four`, `five`, `six`, `seven`, `eight`, `nine`, `ten`) VALUES (12, 30000, 2, 0, 55, 0, 5, 35, 0, 2, 0, 3, 0);
-INSERT INTO `ny_lottery` (`id`, `limit`, `number`, `one`, `two`, `three`, `four`, `five`, `six`, `seven`, `eight`, `nine`, `ten`) VALUES (13, 100000, 3, 0, 50, 0, 10, 30, 0, 4, 0, 6, 0);
+    key config_id (config_id),
+    key domain_id (domain_id),
+    key create_id (create_id),
+    key order_id (order_id),
+    PRIMARY key (id)
+)ENGINE=INNODB  DEFAULT CHARSET=utf8 comment='参数数据'
 
 
 
 
-twig
-
-yaml
-
-socketLog
 
 
-0000000028ee3eabffffffffe9374e72
+
 
 
 create table member(
@@ -250,7 +193,7 @@ create table clock_in_log(
     id int unsigned not null auto_increment,
 
     member_id int unsigned not null default 0 comment '会员id',
-    date int unsigned not null default 0 comment '签到日期 Ymd',
+date int unsigned not null default 0 comment '签到日期 Ymd',
 
     create_time int unsigned not null default 0,
     
@@ -329,6 +272,11 @@ Feedback
 
 
 
+twig
+
+yaml
+
+socketLog
 
 
 
