@@ -145,12 +145,15 @@ v-html
 
 
 // extend 扩展
-<exten></exten>
+<exten>{{a}}</exten>
+
 let exten = Vue.extend({
-	template: "<h1>123</h1>"
+	template: "<h1>123</h1>",
+	props: ['a']
 })
 
-new exten().$mount('exten');
+
+new exten({propsData:{a:1}}).$mount('exten');
 
 // set 全局操作
 var outData = {
@@ -226,6 +229,35 @@ $refs  表单    this.$refs.表单的ref值
 //  把对象转为数组
 _.values(object)
 
+
+// 选项
+<div id="app">
+	{{ computed }}
+</div>
+
+var app = new Vue({
+	el: '#app',
+	data: {
+		count: 1
+	},
+	//实例   返回数据  计算属性   变量改变时
+	computed: {
+		sum(){
+			return 1; 
+		}
+	},
+	//方法   执行时间
+	methods: {
+		sum(){
+			this.$emit('sum')    //子组件呼叫  主组件 绑定方法
+		}
+	}
+
+
+})
+	
+
+
 animate.css   //过度动画类库
 //过度动画   配合taransition   样式类名
 	hd-enter 				//开始
@@ -237,20 +269,9 @@ animate.css   //过度动画类库
 			hd-leave-to
 
 
-//方法   执行时间
-methods: {
-	sum(){
-		this.$emit('sum')    //子组件呼叫  主组件 绑定方法
-	}
-}
 
 
-//实例   返回数据  计算属性   变量改变时
-computed: {
-	sum(){
-		return 
-	}
-}  
+
 
 //监听   数据改变的时候  
 watch: {
