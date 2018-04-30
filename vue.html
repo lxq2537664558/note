@@ -144,7 +144,7 @@ v-html
 
 
 
-// extend 扩展
+// extend 扩展   propsData
 <exten>{{a}}</exten>
 
 let exten = Vue.extend({
@@ -155,6 +155,7 @@ let exten = Vue.extend({
 
 new exten({propsData:{a:1}}).$mount('exten');
 
+
 // set 全局操作
 var outData = {
 	count: 1
@@ -164,6 +165,71 @@ Vue.set(outData, 'count', 2)
 var app = new Vue({
 	data: outData
 })
+
+// mount 挂载
+<div id='app'></div>
+
+var jspang = Vue.extend({
+	template: '<h1></h1>',
+	data: function(){
+		return {
+			message: 'hello'
+		}
+	}
+
+	var vm = new jspang().$mout('#app')
+})
+
+// 卸载
+app.$destroy()
+
+// 更新
+app.$forceUpdate()
+
+// 修改
+app.$nextTick()
+
+
+// 执行主 方法
+app.$emit('mo')
+
+实例事件
+app.$on('reduce', function(){
+	this.num --;
+})
+
+app.$once('add', function(){
+	// 只能执行一次         
+})
+
+app.$off('reduce', function(){
+	// 关闭事件
+})
+
+
+//  内置组件  slot
+<div id="app">
+	<jspang slot="bolgUrl"></jspang>
+</div>
+
+<template id="temp">
+	<div>
+		<slot name="bolgUrl"></slot>
+	</div>
+</template>
+
+var jspan = {
+	template: '#temp'
+}
+
+var app = new Vue({
+	components: {
+		'jspang': jspan
+		]
+	}
+})
+
+
 
 // template 模板
 <template id="d">
@@ -252,10 +318,47 @@ var app = new Vue({
 			this.$emit('sum')    //子组件呼叫  主组件 绑定方法
 		}
 	}
+	//监听   数据改变的时候  
+	watch: {
+		word: function(newV, oldV){
+			app.result
+		}
+	}
 
+	app.$watch('wendu', function(newV, oldV){
+
+	})
+	// mixins 混入
+	var addConsole = {
+		updated: function(){
+			console.log(1)
+		}
+	}
+
+	Vue.mixin({
+		updated: function(){
+			// 全局的混入
+		}
+	})
+
+	
+	mixins: ['addConsole']
+
+	// extends 扩展
+	var extendsObj = {
+		updated: function(){
+			console.log(1);
+		}
+	}
+
+	extends: extendsObj
+	
 
 })
 	
+
+
+
 
 
 animate.css   //过度动画类库
@@ -273,12 +376,16 @@ animate.css   //过度动画类库
 
 
 
+<<<<<<< HEAD
 //监听   数据改变的时候  
 watch: {
 	'word': function(newV, oldV){
 		app.result
 	}
 }
+=======
+
+>>>>>>> 62ffe6b8437c9c028354a78be0e2af88e3aaa326
 
 // 组件激活的时候使用
 activated(){
@@ -330,6 +437,9 @@ axios     //http请求
 lodash    //延时执行
 	_.debounce(function(){}, 1000)
 
+
+// 磨板输出定义符
+	delimiter: ['{{', '}']
 
 
 组件
