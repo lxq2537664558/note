@@ -6,8 +6,8 @@ Bt-Panel: http://47.52.33.206:8888
 username: admin
 password: 0b140635
 
-
-
+42xx_com
+BCwSXwAmnh
 
 svn://103.35.116.101:1111
 hugo   密码etdclzvbfgdfa#234
@@ -29,21 +29,47 @@ hugo=f7aa37fcd991195620ee7066a104f566
 
 
 😊😊。
+    
+
+
+E:\www\hd5009\active\index120.html
+E:\www\hd5009\images\registered38_gb.jpg
+E:\www\hd5009\active\registered38.html
+E:\www\hd5009\images\registered38_show_bg.jpg
+
+user_name
+phone
+email
+real_name
+
+    
+vueThink
+    47.90.124.47 
+
+
+    admin
+    hugodemima
+
+    api.hy590.vip
+    admin.hy590.vip
+
+
+    svn://47.90.124.47    hugo    密码fafgjdfaj1231#
 
 
 
 
-
-汇海
-
+https://github.com/PanJiaChen/vue-element-admin
 
 
 
 
+alter table zp_winning add column user_id int unsigned not null default 0 comment '中奖者id';
+alter table zp_winning add column domain_id int unsigned not null default 0 comment '域名id';
 
 
-顶级菜单
 
+export
 
 
 Electron
@@ -762,59 +788,6 @@ Recommend 		推荐
 
 
 
-
-
-
-牙
-电动牙刷
-手表  黑  皮
-
-
-背包
-
-
-
-
-洁面
-    NOESA洗面奶
-    资生堂盼丽风姿洁面膏
-    旁氏米粹
-    清妃柔白洗面奶
-    Estee Lauder红石榴洁面
-
-
-身体乳
-    Alpha Hydrox12% AH果酸
-    郁美净
-    凡士林粉嫩透白润体乳（粉色款）
-    玉兰油7重功效润肤乳
-
-磨砂膏
-    oh！baby
-
-防嗮
-    Elta MD UV Shield SPF45无油防晒乳 夏季，日常使用
-    SHISEIDO ANESSA资生堂安耐晒金瓶超强防水防晒霜SPF50 PA++++  防水抗汗的防晒霜一定要摇匀后使用
-    嘉娜宝ALLIE极致防水药用防晒霜 防水抗汗，媲美安耐晒金瓶  涂改液剂型，摇匀后使用
-    碧柔清爽防晒乳液SPF50 PA+++
-    碧柔水活防晒保湿凝蜜SPF30+PA+++
-    Cetaphil/丝塔芙控油保湿防晒乳SPF30
-    美加净细嫩柔白防晒乳SPF30
-
-美白
-    Olay旗舰 玉兰油Pro-X纯白方精华液  适合夏季，日常使用
-    Elings Orange 20% Vitamin C L-Ascorbic Acid Serum   秋冬使用
-    THE BODY SHOP美体小铺VC 28天美白精华胶囊  VC胶囊，每次一到两粒，配合PHA精华，价格便宜啊，不错的东西
-    高丝雪肌精（泡纸膜）
-    Olay美白淡斑精华（美版小白瓶）
-    利维肤美白淡斑日霜
-
-润唇膏
-    Blistex Lip Medex 即时修复润唇膏
-
-日立N3000美容仪
-
-芦荟胶 睡前
 
 php设计模式
 溜课

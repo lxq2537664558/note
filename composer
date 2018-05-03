@@ -1,5 +1,12 @@
 安装
-	安装前请务必确保已经正确安装了 PHP。打开命令行窗口并执行 php -v 查看是否正确输出版本号。
+	centos
+		1 下载composer
+			curl -sS https://getcomposer.org/installer | php
+		2 移动或复制composer到环境下可执行
+		3 composer -V 查看版本
+
+	
+
 
 	打开命令行并执行下列命令安装最新版本的 Composer (以下指令摘自 https://getcomposer.org/download/ ，请前往查看最新的安装指令)：
 
