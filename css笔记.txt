@@ -1,3 +1,11 @@
+animate 动画
+
+
+
+
+
+
+
 <style type="text/css"></style>
 <link rel="stylesheet" type="text/css" href="mystyle.css">	引入css文件
 @import url("")			CSS内引入CSS
@@ -215,7 +223,7 @@ background-image		把图像设置为背景
 background-position		设置背景图像的起始位置
 	关键字 关键字	如果仅规定了一个关键词,那么第二个值将是"center" 默认值 0% 0%
 	x% y%			第一个值是水平位置,第二个值是垂直位置 如果仅规定了一个值,另一个将是50%
-	xpos ypos		同上 单位为像素
+	xpos¡ ypos		同上 单位为像素
 background-repeat		设置背景图像是否及如何重复
 	repeat			默认.背景图像将在垂直方向个水平方向重复
 	repeat-x		背景图像将在水平方向重复
@@ -693,6 +701,7 @@ grid布局
 
 动画
     补间动画       fransition
+     animation:arrowAction 2s ease-out infinite forwards;
         transition: all 2s;
         transition-property             属性
             all
