@@ -1,0 +1,107 @@
+
+
+
+
+<tmplate>
+	// 最外层必须是div
+	<div>
+		<text class="text">块级文本容器, 文本只能放在这里</text>
+		<input /> // input 标签必须用 / 结束
+	</div>
+</tmplate>
+
+
+<script>
+	// 引入文件
+	weex.requireModule('xxx')	
+</script>
+
+
+<style scoped>
+	// css样式   强制使用scoped
+	// css必须用id 或 类名  其他选择器不起作用
+	.text {
+		// 超出显示省略号
+		lines: 1
+	}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 安装 weex 工具
+	npm install weex-toolkit -g
+
+// 创建一个空的模板
+	weex create my-app
+
+
+npm install
+npm start
+
+
+
+// 生成一个 ios 项目
+	weex platform add ios
+
+// 生成一个 android 项目
+	weex platform add android 
+
+
+// 发布成 Android 应用
+	weex run android
+
+
+
+// 修改图标
+	Android
+		android\app\src\main\res\mipmap-xxxhdpi\ic_launcher.png
+
+
+
+注意事项
+	使用 flex 布局
+	不支持百分比布局
+	border 设置分开写
+	长度单位只支持px  此处的px和html的px不一样
+	input 标签要用 / 结束  
+
+
+	宽：720px=100%         高：1250px =100%
+		750 ?
+
+
+	列表
+		list  ul
+		cell  li
+
+
+
+image 的 resize 属性   控制图片的拉伸方式的，它有三种拉伸方式。
+	stretch：默认值，指定图片按照容器拉伸，有可能使图片产生形变。
+	cover：指定图片可以被调整到容器，以使图片完全覆盖背景区域，图片有可能被剪裁。
+	contain：指定可以不用考虑容器的大小，把图像扩展至最大尺寸，以使其宽度和高度完全适应内容区域
+
+
+
+调用内建模块
+	weex.requireModule(‘xxx’)
+
+
+weex-ui
+	// 安装
+	npm i weex-ui -S
+
+	// 安装插件
+	npm i babel-preset-stage-0 babel-plugin-component  -D

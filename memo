@@ -32,6 +32,20 @@ hugo=f7aa37fcd991195620ee7066a104f566
     
 
 
+
+
+
+域名管理添加
+
+
+alter table oa_admin_user add column domains varchar(32) not null default ''; 
+
+
+alter table oa_admin_user modfiy column domains varchar(32) not null dafault '' comment '所拥有域名';
+
+
+
+
 E:\www\hd5009\active\index120.html
 E:\www\hd5009\images\registered38_gb.jpg
 E:\www\hd5009\active\registered38.html
@@ -68,6 +82,8 @@ alter table zp_winning add column user_id int unsigned not null default 0 commen
 alter table zp_winning add column domain_id int unsigned not null default 0 comment '域名id';
 
 
+alter table zp_cust_winning add column user_id int unsigned not null default 0 comment '中奖者id';
+alter table zp_cust_winning add column domain_id int unsigned not null default 0 comment '域名id';
 
 export
 
@@ -97,6 +113,10 @@ Winning
 自定义中奖
 custWinning
 
+
+
+
+JavaScriptCore
 
 
 Domain
