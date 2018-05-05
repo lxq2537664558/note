@@ -1,0 +1,10 @@
+
+// 安装 全局 webpack
+npm install webpack -g
+
+
+// 初始化一个项目
+npm init 
+
+// 安装依赖
+npm install --save-dev webpack

@@ -362,6 +362,7 @@ var app = new Vue({
 
 
 animate.css   //过度动画类库
+<taransition mode="模式"></taransition>
 //过度动画   配合taransition   样式类名
 	hd-enter 				//开始
 		hd-enter-active		//过程
@@ -375,17 +376,12 @@ animate.css   //过度动画类库
 
 
 
-
-<<<<<<< HEAD
 //监听   数据改变的时候  
 watch: {
 	'word': function(newV, oldV){
 		app.result
 	}
 }
-=======
-
->>>>>>> 62ffe6b8437c9c028354a78be0e2af88e3aaa326
 
 // 组件激活的时候使用
 activated(){
@@ -480,6 +476,13 @@ lodash    //延时执行
 
 
 //路由   router
+	<route-link to="/">home</route-link>
+	<route-link :to="{name:路由中的name}"></route-link>
+
+
+	<route-view name=""></route-view>
+
+
 	const php = {
 		template: '<h1>123</h1>'
 	}
@@ -487,10 +490,11 @@ lodash    //延时执行
 		routes: [
 			{path: '/phpedit/:id(a\\d{2})?', compnent: php, name: phpe}
 
-			// 多组件
+			// 多组件  compent 加 s
 			{path: '/', components: {
 				default: menu,
 				news:news
+				//  news 是根据 route-view 的name值
 			}}
 
 			{path: '/php/', compnent: php, children:[
@@ -498,16 +502,33 @@ lodash    //延时执行
 			]}
 
 			//重定向
+			{path: '/', redirect: //重定向}
 			{path: '/about', redirect: {name: 'content', params: {id: 3}}}
 
 			//别名
 			{path: '/conent/2', alias: ['/about']}
 
+
 			//其他的路由  如404
 			{path: '*', compnent: NotFound}
+
+			// 钩子函数
+			{beforeEnter: (to. from, next) => {
+				// 允许跳转
+				next()
+			}}
 		]
 	})
 
+
+	export default{
+		// 请求前
+		beforeRouteEnter: (to, from, next) => {}	
+		// 准备离开
+		beforeRouteLeave: (to, from, next) => {}	
+	}
+	
+	$route.params
 
 	this.$route.params    //参数
 	this.$router.push('')  //跳转到
