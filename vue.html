@@ -546,8 +546,79 @@ watch: {
 路由切换就是控制组件显示隐藏   可以使用动画
 
 
-verx
-	store
+vuex
+	npm install vuex --save
+
+	创建 src/vuex/store.js 文件
+		import Vue from 'vue'
+		import Vuex from 'vuex'
+		Vue.use(Vuex)
+		export default new Vuex.Store({
+			state,
+			mutations,
+			getters,
+			actions
+		})
+
+	文件里面引入
+		import store from '@/vuex/store'
+	    export default{
+	        data(){},
+	        store    
+    	}
+
+	// 数据   仓库
+	state
+		count: 1
+
+		$store.state.count
+
+	// 修改    仓库数据
+	mutations
+		add(state, n) {
+			state.count += n;
+		}
+
+		$store.commit('add', n)
+
+
+	// 获取    仓库数据时
+	getters
+		count:function(state){
+			return state.count
+		}
+
+		$store.getters.count
+
+
+	// 修改数据 方法  
+	actions
+		addAction(store, n){
+			store.commit('add', 10)
+		}
+
+		addAction({commit}, n){
+			commit('add')
+		}
+
+		this.$store.dispatch('addAction', 10)
+
+	// 模块组
+		const moduleA={
+	    	state,mutations,getters,actions
+		}
+
+		export default new Vuex.Store({
+		    modules:{a:moduleA}
+		})
+
+		<h3>{{$store.state.a.count}}</h3>
+
+		computed:{
+		    count(){
+		        return this.$store.state.a.count;
+		    }
+		},
 
 
 const caetModule = {
