@@ -136,3 +136,4 @@
 			C:\Users\Administrator>composercreate-project--prefer-distyiisoft/yii2-app-basicbasic 
 				下载过程中会使用到 git 账号 ， 没有的到 https://github.com/注册一个
 
+composer install phpoffice/phpexcel
