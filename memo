@@ -1,5 +1,91 @@
 9777081419
 
+        if(defined(FC2_FLAG) && FC2_FLAG === true){
+            echo '<pre>';var_dump(321);echo '<hr>';die;
+        }
+
+
+
+
+FC_DEBUG
+
+
+wunderlist
+
+todoist
+
+
+animate
+
+
+
+
+
+
+
+47.90.106.4
+root
+
+47.90.106.4
+jsvip
+S2WsBeZsmPpYJAA2
+
+u.99205.site
+
+ 47.90.106.4
+http://47.90.106.4:39001/
+v.99205.site
+
+
+
+composer require phpoffice/phpexcel
+
+composer require topthink/think-queue
+
+
+
+<div class="numButton">
+
+
+
+
+<div class="actButton">
+
+
+
+
+<div class="butButton">
+
+
+
+
+<div class="qingButton">
+
+
+<div class="checkButton">
+
+
+</div>
+
+// 添加注单  清除按钮点击
+
+// 复选框
+
+// 清除按钮
+
+// 确认投注
+
+// 随机注单
+
+
+
+ class="rdo"
+
+
+
+
+
+
 
 
 Bt-Panel: http://47.52.33.206:8888
@@ -21,17 +107,46 @@ https://www.hd5009.com/
 vonly=f00d541b1c38377c965ca2c575c241eb
 47.75.38.5
 http://hd6590.com
-
-
+-------------------------------------------------
 http://payhy.8889s.com/
 svn://47.90.34.174:7777
 hugo=f7aa37fcd991195620ee7066a104f566
+--------------------------------------
+dd778799
+hugo=dkghedad54124!#^%
+47.52.1.158:3333
+
 
 
 😊😊。
-    
+ 
 
 
+
+全局配置参数
+    添加时
+        管理员    全部人都可以看到
+        用户      只有管理员和  用户自己能看到   不能创建 同名的配置 和 管理员的
+
+    修改
+        管理员     可以随意修改
+        用户       只能修改自己的
+
+
+
+
+    管理员可添加 全局配置参数    所属人 为 1  会为参数值的默认值    
+
+    其他用户可以 拿到自己配置的全局参数 和  系统的   
+
+    名字都不能重复
+
+
+
+
+
+
+alert talbe global_config add create_id int unsigned not null default 0 comment '创建人'
 
 
 
