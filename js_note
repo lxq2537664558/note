@@ -875,7 +875,26 @@ reader.readAsDataURL(file);
 
 
 
+es6
+	// 初始化  使用默认值
+	npm init -y 
 
+	// 转义工具
+	npm install -g babel-cli
+	npm install --save-dev babel-breset-es2015 babel-cli
+
+	.babelrc
+	{
+		"presets": [
+			"es2015"
+		],
+		"plugins": []
+	}
+
+
+	var
+	let
+	const
 
 
 
