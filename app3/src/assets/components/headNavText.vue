@@ -3,7 +3,7 @@
     <!--导航头-->
     <div style="height: 110px;background-color: #3d3d3d;flex-direction: row;">
       <div @click="clickReturnArrow" style="flex: 0.3;justify-content: center;align-items: center;">
-        <img :src="returnArrowLog" alt="" style="width: 40px;height: 40px;">
+        <image :src="returnArrowLog" alt="" style="width: 40px;height: 40px;"></image>
       </div>
       <div style="flex: 1;justify-content: center;align-items: center;">
         <!--<img :src="agentLogo" alt="" style="width: 350px;height: 100px">-->

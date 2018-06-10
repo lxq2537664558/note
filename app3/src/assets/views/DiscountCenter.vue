@@ -6,14 +6,14 @@
       <!--优惠办理中心-->
       <div style="height: 60px;flex-direction: row;background-color: #eeeeee">
         <div style="flex: 1;align-items: flex-start;justify-content: center">
-          <img :src="left_arrow" alt="" style="width: 45px;height: 45px">
+          <image :src="left_arrow" alt="" style="width: 45px;height: 45px"></image>
         </div>
         <div style="flex: 1;flex-direction: row;align-items:center;justify-content: center">
-          <img :src="discountLogo" alt="" style="height: 40px;width: 40px">
+          <image :src="discountLogo" alt="" style="height: 40px;width: 40px"></image>
           <text style="color: #b72021;margin-left: 10px;font-size: 30px">优惠办理中心</text>
         </div>
         <div style="flex: 1;align-items: flex-end;justify-content: center">
-          <img :src="right_arrow" alt="" style="height: 45px;width: 45px;">
+          <image :src="right_arrow" alt="" style="height: 45px;width: 45px;"></image>
         </div>
       </div>
       <!--列表-->

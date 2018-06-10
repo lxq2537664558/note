@@ -6,7 +6,7 @@
         <div style="width: 690px;border-radius: 20px;">
           <!--tip-top-->
           <div style="height: 300px;">
-            <img :src="tipList.tipTopUrl" alt="" style="height: 300px;width: 690px">
+            <image :src="tipList.tipTopUrl" alt="" style="height: 300px;width: 690px"></image>
           </div>
           <!--tip-center-->
           <div style="background-color: #ffffff;border-bottom-left-radius: 20px;border-bottom-right-radius: 20px">
@@ -16,14 +16,14 @@
             </div>
             <!--tip-text image-text -->
             <div v-if="tipList.type == 'imageText'" style="justify-content: center;align-items: center;margin-bottom: 100px;margin-top: 70px;flex-direction: row">
-              <img :src="tipList.imageSuccess" alt="" style="width: 75px;height: 75px;margin-right: 50px">
+              <image :src="tipList.imageSuccess" alt="" style="width: 75px;height: 75px;margin-right: 50px"></image>
               <text style="font-size: 38px;color: #555555">{{tipList.text}}</text>
             </div>
             <!--tip-text lulu -->
             <div v-if="tipList.type == 'lulu'" style="flex-direction: column;align-items: center">
               <div style="flex-direction: row;height: 200px;width: 600px;border-style: solid;border-color: #eee;border-width: 1px;;border-radius: 5px;border-left-width: 0px">
                 <div style="width: 15px">
-                  <img :src="tipList.imageLulu" alt="" style="height: 200px;width: 15px">
+                  <image :src="tipList.imageLulu" alt="" style="height: 200px;width: 15px"></image>
                 </div>
                 <div style="flex: .9;justify-content: center;align-items: center">
                   <text style="font-size: 38px;color: #555">{{tipList.luluText}}</text>
@@ -34,7 +34,7 @@
                 </div>
               </div>
               <div style="height: 120px;flex-direction: row;justify-content: center;align-items: center">
-                <img :src="tipList.imageSuccess" alt="" style="width: 75px;height: 75px;margin-right: 50px">
+                <image :src="tipList.imageSuccess" alt="" style="width: 75px;height: 75px;margin-right: 50px"></image>
                 <div><text style="font-size: 38px;color: #555">{{tipList.text}}</text></div>
               </div>
             </div>

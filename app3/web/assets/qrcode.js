@@ -1639,7 +1639,7 @@ var qrcode = function () {
     }
     base64.flush();
     var img = '';
-    img += '<img';
+    img += '<image';
     img += '\u0020src="';
     img += 'data:image/gif;base64,';
     img += base64;
@@ -1655,7 +1655,7 @@ var qrcode = function () {
       img += alt;
       img += '"';
     }
-    img += '/>';
+    img += '></image>';
     return img;
   };
   //---------------------------------------------------------------------

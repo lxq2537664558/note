@@ -5,11 +5,11 @@
       <!--个人资料-->
       <div style="height: 220px">
         <div style="position: absolute;top: 0;left:0;right: 0;bottom:0">
-          <img :src="userInfoBlurryBackground" alt="" style="height: 220px;width: 750px">
+          <image :src="userInfoBlurryBackground" alt="" style="height: 220px;width: 750px"></image>
         </div>
         <div class="user-info">
           <div style="width: 130px;margin-left: 50px">
-            <img :src="user.head_img" alt="" style="height: 130px;width: 130px;border-radius: 65px;">
+            <image :src="user.head_img" alt="" style="height: 130px;width: 130px;border-radius: 65px;"></image>
           </div>
           <div style="flex: 1;justify-content: center;align-items: center">
             <text class="user-info-text" style="color: #fff;">账号:  {{user.username}}</text>
@@ -17,7 +17,7 @@
           </div>
           <div style="flex: .9"></div>
           <div style="flex: 1.1;flex-direction: row;justify-content: center;" @click="clickSignIn">
-            <img :src="signInLogo" alt="" style="width: 40px;height: 40px;">
+            <image :src="signInLogo" alt="" style="width: 40px;height: 40px;"></image>
             <text style="color: #fff;font-size: 26px;margin-left: 10px;padding-top: 5px">每日签到 ></text>
           </div>
         </div>
@@ -29,7 +29,7 @@
           <div class="center-list">
             <div v-for="list in centerList" @click="clickList(list)" style="width: 370px;height: 120px;background-color: #fff;margin-bottom: 5px;flex-direction: row">
               <div style="flex: .3;align-items: flex-end;justify-content: center;">
-                <img :src="list.logo" alt="" style="width: 50px;height: 50px;">
+                <image :src="list.logo" alt="" style="width: 50px;height: 50px;"></image>
               </div>
               <div style="flex: 1;justify-content: center;padding-left: 20px">
                 <text class="t3" style="font-size: 30px;font-weight: bold">{{list.t1}}</text>
@@ -46,7 +46,7 @@
     <div @click="clickCloseMask" v-if="maskShow" class="mask-black" style="justify-content: center;align-items: center"></div>
     <!--签到成功-->
     <div @click="clickCloseMask" v-if="maskSignInShow" class="mask-sign-in" style="justify-content: center;align-items: center">
-      <img :src="signInSuccess" alt="" style="width: 600px;height: 600px">
+      <image :src="signInSuccess" alt="" style="width: 600px;height: 600px"></image>
     </div>
     <!--确认按钮-->
     <wxc-dialog :title="confirm.title"

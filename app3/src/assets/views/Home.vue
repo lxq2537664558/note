@@ -17,7 +17,7 @@
       <div style="height: 310px;flex-direction: column;">
         <div style="flex: 1;flex-direction: row;" v-for="v in actionAll">
           <div style="flex: 1;justify-content: center;align-items: center" v-for="action in v.item" @click="clickAction(action.url)">
-            <img :src="action.logo" alt="" style="width: 80px;height: 80px">
+            <image :src="action.logo" alt="" style="width: 80px;height: 80px"></image>
             <text style="font-size: 22px;margin-top: 10px;color: #666">{{test}}{{action.title}}</text>
           </div>
         </div>
@@ -32,7 +32,7 @@
         <div style="height: 360px;flex-direction: column;justify-content: space-between;padding-bottom: 5px;">
           <div style="height: 165px;flex-direction: row;justify-content: space-between;padding-left: 40px;padding-right: 40px" v-for="v in hotDeals">
             <div style="background-color: #fff;width: 315px;align-items: center;border-radius: 15px;overflow:hidden;border-color: #ccc;border-style: solid;border-width: 1px" v-for="deals in v.item" @click="clickDeals(deals.url)">
-              <img :src="deals.logo" alt="" style="height: 130px;width: 315px;border-top-left-radius:15px;border-top-right-radius:15px;">
+              <image :src="deals.logo" alt="" style="height: 130px;width: 315px;border-top-left-radius:15px;border-top-right-radius:15px;"></image>
               <text style="font-size: 26px;color: #666;line-height: 35px">{{deals.title}}</text>
             </div>
           </div>

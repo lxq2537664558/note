@@ -5,7 +5,7 @@
     <list :class="['main-list']">
       <cell @click="clickMsgRecode(v.url)" v-for="v in msgRecodeList" style="background-color: #fff;height: 150px;margin-bottom: 5px;flex-direction: row;align-items: center;justify-content: center">
           <div style="flex: .3;justify-content: center;align-items: center">
-            <img :src="v.logo" alt="" style="width: 60px;height: 60px;">
+            <imageg :src="v.logo" alt="" style="width: 60px;height: 60px;"></imageg>
           </div>
           <div style="height: 100px;width: 1px;background-color: #717171;"></div>
           <div style="flex: 1;margin-left: 20px">

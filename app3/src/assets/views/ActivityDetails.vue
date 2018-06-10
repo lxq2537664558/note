@@ -9,7 +9,7 @@
           <div style="">
             <text class="star-text">VIP {{user.currentLevel}}</text>
           </div>
-          <img :src="starLogo" alt="" style="height: 45px;width: 45px;position: absolute;top: 25px;left: 0;right: 0;bottom: 0;">
+          <image :src="starLogo" alt="" style="height: 45px;width: 45px;position: absolute;top: 25px;left: 0;right: 0;bottom: 0;"></image>
         </div>
         <div style="width: 385px;flex-direction: column;justify-content: center">
           <div style="background-color: #eee;;justify-content: center;align-items: center;position: relative;border-radius: 10px">
@@ -25,27 +25,27 @@
       <!--选择礼品进行兑换-->
       <div style="height: 70px;flex-direction: row;background-color: #eeeeee;padding-right: 20px;padding-left: 20px">
         <div style="flex: .3;align-items: flex-start;justify-content: center">
-          <img :src="left_arrow" alt="" style="width: 45px;height: 45px">
+          <image :src="left_arrow" alt="" style="width: 45px;height: 45px"></image>
         </div>
         <div style="flex: 1;flex-direction: row;justify-content: center;flex-direction: row">
           <div style="justify-content: center;">
             <div style="">
               <text class="star-text">VIP {{user.preLevel || user.currentLevel}}</text>
             </div>
-            <img :src="starLogo" alt="" style="height: 45px;width: 45px;position: absolute;top: 10px;left: 0;right: 0;bottom: 0;">
+            <image :src="starLogo" alt="" style="height: 45px;width: 45px;position: absolute;top: 10px;left: 0;right: 0;bottom: 0;"></image>
           </div>
           <div style="margin-left: 10px;justify-content: center">
             <text style="color: #b72021;font-size: 30px;">{{user.preLevel ? '等级奖励' : '已是最高等级'}}</text>
           </div>
         </div>
         <div style="flex: .3;align-items: flex-end;justify-content: center">
-          <img :src="right_arrow" alt="" style="height: 45px;width: 45px;">
+          <image :src="right_arrow" alt="" style="height: 45px;width: 45px;"></image>
         </div>
       </div>
       <!--奖品-->
       <div style="height: 80px;flex-direction: row;justify-content: center;align-items: center">
         <text style="color: #b72021;font-size: 30px;margin-right: 40px">奖励</text>
-        <img :src="moneyLog" alt="" style="height: 45px;width: 45px;">
+        <imageg :src="moneyLog" alt="" style="height: 45px;width: 45px;"></imageg>
         <text style="margin-left: 10px;margin-right: 30px;font-size: 30px;color: #333">{{user.reward}}</text>
       </div>
       <div style="height: 15px;background-color: #ededed"></div>

@@ -6,7 +6,7 @@
       <div style="height: 280px;position: relative;">
 
         <div style="position: absolute;top: 0;left: 0;right: 0;bottom: 0;">
-          <img :src="domainsBackground" alt="" style="height: 280px;width: 750px">
+          <image :src="domainsBackground" alt="" style="height: 280px;width: 750px"></image>
         </div>
         <div style="flex: 1;flex-direction: row;justify-content: space-around;align-items: center;">
           <div @click="clickDomain(v.url)" v-for="v in domains" style=";height: 150px;width: 150px;border-color: #edc23b;border-width: 3px;border-style: solid;border-radius: 75px;justify-content: center;align-items: center">
@@ -22,7 +22,7 @@
         <cell style="height: 130px;" v-for="route in routes">
           <div style="background-color: #fff;height: 110px;margin-top: 20px;flex-direction: row;align-items: center">
             <div style="width: 169px;flex-direction: row">
-              <img :src="newBulletinLog" alt="" style="margin-left: 20px;height: 30px;width: 30px;" >
+              <image :src="newBulletinLog" alt="" style="margin-left: 20px;height: 30px;width: 30px;" ></image>
               <text style="margin-left: 10px;font-size: 22px;color: #555">{{route.title}}</text>
             </div>
             <div style="width: 1px;background-color: #aaa;height: 50px;"></div>

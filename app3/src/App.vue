@@ -34,8 +34,8 @@
     data () {
       return {
       	// 当前页面
-        // currentPage: 'Home',
-				currentPage: 'IntegralExchange',
+        currentPage: 'Home',
+				// currentPage: 'IntegralExchange',
       	// 遮罩底层
 				bottomMaskShow: false,
 				// 加载按钮

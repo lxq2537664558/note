@@ -6,14 +6,14 @@
         <text style="font-size: 20px;color: #fecd2e;padding: 5px ;padding-left: 15px; padding-right: 15px;background-color: rgba(255, 255, 255, 0.1) ;border-radius: 20px">联系客服</text>
       </div>
       <div v-else @click="clickMsgCenter" style="flex: 0.3;justify-content: center;align-items: center;">
-        <img :src="msgCenterLogo" alt="" style="width: 40px;height: 40px;">
+        <image :src="msgCenterLogo" alt="" style="width: 40px;height: 40px;"></image>
       </div>
       <div></div>
       <div style="flex: 1;justify-content: center;align-items: center;">
-        <img :src="agentLogo" alt="" style="width: 350px;height: 100px">
+        <image :src="agentLogo" alt="" style="width: 350px;height: 100px"></image>
       </div>
       <div v-if="uId" @click="clickSetting" style="flex: 0.3;justify-content: center;align-items: center;">
-        <img :src="settingLost" alt="" style="width: 40px;height: 40px;">
+        <image :src="settingLost" alt="" style="width: 40px;height: 40px;"></image>
       </div>
       <div v-else @click="clickMemberBind" style="flex: 0.3;justify-content: center;align-items: center">
         <text style="background-color: rgba(255, 255, 255, .1);font-size: 20px;color: #fecd2e;padding-top: 5px;padding-bottom: 5px;padding-left: 15px;padding-right: 15px;border-radius: 20px">会员绑定</text>

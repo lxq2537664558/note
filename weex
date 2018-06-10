@@ -136,3 +136,22 @@ weex-ui
 热更新
 	npm run dev
 	npm run serve 
+
+
+
+手机要和电脑在同一个网络中	
+
+命令行 weex  we文件路径.we --qr
+
+生成页面的二维码
+
+用手机的playground客户端扫描，再修改we文件后保存，手机屏幕会闪一下，页面就更新了
+
+
+ios
+
+	安装   cocoapods
+		 gem install -n /usr/local/bin cocoapods 
+	安装   weexSDK
+		 pod install
+	

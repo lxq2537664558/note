@@ -1,7 +1,7 @@
 <template>
   <div style="height: 40px;flex-direction: row;background-color: #fff;border-bottom-color: #f1f1f1;border-bottom-width: 1px;border-bottom-style: solid;background-color: #fff">
     <div style="width:150px;flex-direction: row;justify-content: flex-end;align-items: center;">
-      <img :src="newBulletinLog" alt="" style="width: 30px;height: 30px;margin-right: 5px">
+      <image :src="newBulletinLog" alt="" style="width: 30px;height: 30px;margin-right: 5px"></image>
       <text style="font-size: 24px;font-weight: 500;color: #333;">最新公告:</text>
     </div>
     <scroller scroll-direction="horizontal" style="width: 580px">

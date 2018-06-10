@@ -98,7 +98,7 @@ let utilFunc = {
 			})
 		},
 		getRequest(url, header, callback, failCallback, clearLogin) {
-			stream.fetch({
+    	stream.fetch({
 				method: 'GET',
 				type: 'json',
 				headers: header,
