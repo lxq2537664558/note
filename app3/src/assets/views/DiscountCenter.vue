@@ -1,7 +1,7 @@
 <template>
   <div>
     <head-nav @tabTo="onTabTo"></head-nav>
-    <scroller :class="['main-list']" offset-accuracy="300" loadmoreoffset="300">
+    <scroller :class="['main-list', isIpx() ? 'w-ipx' : '']" offset-accuracy="300" loadmoreoffset="300">
       <announcement :bulletinText="bulletinText"></announcement>
       <!--优惠办理中心-->
       <div style="height: 60px;flex-direction: row;background-color: #eeeeee">
@@ -61,10 +61,8 @@
   </div>
 </template>
 <script>
+	import _c from '@/Global.vue'
 	import { WxcOverlay } from 'weex-ui';
-
-	import _globalConfig from '@/Global.vue'
-	const _c = _globalConfig
 
 	import HeadNav from '../components/headNav.vue';
 	import AnCement from '../components/announcement.vue';
@@ -187,6 +185,9 @@
 					},
 					status: 'navTabTo'
 				})
+			},
+			isIpx() {
+				return _c.isIpx()
 			}
     },
 		mounted() {
@@ -224,5 +225,8 @@
     bottom: 0;
     left: 0;
     right: 0;
+  }
+  .w-ipx {
+     bottom: 140px;
   }
 </style>

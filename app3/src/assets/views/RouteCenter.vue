@@ -2,7 +2,7 @@
   <div>
     <head-nav @tabTo="onTabTo"></head-nav>
     <!--网址-->
-    <scroller :class="['main-list']" offset-accuracy="300" loadmoreoffset="300">
+    <scroller :class="['main-list', isIpx() ? 'w-ipx' : '']" offset-accuracy="300" loadmoreoffset="300">
       <div style="height: 280px;position: relative;">
 
         <div style="position: absolute;top: 0;left: 0;right: 0;bottom: 0;">
@@ -18,7 +18,7 @@
       <announcement :bulletinText="bulletinText"></announcement>
       <!--线路-->
       <!--<scroller style="height: 710px;background-color: #f1f1f1"></scroller>-->
-      <list :class="['route-list']" style="background-color: #f1f1f1;">
+      <list :class="['route-list', isIpx() ? 'w-ipx' : '']" style="background-color: #f1f1f1;">
         <cell style="height: 130px;" v-for="route in routes">
           <div style="background-color: #fff;height: 110px;margin-top: 20px;flex-direction: row;align-items: center">
             <div style="width: 169px;flex-direction: row">
@@ -39,8 +39,7 @@
   </div>
 </template>
 <script>
-	import _globalConfig from '@/Global.vue'
-	const _c = _globalConfig
+	import _c from '@/Global.vue'
 
 	import HeadNav from '../components/headNav.vue';
 	import AnCement from '../components/announcement.vue';
@@ -160,7 +159,10 @@
 					},
 					status: 'navTabTo'
 				})
-			}
+			},
+      isIpx() {
+      	return _c.isIpx()
+      }
     },
     components: {
 		  'head-nav': HeadNav,
@@ -183,6 +185,9 @@
     bottom: 90px;
     left: 0;
     right: 0;
+  }
+  .w-ipx {
+    bottom: 140px;
   }
   .route-list {
     position: fixed;

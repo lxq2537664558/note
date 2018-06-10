@@ -2,7 +2,7 @@
   <div>
     <head-nav-text @tabTo="onTabTo" :navTitle="navTitle"></head-nav-text>
     <!--消息记录列表-->
-    <list :class="['main-list']">
+    <list :class="['main-list', isIpx() ? 'w-ipx' : '']">
       <cell @click="clickMsgRecode(v.url)" v-for="v in msgRecodeList" style="background-color: #fff;height: 150px;margin-bottom: 5px;flex-direction: row;align-items: center;justify-content: center">
           <div style="flex: .3;justify-content: center;align-items: center">
             <imageg :src="v.logo" alt="" style="width: 60px;height: 60px;"></imageg>
@@ -17,8 +17,7 @@
   </div>
 </template>
 <script>
-	import _globalConfig from '@/Global.vue'
-	const _c = _globalConfig
+	import _c from '@/Global.vue'
 
 	import headNavText from '../components/headNavText.vue';
   export default {
@@ -71,6 +70,9 @@
 					},
 					status: 'navTabTo'
 				})
+			},
+			isIpx() {
+				return _c.isIpx()
 			}
     },
 		mounted() {
@@ -119,5 +121,8 @@
     bottom: 90px;
     left: 0;
     right: 0;
+  }
+  .w-ipx {
+    bottom: 140px;
   }
 </style>

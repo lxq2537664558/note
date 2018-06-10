@@ -1,7 +1,7 @@
 <template>
   <div>
     <head-nav @tabTo="onTabTo"></head-nav>
-    <scroller :class="['main-list']" offset-accuracy="300" loadmoreoffset="300">
+    <scroller :class="['main-list', isIpx() ? 'w-ipx' : '']" offset-accuracy="300" loadmoreoffset="300">
       <!--轮播图-->
       <div style="height: 280px;">
         <slider class="slider" auto-play="true" interval="5000" @change="changeSlider" infinite="true">
@@ -42,8 +42,7 @@
   </div>
 </template>
 <script>
-	import _globalConfig from '@/Global.vue'
-	const _c = _globalConfig
+	import _c from '@/Global.vue'
 
 	import HeadNav from '../components/headNav.vue';
 	import AnCement from '../components/announcement.vue';
@@ -221,6 +220,9 @@
     bottom: 90px;
     left: 0;
     right: 0;
+  }
+  .w-ipx {
+    bottom: 140px;
   }
   .iconfont {
     font-family:iconfont;

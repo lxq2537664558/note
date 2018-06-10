@@ -22,8 +22,7 @@
     </div>
 </template>
 <script>
-	import _globalConfig from '@/Global.vue'
-	const _c = _globalConfig
+	import _c from '@/Global.vue'
 
 	const modal = weex.requireModule('modal')
 	import util from '../util'

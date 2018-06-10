@@ -1,7 +1,7 @@
 <template>
   <div class="app-wrapper">
       <router-view class="r-box" ></router-view>
-      <tab-bar :test="test" :currentPage="currentPage" @tabTo="onTabTo"></tab-bar>
+      <tab-bar :currentPage="currentPage" @tabTo="onTabTo"></tab-bar>
       <!--加载图标-->
       <wxc-loading
           :show="loading.show"
@@ -19,32 +19,31 @@
 </template>
 
 <script>
+	import _c from '@/Global.vue'
+
 	import { WxcLoading } from 'weex-ui';
+
 	import util from './assets/util';
 	import tabBar from './assets/components/tabBar.vue';
 	import formH from './assets/components/formH.vue'
 	import tipH from './assets/components/tipH.vue'
-	import _globalConfig from '@/Global.vue'
 
-  const _c = _globalConfig
 	const storage = weex.requireModule('storage')
 	const modal = weex.requireModule('modal');
 
-  export default {
-    data () {
-      return {
-      	// 当前页面
-        currentPage: 'Home',
+	export default {
+		data () {
+			return {
+				// 当前页面
+				currentPage: 'Home',
 				// currentPage: 'IntegralExchange',
-      	// 遮罩底层
+				// 遮罩底层
 				bottomMaskShow: false,
 				// 加载按钮
-        loading: {
+				loading: {
 					show: false,
 					text: '加载中...',
-				},
-        test: null,
-        // 提示框
+				},// 提示框
 				tipList: {
 					tipTopUrl: _c.sUrl + '/images/tip_top.png',
 					imageSuccess: _c.sUrl + '/images/image_success.png',
@@ -100,59 +99,59 @@
 				},
 				formList: {
 					show: false
-        },
+				},
 				// 登录信息
-        userInfo: {}
-      }
-    },
-    components: {
-      'tab-bar': tabBar,
+				userInfo: {}
+			}
+		},
+		components: {
+			'tab-bar': tabBar,
 			WxcLoading,
 			'form-h': formH,
 			'tip-h': tipH
 		},
-    created () {
-    	// this.clearLogin()
-    	this.init()
+		created () {
+			// this.clearLogin()
+			this.init()
 		},
-    methods: {
-      onTabTo(_result){
-        let _key = _result.data.key || '';
+		methods: {
+			onTabTo(_result){
+				let _key = _result.data.key || '';
 				if(this.$router) {
 					this.openLoading();
 					// console.log(_key)
-          this.currentPage = _key
-				  this.$router.push('/' + _key)
-        } else {
+					this.currentPage = _key
+					this.$router.push('/' + _key)
+				} else {
 					// console.log('urlError')
-        }
-      },
-      openLoading() {
+				}
+			},
+			openLoading() {
 				this.loading.show = true
-      },
-      closeLoadding() {
-      	setTimeout(() => {
+			},
+			closeLoadding() {
+				setTimeout(() => {
 					this.loading.show = false
 				}, 500)
-      },
-      login(){
+			},
+			login(){
 				this.formList = this.submitForm
 				this.formList.show = true
-      },
-      init() {
-      	let self = this
+			},
+			init() {
+				let self = this
 				storage.getItem('userInfo', e => {
 					if (e.result == 'success') {
 						self.userInfo = e.data ? JSON.parse(e.data) : {}
 					} else {}
-        })
+				})
 			},
-      clearLogin() {
-      	util.setCache('userInfo', null)
-      	this.userInfo = {}
-      },
-      auth(page) {
-      	// console.log(this.userInfo.username)
+			clearLogin() {
+				util.setCache('userInfo', null)
+				this.userInfo = {}
+			},
+			auth(page) {
+				// console.log(this.userInfo.username)
 				if (this.userInfo.username) {
 
 				} else {
@@ -170,10 +169,10 @@
 							status: 'auth'
 						})
 					}
-        }
-      }
-    }
-  }
+				}
+			}
+		}
+	}
 </script>
 
 <style>

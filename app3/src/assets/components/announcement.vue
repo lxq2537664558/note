@@ -10,9 +10,7 @@
   </div>
 </template>
 <script>
-	import _globalConfig from '@/Global.vue'
-	const _c = _globalConfig
-  // const timer = require('@weex-module/timer')
+	import _c from '@/Global.vue'
 
 	const animation = weex.requireModule('animation')
 	const dom = weex.requireModule('dom')

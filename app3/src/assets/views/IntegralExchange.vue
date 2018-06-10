@@ -2,7 +2,7 @@
   <div>
     <head-nav-text @tabTo="onTabTo" :navTitle="navTitle"></head-nav-text>
 
-    <scroller :class="['main-list']" offset-accuracy="300" loadmoreoffset="300">
+    <scroller :class="['main-list', isIpx() ? 'w-ipx' : '']" offset-accuracy="300" loadmoreoffset="300">
       <!--账号信息-->
       <div style="background-color: #fff;height: 100px;flex-direction: row;align-items: center;justify-content: space-between;padding-left: 50px;padding-right: 50px">
         <div style="flex-direction: row">
@@ -52,8 +52,7 @@
   </div>
 </template>
 <script>
-	import _globalConfig from '@/Global.vue'
-	const _c = _globalConfig
+	import _c from '@/Global.vue'
 
 	import HeadNavText from '../components/headNavText.vue';
 	import AnCement from '../components/announcement.vue';
@@ -159,6 +158,9 @@
 						duration: 1
 					}, (value) => {})
 				}, () =>{self.$parent.clearLogin()})
+      },
+      isIpx() {
+        return _c.isIpx()
       }
     },
     components: {
@@ -199,5 +201,8 @@
     bottom: 90px;
     left: 0;
     right: 0;
+  }
+  .w-ipx {
+    bottom: 140px;
   }
 </style>

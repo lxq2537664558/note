@@ -2,7 +2,7 @@
   <div>
     <head-nav-text @tabTo="onTabTo" :navTitle="navTitle" :navRight="{title: 'VIP说明', url: 'VIPexplanation'}"></head-nav-text>
 
-    <scroller :class="['main-list']" offset-accuracy="300" loadmoreoffset="300" style="background-color: white">
+    <scroller :class="['main-list', isIpx() ? 'w-ipx' : '']" offset-accuracy="300" loadmoreoffset="300" style="background-color: white">
       <!--账号信息-->
       <div style="background-color: #fff;height: 100px;flex-direction: row;justify-content: space-between;padding-left: 50px;padding-right: 50px">
         <div style="justify-content: center;">
@@ -73,8 +73,7 @@
 </template>
 <script>
 	import { WxcDialog } from 'weex-ui';
-	import _globalConfig from '@/Global.vue'
-	const _c = _globalConfig
+	import _c from '@/Global.vue'
 
 	import HeadNavText from '../components/headNavText.vue';
 	import util from '../util'
@@ -187,6 +186,9 @@
 				}, () =>{self.$parent.clearLogin()})
 
 				this.confirmShow = false;
+			},
+			isIpx() {
+				return _c.isIpx()
 			}
 		},
     components: {
@@ -245,5 +247,8 @@
     left: 0;
     bottom: 0;
     border-radius: 10px
+  }
+  .w-ipx {
+    bottom: 140px;
   }
 </style>

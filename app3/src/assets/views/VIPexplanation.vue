@@ -2,7 +2,7 @@
   <div>
     <head-nav-text @tabTo="onTabTo" :navTitle="navTitle" ></head-nav-text>
 
-    <scroller :class="['main-list']" offset-accuracy="300" loadmoreoffset="300" style="background-color: white">
+    <scroller :class="['main-list', isIpx() ? 'w-ipx' : '']" offset-accuracy="300" loadmoreoffset="300" style="background-color: white">
       <!--VIP升级说明    -->
       <div style="background-color: #eee;height: 60px;justify-content: center;align-items: center">
         <text style="color: #a92427;font-size: 30px">◆ VIP升级说明 ◆</text>
@@ -41,8 +41,7 @@
   </div>
 </template>
 <script>
-	import _globalConfig from '@/Global.vue'
-	const _c = _globalConfig
+	import _c from '@/Global.vue'
 
 	import HeadNavText from '../components/headNavText.vue';
 	import util from '../util'
@@ -147,7 +146,10 @@
 				}, e => {
 					console.log(e)
 				}, () =>{this.$parent.clearLogin()})
-      }
+      },
+			isIpx() {
+				return _c.isIpx()
+			}
 		},
     components: {
 		  'head-nav-text': HeadNavText,
@@ -215,5 +217,8 @@
     border-bottom-color: #ccc;
     border-bottom-style: solid;
     border-bottom-width: 1px;
+  }
+  .w-ipx {
+    bottom: 140px;
   }
 </style>

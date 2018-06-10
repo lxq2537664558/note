@@ -1,7 +1,7 @@
 <template>
   <div>
     <head-nav @tabTo="onTabTo"></head-nav>
-    <scroller :class="['main-list']" offset-accuracy="300" loadmoreoffset="300">
+    <scroller :class="['main-list', isIpx() ? 'w-ipx' : '']" offset-accuracy="300" loadmoreoffset="300">
       <!--个人资料-->
       <div style="height: 220px">
         <div style="position: absolute;top: 0;left:0;right: 0;bottom:0">
@@ -25,7 +25,7 @@
       </div>
       <!--列表-->
       <!--<scroller scroll-direction="horizontal">-->
-        <scroller class="center-list-scroller">
+        <scroller class="['center-list-scroller', isIpx() ? 'w-ipx' : '']">
           <div class="center-list">
             <div v-for="list in centerList" @click="clickList(list)" style="width: 370px;height: 120px;background-color: #fff;margin-bottom: 5px;flex-direction: row">
               <div style="flex: .3;align-items: flex-end;justify-content: center;">
@@ -60,8 +60,7 @@
 </template>
 <script>
 	import { WxcDialog } from 'weex-ui';
-	import _globalConfig from '@/Global.vue'
-	const _c = _globalConfig
+	import _c from '@/Global.vue'
 
 	const storage = weex.requireModule('storage')
   const modal = weex.requireModule('modal')
@@ -334,6 +333,9 @@
 				let self = this
 				self.confirm.action()
 				this.confirm.show = false;
+			},
+			isIpx() {
+				return _c.isIpx()
 			}
     },
 		mounted() {
@@ -381,6 +383,9 @@
     padding-right: 2px;
     padding-left: 2px;
     padding-top: 10px
+  }
+  .w-ipx {
+    bottom: 140px;
   }
   .center-list-scroller {
     position: fixed;
