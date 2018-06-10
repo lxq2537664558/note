@@ -638,7 +638,7 @@ animation: name duration timing-function delay iteration-count direction play-st
 
 initial 使用初始值
 
-
+linear-gradient(to bottom right, #febe47, #f48f45
 
 flex container
     flex-direction          主轴的方向
@@ -808,3 +808,105 @@ sass
 		}
 
 less
+
+
+
+
+
+
+
+
+
+
+
+
+
+滚动条
+.bottom1 .reboxleft {
+    padding-right: 10px;
+
+    height: 194px;
+    overflow: hidden;
+    overflow-y: scroll;
+    width: 560px;
+    float: left;
+    margin-top: 9px;
+}
+
+.bottom1 .reboxleft::-webkit-scrollbar {
+    width: 8px;
+}
+.bottom1 .reboxleft::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #fa6200;
+    width: 6px;
+}
+.bottom1 .reboxleft::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #fa6200;
+    width: 6px;
+}
+.bottom1 .reboxleft::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #e5e5e5;
+}
+.bottom1 .reboxleft::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #e5e5e5;
+}
+
+
+
+/*单选按钮*/
+.dantuo {
+    margin-left: 28px;
+    margin-top: 4px;
+}
+.dantuo label {
+    margin-right: 20px;
+}
+.dantuo .rdo {
+    width: 0;
+    height: 25px;
+    background-color: #000;
+    margin-right: 28px;
+    border-radius: 50%;
+    position: relative;
+}
+.dantuo .rdo:before,.rdo:after {
+    content: '';
+    display: block;
+    position: absolute;
+    border-radius: 50%;
+    transition: .3s ease;
+}
+.dantuo .rdo:before {
+    top: 0px;
+    left: 0px;
+    width: 18px;
+    height: 18px;
+    background-color: #fff;
+    border: 1px solid #000;
+}
+.dantuo .rdo:after {
+    top: 6px;
+    left: 6px;
+    width: 8px;
+    height: 8px;
+    background-color: #fff;
+}
+.dantuo .rdo:checked:after {
+    top: 3.8px;
+    left: 3.7px;
+    width: 12px;
+    height: 12px;
+    background-color:#f42023;
+}
+.dantuo .rdo:checked:before {
+    border-color:#f42023;
+}
+
+<div class="dantuo">
+    <label><input type="radio" class="rdo" name="dantuo" value="" checked="checked"/>普通</label>
+    <label><input type="radio" class="rdo" name="dantuo" value="1"/>胆拖</label>
+</div>

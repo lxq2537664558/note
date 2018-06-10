@@ -3,6 +3,7 @@ svn全称SubVersion子级版本(自己源代码版本控制管理软件)
 
 创建仓库
 cmd >svnadmin create D:/Subversion/app/book
+/usr/local/svn/bin
 
 启动仓库服务
 	svnserve -d(后台运行) -r(监管目录)  D:\WWW\svn\myapp\shop
@@ -24,7 +25,7 @@ cmd >svnserve -d -r D:/Subversion/app/shop
 黄色叹号	表示该文件正处于冲突状态
 
 开启匿名账号权限
-	仓库文件夹 conf/svnserve.ocnf
+	仓库文件夹 conf/svnserve.conf
 	anon-access = write
 
 版本回退

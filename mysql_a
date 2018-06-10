@@ -824,6 +824,14 @@ TIMESTAMPDIFF(second, startTime, engTime)            startTime到engTime 之间�
 exists
 
 
+$sum_fields = [
+    'ifnull(sum(amount), 0.00) as flowing_water',
+    'sum(case when direct = "0" then amount else 0 end) as income',
+    'ifnull(sum(case when direct = 1 then amount else 0 end),0.00) as expenditure',
+];
+$data = (new MoneyModel)->getListBuild()->field($sum_fields)->find();
+
+
 
 information_schema
 	SCHEMATA表：提供了关于数据库的信息。

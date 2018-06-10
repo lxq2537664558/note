@@ -98,6 +98,8 @@ image 的 resize 属性   控制图片的拉伸方式的，它有三种拉伸方
 调用内建模块
 	weex.requireModule(‘xxx’)
 
+	const animation = weex.requireModule('animation')
+	animation.transition()
 
 weex-ui
 	// 安装
@@ -105,3 +107,32 @@ weex-ui
 
 	// 安装插件
 	npm i babel-preset-stage-0 babel-plugin-component  -D
+
+	1
+		import { WxcComponent1, WxcComponent2 } from "weex-ui"
+	2
+		import WxcComponent1 from "weex-ui/packages/wxc-component1"
+		import WxcComponent2 from "weex-ui/packages/wxc-component2"
+
+
+	在 .babelrc 文件中添加插件配置
+		{
+		  "presets": [
+		    "es2015",
+		    "stage-0"
+		  ],
+		  "plugins": [
+		    [
+		      "component",
+		      {
+		        "libraryName": "weex-ui",
+		        "libDir": "packages"
+		      }
+		    ]
+		  ]
+		}
+
+
+热更新
+	npm run dev
+	npm run serve 

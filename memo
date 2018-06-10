@@ -1,13 +1,118 @@
 9777081419
 
-        if(defined(FC2_FLAG) && FC2_FLAG === true){
-            echo '<pre>';var_dump(321);echo '<hr>';die;
-        }
+
+
+
+做一个keywork
+
+
+积分记录表
+
+
+id
+member_id 会员
+integral  积分
+type      1 签到 2 升级赠送 3 周赠送 4月赠送 5首次绑定赠送
+create_year  哪一年
+create_month 一年中的那一月
+create_week  一年中的那一周
+create_day   一年中的那一天
+create_time  详细时间
+
+
+
+CREATE TABLE `global_appid_log` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(11) unsigned not null DEFAULT 0 comment '会员id',
+  `auth` varchar(128) not nulll DEFAULT '' comment 'auth认证',
+  `app_id` varchar(32) not nulll DEFAULT '' comment '设备唯一id',
+  `user_agent` varchar(256) not null default '' comment '设备类型',
+  `type` varchar(32)  not null default '' comment '设备',
+  `date` bigint(20) unsigned DEFAULT '0' COMMENT '创建时间',
+
+  PRIMARY KEY (`id`),
+  key uid(uid),
+  key auth(auth),
+  key app_id(app_id),
+  type type(type)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+
+
+id
+uid
+auth
+app_id
+user_agent
+
+type
+    ios
+    android
+
+date
 
 
 
 
-FC_DEBUG
+
+
+
+
+create table member_integral  (
+    id int unsigned not null auto_increment,
+
+    title varchar(32) not null default '' comment '域名',
+
+
+
+    create_id int unsigned not null default 0 comment '创建者id  除了管理员只有自己可以删除自己域名',
+    agent_id int unsigned not null default 1 comment '服务商id  1 海洋  2 金沙', 
+
+    status TINYINT unsigned not null default 1 comment '状态 0关闭 1开启   域名关闭后前台将拿不到数据',
+    
+    order_id int not null default 0 comment '排序',
+    create_time int unsigned not null default 0,
+    update_time int unsigned not null default 0,
+
+    key title (title),
+    key type (type),
+    key order_id (order_id),
+    PRIMARY key (id)
+)ENGINE=INNODB  DEFAULT CHARSET=utf8
+
+
+积分出入类型
+ 1   签到    是否自动发送
+
+
+资金出入类型
+1    充值    是否
+
+
+
+
+
+ios
+
+android
+
+swoole
+
+node
+
+移动端页面
+
+SASS
+
+vue-element-admin
+
+c
+
+phalconphp
+
+vuido
+
+
 
 
 wunderlist
@@ -17,11 +122,83 @@ todoist
 
 animate
 
+netstat -anp 
+
+canvas
 
 
 
 
 
+php STDOUT
+
+ps aft | grep tcp.php
+
+
+nc  linux工具   netcat
+
+html websocket
+
+
+swoole 配置参数
+
+
+css 变量
+
+
+new Date()  格式化
+
+
+
+go 语言
+
+deno
+
+
+
+
+auth    id _ 用户名
+
+用户id
+用户名
+等级
+最后签到时间
+
+
+
+下一级积分
+
+
+
+
+auth   储存在缓存   地址也要存储
+
+
+auth key = 
+
+缓存里面的值是  auth_ 加密(username_uid)  userinfo的数据
+
+登录成功时  给缓存住信息
+
+
+
+验证   访问时
+
+
+
+
+
+
+
+composer require phpoffice/phpexcel
+
+composer require topthink/think-queue
+
+
+
+
+47.90.106.4:1111
+hugo 密sdfafaf#123dfa333
 
 47.90.106.4
 root
@@ -37,60 +214,27 @@ http://47.90.106.4:39001/
 v.99205.site
 
 
+@tabTo="onTabTo"
 
-composer require phpoffice/phpexcel
-
-composer require topthink/think-queue
-
-
-
-<div class="numButton">
-
-
-
-
-<div class="actButton">
+onTabTo(url) {
+    this.$parent.onTabTo({
+        data: {
+            key: url
+        },
+        status: 'navTabTo'
+    })
+},
 
 
-
-
-<div class="butButton">
-
-
-
-
-<div class="qingButton">
-
-
-<div class="checkButton">
-
-
-</div>
-
-// 添加注单  清除按钮点击
-
-// 复选框
-
-// 清除按钮
-
-// 确认投注
-
-// 随机注单
-
-
-
- class="rdo"
-
-
-
-
-
-
+首次绑定送积分
+解决了跨域的问题
+每日签到
+app登录验证
 
 
 Bt-Panel: http://47.52.33.206:8888
 username: admin
-password: 0b140635
+password: qqqq4321
 
 42xx_com
 BCwSXwAmnh
@@ -158,6 +302,15 @@ alter table oa_admin_user add column domains varchar(32) not null default '';
 
 alter table oa_admin_user modfiy column domains varchar(32) not null dafault '' comment '所拥有域名';
 
+
+
+ <wxc-loading 
+          :show="loading.show"
+          :loading-text="loading.text"
+          :need-mask="true"
+          :interval="'200'"
+          :mask-style="{backgroundColor: 'rgba(0, 0, 0, .6)'}"
+    >
 
 
 
@@ -262,312 +415,8 @@ create table oa_domain(
 )ENGINE=INNODB  DEFAULT CHARSET=utf8
 
 
-// 全局参数
-create table global_config(
-    id int unsigned not null auto_increment,
-
-    config_name varchar(32) not null default '' comment '参数名',
-    config_type tinyint unsigned not null default 0 comment '数据类型 0 字符串 1 数值 2 对象',
-    config_default_value text comment '全局配置默认参数',
-    description text comment '描述',
-
-    web_type_id tinyint unsigned not null default 0 comment '所属网站类型',
-
-    need_auth tinyint unsigned not null default 0 comment '验证登录  0 不验证 1 验证',
-
-    status TINYINT not null default 0 comment '状态 0关闭 1开启',
-    order_id int not null default 0 comment '排序',
-    create_time int unsigned not null default 0,
-    update_time int unsigned null default 0,
-
-    key config_name (config_name),
-    key web_type_id (web_type_id),
-    key order_id (order_id),
-    PRIMARY key (id)
-)ENGINE=INNODB  DEFAULT CHARSET=utf8 comment='全局配置'
-
-
-// 全局 参数数据
-create table global_config_value(
-    id int unsigned not null auto_increment,
-
-    config_id int unsigned not null default 0 comment '配置id',
-    config_value text comment '参数的值',
-    domain_id int unsigned not null default 0 comment '域名id',
-    create_id int unsigned not null default 0 comment '创建者',
-
-    status TINYINT not null default 0 comment '状态 0关闭 1开启',
-    order_id int not null default 0 comment '排序',
-    create_time int unsigned not null default 0,
-    update_time int unsigned null default 0,
-
-    key config_id (config_id),
-    key domain_id (domain_id),
-    key create_id (create_id),
-    key order_id (order_id),
-    PRIMARY key (id)
-)ENGINE=INNODB  DEFAULT CHARSET=utf8 comment='参数数据'
-
-
-
-
-
-
-
-
-
-create table member(
-    id int unsigned not null auto_increment,
-
-
-    status TINYINT unsigned not null default 0 comment '状态 0关闭 1开启',
-    order_id int not null default 0 comment '排序',
-    create_time int unsigned not null default 0,
-    update_time int unsigned null default 0,
-
-    key order_id (order_id),
-    PRIMARY key (id)
-)ENGINE=INNODB  DEFAULT CHARSET=utf8
-
-
-// 会员 member
-create table member(
-    id int unsigned not null auto_increment,
-    username varchar(32) not null default '' comment '用户名',
-    password varchar(32) not null default '' comment '密码',
- 
-    level_id int unsigned not null default '' comment '层级id',
-    sc_id int unsigned not null default '' comment '股东id',
-
-    app_id varchar(32) not null default '' comment '设备id', 
-    
-    clock_in_score int unsigned not null default 0 comment '签到积分',
-
-     
-    state TINYINT not null default 0 comment '状态 0关闭 1开启',
-    order_id int not null default 0 comment '排序',
-    create_time int unsigned not null default 0,
-    update_time int unsigned not null default 0,
-
-    key username (username),
-    key level_id (level_id),
-    key sc_id (sc_id),
-    key app_id (app_id),
-    PRIMARY key (id)
-)ENGINE=INNODB  DEFAULT CHARSET=utf8
-
-
-// 签到记录  clock_in_log
-create table clock_in_log(
-    id int unsigned not null auto_increment,
-
-    member_id int unsigned not null default 0 comment '会员id',
-date int unsigned not null default 0 comment '签到日期 Ymd',
-
-    create_time int unsigned not null default 0,
-    
-    key member_id(member_id),
-    key date(date),
-    key create_time(create_time),
-    PRIMARY key (id)
-)ENGINE=INNODB  DEFAULT CHARSET=utf8
-
-
-积分记录表
-    id
-    uid
-    时间
-    积分状态  122  
-    type 1 2
-    desc
-
-
-兑换奖品表
-    id
-    积分
-    奖品
-    状态
-    排序
-
-
-彩金兑换记录表
-    用户id
-    兑换奖品id
-    申请时积分
-    兑换时间
-    状态    申请中
-    审核人 
-
-// 推荐人关系表 recommender
-create table recommender(
-    id int unsigned not null auto_increment,
-
-    member_id int unsigned not null comment '会员id',
-    recommender_id int unsigned not null comment '推荐人id',
-
-    create_time int unsigned not null default 0,
-
-    key member_id(member_id),
-    key recommender_id(recommender_id),
-    PRIMARY key (id)
-)ENGINE=INNODB  DEFAULT CHARSET=utf8
-
-
-vip_level
-    id
-    name
-    限额
-
-    送的
-
-
-反馈
-Feedback
-    id
-    uid
-    phone
-    text
-    imgs uuu,jjjhh,ggfff
-    type 0 建议
-
-
-
-
-返水表 记录表
-
-
-
-
-
-
-
-twig
-
-yaml
-
-socketLog
-
-
-
-
-
-
-
-
-    sc_name int not null default '' comment '股东名',
-
-
-
-
-
-
-create table vc_rqcode(
-    id int unsigned not null auto_increment,
-    username varchar(32) not null default '' comment '账号',
-    image_url varchar(64) not null default '' comment '二维码地址',
-    type tinyint UNSIGNED not null default 0 comment '类型',
-  state TINYINT not null default 0 comment '状态 0关闭 1开启',
-    order_id int not null default 0 comment '排序',
-  create_time datetime not null default '0000-00-00 00:00:00',
-  update_time datetime not null default '0000-00-00 00:00:00',
-    PRIMARY key (id)
-)ENGINE=INNODB  DEFAULT CHARSET=utf8
-
-alter table vc_rqcode modify type varchar(32) not null default '' comment '根据域名分类';
-
-
-
-
-
-
-E:\www\qq7819.com\guanli\menu.php
-E:\www\qq7819.com\guanli\RQcode_list.php
-E:\www\qq7819.com\guanli\RQcode_add.php
-E:\www\qq7819.com\guanli\RQcode_set.php
-E:\www\qq7819.com\data\recode.php
-
-56378590
-
-api模板生成
-
-  加上 
-
-  查询方式为本地数据库查询
-
-
-images/listbg_2m.png
-
-//支付类型
-pay_type
-
-create table vc_pay_type(
-    id SMALLINT UNSIGNED AUTO_INCREMENT,
-    name char(32) not null default '',
-    nick char(32) not null default '' comment '中文名称',
-    state TINYINT(1) UNSIGNED not null default 0 comment '状态 0关闭 1开启 2维护',
-    logo char(32) not null default '' comment '图片地址',
-    default_opt MEDIUMINT unsigned not null default 0 comment '默认支付方式',
-    is_mobile tinyint unsigned not null default 0 comment '是否为移动端支付类型  0 不是  1 是',
-    sort int unsigned not null default 0,
-    PRIMARY KEY (`id`)  
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '支付类型';
-
-
-//支付商家
-pay_merchant
-
-create table vc_pay_merchant(
-    id MEDIUMINT UNSIGNED AUTO_INCREMENT,
-    name char(32) not null default '',
-    path char(16) not null default '' comment '文件夹名', 
-    state TINYINT(1) UNSIGNED not null default 0 comment '状态 0关闭 1开启 2维护',
-    sort int unsigned not null default 0,
-    create_time int unsigned not null default 0,
-    update_time int unsigned not null default 0,
-    PRIMARY KEY (`id`)  
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '支付商家';
-
-
-//支付方式
-vc_pay_type_merchant
-
-create table vc_pay_type_merchant(
-    id MEDIUMINT UNSIGNED AUTO_INCREMENT,
-    type_id SMALLINT UNSIGNED not null default 0 comment '支付类型id',
-    merchant_id MEDIUMINT UNSIGNED not null default 0 comment '支付商家id',
-    code char(32) not null default '' comment '支付code',
-    min_amount int UNSIGNED not null default 0 comment '最小限额',
-    max_amount int UNSIGNED not null default 0 comment '最大限额',
-    state TINYINT(1) UNSIGNED not null default 0 comment '状态 0关闭 1开启 2维护',
-    action char(16) not null default '' comment '执行的方法名',
-    extend_name char(32) not null default '' comment '支付扩展名',
-    sort int unsigned not null default 0,
-    create_time int unsigned not null default 0,
-    update_time int unsigned not null default 0,
-    PRIMARY KEY (`id`)  
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 comment '支付方式';
-
-
-
-
-
-$global[is_many_request] 
-
-
-
-array_key_exists() 
 
 get_defined_vars()
-
-
-
-
-
-http://mypay.8889s.com/api/zhongbaopay/pay.php?username=test&coin=50&type=ALIPAY&bank=&banktype=ALIPAY
-
-
-
-
 
 
 
@@ -578,25 +427,6 @@ redis-server /etc/redis/6379.conf
 
 
 systemctl restart network.service
-
-
-
-
-
-      //随机的wechat图片
-      var wechatImageArr = ['kjhyu879', 'qqo25886'];
-      //var Math.floor(Math.random()*10);//生成0-9的随机数 
-     var randomIndex = Math.floor(Math.random() * wechatImageArr.length)  //随机数
-     
-      $('#weChatImage').attr('src', '/images/weixin/' + wechatImageArr[randomIndex] + '.png');
-      $('#weChatName').html(wechatImageArr[randomIndex]);
-
-
-
-
-
-
-
 
 
 

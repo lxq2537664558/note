@@ -722,11 +722,11 @@ curd操作
 		find成功返回一维数组没有满足默认返回null
 
 		where( 字段名，条件表达式，查询值 )
-		EQ、 = 			等于（=）
-		NEQ、 			不等于（）
-		GT、 > 			大于（>）
-		EGT、>= 		大于等于（>=）
-		LT、 < 			小于（<）
+		EQ  = 			等于（=）
+		NEQ  			不等于（）
+		GT  > 			大于（>）
+		EGT >= 		大于等于（>=）
+		LT  < 			小于（<）
 		ELT、 <= 		小于等于（<=）
 		LIKE 			模糊查询
 		[NOT] BETWEEN 	（不在）区间查询
@@ -1491,3 +1491,20 @@ ThinkPHP5快速入门
 图片处理
 单元测试
 助手函数
+
+
+
+
+
+模型
+	子查询
+		select(false)    返回sql 
+		fetchSql(true)   返回sql 支持所有的 curd 查询
+		buildSql()       返回sql  使用括号包裹了起来 (sql)
+
+		Db::table($sql . 'a')
+
+
+
+
+
