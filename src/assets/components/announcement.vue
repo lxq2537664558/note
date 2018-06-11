@@ -48,11 +48,14 @@
 		mounted() {
 			const testEl = this.$refs.test
 
-			dom.getComponentRect(testEl, (info) => {
-				if (info.size.width > 650) {
-					//公告溢出时滚动
-					this.bulletinA(testEl)
-        }
+			dom.getComponentRect(testEl, info => {
+				let self = this
+				setTimeout(() => {
+					if (info.size && info.size.width && info.size.width > 650) {
+						//公告溢出时滚动
+						self.bulletinA(testEl)
+					}
+        }, 200)
 			})
     },
     created() {}

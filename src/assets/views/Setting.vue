@@ -5,13 +5,13 @@
     <list :class="['main-list', isIpx() ? 'w-ipx' : '']">
       <cell @click="clickSetting(v.url)" v-for="v in settingList" style="background-color: #fff;height: 120px;margin-bottom: 5px;flex-direction: row;align-items: center;justify-content: center">
         <div style="flex: .4;align-items: center">
-          <imageg :src="v.logo" alt="" style="width: 50px;height: 50px"></imageg>
+          <image :src="v.logo" alt="" style="width: 50px;height: 50px"></image>
         </div>
         <div style="flex: 1">
           <text style="font-size: 30px;color: #555">{{v.title}}</text>
         </div>
         <div style="flex: .3;align-items: center">
-          <imageg :src="rightArrow" alt="" style="width: 25px;height: 25px"></imageg>
+          <image :src="rightArrow" alt="" style="width: 25px;height: 25px"></image>
         </div>
       </cell>
     </list>

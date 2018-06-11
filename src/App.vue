@@ -52,7 +52,7 @@
 					// type: 'default',
 					// type: 'imageText',
 					// type: 'lulu',
-					type: 'submit',
+					type: 'default',
 					// 内容
 					// text: '您当前积分不足100',
 					text: '兑换成功',
@@ -64,7 +64,7 @@
 					currentScore: 666,
 					needScore: 100,
 					// 提交按钮
-					submitShow: true,
+					submitShow: false,
 					// 是否显示
 					show: false
 				},
@@ -82,7 +82,8 @@
 						{
 							name: 'password',
 							placeholder: '请输入您的密码',
-							value: ''
+							value: '',
+							type: 'password'
 						}
 					],
 					submitUrl: 'member/login',
@@ -93,15 +94,20 @@
 						modal.toast({
 							message: '登录成功',
 							duration: 0.3
-						}, function (value) {
 						})
+
+						if (_c.authUrlJump.indexOf(this.auhtLoginUrl) > -1) {
+							this.onTabTo({data: {key: this.auhtLoginUrl}})
+						}
 					}
 				},
 				formList: {
 					show: false
 				},
 				// 登录信息
-				userInfo: {}
+				userInfo: {},
+        // 登录验证url
+        auhtLoginUrl: ''
 			}
 		},
 		components: {
@@ -110,20 +116,25 @@
 			'form-h': formH,
 			'tip-h': tipH
 		},
-		created () {
-			// this.clearLogin()
+		created() {
+			this.clearLogin()
 			this.init()
+      // 获取设备信息
+      this.getDevInfo()
+
+      //
 		},
 		methods: {
 			onTabTo(_result){
 				let _key = _result.data.key || '';
 				if(this.$router) {
-					this.openLoading();
-					// console.log(_key)
-					this.currentPage = _key
-					this.$router.push('/' + _key)
+					this.auhtLoginUrl = ''
+          if (this.auth(_key)) {
+						this.currentPage = _key
+						this.openLoading()
+						this.$router.push('/' + _key)
+					}
 				} else {
-					// console.log('urlError')
 				}
 			},
 			openLoading() {
@@ -142,7 +153,13 @@
 				let self = this
 				storage.getItem('userInfo', e => {
 					if (e.result == 'success') {
-						self.userInfo = e.data ? JSON.parse(e.data) : {}
+						let userInfo = {}
+						if (e.data) {
+							userInfo = JSON.parse(e.data)
+						}
+
+						// self.userInfo = e.data ? JSON.parse(e.data ) : {}
+						self.userInfo = userInfo
 					} else {}
 				})
 			},
@@ -151,26 +168,33 @@
 				this.userInfo = {}
 			},
 			auth(page) {
-				// console.log(this.userInfo.username)
-				if (this.userInfo.username) {
+				if (_c.authUrlArr.indexOf(page) > -1) {
+					// 需要登录验证的  页面
+					if (!this.userInfo.username) {
+						this.auhtLoginUrl = page
+            modal.alert({
+              message: '请先登录',
+              duration: 0.3
+            }, () => {
+              this.login()
+            })
 
-				} else {
-					modal.alert({
-						message: '请先登录',
-						duration: 0.3
-					}, () => {
-						this.login()
-					})
-					if (page) {
-						this.onTabTo({
-							data: {
-								key: page
-							},
-							status: 'auth'
-						})
-					}
+            return false;
+          }
 				}
-			}
+				return true
+			},
+			getDevInfo() {
+				util.GET('log/getDevInfo', [{name: 'devInfoJson', value: JSON.stringify(weex.config)}], () => {}, () => {}, () => {})
+      },
+			jumpWeb (_url) {
+				// if(!_url) _url = 'http://m.you.163.com/topic/v1/pub/XLymbwEO0J.html';
+				const url = this.$getConfig().bundleUrl;
+				navigator.push({
+					url: util.setBundleUrl(url, 'page/webview.js?weburl='+_url) ,
+					animated: "true"
+				});
+			},
 		}
 	}
 </script>

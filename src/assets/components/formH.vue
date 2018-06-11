@@ -13,8 +13,9 @@
                style="height: 85px;margin-bottom: 20px;padding-left: 40px;padding-right: 40px">
             <div style="flex: 1;height: 85px">
               <!--<input type="text">-->
-              <input type="text" :name="item.name" v-model="item.value"
-                     style="flex: 1;background-color: #ededed;border-radius: 15px;font-size: 28px;padding-left: 30px;padding-right: 30px;color: #333"
+              <input :type="item.type ? item.type : 'text'"
+                     :name="item.name" v-model="item.value"
+                     style="flex: 1;background-color: #ededed;border-radius: 20px;padding-left: 30px;padding-right: 30px;color: #333"
                      :placeholder="item.placeholder">
             </div>
           </div>
@@ -22,7 +23,7 @@
           <div style="height: 150px;justify-content: flex-end;align-items: center;">
             <div @click="clickSubmit"
                 style="width: 300px;height: 75px;justify-content: center;align-items: center;background-color: #ffcb2f;margin-bottom: 25px;border-radius: 50px">
-              <text style="color: #333">提交</text>
+              <text style="color: #555">提交</text>
             </div>
           </div>
         </div>

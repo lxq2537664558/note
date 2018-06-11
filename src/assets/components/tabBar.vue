@@ -3,9 +3,7 @@
     <div class="bar-item" @click="tabTo(key)" v-for="(nav, key) of bottomNav" style="align-items: center">
       <image :src="nav.logo +  (currentPageIndex == key ? '_active.png' : '.png')" alt=""
              style="width: 30px;height: 30px; margin-top: 15px"></image>
-      <text class="bar-txt" :style="{fontSize: '28px', color: currentPageIndex == key ? '#fecd2e' : '#eeeeee'}">
-        {{nav.title}}
-      </text>
+      <text class="bar-txt" :style="{fontSize: '28px', color: currentPageIndex == key ? '#fecd2e' : '#eeeeee'}">{{nav.title}}</text>
     </div>
   </div>
 </template>

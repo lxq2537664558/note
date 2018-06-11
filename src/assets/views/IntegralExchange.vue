@@ -6,11 +6,11 @@
       <!--账号信息-->
       <div style="background-color: #fff;height: 100px;flex-direction: row;align-items: center;justify-content: space-between;padding-left: 50px;padding-right: 50px">
         <div style="flex-direction: row">
-          <imageg :src="userLogo" alt="" style=";width: 40px;height: 40px;"></imageg>
+          <image :src="userLogo" alt="" style=";width: 40px;height: 40px;"></image>
           <text style="flex: 1;font-size: 30px;margin-left: 10px;color: #333">账号:  {{user.username}}</text>
         </div>
         <div style="flex-direction: row;">
-          <imageg :src="integralLogo" alt="" style=";width: 40px;height: 40px;"></imageg>
+          <image :src="integralLogo" alt="" style=";width: 40px;height: 40px;"></image>
           <text style="flex: 1;font-size: 30px;margin-left: 10px;color: #333">当前积分:  {{user.integral}}</text>
         </div>
       </div>
@@ -20,11 +20,11 @@
           <image :src="left_arrow" alt="" style="width: 45px;height: 45px"></image>
         </div>
         <div style="flex: 1;flex-direction: row;align-items:center;justify-content: center;">
-          <imageg :src="giftLogo" alt="" style="height: 40px;width: 40px"></imageg>
+          <image :src="giftLogo" alt="" style="height: 40px;width: 40px"></image>
           <text style="color: #b72021;margin-left: 10px;font-size: 30px;">选择礼品进行兑换</text>
         </div>
         <div style="flex: .3;align-items: flex-end;justify-content: center">
-          <imageg :src="right_arrow" alt="" style="height: 45px;width: 45px;"></imageg>
+          <image :src="right_arrow" alt="" style="height: 45px;width: 45px;"></image>
         </div>
       </div>
       <!--礼品-->
@@ -92,12 +92,12 @@
           this.$parent.tipList.type = 'default'
           this.$parent.tipList.text = '您当前积分不足 ' + item.integral + ' (╯︵╰)'
           this.$parent.tipList.submitShow = false
-				// } else if (item.inStock < 1) {
-				// 	// 库存不够
-				// 	this.$parent.tipList.show = true
-				// 	this.$parent.tipList.type = 'default'
-				// 	this.$parent.tipList.text = '库存不足 (╯︵╰)'
-				// 	this.$parent.tipList.submitShow = false
+				} else if (item.inStock < 1) {
+					// 库存不够
+					this.$parent.tipList.show = true
+					this.$parent.tipList.type = 'default'
+					this.$parent.tipList.text = '库存不足 (╯︵╰)'
+					this.$parent.tipList.submitShow = false
 				} else {
           // 确认兑换
           this.$parent.tipList.show = true

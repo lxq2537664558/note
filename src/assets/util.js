@@ -68,7 +68,6 @@ let utilFunc = {
 		let self = this
 		let url = 'http://api.hy590.vip/' + api
 		// let url = 'http://my.vuethink.com/' + api
-
 		// 有参数的话  拼接为字符串加在 url后面
 		if (data.length > 0) {
 			let formStr = ''
@@ -88,7 +87,11 @@ let utilFunc = {
 		}
 		storage.getItem('userInfo', e => {
 			if (e.result == 'success') {
-				let userInfo = e.data ? JSON.parse(e.data) : {}
+				let userInfo = {}
+				if (e.data) {
+					userInfo = JSON.parse(e.data)
+				}
+
 				header.authKey = userInfo.auth
 				// console.log(userInfo)
 				self.getRequest(url, header, callback, failCallback, clearLogin)
@@ -104,19 +107,23 @@ let utilFunc = {
 			headers: header,
 			url: url
 		}, (rst) => {
-			if (rst.data.code == 200) {
-				callback(rst)
-			} else if (rst.data.code == 101) {
-				// 验证失败
-				// 提示信息
-				modal.alert({
-					message: rst.data.message,
-					duration: 1
-				}, function (value) {
-				})
-				// 删除用户登录信息  和缓存
-				clearLogin()
-			} else {
+			if(rst.data){
+				if (rst.data.code == 200) {
+					callback(rst)
+				} else if (rst.data.code == 101) {
+					// 验证失败
+					// 提示信息
+					modal.alert({
+						message: rst.data.message,
+						duration: 1
+					}, function (value) {
+					})
+					// 删除用户登录信息  和缓存
+					clearLogin()
+				} else {
+					failCallback(rst)
+				}
+			}else{
 				failCallback(rst)
 			}
 		}, (rst) => {
@@ -152,10 +159,6 @@ let utilFunc = {
 			storage.setItem(key, value, e => {
 			})
 		}
-	},
-
-	isIpx() {
-		return weex && (weex.config.env.deviceModel === 'iPhone10,3' || weex.config.env.deviceModel === 'iPhone10,6');
 	}
 };
 

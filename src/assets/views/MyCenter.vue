@@ -342,8 +342,6 @@
 			this.$parent.closeLoadding()
 		},
 		created() {
-			// 判断权限
-      this.$parent.auth('Home')
 			this.init()
     }
   }

@@ -22,7 +22,7 @@
         <cell style="height: 130px;" v-for="route in routes">
           <div style="background-color: #fff;height: 110px;margin-top: 20px;flex-direction: row;align-items: center">
             <div style="width: 169px;flex-direction: row">
-              <image :src="newBulletinLog" alt="" style="margin-left: 20px;height: 30px;width: 30px;" ></image>
+              <image :src="routeCenterLogo" alt="" style="margin-left: 20px;height: 30px;width: 30px;" ></image>
               <text style="margin-left: 10px;font-size: 22px;color: #555">{{route.title}}</text>
             </div>
             <div style="width: 1px;background-color: #aaa;height: 50px;"></div>
@@ -47,6 +47,7 @@
   export default {
     data() {
       return {
+				routeCenterLogo: _c.sUrl + '/images/route_center_active.png',
       	// 公告
 				bulletinText: '啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊',
         // domain
@@ -140,9 +141,7 @@
             showUrl: 'http://www.baidu.com',
             url: '1'
           },
-        ],
-        newBulletinLog: _c.sUrl + '/images/new_bulletin.png',
-        newBulletinText: '不计输赢天天返回优惠无需申请, 美东时间: 2018/4/30'
+        ]
       }
     },
     methods: {

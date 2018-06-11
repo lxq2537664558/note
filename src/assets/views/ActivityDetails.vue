@@ -45,7 +45,7 @@
       <!--奖品-->
       <div style="height: 80px;flex-direction: row;justify-content: center;align-items: center">
         <text style="color: #b72021;font-size: 30px;margin-right: 40px">奖励</text>
-        <imageg :src="moneyLog" alt="" style="height: 45px;width: 45px;"></imageg>
+        <image :src="moneyLog" alt="" style="height: 45px;width: 45px;"></image>
         <text style="margin-left: 10px;margin-right: 30px;font-size: 30px;color: #333">{{user.reward}}</text>
       </div>
       <div style="height: 15px;background-color: #ededed"></div>
