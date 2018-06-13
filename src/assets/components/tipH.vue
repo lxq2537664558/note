@@ -11,8 +11,8 @@
           <!--tip-center-->
           <div style="background-color: #ffffff;border-bottom-left-radius: 20px;border-bottom-right-radius: 20px">
             <!--tip-text default-->
-            <div v-if="tipList.type == 'default'" style="justify-content: center;align-items: center;margin-bottom: 100px;margin-top: 70px;">
-                <text style="font-size: 38px;color: #666666">{{tipList.text}}</text>
+            <div v-if="tipList.type == 'default'" style="justify-content: center;align-items: center;margin-top: 70px;">
+                <text style="font-size: 38px;color: #666666;padding-bottom: 100px">{{tipList.text}}</text>
             </div>
             <!--tip-text image-text -->
             <div v-if="tipList.type == 'imageText'" style="justify-content: center;align-items: center;margin-bottom: 100px;margin-top: 70px;flex-direction: row">
@@ -61,7 +61,7 @@
             <div v-if="tipList.submitShow" style="height: 150px;justify-content: flex-end;align-items: center;">
               <div  @click="clickSubmit"
                    style="width: 300px;height: 75px;justify-content: center;align-items: center;background-color: #ffcb2f;margin-bottom: 25px;border-radius: 50px">
-                <text style="color: #333">确认</text>
+                <text style="color: #333333">确认</text>
               </div>
             </div>
           </div>

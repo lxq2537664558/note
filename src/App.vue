@@ -117,12 +117,10 @@
 			'tip-h': tipH
 		},
 		created() {
-			this.clearLogin()
+			// this.clearLogin()
 			this.init()
       // 获取设备信息
       this.getDevInfo()
-
-      //
 		},
 		methods: {
 			onTabTo(_result){

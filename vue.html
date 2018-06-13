@@ -1,6 +1,63 @@
-/webpack-dev-server.js
+组件
 
-const   常量
+<head-b></head-b>
+	
+import headA from './components/head.vue'
+
+	components: {
+		headB:  headA
+	}
+
+
+// 全局组件 不需要声明
+
+
+main.js
+import headA from './components/head.vue'
+
+Vue.component('headB', headA)	
+
+
+传值
+prors
+
+传方法
+$on  
+$emit
+
+
+
+css
+	scoped  局部使用
+
+
+
+过滤器
+vm.filters: {
+	myFilter: function($value){
+		return 1;
+	}
+}
+
+
+全局
+Vue.filter('myFilter', function($value){
+	return 1;
+})
+
+组件内
+
+
+
+
+
+
+
+
+
+
+
+/webpack-dev-server.js
 
 
 

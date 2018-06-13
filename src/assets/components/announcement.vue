@@ -4,8 +4,8 @@
       <image :src="newBulletinLog" alt="" style="width: 30px;height: 30px;margin-right: 5px"></image>
       <text style="font-size: 24px;font-weight: 500;color: #333;">最新公告:</text>
     </div>
-    <scroller scroll-direction="horizontal" style="width: 580px">
-      <text class="announcement-text" ref="test" :style="{width: this.bulletinText.length * 22 + 22 + 'px'}">{{bulletinText}}</text>
+    <scroller scroll-direction="horizontal" :scrollable="false" style="width: 580px;margin-left: 10px">
+      <text class="announcement-text" ref="test" :style="{width: announTextWidth + 'px'}">{{bulletinText}}</text>
     </scroller>
   </div>
 </template>
@@ -26,7 +26,30 @@
     methods: {
 			// 公告动画
       bulletinA(el) {
+      	console.log(1)
 				setTimeout(() => {
+					animation.transition(el, {
+						styles: {
+							transform: 'translateX(-102%)'
+						},
+						duration: 10000,
+						delay: 0
+					}, () => {
+						console.log(2)
+						animation.transition(el, {
+							styles: {
+								transform: 'translateX(0)'
+							},
+							duration: 0,
+							delay: 0
+						}, () => {})
+					});
+				}, 10000);
+      },
+			invalid: (obj, testEl) => {
+        let self = obj
+        let el = testEl
+      	let time = setTimeout(function(){
 					animation.transition(el, {
 						styles: {
 							transform: 'translateX(-102%)'
@@ -37,26 +60,30 @@
 						animation.transition(el, {
 							styles: {
 								transform: 'translateX(0)'
-							}
+							},
+							duration: 0,
+							delay: 0
 						}, () => {
-							this.bulletinA(el)
-						})
+							// ???
+            })
 					});
-				}, 2000);
-      },
+
+					clearTimeout(time)
+          self.invalid(self, el)
+        }, 10000)
+      }
     },
 		mounted() {
 			const testEl = this.$refs.test
 
-			dom.getComponentRect(testEl, info => {
-				let self = this
-				setTimeout(() => {
-					if (info.size && info.size.width && info.size.width > 650) {
-						//公告溢出时滚动
-						self.bulletinA(testEl)
-					}
-        }, 200)
-			})
+			if (this.announTextWidth > 650) {
+        this.invalid(this, testEl)
+			}
+    },
+    computed: {
+      announTextWidth() {
+      	return this.bulletinText.length * 22 + 22
+      }
     },
     created() {}
   }

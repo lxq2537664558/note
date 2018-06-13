@@ -24,8 +24,7 @@
 
       </div>
       <!--列表-->
-      <!--<scroller scroll-direction="horizontal">-->
-        <scroller class="['center-list-scroller', isIpx() ? 'w-ipx' : '']">
+        <scroller :class="['center-list-scroller', isIpx() ? 'w-ipx' : '']">
           <div class="center-list">
             <div v-for="list in centerList" @click="clickList(list)" style="width: 370px;height: 120px;background-color: #fff;margin-bottom: 5px;flex-direction: row">
               <div style="flex: .3;align-items: flex-end;justify-content: center;">
@@ -38,7 +37,6 @@
             </div>
           </div>
         </scroller>
-      <!--</scroller>-->
 
 
     </scroller>

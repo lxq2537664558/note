@@ -1,63 +1,23 @@
 9777081419
 
-
-
-
-做一个keywork
-
-
-积分记录表
-
-
-id
-member_id 会员
-integral  积分
-type      1 签到 2 升级赠送 3 周赠送 4月赠送 5首次绑定赠送
-create_year  哪一年
-create_month 一年中的那一月
-create_week  一年中的那一周
-create_day   一年中的那一天
-create_time  详细时间
-
-
-
-CREATE TABLE `global_appid_log` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `uid` int(11) unsigned not null DEFAULT 0 comment '会员id',
-  `auth` varchar(128) not nulll DEFAULT '' comment 'auth认证',
-  `app_id` varchar(32) not nulll DEFAULT '' comment '设备唯一id',
-  `user_agent` varchar(256) not null default '' comment '设备类型',
-  `type` varchar(32)  not null default '' comment '设备',
-  `date` bigint(20) unsigned DEFAULT '0' COMMENT '创建时间',
-
-  PRIMARY KEY (`id`),
-  key uid(uid),
-  key auth(auth),
-  key app_id(app_id),
-  type type(type)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
-
-
-
-id
-uid
-auth
-app_id
-user_agent
-
-type
-    ios
-    android
-
-date
+CREATE ALGORITHM=UNDEFINED DEFINER=`jshd1005`@`%` 
+SQL SECURITY DEFINER VIEW `user_group_level` AS select 
+        `vc_member`.`userName` AS `userName`,
+        `vc_member`.`levelId` AS `levelId`,
+        `vc_group_level`.`groupId` AS `groupId`,
+        `vc_member`.`scName` AS `scName` 
+            
+    from (`vc_member` join `vc_group_level` on(
+            (
+                (`vc_member`.`levelId` = `vc_group_level`.`levelId`) and (`vc_member`.`scId` = `vc_group_level`.`scId`)
+            )
+    ))
 
 
 
 
 
-
-
-
+api.hy590.vip
 create table member_integral  (
     id int unsigned not null auto_increment,
 
@@ -242,6 +202,11 @@ BCwSXwAmnh
 svn://103.35.116.101:1111
 hugo   密码etdclzvbfgdfa#234
 
+
+//    app01
+//    qwe123
+
+
 金沙：
 vonly=eefe5edda0438ade95879a636d3e2936
 svn://47.52.154.155
@@ -295,6 +260,8 @@ alert talbe global_config add create_id int unsigned not null default 0 comment 
 
 
 域名管理添加
+
+alter table global_member add column user_id int not null default 0;
 
 
 alter table oa_admin_user add column domains varchar(32) not null default ''; 

@@ -14,7 +14,7 @@
             <div style="flex: 1;height: 85px">
               <!--<input type="text">-->
               <input :type="item.type ? item.type : 'text'"
-                     :name="item.name" v-model="item.value"
+                     :name="item.name" v-model="item.value" :key="key"
                      style="flex: 1;background-color: #ededed;border-radius: 20px;padding-left: 30px;padding-right: 30px;color: #333"
                      :placeholder="item.placeholder">
             </div>
