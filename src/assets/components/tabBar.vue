@@ -112,14 +112,14 @@
 			}
 		},
 		created() {
-			// this.$router.push(this.bottomNav[this.bottomSelected].url)
-			this.$router.push(this.currentPage)
+      this.tabTo(this.currentPage)
+
+			// this.$router.push(this.currentPage)
 		},
 		mounted() {
 		},
 		computed: {
 			currentPageIndex() {
-				let index;
 				switch (this.currentPage) {
 					case 'Home':
 						return 0

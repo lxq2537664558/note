@@ -40,6 +40,7 @@
 </template>
 <script>
 	import _c from '@/Global.vue'
+	import util from '../util';
 
 	import HeadNav from '../components/headNav.vue';
 	import AnCement from '../components/announcement.vue';
@@ -49,7 +50,7 @@
       return {
 				routeCenterLogo: _c.sUrl + '/images/route_center_active.png',
       	// 公告
-				bulletinText: '啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊',
+        // bulletinText: '啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊',
         // domain
         domains: [
           {
@@ -71,85 +72,25 @@
         domainsBackground: _c.sUrl + '/images/route_blurry_background.png',
         //  route
         routes: [
-          {
-            title: '线路一',
-            showUrl: 'http://www.baidu.com',
-            url: '1'
-          },
-          {
-            title: '线路一',
-            showUrl: 'http://www.baidu.com',
-            url: '1'
-          },
-          {
-            title: '线路一',
-            showUrl: 'http://www.baidu.com',
-            url: '1'
-          },
-          {
-            title: '线路一',
-            showUrl: 'http://www.baidu.com',
-            url: '1'
-          },
-          {
-            title: '线路一',
-            showUrl: 'http://www.baidu.com',
-            url: '1'
-          },
-          {
-            title: '线路一',
-            showUrl: 'http://www.baidu.com',
-            url: '1'
-          },
-          {
-            title: '线路一',
-            showUrl: 'http://www.baidu.com',
-            url: '1'
-          },
-          {
-            title: '线路一',
-            showUrl: 'http://www.baidu.com',
-            url: '1'
-          },
-          {
-            title: '线路一',
-            showUrl: 'http://www.baidu.com',
-            url: '1'
-          },
-          {
-            title: '线路一',
-            showUrl: 'http://www.baidu.com',
-            url: '1'
-          },
-          {
-            title: '线路一',
-            showUrl: 'http://www.baidu.com',
-            url: '1'
-          },
-          {
-            title: '线路一',
-            showUrl: 'http://www.baidu.com',
-            url: '1'
-          },
-          {
-            title: '线路一',
-            showUrl: 'http://www.baidu.com',
-            url: '1'
-          },
-          {
-            title: '线路一',
-            showUrl: 'http://www.baidu.com',
-            url: '1'
-          },
+					{
+						title: '加载中',
+						showUrl: 'http://hd5009.com',
+						url: '1'
+					},
+					{
+						title: '加载中',
+						showUrl: 'http://hd5009.com',
+						url: '1'
+					}
         ]
       }
     },
     methods: {
       clickDomain(url) {
-        console.log(url)
+				_c.alterTip('功能维护中', 1)
       },
       clickRoute(url) {
-        console.log(url)
+				_c.alterTip('功能维护中', 1)
       },
 			onTabTo(url) {
 				this.$parent.onTabTo({
@@ -161,6 +102,13 @@
 			},
       isIpx() {
       	return _c.isIpx()
+      },
+      init() {
+				util.GET('oaSystem/urlCesu', {}, e => {
+					this.domains = e.data.data.domains
+					this.routes = e.data.data.routes
+				}, e => {
+				}, (e) =>{})
       }
     },
     components: {
@@ -168,9 +116,17 @@
 		  'announcement': AnCement,
     },
 		mounted() {
+			this.init()
     	this.$parent.closeLoadding()
 			// this.$parent.isShow = false
-		}
+		},
+		computed: {
+			bulletinText(){
+				return this.$parent.announcement
+			}
+		},
+    created() {
+    }
   }
 </script>
 <style scoped>

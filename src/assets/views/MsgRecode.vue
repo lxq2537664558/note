@@ -19,6 +19,7 @@
 <script>
 	import _c from '@/Global.vue'
 
+	// const modal = weex.requireModule('modal')
 	import headNavText from '../components/headNavText.vue';
   export default {
     components: {
@@ -61,7 +62,7 @@
     },
     methods: {
 			clickMsgRecode(url) {
-    		console.log(url)
+				_c.alterTip('功能维护中', 1)
       },
 			onTabTo(url) {
 				this.$parent.onTabTo({

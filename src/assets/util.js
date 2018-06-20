@@ -100,26 +100,61 @@ let utilFunc = {
 			}
 		})
 	},
-	getRequest(url, header, callback, failCallback, clearLogin) {
-		stream.fetch({
-			method: 'GET',
+	POST(api, data, callback, failCallback, clearLogin) {
+		let self = this
+		let url = 'http://api.hy590.vip/' + api
+		// let url = 'http://my.vuethink.com/' + api
+		// 有参数的话  拼接为字符串加在 url后面
+		let body = {}
+		if (data.length > 0) {
+			body = data
+		}
+
+		let header = {
+			'dev-type': WXEnvironment.platform
+		}
+
+		storage.getItem('userInfo', e => {
+			if (e.result == 'success') {
+				let userInfo = {}
+				if (e.data) {
+					userInfo = JSON.parse(e.data)
+				}
+
+				header.authKey = userInfo.auth
+				// console.log(userInfo)
+				self.getRequest(url, header, callback, failCallback, clearLogin, 'POST', body)
+			} else {
+				self.getRequest(url, header, callback, failCallback, clearLogin, 'POST', body)
+			}
+		})
+	},
+	getRequest(url, header, callback, failCallback, clearLogin, method, body) {
+		let fetchData = {
 			type: 'json',
-			headers: header,
-			url: url
-		}, (rst) => {
+			// headers: header,
+			url: url,
+		}
+		if (body) {
+			fetchData.body = body
+		}
+		if (method) {
+			fetchData.method =  method;
+		}else {
+			fetchData.method = "GET";
+			fetchData.headers = header
+		}
+		// console.log(fetchData)
+		stream.fetch(fetchData, (rst) => {
+			// console.log(rst)
 			if(rst.data){
 				if (rst.data.code == 200) {
 					callback(rst)
-				} else if (rst.data.code == 101) {
+				} else if (rst.data.code == 101 || rst.data.code == 102) {
 					// 验证失败
 					// 提示信息
-					modal.alert({
-						message: rst.data.message,
-						duration: 1
-					}, function (value) {
-					})
 					// 删除用户登录信息  和缓存
-					clearLogin()
+					clearLogin(rst.data)
 				} else {
 					failCallback(rst)
 				}
@@ -158,6 +193,17 @@ let utilFunc = {
 		} else {
 			storage.setItem(key, value, e => {
 			})
+		}
+	},
+	getEntryUrl(name) {
+		// 判断当前的环境，适配web端
+		if (weex.config.env.platform === "Web") {
+			return './' + name + '.html'
+		} else {
+			let arr = weex.config.bundleUrl.split('/');
+			arr.pop();
+			arr.push(name + '.js');
+			return arr.join('/');
 		}
 	}
 };

@@ -17,7 +17,7 @@
         </div>
       </div>
       <!--列表-->
-      <scroller class="scroller-list">
+      <scroller :class="['scroller-list', isIpx() ? 'w-ipx' : '']" style="background-color: #dddddd">
         <div style="flex-direction: row;flex-wrap: wrap;justify-content: space-between">
           <div @click="clickDiscount(discount.url)" v-for="(discount, k) of discountList" style="flex-direction: row;width: 370px;background-color: #fff;height: 120px;margin-bottom: 5px;margin-left: 2px;margin-right: 2px;align-items: center">
             <div style="flex: .2;justify-content: center;align-items: center">
@@ -66,6 +66,7 @@
 
 	import HeadNav from '../components/headNav.vue';
 	import AnCement from '../components/announcement.vue';
+	const modal = weex.requireModule('modal')
 
   export default {
     components: {
@@ -94,49 +95,25 @@
 						url: '1'
 					},
 					{
-						title: '实时返水',
+						title: '老虎机注单, 位数1个8',
 						url: '1'
 					},
 					{
-						title: '实时返水',
+						title: '幸运抽抽乐',
 						url: '1'
 					},
 					{
-						title: '实时返水',
+						title: '九周年亿元现金回馈',
 						url: '1'
 					},
 					{
-						title: '实时返水',
+						title: '云闪付APP 秒到账',
 						url: '1'
 					},
 					{
-						title: '实时返水',
+						title: '老虎机注单, 位数1个8',
 						url: '1'
-					},
-					{
-						title: '实时返水',
-						url: '1'
-					},
-					{
-						title: '实时返水',
-						url: '1'
-					},
-					{
-						title: '实时返水',
-						url: '1'
-					},
-					{
-						title: '实时返水',
-						url: '1'
-					},
-					{
-						title: '实时返水',
-						url: '1'
-					},
-					{
-						title: '实时返水',
-						url: '1'
-					},
+					}
         ],
         // 遮罩层 显示
         maskShow: false,
@@ -146,26 +123,31 @@
     },
     methods: {
     	clickDiscount(url) {
-    		this.$parent.formList = {
-						// show: false,
-						show: true,
-						title: '优惠活动名称',
-						list: [
-							{
-								name: 'username',
-								placeholder: '请输入您的会员账号',
-							},
-							{
-								name: 'betNumber',
-								placeholder: '注单编号',
-							},
-							{
-								name: 'yzm',
-								placeholder: '填写验证码',
-							}
-						],
-						submitUrl: ''
-        }
+				modal.toast({
+					message: '功能维护中',
+					duration: 1
+				})
+        // this.$parent.formList = {
+					// 	// show: false,
+					// 	show: true,
+					// 	title: '优惠活动名称',
+					// 	list: [
+					// 		{
+					// 			name: 'username',
+					// 			placeholder: '请输入您的会员账号',
+					// 		},
+					// 		{
+					// 			name: 'betNumber',
+					// 			placeholder: '注单编号',
+					// 		},
+					// 		{
+					// 			name: 'yzm',
+					// 			placeholder: '填写验证码',
+					// 		}
+					// 	],
+					// 	submitUrl: '',
+        //
+        // }
 				// this.maskShow = true
 			},
 			openOverlay () {

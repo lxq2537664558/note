@@ -11,12 +11,13 @@
           <div style="width: 130px;margin-left: 50px">
             <image :src="user.head_img" alt="" style="height: 130px;width: 130px;border-radius: 65px;"></image>
           </div>
-          <div style="flex: 1;justify-content: center;align-items: center">
-            <text class="user-info-text" style="color: #fff;">账号:  {{user.username}}</text>
-            <text @click="clickLevel" class="user-info-text" style="margin-top: 15px;background-color: #fdcc2e;color: #333;padding-left: 20px;padding-right: 20px;padding-top: 5px;padding-bottom: 5px;border-radius: 20px">等级: VIP{{user.level}}</text>
+          <div style="flex: 1;justify-content: flex-start;align-items: flex-start;margin-left: 20px">
+            <text class="user-info-text" style="color: #fff;">账号: {{user.username}}</text>
+            <div @click="clickLevel" style="width:170px;margin-top:15px;background-color: #fdcc2e;padding-left: 20px;padding-right: 20px;padding-top: 5px;padding-bottom: 5px;border-radius: 20px;">
+              <text  class="user-info-text" style="color: #333;">等级: VIP{{user.level}}</text>
+            </div>
           </div>
-          <div style="flex: .9"></div>
-          <div style="flex: 1.1;flex-direction: row;justify-content: center;" @click="clickSignIn">
+          <div style="flex: 1;flex-direction: row;justify-content: flex-end;margin-right: 20px" @click="clickSignIn">
             <image :src="signInLogo" alt="" style="width: 40px;height: 40px;"></image>
             <text style="color: #fff;font-size: 26px;margin-left: 10px;padding-top: 5px">每日签到 ></text>
           </div>
@@ -78,7 +79,7 @@
           // 名称
           username: 'QAQ',
           // 等级
-          level: 2
+          level: 0
 				},
 				// 签到logo
 				signInLogo: _c.sUrl + '/images/sing_in.png',
@@ -112,85 +113,7 @@
 						t1: '认证中心',
 						t2: '官方信息认证查询',
 						url: '1'
-					},
-					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
-						t1: '领取周俸禄',
-						t2: 'VIP周俸禄领取',
-						url: '1'
-					},
-					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
-						t1: '领取周俸禄',
-						t2: 'VIP周俸禄领取',
-						url: '1'
-					},
-					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
-						t1: '领取周俸禄',
-						t2: 'VIP周俸禄领取',
-						url: '1'
-					},
-					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
-						t1: '领取周俸禄',
-						t2: 'VIP周俸禄领取',
-						url: '1'
-					},
-					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
-						t1: '领取周俸禄',
-						t2: 'VIP周俸禄领取',
-						url: '1'
-					},
-					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
-						t1: '领取周俸禄',
-						t2: 'VIP周俸禄领取',
-						url: '1'
-					},
-					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
-						t1: '领取周俸禄',
-						t2: 'VIP周俸禄领取',
-						url: '1'
-					},
-					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
-						t1: '领取周俸禄',
-						t2: 'VIP周俸禄领取',
-						url: '1'
-					},
-					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
-						t1: '领取周俸禄',
-						t2: 'VIP周俸禄领取',
-						url: '1'
-					},
-					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
-						t1: '领取周俸禄',
-						t2: 'VIP周俸禄领取',
-						url: '1'
-					},
-					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
-						t1: '领取周俸禄',
-						t2: 'VIP周俸禄领取',
-						url: '1'
-					},
-					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
-						t1: '领取周俸禄',
-						t2: 'VIP周俸禄领取',
-						url: '1'
-					},
-					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
-						t1: '领取周俸禄',
-						t2: 'VIP周俸禄领取',
-						url: '1'
-					},
+					}
         ],
         // 遮罩
 				maskShow: false,
@@ -224,9 +147,10 @@
 									}, e => {
 										this.$parent.tipList.show = true
 										this.$parent.tipList.type = 'default'
-										this.$parent.tipList.text = '您本周的俸禄已领完 (╯︵╰)'
+										this.$parent.tipList.text = e.data.message
+										// this.$parent.tipList.text = '您本周的俸禄已领完 (╯︵╰)'
 										this.$parent.tipList.submitShow = false
-									}, () =>{self.$parent.clearLogin()})
+									}, (e) =>{self.$parent.clearLogin(e)})
                 }
 							}
             	break
@@ -245,11 +169,13 @@
 										this.$parent.tipList.luluCoinText = '积分'
 										this.$parent.tipList.submitShow = false
 									}, e => {
+										// console.log(e)
 										this.$parent.tipList.show = true
 										this.$parent.tipList.type = 'default'
-										this.$parent.tipList.text = '您本月的俸禄已领完 (╯︵╰)'
+										// this.$parent.tipList.text = '您本月的俸禄已领完 (╯︵╰)'
+										this.$parent.tipList.text = e.data.message
 										this.$parent.tipList.submitShow = false
-									}, () =>{self.$parent.clearLogin()})
+									}, (e) =>{self.$parent.clearLogin(e)})
 								}
 							}
             	break
@@ -272,7 +198,8 @@
       },
       // 签到
       clickSignIn() {
-        // util.setCache('lastSignIn', null)
+				let self = this
+        util.setCache('lastSignIn', null)
         storage.getItem('lastSignIn', e => {
 					if (e.result == 'success' && e.data == (new Date()).toLocaleDateString()) {
 							modal.toast({
@@ -282,15 +209,15 @@
 					} else {
 						util.GET('member/register', {}, (rst) => {
 							// 成功
-							this.maskShow = true
-							this.maskSignInShow = true
-							this.$parent.bottomMaskShow = true
+							self.maskShow = true
+							self.maskSignInShow = true
+							self.$parent.bottomMaskShow = true
 						}, (rst) => {
 							modal.toast({
 								message: rst.data.message,
 								duration: 1
 							})
-						}, () => {this.$parent.clearLogin()})
+						}, (e) => {self.$parent.clearLogin(e)})
 						// 缓存 最后一签到日期
 						util.setCache('lastSignIn', (new Date()).toLocaleDateString())
           }
@@ -303,7 +230,18 @@
       },
       // 等级
 			clickLevel() {
-    		this.onTabTo('ActivityDetails')
+    		// 判断数据是否在刷数据
+        let self = this
+				util.GET('member/status', {}, (rst) => {
+					// console.log(rst)
+					// 成功
+					self.onTabTo('ActivityDetails')
+				}, (rst) => {
+					modal.toast({
+						message: rst.data.message,
+						duration: 1
+					})
+				}, (e) => {self.$parent.clearLogin(e)})
       },
 			onTabTo(url) {
 				this.$parent.onTabTo({
@@ -334,7 +272,10 @@
 			},
 			isIpx() {
 				return _c.isIpx()
-			}
+			},
+      isRefresh() {
+
+      }
     },
 		mounted() {
 			this.$parent.closeLoadding()

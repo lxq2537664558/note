@@ -110,21 +110,21 @@
 						let self = this
 						util.GET('member/exchangePrizeApi', [{name: 'prize_id', value: item.id},], e => {
               // 领取成功
-							this.$parent.tipList.show = true
-							this.$parent.tipList.type = 'imageText'
-							this.$parent.tipList.submitShow = false
-							this.$parent.tipList.text = e.data.data.message
+							self.$parent.tipList.show = true
+							self.$parent.tipList.type = 'imageText'
+							self.$parent.tipList.submitShow = false
+							self.$parent.tipList.text = e.data.data.message
 							// 会员信息
-							self.user.username = e.data.data.userInfo.username
-							self.user.integral = e.data.data.userInfo['clock_in_score']
+							self.user.username = e.data.data.username
+							self.user.integral = e.data.data.score
 
 						}, e => {
 							// 错误消息
-							this.$parent.tipList.show = true
-							this.$parent.tipList.type = 'default'
-							this.$parent.tipList.text = e.data.message + ' (╯︵╰)'
-							this.$parent.tipList.submitShow = false
-						}, () =>{self.$parent.clearLogin()})
+							self.$parent.tipList.show = true
+							self.$parent.tipList.type = 'default'
+							self.$parent.tipList.text = e.data.message + ' (╯︵╰)'
+							self.$parent.tipList.submitShow = false
+						}, (e) =>{self.$parent.clearLogin(e)})
           }
 				}
       },
@@ -142,7 +142,7 @@
 					// console.log(e.data.data.userInfo['clock_in_score'])
 					// 会员信息
           self.user.username = e.data.data.userInfo.username
-          self.user.integral = e.data.data.userInfo['clock_in_score']
+          self.user.integral = e.data.data.userInfo['score']
           // 礼品
           e.data.data.list.forEach(el => {
           	self.giftList.push({
@@ -157,7 +157,7 @@
 						message: e.data.message,
 						duration: 1
 					}, (value) => {})
-				}, () =>{self.$parent.clearLogin()})
+				}, (e) =>{self.$parent.clearLogin(e)})
       },
       isIpx() {
         return _c.isIpx()

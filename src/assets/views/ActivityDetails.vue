@@ -133,6 +133,9 @@
       },
       levelProgress() {
 				// 等级进度条  right 385  = 0     right 0 = 100
+				if (this.user.currentScore == 0) {
+					return 385
+				}
 				if (this.user.preScore < this.user.currentScore) {
 					this.user.isUpdate = true
 					return 0
@@ -154,19 +157,22 @@
       init() {
         let self = this
 				util.GET('member/memberLevel', {}, e => {
+					// console.log(e)
 					self.changeScore(e.data.data)
         }, e => {
+					// console.log(e)
 					modal.alert({
 						message: e.data.message,
 						duration: 1
 					}, (value) => {})
-        }, () =>{this.$parent.clearLogin()})
+        }, (e) =>{self.$parent.clearLogin(e)})
       },
 			clickUpdate() {
 				this.confirmShow = true
 			},
       changeScore(data) {
 				this.user = data
+				this.$parent.userInfo.level_id = data.currentLevel
 				this.user.reward = data.rankScore ? data.rankScore + '积分' : '已是最高分(敬请期待)'
 			},
 			wxcDialogCancelBtnClicked () {
@@ -183,7 +189,7 @@
 						message: e.data.message,
 						duration: 1
 					}, (value) => {})
-				}, () =>{self.$parent.clearLogin()})
+				}, (e) =>{self.$parent.clearLogin(e)})
 
 				this.confirmShow = false;
 			},

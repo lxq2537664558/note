@@ -18,7 +18,7 @@
         <div style="flex: 1;flex-direction: row;" v-for="v in actionAll">
           <div style="flex: 1;justify-content: center;align-items: center" v-for="action in v.item" @click="clickAction(action.url)">
             <image :src="action.logo" alt="" style="width: 80px;height: 80px"></image>
-            <text style="font-size: 22px;margin-top: 10px;color: #666">{{test}}{{action.title}}</text>
+            <text style="font-size: 22px;margin-top: 10px;color: #666">{{action.title}}</text>
           </div>
         </div>
       </div>
@@ -47,41 +47,27 @@
 	import HeadNav from '../components/headNav.vue';
 	import AnCement from '../components/announcement.vue';
 
+	import util from '../util';
+
 	const storage = weex.requireModule('storage')
 
 	export default {
 		data() {
 			return {
 				// 公告
-				bulletinText: '1啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊',
+				// bulletinText: '',
 				// 轮播图
 				sliderList: [
 					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
+						logo: _c.sUrl + '/images/load_750_280.gif',
 						url: '1'
 					},
 					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
+						logo: _c.sUrl + '/images/load_750_280.gif',
 						url: '1'
 					},
 					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
-						url: '1'
-					},
-					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
-						url: '1'
-					},
-					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
-						url: '1'
-					},
-					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
-						url: '1'
-					},
-					{
-						logo: _c.sUrl + '/images/route_blurry_background.png',
+						logo: _c.sUrl + '/images/load_750_280.gif',
 						url: '1'
 					}
 				],
@@ -141,12 +127,12 @@
 					{
 						item: [
 							{
-								title: '返水秒到账1',
+								title: '返水秒到账111',
 								logo: _c.sUrl + '/images/135-315.png',
 								url: '1'
 							},
 							{
-								title: '返水秒到账2',
+								title: '返水秒到账',
 								logo: _c.sUrl + '/images/135-315.png',
 								url: '2'
 							}
@@ -156,35 +142,33 @@
 					{
 						item: [
 							{
-								title: '返水秒到账3',
+								title: '返水秒到账',
 								logo: _c.sUrl + '/images/135-315.png',
 								url: '3'
 							},
 							{
-								title: '返水秒到账4',
+								title: '返水秒到账',
 								logo: _c.sUrl + '/images/135-315.png',
 								url: '4'
 							}
 
 						]
 					}
-				],
-        test: ''
+				]
 			}
 		},
 		methods: {
 			clickAction(url) {
-				console.log(url)
-				// this.$router.push(url)
+				_c.alterTip('功能维护中', 1)
 			},
 			clickDeals(url) {
-				console.log(url)
+				_c.alterTip('功能维护中', 1)
 			},
 			changeSlider(event) {
 				// console.log(event)
 			},
 			clickSlider(url) {
-				console.log(url)
+				_c.alterTip('功能维护中', 1)
 			},
 			onTabTo(url) {
 				this.$parent.onTabTo({
@@ -199,16 +183,46 @@
 			},
 			isIpx() {
 				return _c.isIpx()
-			}
+			},
+      init() {
+				util.GET('oaSystem/advert', {}, e => {
+					this.$parent.announcement = e.data.data.bulletinText
+          // console.log(e)
+					this.sliderList = e.data.data.sliderList
+				}, e => {
+				}, (e) =>{})
+      }
 		},
 		created() {
+			this.init()
+			// console.log(this.$parent.sliderList)
+			// this.sliderList = this.$parent.sliderList
 		},
+		watch: {},
+    computed: {
+			// 公告
+			bulletinText(){
+				return this.$parent.announcement
+      }
+    },
 		components: {
 			'head-nav': HeadNav,
 			'announcement': AnCement
 		},
 		mounted() {
 			this.$parent.closeLoadding()
+      // console.log()
+      // this.sliderList = this.$parent.sliderList
+      this.sliderList =  [
+				{
+					logo: _c.sUrl + '/images/route_blurry_background.png',
+					url: '1'
+				},
+				{
+					logo: _c.sUrl + '/images/route_blurry_background.png',
+					url: '1'
+				}
+      ]
 		}
 	}
 </script>

@@ -1,4 +1,6 @@
 <script>
+	const modal = weex.requireModule('modal')
+
   export default {
   	// 全局变量
 
@@ -54,6 +56,15 @@
 
 			const newUrl = base + jsFile;
 			return newUrl;
-		}
+		},
+    alterTip(text, s){
+			if (!s) {
+				s = 1
+			}
+			modal.toast({
+				message: text,
+				duration: s
+			})
+    }
   }
 </script>

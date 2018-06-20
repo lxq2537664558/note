@@ -20,7 +20,12 @@
             </div>
           </div>
           <!--提交按钮-->
-          <div style="height: 150px;justify-content: flex-end;align-items: center;">
+
+          <!--详情-->
+          <div style="margin-bottom: 10px">
+            <text v-if="formList.descr" style="font-size: 24px;color: #ed3f14;text-align: center">{{formList.descr}}</text>
+          </div>
+          <div style="height: 100px;justify-content: flex-end;align-items: center;">
             <div @click="clickSubmit"
                 style="width: 300px;height: 75px;justify-content: center;align-items: center;background-color: #ffcb2f;margin-bottom: 25px;border-radius: 50px">
               <text style="color: #555">提交</text>
@@ -29,7 +34,7 @@
         </div>
         <div @click="clickCloseMask" style="height: 150px;width: 690px;align-items: center">
           <div
-              style="width: 75px;height: 75px;margin-top: 75px;border-radius: 50px;justify-content: center;align-items: center;border-width: 3px;border-color: #fff;border-style: solid">
+              style="width: 76px;height: 76px;margin-top: 75px;border-radius: 50px;justify-content: center;align-items: center;border-width: 3px;border-color: #fff;border-style: solid">
             <text style="font-size: 70px;color: #fff;padding-top: 5px;">×</text>
           </div>
         </div>
@@ -63,17 +68,17 @@
 				if (this.formList.submitUrl) {
 					// console.log(this.formList)
 					util.GET(this.formList.submitUrl, this.formList.list, (rst) => {
-            // 成功
-            this.formList.submitAct(rst.data)
-            this.clickCloseMask()
-          }, (rst) => {
-            // 失败
-            modal.alert({
-              message: rst.data.message,
-              duration: 1
-            }, function (value) {
-            })
-          })
+						// 成功
+						this.formList.submitAct(rst.data)
+						this.clickCloseMask()
+					}, (rst) => {
+						// 失败
+						modal.alert({
+							message: rst.data.message,
+							duration: 1
+						}, function (value) {
+						})
+					})
 
 					this.clearForm()
 				} else {

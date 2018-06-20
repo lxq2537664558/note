@@ -20,7 +20,7 @@
             </div>
             <div style="width: 1px;background-color: #ccc"></div>
             <div style="flex: 1;justify-content: center;align-items: center;">
-              <text style="color: #555;">1{{level.lottery}}</text>
+              <text style="color: #555;">{{level.lottery}}</text>
             </div>
           </div>
         </div>
@@ -127,13 +127,12 @@
       init() {
 				let self = this
 				util.GET('member/level', {}, e => {
-					console.log(e)
 					let list = []
           e.data.data.forEach((el) => {
           	el.title = 'VIP' + el.level_name
             el.lottery = el.rank_gold
 						list.push(el)
-            console.log(el)
+            // console.log(el)
           })
 
 					list.unshift({
@@ -144,8 +143,8 @@
 
 					self.VIPLevel = list
 				}, e => {
-					console.log(e)
-				}, () =>{this.$parent.clearLogin()})
+					// console.log(e)
+				}, (e) =>{self.$parent.clearLogin(e)})
       },
 			isIpx() {
 				return _c.isIpx()

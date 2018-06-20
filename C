@@ -5,3 +5,147 @@
     结构类型
         由若干个类型组合而成, 是可以再分解的. 例如, 整形数组是由若干整型数据组成的        
 
+
+
+编译
+	gcc main.c -o main    指定main.c编译为main可执行文件 
+
+	gcc -Wall main.c 	  提示所有的错误
+
+
+
+赋值
+
+
+
+#include<stdio.h>
+
+int main(void){
+
+}
+
+
+// 输出
+printf(输出控制, 输出列表);
+
+printf("%s\n", );
+	%c 字符型
+	%d 整型
+	%f 单精度
+	%o 八进制 无符号
+	%x 十六进制 无符号
+	%u 整型 无符号
+	%e 指数型
+	%s 字符串型
+
+	可在%和格式字符之间加一个数来控制数据所占的宽度小数位数
+
+	// 转义字符
+	\' 	单引号
+	\" 	双引号
+	\?  问号
+	\\  反斜线
+	\a  响铃
+	\b  退格
+	\f 	分页符
+	\r  换行
+	\t  水平制表符
+	\v  垂直制表符
+'
+
+
+// 输入
+scanf(格式控制, 输入项1, 输入项2)
+
+对于int, double, long等变量类型, 输入项要求带取地址符&
+当用键盘输入多个数据时, 数据之间用分隔符. 分隔符包括空格符, 制表符和回车符, 但不包括逗号
+
+
+// 常量
+	字符常量
+		使用 '' 包裹起来 只能有一个字符  或者转义字符
+	整数常量
+	浮点数常量
+	枚举常量
+
+// 变量
+	// 定义类型
+	char a;
+	int b;
+	float c;
+	double d;
+
+	// 浮点型
+		float  单精度
+		double 双精度
+		long double 长双精度
+
+
+
+
+复合语句 {}
+空语句   ;
+ 
+关系运算
+	>
+	>=
+	<
+	<=
+	==
+	!=
+  前四种高于后两种
+
+
+
+库函数的调用   #include
+以#开头的一行称为 编译预处理  不是c语言语句 不加分号  不占运行时间
+sprt() 算术平方根 fabs() 绝对值 pow() 幂函数  sin() 正弘
+
+
+函数
+
+函数类型 函数名(类型 形参) 
+
+
+ 
+
+
+
+// 保留关键字
+auto
+break
+case
+char
+const
+continue
+default
+do
+double
+else
+enum
+extern
+float
+for
+goto
+if
+inline
+int
+long
+register
+restrict
+return
+short
+signed
+sizeof
+static
+struct
+switch
+typedef
+union
+unsigned
+void
+volatile
+while
+_Bool
+_Complex
+_Imaginary

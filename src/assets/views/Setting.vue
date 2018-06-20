@@ -64,7 +64,7 @@
 		},
 		methods: {
 			clickSetting(url) {
-				console.log(url)
+				_c.alterTip('功能维护中', 1)
 			},
 			onTabTo(url) {
 				this.$parent.onTabTo({

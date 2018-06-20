@@ -155,3 +155,38 @@ ios
 	安装   weexSDK
 		 pod install
 	
+
+
+
+
+	-licucore
+
+
+
+
+安装返回按键 
+
+android
+
+app3\platforms\android\app\src\main\java\com\weex\app\AbsWeexActivity.java
+
+public void onBackPressed(){
+Map<String,Object> params=new HashMap<>();
+params.put("name","back");
+mInstance.fireGlobalEventCallback("androidback",params);
+}
+
+
+weex
+
+backListener() {
+	let that = this
+	const globalEvent = weex.requireModule('globalEvent')
+	globalEvent.addEventListener("androidback", (e) => {
+		// 安装范返回键监控   后期处理
+		// console.log(e)
+		// that.$router.go(-1)
+	})
+}	
+
+this.backListener()
