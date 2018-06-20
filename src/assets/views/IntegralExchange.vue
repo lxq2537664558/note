@@ -117,7 +117,6 @@
 							// 会员信息
 							self.user.username = e.data.data.username
 							self.user.integral = e.data.data.score
-
 						}, e => {
 							// 错误消息
 							self.$parent.tipList.show = true

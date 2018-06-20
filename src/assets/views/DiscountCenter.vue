@@ -180,7 +180,7 @@
 			bulletinText(){
 				return this.$parent.announcement
 			}
-		}
+		},
   }
 </script>
 <style scoped>

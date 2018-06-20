@@ -5175,21 +5175,21 @@ exports.default = {
 			// 热门优惠
 			hotDeals: [{
 				item: [{
-					title: '返水秒到账111',
+					title: '返水秒到账1',
 					logo: _Global2.default.sUrl + '/images/135-315.png',
 					url: '1'
 				}, {
-					title: '返水秒到账',
+					title: '返水秒到账2',
 					logo: _Global2.default.sUrl + '/images/135-315.png',
 					url: '2'
 				}]
 			}, {
 				item: [{
-					title: '返水秒到账',
+					title: '返水秒到账3',
 					logo: _Global2.default.sUrl + '/images/135-315.png',
 					url: '3'
 				}, {
-					title: '返水秒到账',
+					title: '返水秒到账4',
 					logo: _Global2.default.sUrl + '/images/135-315.png',
 					url: '4'
 				}]
@@ -5596,7 +5596,7 @@ module.exports = {
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _Global = __webpack_require__(1);
@@ -5620,56 +5620,62 @@ var animation = weex.requireModule('animation'); //
 var dom = weex.requireModule('dom');
 
 exports.default = {
-	props: ['bulletinText'],
-	data: function data() {
-		return {
-			newBulletinLog: _Global2.default.sUrl + '/images/new_bulletin.png'
-			// bulletinText: '不计输赢天天返回优惠无需申请, 美东时间: 2018/4/30111 啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊'
-		};
-	},
+  props: ['bulletinText'],
+  data: function data() {
+    return {
+      newBulletinLog: _Global2.default.sUrl + '/images/new_bulletin.png',
+      // bulletinText: '不计输赢天天返回优惠无需申请, 美东时间: 2018/4/30111 啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊',
+      textEl: null
+    };
+  },
 
-	methods: {
-		// 公告动画
-		bulletinA: function bulletinA(el) {
-			var self = this;
-			setTimeout(function () {
-				animation.transition(el, {
-					styles: {
-						transform: 'translateX(-102%)'
-					},
-					duration: 10000,
-					delay: 0
-				}, function () {
-					animation.transition(el, {
-						styles: {
-							transform: 'translateX(0)'
-						},
-						duration: 0,
-						delay: 0
-					}, function () {});
-				});
-				setTimeout(function () {
-					self.bulletinA(el);
-				}, 10000);
-			}, 2000);
-		}
-	},
-	mounted: function mounted() {
-		if (this.announTextWidth > 650) {
-			// this.invalid(this, testEl)
-			var testEl = this.$refs.test;
-			this.bulletinA(testEl);
-		}
-	},
+  methods: {
+    // 公告动画
+    bulletinA: function bulletinA(elText) {
+      var self = this;
+      var el = elText;
+      setTimeout(function () {
+        animation.transition(el, {
+          styles: {
+            transform: 'translateX(-102%)'
+          },
+          duration: 10000,
+          delay: 0
+        }, function () {
+          animation.transition(el, {
+            styles: {
+              transform: 'translateX(0)'
+            },
+            duration: 0,
+            delay: 0
+          }, function () {});
+        });
+        setTimeout(function () {
+          self.bulletinA(el);
+        }, 10000);
+      }, 2000);
+    },
+    annon: function annon() {
+      var width = this.bulletinText.length * 22 + 22;
+      if (width > 650) {
+        var el = this.textEl;
+        if (el) {
+          this.bulletinA(el);
+        }
+      }
+      return width;
+    }
+  },
+  mounted: function mounted() {
+    this.textEl = this.$refs.textEl;
+  },
 
-	computed: {
-		announTextWidth: function announTextWidth() {
-			return this.bulletinText.length * 22 + 22;
-		}
-	},
-	created: function created() {
-		// console.log(this.$parent.announcement)
-	}
+  computed: {
+    announTextWidth: function announTextWidth() {
+      return this.annon();
+    }
+  },
+  created: function created() {}
 };
 
 /***/ }),
@@ -5720,7 +5726,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "scrollable": false
     }
   }, [_c('text', {
-    ref: "test",
+    ref: "textEl",
     staticClass: ["announcement-text"],
     style: {
       width: _vm.announTextWidth + 'px'
@@ -6469,7 +6475,7 @@ exports.default = {
 	data: function data() {
 		return {
 			// 公告
-			bulletinText: '啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊',
+			// bulletinText: '啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊',
 			// 左箭头
 			left_arrow: _Global2.default.sUrl + '/images/left_arrow_2.png',
 			// 右箭头
@@ -6559,6 +6565,13 @@ exports.default = {
 	},
 	mounted: function mounted() {
 		this.$parent.closeLoadding();
+	},
+
+	computed: {
+		// 公告
+		bulletinText: function bulletinText() {
+			return this.$parent.announcement;
+		}
 	}
 };
 
@@ -23427,8 +23440,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
 
 var storage = weex.requireModule('storage');
 var modal = weex.requireModule('modal');
@@ -23712,7 +23723,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })]), _c('div', {
     staticStyle: {
       flex: "1",
-      justifyContent: "flex-start",
+      justifyContent: "center",
       alignItems: "flex-start",
       marginLeft: "20px"
     }
@@ -23721,11 +23732,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       color: "#fff"
     }
-  }, [_vm._v("账号: " + _vm._s(_vm.user.username))]), _c('div', {
+  }, [_vm._v("账号: " + _vm._s(_vm.user.username))]), _c('text', {
+    staticClass: ["user-info-text"],
     staticStyle: {
-      width: "170px",
       marginTop: "15px",
       backgroundColor: "#fdcc2e",
+      color: "#333",
       paddingLeft: "20px",
       paddingRight: "20px",
       paddingTop: "5px",
@@ -23735,12 +23747,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.clickLevel
     }
-  }, [_c('text', {
-    staticClass: ["user-info-text"],
-    staticStyle: {
-      color: "#333"
-    }
-  }, [_vm._v("等级: VIP" + _vm._s(_vm.user.level))])])]), _c('div', {
+  }, [_vm._v("等级: VIP" + _vm._s(_vm.user.level))])]), _c('div', {
     staticStyle: {
       flex: "1",
       flexDirection: "row",

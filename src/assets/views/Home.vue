@@ -127,12 +127,12 @@
 					{
 						item: [
 							{
-								title: '返水秒到账111',
+								title: '返水秒到账1',
 								logo: _c.sUrl + '/images/135-315.png',
 								url: '1'
 							},
 							{
-								title: '返水秒到账',
+								title: '返水秒到账2',
 								logo: _c.sUrl + '/images/135-315.png',
 								url: '2'
 							}
@@ -142,12 +142,12 @@
 					{
 						item: [
 							{
-								title: '返水秒到账',
+								title: '返水秒到账3',
 								logo: _c.sUrl + '/images/135-315.png',
 								url: '3'
 							},
 							{
-								title: '返水秒到账',
+								title: '返水秒到账4',
 								logo: _c.sUrl + '/images/135-315.png',
 								url: '4'
 							}

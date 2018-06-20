@@ -11,11 +11,9 @@
           <div style="width: 130px;margin-left: 50px">
             <image :src="user.head_img" alt="" style="height: 130px;width: 130px;border-radius: 65px;"></image>
           </div>
-          <div style="flex: 1;justify-content: flex-start;align-items: flex-start;margin-left: 20px">
+          <div style="flex: 1;justify-content: center;align-items: flex-start;margin-left: 20px">
             <text class="user-info-text" style="color: #fff;">账号: {{user.username}}</text>
-            <div @click="clickLevel" style="width:170px;margin-top:15px;background-color: #fdcc2e;padding-left: 20px;padding-right: 20px;padding-top: 5px;padding-bottom: 5px;border-radius: 20px;">
-              <text  class="user-info-text" style="color: #333;">等级: VIP{{user.level}}</text>
-            </div>
+            <text @click="clickLevel" class="user-info-text" style="margin-top: 15px;background-color: #fdcc2e;color: #333;padding-left: 20px;padding-right: 20px;padding-top: 5px;padding-bottom: 5px;border-radius: 20px">等级: VIP{{user.level}}</text>
           </div>
           <div style="flex: 1;flex-direction: row;justify-content: flex-end;margin-right: 20px" @click="clickSignIn">
             <image :src="signInLogo" alt="" style="width: 40px;height: 40px;"></image>

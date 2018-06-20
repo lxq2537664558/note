@@ -5,7 +5,7 @@
       <text style="font-size: 24px;font-weight: 500;color: #333;">最新公告:</text>
     </div>
     <scroller scroll-direction="horizontal" :scrollable="false" style="width: 580px;margin-left: 10px">
-      <text class="announcement-text" ref="test" :style="{width: announTextWidth + 'px'}">{{bulletinText}}</text>
+      <text class="announcement-text" ref="textEl" :style="{width: announTextWidth + 'px'}">{{bulletinText}}</text>
     </scroller>
   </div>
 </template>
@@ -20,50 +20,56 @@
     data() {
     	return {
 				newBulletinLog: _c.sUrl + '/images/new_bulletin.png',
-				// bulletinText: '不计输赢天天返回优惠无需申请, 美东时间: 2018/4/30111 啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊'
+				// bulletinText: '不计输赢天天返回优惠无需申请, 美东时间: 2018/4/30111 啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊',
+        textEl: null
 			}
     },
     methods: {
 			// 公告动画
-      bulletinA(el) {
+      bulletinA(elText) {
         let self = this
-					setTimeout(() => {
-						animation.transition(el, {
-							styles: {
-								transform: 'translateX(-102%)'
-							},
-							duration: 10000,
-							delay: 0
-						}, () => {
-							animation.transition(el, {
-								styles: {
-									transform: 'translateX(0)'
-								},
-								duration: 0,
-								delay: 0
-							}, () => {})
-						});
-						setTimeout(() => {
-							self.bulletinA(el)
-            }, 10000)
-					}, 2000);
+        let el = elText
+        setTimeout(() => {
+          animation.transition(el, {
+            styles: {
+              transform: 'translateX(-102%)'
+            },
+            duration: 10000,
+            delay: 0
+          }, () => {
+            animation.transition(el, {
+              styles: {
+                transform: 'translateX(0)'
+              },
+              duration: 0,
+              delay: 0
+            }, () => {})
+          });
+          setTimeout(() => {
+            self.bulletinA(el)
+          }, 10000)
+        }, 2000);
+			},
+      annon() {
+      	let width = this.bulletinText.length * 22 + 22
+				if (width > 650) {
+					let el = this.textEl
+					if (el) {
+						this.bulletinA(el)
+					}
+				}
+				return width
 			}
     },
 		mounted() {
-			if (this.announTextWidth > 650) {
-        // this.invalid(this, testEl)
-				const testEl = this.$refs.test
-			  this.bulletinA(testEl)
-			}
+			this.textEl = this.$refs.textEl
     },
     computed: {
       announTextWidth() {
-      	return this.bulletinText.length * 22 + 22
+				return this.annon()
       }
     },
-    created() {
-      // console.log(this.$parent.announcement)
-    }
+    created() {}
   }
 </script>
 <style scoped>
