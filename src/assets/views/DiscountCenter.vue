@@ -77,7 +77,7 @@
     data (){
     	return {
 				// 公告
-				bulletinText: '啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊',
+				// bulletinText: '啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊',
 				// 左箭头
 				left_arrow: _c.sUrl + '/images/left_arrow_2.png',
 				// 右箭头
@@ -174,6 +174,12 @@
     },
 		mounted() {
 			this.$parent.closeLoadding()
+		},
+		computed: {
+			// 公告
+			bulletinText(){
+				return this.$parent.announcement
+			}
 		}
   }
 </script>
