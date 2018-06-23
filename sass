@@ -24,12 +24,27 @@ gem install compass
 compass create sass
 
 
+编译
+	sass demo1.scss 1.css
+
+监视
+	sass --watch demo1.scss:1.css
+	文件夹
+	sass --wath sass:style
+
+
 
 4种转换风格
 	nested      大括号在最后一行 样式后面
 	expanded 	大括号在最后一行 开头
 	compact     一个选择器一行
 	compressed  压缩文件
+
+
+
+变量
+
+$highlight-color: #F90;
 
 
 h1
