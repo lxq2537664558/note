@@ -1,211 +1,198 @@
-let navigator = weex.requireModule("navigator");
+// let navigator = weex.requireModule("navigator");
 const stream = weex.requireModule('stream');
 const storage = weex.requireModule('storage')
 const modal = weex.requireModule('modal')
 
+const Utils = {
+  isTaobao() {
+    const {appName} = weex.config.env;
+    return /(tb|taobao|淘宝)/i.test(appName);
+  },
+  isTrip() {
+    const {appName} = weex.config.env;
+    return appName === 'LX';
+  },
+  isBoat() {
+    const {appName} = weex.config.env;
+    return appName === 'Boat' || appName === 'BoatPlayground';
+  },
+  isWeb() {
+    const {platform} = weex.config.env;
+    return typeof (window) === 'object' && platform.toLowerCase() === 'web';
+  },
+  isIOS() {
+    const {platform} = weex.config.env;
+    return platform.toLowerCase() === 'ios';
+  },
+  /**
+   * 是否为 iPhone X
+   * @returns {boolean}
+   */
+  isIPhoneX() {
+    const {deviceHeight} = weex.config.env;
+    if (this.isWeb()) {
+      return typeof window !== undefined && window.screen && window.screen.width && window.screen.height && (parseInt(window.screen.width, 10) === 375) && (parseInt(window.screen.height, 10) === 812);
+    }
+    return this.isIOS() && deviceHeight === 2436;
+  },
+  isAndroid() {
+    const {platform} = weex.config.env;
+    return platform.toLowerCase() === 'android';
+  },
+  isAlipay() {
+    const {appName} = weex.config.env;
+    return appName === 'AP';
+  },
+  isTmall() {
+    const {appName} = weex.config.env;
+    return /(tm|tmall|天猫)/i.test(appName);
+  },
+  isAliWeex() {
+    return this.isTmall() || this.isTrip() || this.isTaobao();
+  },
+  decodeIconFont(text) {
+    // 正则匹配 图标和文字混排 eg: 我去上学校&#xe600;,天天不&#xe600;迟到
+    const regExp = /&#x[a-z|0-9]{4,5};?/g;
+    if (regExp.test(text)) {
+      return text.replace(new RegExp(regExp, 'g'), function (iconText) {
+        const replace = iconText.replace(/&#x/, '0x').replace(/;$/, '');
+        return String.fromCharCode(replace);
+      });
+    } else {
+      return text;
+    }
+  },
+  GET(api, data, callback, failCallback, clearLogin) {
+    let self = this
+    let url = 'http://api.hy590.vip/' + api
+    // let url = 'http://my.vuethink.com/' + api
+    // 有参数的话  拼接为字符串加在 url后面
+    if (data.length > 0) {
+      let formStr = ''
+      data.forEach((el) => {
+        if (el.name) {
+          formStr += el.name + '=' + el.value + '&'
+        }
+      })
 
-let utilFunc = {
-	initIconFont() {
-		let domModule = weex.requireModule('dom');
-		domModule.addRule('fontFace', {
-			'fontFamily': "iconfont",
-			'src': "url('https://cdn.bootcss.com/font-awesome/4.7.0/fonts/fontawesome-webfont.ttf?v=4.7.0')"
-		});
-	},
-	setBundleUrl(url, jsFile) {
-		const bundleUrl = url;
-		let host = '';
-		let path = '';
-		let nativeBase;
-		const isAndroidAssets = bundleUrl.indexOf('your_current_IP') >= 0 || bundleUrl.indexOf('file://assets/') >= 0;
-		const isiOSAssets = bundleUrl.indexOf('file:///') >= 0 && bundleUrl.indexOf('WeexDemo.app') > 0;
-		if (isAndroidAssets) {
-			nativeBase = 'file://assets/dist';
-		} else if (isiOSAssets) {
-			nativeBase = bundleUrl.substring(0, bundleUrl.lastIndexOf('/') + 1);
-		} else {
-			const matches = /\/\/([^\/]+?)\//.exec(bundleUrl);
-			const matchFirstPath = /\/\/[^\/]+\/([^\/\s]+)\//.exec(bundleUrl);
-			if (matches && matches.length >= 2) {
-				host = matches[1];
-			}
-			if (matchFirstPath && matchFirstPath.length >= 2) {
-				path = matchFirstPath[1];
-			}
-			nativeBase = 'http://' + host + '/';
-		}
-		const h5Base = './index.html?page=';
-		// in Native
-		let base = nativeBase;
-		if (typeof navigator !== 'undefined' && (navigator.appCodeName === 'Mozilla' || navigator.product === 'Gecko')) {
-			// check if in weexpack project
-			if (path === 'web' || path === 'dist') {
-				base = h5Base + '/dist/';
-			} else {
-				base = h5Base + '';
-			}
-		} else {
-			base = nativeBase + (!!path ? path + '/' : '');
-		}
+      if (formStr) {
+        url += '?' + formStr.substr(0, formStr.length - 1)
+      }
+    }
 
-		const newUrl = base + jsFile;
-		return newUrl;
-	},
-	getUrlSearch(url, name) {
-		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-		var r = url.slice(url.indexOf('?') + 1).match(reg);
-		if (r != null) {
-			try {
-				return decodeURIComponent(r[2]);
-			} catch (_e) {
-				return null;
-			}
-		}
-		return null;
-	},
-	// 请求
-	GET(api, data, callback, failCallback, clearLogin) {
-		let self = this
-		let url = 'http://api.hy590.vip/' + api
-		// let url = 'http://my.vuethink.com/' + api
-		// 有参数的话  拼接为字符串加在 url后面
-		if (data.length > 0) {
-			let formStr = ''
-			data.forEach((el) => {
-				if (el.name) {
-					formStr += el.name + '=' + el.value + '&'
-				}
-			})
+    let header = {
+      'dev-type': WXEnvironment.platform
+    }
+    storage.getItem('userInfo', e => {
+      if (e.result == 'success') {
+        let userInfo = {}
+        if (e.data) {
+          userInfo = JSON.parse(e.data)
+        }
 
-			if (formStr) {
-				url += '?' + formStr.substr(0, formStr.length - 1)
-			}
-		}
+        header.authKey = userInfo.auth
+        // console.log(userInfo)
+        self.getRequest(url, header, callback, failCallback, clearLogin)
+      } else {
+        self.getRequest(url, header, callback, failCallback, clearLogin)
+      }
+    })
+  },
+  POST(api, data, callback, failCallback, clearLogin) {
+    let self = this
+    let url = 'http://api.hy590.vip/' + api
+    // let url = 'http://my.vuethink.com/' + api
+    // 有参数的话  拼接为字符串加在 url后面
+    let body = {}
+    if (data.length > 0) {
+      body = data
+    }
 
-		let header = {
-			'dev-type': WXEnvironment.platform
-		}
-		storage.getItem('userInfo', e => {
-			if (e.result == 'success') {
-				let userInfo = {}
-				if (e.data) {
-					userInfo = JSON.parse(e.data)
-				}
+    let header = {
+      'dev-type': WXEnvironment.platform
+    }
 
-				header.authKey = userInfo.auth
-				// console.log(userInfo)
-				self.getRequest(url, header, callback, failCallback, clearLogin)
-			} else {
-				self.getRequest(url, header, callback, failCallback, clearLogin)
-			}
-		})
-	},
-	POST(api, data, callback, failCallback, clearLogin) {
-		let self = this
-		let url = 'http://api.hy590.vip/' + api
-		// let url = 'http://my.vuethink.com/' + api
-		// 有参数的话  拼接为字符串加在 url后面
-		let body = {}
-		if (data.length > 0) {
-			body = data
-		}
+    storage.getItem('userInfo', e => {
+      if (e.result == 'success') {
+        let userInfo = {}
+        if (e.data) {
+          userInfo = JSON.parse(e.data)
+        }
 
-		let header = {
-			'dev-type': WXEnvironment.platform
-		}
+        header.authKey = userInfo.auth
+        // console.log(userInfo)
+        self.getRequest(url, header, callback, failCallback, clearLogin, 'POST', body)
+      } else {
+        self.getRequest(url, header, callback, failCallback, clearLogin, 'POST', body)
+      }
+    })
+  },
+  getRequest(url, header, callback, failCallback, clearLogin, method, body) {
+    let fetchData = {
+      type: 'json',
+      // headers: header,
+      url: url,
+    }
+    if (body) {
+      fetchData.body = body
+    }
+    if (method) {
+      fetchData.method = method;
+    } else {
+      fetchData.method = "GET";
+      fetchData.headers = header
+    }
+    // console.log(fetchData)
+    stream.fetch(fetchData, (rst) => {
+      // console.log(rst)
+      if (rst.data) {
+        if (rst.data.code == 200) {
+          callback(rst)
+        } else if (rst.data.code == 101 || rst.data.code == 102) {
+          // 验证失败
+          // 提示信息
+          // 删除用户登录信息  和缓存
+          clearLogin(rst.data)
+        } else {
+          failCallback(rst)
+        }
+      } else {
+        failCallback(rst)
+      }
+    }, (rst) => {
+    })
+  },
+  // 本地缓存 storage
+  getCache(key, action, fialAction) {
+    if (key === null || key === '') {
+      // key值不能为空
+      return false
+    }
 
-		storage.getItem('userInfo', e => {
-			if (e.result == 'success') {
-				let userInfo = {}
-				if (e.data) {
-					userInfo = JSON.parse(e.data)
-				}
+    storage.getItem(key, (e) => {
+      if (e.result == 'success') {
+        action(e);
+      } else {
+        fialAction(e);
+      }
+    })
+  },
 
-				header.authKey = userInfo.auth
-				// console.log(userInfo)
-				self.getRequest(url, header, callback, failCallback, clearLogin, 'POST', body)
-			} else {
-				self.getRequest(url, header, callback, failCallback, clearLogin, 'POST', body)
-			}
-		})
-	},
-	getRequest(url, header, callback, failCallback, clearLogin, method, body) {
-		let fetchData = {
-			type: 'json',
-			// headers: header,
-			url: url,
-		}
-		if (body) {
-			fetchData.body = body
-		}
-		if (method) {
-			fetchData.method =  method;
-		}else {
-			fetchData.method = "GET";
-			fetchData.headers = header
-		}
-		// console.log(fetchData)
-		stream.fetch(fetchData, (rst) => {
-			// console.log(rst)
-			if(rst.data){
-				if (rst.data.code == 200) {
-					callback(rst)
-				} else if (rst.data.code == 101 || rst.data.code == 102) {
-					// 验证失败
-					// 提示信息
-					// 删除用户登录信息  和缓存
-					clearLogin(rst.data)
-				} else {
-					failCallback(rst)
-				}
-			}else{
-				failCallback(rst)
-			}
-		}, (rst) => {
-		})
-	},
-	// 本地缓存 storage
-	getCache(key, action, fialAction) {
-		if (key === null || key === '') {
-			// key值不能为空
-			return false
-		}
+  setCache(key, value) {
+    if (key === null || key === '') {
+      // key值不能为空
+      return false
+    }
 
-		storage.getItem(key, (e) => {
-			if (e.result == 'success') {
-				action(e);
-			} else {
-				fialAction(e);
-			}
-		})
-	},
+    if (value === '' || value === null) {
+      // 删除
+      storage.removeItem(key, e => {
+      })
+    } else {
+      storage.setItem(key, value, e => {
+      })
+    }
+  }
+}
 
-	setCache(key, value) {
-		if (key === null || key === '') {
-			// key值不能为空
-			return false
-		}
-
-		if (value === '' || value === null) {
-			// 删除
-			storage.removeItem(key, e => {
-			})
-		} else {
-			storage.setItem(key, value, e => {
-			})
-		}
-	},
-	getEntryUrl(name) {
-		// 判断当前的环境，适配web端
-		if (weex.config.env.platform === "Web") {
-			return './' + name + '.html'
-		} else {
-			let arr = weex.config.bundleUrl.split('/');
-			arr.pop();
-			arr.push(name + '.js');
-			return arr.join('/');
-		}
-	}
-};
-
-export default utilFunc;
+export default Utils
