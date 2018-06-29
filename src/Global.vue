@@ -4,20 +4,34 @@
   export default {
     // 全局变量
 
+    // 路由
+		tabContent: [
+			{
+				title: '首页',
+				icon: '&#xe696;',
+        path: 'Home'
+			},
+			{
+				title: '线路中心',
+				icon: '&#xe6f7;',
+        path: 'RouteCenter'
+			},
+			{
+				title: '优惠中心',
+				icon: '&#xe6db;',
+        path: 'DiscountCenter'
+			},
+			{
+				title: '我',
+				icon: '&#xe6b8;',
+        path: 'MyCenter',
+        auth: true
+			}
+		],
     // 静态资源地址 static
     sUrl: 'http://api.hy590.vip/appStatic/',
-    // auth 验证域名
-    authUrlArr: ['MyCenter'],
-    authUrlJump: ['MyCenter'],
 
     // 全局方法
-
-    // 检测是否为特殊的 ios
-    isIpx:() => {
-      return weex && weex.config.env.osName == 'iOS' && weex.config.env.platform == 'iOS'
-      // return weex && (weex.config.env.deviceModel === 'iPhone10,3' || weex.config.env.deviceModel === 'iPhone10,6');
-      // return false
-    },
     setBundleUrl(url, jsFile) {
       const bundleUrl = url;
       let host = '';

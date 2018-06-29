@@ -1,271 +1,230 @@
 <template>
-    <div class="pos-a">
-        <!--<head-nav @tabTo="onTabTo"></head-nav>-->
-
-        <!--<scroller :class="['main-list', isIpx() ? 'w-ipx' : '']" offset-accuracy="300" loadmoreoffset="300">-->
-        <!--&lt;!&ndash;轮播图&ndash;&gt;-->
-        <!--<div style="height: 280px;">-->
-        <!--<slider class="slider" auto-play="true" interval="5000" @change="changeSlider" infinite="true">-->
-        <!--<div class="frame" v-for="slider in sliderList">-->
-        <!--<image class="image" resize="cover" :src="slider.logo" @click="clickSlider(slider.url)"></image>-->
-        <!--</div>-->
-        <!--<indicator class="indicator"></indicator>-->
-        <!--</slider>-->
-        <!--</div>-->
-        <!--&lt;!&ndash;公告&ndash;&gt;-->
-        <!--<announcement :bulletinText="bulletinText"></announcement>-->
-        <!--&lt;!&ndash;功能&ndash;&gt;-->
-        <!--<div style="height: 310px;flex-direction: column;">-->
-        <!--<div style="flex: 1;flex-direction: row;" v-for="v in actionAll">-->
-        <!--<div style="flex: 1;justify-content: center;align-items: center" v-for="action in v.item" @click="clickAction(action.url)">-->
-        <!--<image :src="action.logo" alt="" style="width: 80px;height: 80px"></image>-->
-        <!--<text style="font-size: 22px;margin-top: 10px;color: #666">{{action.title}}</text>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--&lt;!&ndash;热门优惠&ndash;&gt;-->
-        <!--<div style="height: 415px;">-->
-        <!--<div style="margin-left: 40px;height: 50px;flex-direction: row;align-items: center">-->
-        <!--<div style="height: 28px;width: 5px;background-color: #febc17;"></div>-->
-        <!--<text style="font-weight:bold;font-size: 28px;color: #555;margin-left: 5px">热门优惠</text>-->
-        <!--</div>-->
-        <!--&lt;!&ndash;优惠活动&ndash;&gt;-->
-        <!--<div style="height: 360px;flex-direction: column;justify-content: space-between;padding-bottom: 5px;">-->
-        <!--<div style="height: 165px;flex-direction: row;justify-content: space-between;padding-left: 40px;padding-right: 40px" v-for="v in hotDeals">-->
-        <!--<div style="background-color: #fff;width: 315px;align-items: center;border-radius: 15px;overflow:hidden;border-color: #ccc;border-style: solid;border-width: 1px" v-for="deals in v.item" @click="clickDeals(deals.url)">-->
-        <!--<image :src="deals.logo" alt="" style="height: 130px;width: 315px;border-top-left-radius:15px;border-top-right-radius:15px;"></image>-->
-        <!--<text style="font-size: 26px;color: #666;line-height: 35px">{{deals.title}}</text>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</scroller>-->
-    </div>
+  <div>
+    <scroller class="pos-a" offset-accuracy="300" loadmoreoffset="300">
+      <!--轮播图-->
+      <div class="h280">
+        <slider class="h280 w750" auto-play="true" interval="5000" @change="changeSlider" infinite="true">
+          <div class="h280 w750 pos-r" v-for="slider in sliderList">
+            <image class="h280 w750" resize="cover" :src="slider.logo" @click="clickSlider(slider.url)"></image>
+          </div>
+          <indicator class="w750 h40 indicator"></indicator>
+        </slider>
+      </div>
+      <!--公告-->
+      <announcement></announcement>
+      <!--功能-->
+      <div class="h310 fdc" >
+        <div class="f1 fdr" v-for="v in actionAll">
+          <div class="f1 f-cent" v-for="action in v.item"
+               @click="clickAction(action.url)">
+            <image :src="action.logo" alt="" class="w80 h80" ></image>
+            <text class="action-text f22 mt10">{{action.title}}</text>
+          </div>
+        </div>
+      </div>
+      <!--热门优惠-->
+      <div class="hot-discount">
+        <div class="ml40 h50 fdr fac">
+          <div class="discount-icon mt5 w5"></div>
+          <text class="discount-tip-text f28 ml5" style="">热门优惠</text>
+        </div>
+        <!--优惠活动-->
+        <div class="pb5 fdc h360 fjsb">
+          <div class="fdr fjsb pl40 pr40 h165" v-for="v in hotDeals">
+            <div class="discount-item fac bor-r15 w315"
+                v-for="deals in v.item" @click="clickDeals(deals.url)">
+              <image :src="deals.logo" alt="" class="discount-img"></image>
+              <text class="discount-text f24 pb5">{{deals.title}}</text>
+            </div>
+          </div>
+        </div>
+      </div>
+    </scroller>
+  </div>
 </template>
-<script>
-  import _c from '@/Global.vue'
-  import util from '@/assets/util.js';
-
-  import HeadNav from '../components/headNav.vue';
-  import AnCement from '../components/announcement.vue';
-
-
-  const storage = weex.requireModule('storage')
-
-  export default {
-    data() {
-      return {
-        // 公告
-        // bulletinText: '',
-        // 轮播图
-        sliderList: [
-          {
-            logo: _c.sUrl + '/images/load_750_280.gif',
-            url: '1'
-          },
-          {
-            logo: _c.sUrl + '/images/load_750_280.gif',
-            url: '1'
-          },
-          {
-            logo: _c.sUrl + '/images/load_750_280.gif',
-            url: '1'
-          }
-        ],
-        // 功能
-        actionAll: [
-          {
-            item: [
-              {
-                title: '实时返水',
-                logo: _c.sUrl + '/images/round/real_time_return_water.png',
-                url: '1'
-              },
-              {
-                title: '自动充值',
-                logo: _c.sUrl + '/images/round/real_time_return_water.png',
-                url: '2'
-              },
-              {
-                title: '超级大转盘',
-                logo: _c.sUrl + '/images/round/super_big_turntable.png',
-                url: '3'
-              },
-              {
-                title: '自组客服',
-                logo: _c.sUrl + '/images/round/cust_service.png',
-                url: '4'
-              }
-            ]
-          },
-          {
-            item: [
-              {
-                title: '认证中心',
-                logo: _c.sUrl + '/images/round/auth_center.png',
-                url: ''
-              },
-              {
-                title: '游戏APP下载',
-                logo: _c.sUrl + '/images/round/game_app_download.png',
-                url: ''
-              },
-              {
-                title: '投诉与建议',
-                logo: _c.sUrl + '/images/round/feedback.png',
-                url: ''
-              },
-              {
-                title: '在线客服',
-                logo: _c.sUrl + '/images/round/online_service.png',
-                url: ''
-              }
-            ]
-          }
-        ],
-        // 热门优惠
-        hotDeals: [
-          {
-            item: [
-              {
-                title: '返水秒到账1',
-                logo: _c.sUrl + '/images/135-315.png',
-                url: '1'
-              },
-              {
-                title: '返水秒到账2',
-                logo: _c.sUrl + '/images/135-315.png',
-                url: '2'
-              }
-
-            ]
-          },
-          {
-            item: [
-              {
-                title: '返水秒到账3',
-                logo: _c.sUrl + '/images/135-315.png',
-                url: '3'
-              },
-              {
-                title: '返水秒到账4',
-                logo: _c.sUrl + '/images/135-315.png',
-                url: '4'
-              }
-
-            ]
-          }
-        ]
-      }
-    },
-    methods: {
-      clickAction(url) {
-        _c.alterTip('功能维护中', 1)
-      },
-      clickDeals(url) {
-        _c.alterTip('功能维护中', 1)
-      },
-      changeSlider(event) {
-        // console.log(event)
-      },
-      clickSlider(url) {
-        _c.alterTip('功能维护中', 1)
-      },
-      onTabTo(url) {
-        this.$parent.onTabTo({
-          data: {
-            key: url
-          },
-          status: 'navTabTo'
-        })
-      },
-      closeLoad() {
-        this.$parent.isShow = false;
-      },
-      isIpx() {
-        return _c.isIpx()
-      },
-      init() {
-        util.GET('oaSystem/advert', {}, e => {
-          this.$parent.announcement = e.data.data.bulletinText
-          // console.log(e)
-          this.sliderList = e.data.data.sliderList
-        }, e => {
-        }, (e) => {
-        })
-      }
-    },
-    created() {
-      this.init()
-      // console.log(this.$parent.sliderList)
-      // this.sliderList = this.$parent.sliderList
-    },
-    watch: {},
-    computed: {
-      // 公告
-      bulletinText() {
-        return this.$parent.announcement
-      }
-    },
-    components: {
-      'head-nav': HeadNav,
-      'announcement': AnCement
-    },
-    mounted() {
-      // this.$parent.closeLoadding()
-      // console.log()
-      // this.sliderList = this.$parent.sliderList
-      this.sliderList = [
-        {
-          logo: _c.sUrl + '/images/route_blurry_background.png',
-          url: '1'
-        },
-        {
-          logo: _c.sUrl + '/images/route_blurry_background.png',
-          url: '1'
-        }
-      ]
-    }
-  }
-</script>
 
 <style scoped lang="sass">
-    @import '@/assets/common/common.sass'
+  @import '@/assets/common/common.sass'
 
-    .c3
-        color: #333333
+  .indicator
+    item-color: white
+    item-selected-color: #b4282d
+    item-size: 12px
+    position: absolute
+    bottom: 10px
 
-    .main-list
-        position: fixed
-        top: 110px
-        bottom: 90px
-        left: 0
-        right: 0
+  .action-text
+    color: $font_color
 
-    .w-ipx
-        bottom: 140px
+  .hot-discount
+    height: 415px
 
-    .image
-        width: 750px
-        height: 280px
+  .discount-icon
+    height: 28px
+    background-color: $main_color
 
-    .slider
-        width: 750px
-        height: 280px
+  .discount-tip-text
+    font-weight: 700
+    color: $font_color
 
-    .frame
-        width: 750px
-        height: 280px
-        position: relative
+  .discount-item
+    background-color: #ffffff
+    border-color: #cccccc
+    border-style: solid
+    border-width: 1px
 
-    .indicator
-        width: 750px
-        height: 40px
-        item-color: white
-        item-selected-color: #b4282d
-        item-size: 12px
-        position: absolute
-        bottom: 10px
-        right: 0px
+  .discount-img
+    width: 313px
+    height: 130px
+    border-top-left-radius: 15px
+    border-top-right-radius: 15px
+
+  .discount-text
+    color: $font_color
+    text-align: center
 
 </style>
+
+<script>
+	import _c from '@/Global.vue'
+	// import util from '@/assets/util.js';
+	import AnCement from '../components/announcement.vue';
+
+	// const storage = weex.requireModule('storage')
+
+	export default {
+		components: {
+			'announcement': AnCement
+		},
+		data() {
+			return {
+				// 功能
+				actionAll: [
+					{
+						item: [
+							{
+								title: '实时返水',
+								logo: _c.sUrl + '/images/round/real_time_return_water.png',
+								url: '1'
+							},
+							{
+								title: '自动充值',
+								logo: _c.sUrl + '/images/round/real_time_return_water.png',
+								url: '2'
+							},
+							{
+								title: '超级大转盘',
+								logo: _c.sUrl + '/images/round/super_big_turntable.png',
+								url: '3'
+							},
+							{
+								title: '自组客服',
+								logo: _c.sUrl + '/images/round/cust_service.png',
+								url: '4'
+							}
+						]
+					},
+					{
+						item: [
+							{
+								title: '认证中心',
+								logo: _c.sUrl + '/images/round/auth_center.png',
+								url: ''
+							},
+							{
+								title: '游戏APP下载',
+								logo: _c.sUrl + '/images/round/game_app_download.png',
+								url: ''
+							},
+							{
+								title: '投诉与建议',
+								logo: _c.sUrl + '/images/round/feedback.png',
+								url: ''
+							},
+							{
+								title: '在线客服',
+								logo: _c.sUrl + '/images/round/online_service.png',
+								url: ''
+							}
+						]
+					}
+				],
+				// 热门优惠
+				hotDeals: [
+					{
+						item: [
+							{
+								title: '返水秒到账',
+								logo: _c.sUrl + '/images/135-315.png',
+								url: '1'
+							},
+							{
+								title: '返水秒到账',
+								logo: _c.sUrl + '/images/135-315.png',
+								url: '2'
+							}
+
+						]
+					},
+					{
+						item: [
+							{
+								title: '返水秒到账',
+								logo: _c.sUrl + '/images/135-315.png',
+								url: '3'
+							},
+							{
+								title: '返水秒到账',
+								logo: _c.sUrl + '/images/135-315.png',
+								url: '4'
+							}
+
+						]
+					}
+				]
+			}
+		},
+		methods: {
+			clickAction(url) {
+				_c.alterTip('功能维护中', 1)
+			},
+			clickDeals(url) {
+				_c.alterTip('功能维护中', 1)
+			},
+			changeSlider(event) {
+				// console.log(event)
+			},
+			clickSlider(url) {
+				_c.alterTip('功能维护中', 1)
+			},
+			onTabTo(url) {
+				this.$parent.onTabTo({
+					data: {
+						key: url
+					},
+					status: 'navTabTo'
+				})
+			},
+			closeLoad() {
+				this.$parent.isShow = false;
+			},
+			init() {
+				// 获取公告
+				this.$store.dispatch('advert')
+			}
+		},
+		created() {
+			this.init()
+		},
+		watch: {},
+		computed: {
+			// 轮播图
+			sliderList() {
+				return this.$store.getters.getSliderList
+      }
+		},
+		mounted() {
+			// this.$parent.closeLoadding()
+		}
+	}
+</script>

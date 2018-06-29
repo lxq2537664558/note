@@ -1,11 +1,17 @@
+18个月   学会  ios  android  前端 桌面端         
+
+
 9777081419
 
 admin.hy590.vip
 
 
 
+weex-ui
 
-php /www/wwwroot/admin.hy590.vip/php/think RefreshMemberData
+
+https://cdn.bootcss.com/font-awesome/4.7.0/fonts/fontawesome-webfont.ttf?v=4.7.0
+  
 
 
 设置一个开盘时间
@@ -48,149 +54,6 @@ login_time   登录时间
 
 
 
-线上存款
-Request URL: https://zb168.10050754.com/agv3/cl/?module=CashSystem&method=queryProject&sid=
-Request Method: POST
-
-current: RMB
-sDate: 2018-05-01 00:00:00
-eDate: 2018-06-15 23:59:59
-MemNameSel: single
-mem_name: wayg
-betNum: 
-page: 
-Sort: 1
-m: 1,3,5,12,26,30,31,34,38,35,43
-cid: 1,3,12
-
-{"INFO":{"page_num":1,"page":"1","pageO":50,"total":"13,677.69","maxcredit":"0.34"},"ARR_WDATA":[{"ID":"53595925329","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"79.00","MIN_SUM":"79.20","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-14 17:47:52","PS":"\u5355\u53f7:201806150973132619<br\/>\u4eba\u6c11\u5e01(RMB):79","MEMO":"\u6c47\u94f6\u652f\u4ed8 - \u6c47\u94f6"},{"ID":"53567091530","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"500.00","MIN_SUM":"500.89","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-14 06:22:57","PS":"\u5355\u53f7:201806140972421820<br\/>\u4eba\u6c11\u5e01(RMB):500","MEMO":"\u77ac\u4ed8 - \u65b0\u77ac\u4ed8"},{"ID":"53494486237","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"500.00","MIN_SUM":"600.30","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 01:19:33","PS":"\u5355\u53f7:201806130970788012<br\/>\u4eba\u6c11\u5e01(RMB):500","MEMO":"\u4f18\u7c73\u4ed8 - \u4f18\u7c73\u4ed8"},{"ID":"53491968615","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"500.00","MIN_SUM":"500.04","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 00:25:12","PS":"\u5355\u53f7:201806130970731851<br\/>\u4eba\u6c11\u5e01(RMB):500","MEMO":"\u946b\u652f\u4ed8 - \u946b\u652f\u4ed8"},{"ID":"53491507130","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"500.00","MIN_SUM":"500.74","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 00:13:50","PS":"\u5355\u53f7:201806130970720499<br\/>\u4eba\u6c11\u5e01(RMB):500","MEMO":"\u946b\u652f\u4ed8 - \u946b\u652f\u4ed8"},{"ID":"53446388033","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"500.35","MIN_SUM":"507.77","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-12 03:24:15","PS":"\u5355\u53f7:201806120969603961<br\/>\u4eba\u6c11\u5e01(RMB):500","MEMO":"\u4ec1\u4fe1\u652f\u4ed8 - \u4ec1\u4fe1QQ\u94b1\u5305\u3010\u4e2d\u5c42\u3011"},{"ID":"53383840480","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"500.00","MIN_SUM":"500.05","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-11 00:34:57","PS":"\u5355\u53f7:201806110968188939<br\/>\u4eba\u6c11\u5e01(RMB):500","MEMO":"\u6052\u4fe1\u667a\u4ed8 - \u6052\u4fe1\u667a\u4ed8"},{"ID":"53356521583","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"200.00","MIN_SUM":"200.34","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-10 10:11:29","PS":"\u5355\u53f7:201806100967505615<br\/>\u4eba\u6c11\u5e01(RMB):200","MEMO":"\u661f\u822a\u652f\u4ed8 - \u661f\u822a\u3010\u9ad8\u5c42\u3011"},{"ID":"53334990952","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"400.52","MIN_SUM":"429.50","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-10 02:56:47","PS":"\u5355\u53f7:201806100967031936<br\/>\u4eba\u6c11\u5e01(RMB):400","MEMO":"\u9ad8\u901a\u652f\u4ed8 - \u9ad8\u901a\u652f\u4ed8\u5b9d"},{"ID":"53330740977","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"500.00","MIN_SUM":"523.35","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-10 01:21:39","PS":"\u5355\u53f7:201806100966938207<br\/>\u4eba\u6c11\u5e01(RMB):500","MEMO":"\u767e\u76db\u652f\u4ed8 - \u767e\u76db"},{"ID":"53326154404","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"500.00","MIN_SUM":"512.75","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-09 23:24:08","PS":"\u5355\u53f7:201806100966832246<br\/>\u4eba\u6c11\u5e01(RMB):500","MEMO":"\u95ea\u4ebf\u4ed8 - \u95ea\u4ebf\u4ed8"},{"ID":"53325828421","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"500.00","MIN_SUM":"500.25","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-09 23:14:58","PS":"\u5355\u53f7:201806100966825173<br\/>\u4eba\u6c11\u5e01(RMB):500","MEMO":"\u4f70\u5bcc - \u767e\u5bcc"},{"ID":"53316410038","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"500.00","MIN_SUM":"500.51","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-09 17:35:17","PS":"\u5355\u53f7:201806100966597391<br\/>\u4eba\u6c11\u5e01(RMB):500","MEMO":"\u5168\u94f6\u652f\u4ed8 - \u5168\u94f6\u3010\u9ad8\u5c42\u3011"},{"ID":"53313938258","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"498.28","MIN_SUM":"499.45","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-09 15:44:36","PS":"\u5355\u53f7:201806100966530481<br\/>\u4eba\u6c11\u5e01(RMB):498","MEMO":"\u4ec1\u4fe1\u652f\u4ed8 - \u4ec1\u4fe1QQ\u94b1\u5305\u3010\u4e2d\u5c42\u3011"},{"ID":"53313074658","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"499.00","MIN_SUM":"499.47","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-09 15:12:46","PS":"\u5355\u53f7:201806100966507420<br\/>\u4eba\u6c11\u5e01(RMB):499","MEMO":"\u6c47\u94f6\u652f\u4ed8 - \u6c47\u94f6"},{"ID":"53310715892","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"30.31","MIN_SUM":"30.32","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-09 13:59:51","PS":"\u5355\u53f7:201806100966442163<br\/>\u4eba\u6c11\u5e01(RMB):30","MEMO":"\u4ec1\u4fe1\u652f\u4ed8 - \u4ec1\u4fe1QQ\u94b1\u5305\u3010\u4e2d\u5c42\u3011"},{"ID":"53301588074","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"800.00","MIN_SUM":"800.21","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-09 10:36:02","PS":"\u5355\u53f7:201806090966193076<br\/>\u4eba\u6c11\u5e01(RMB):800","MEMO":"\u6c47\u94f6\u652f\u4ed8 - \u6c47\u94f6"},{"ID":"53298784865","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"800.00","MIN_SUM":"800.41","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-09 09:41:35","PS":"\u5355\u53f7:201806090966115870<br\/>\u4eba\u6c11\u5e01(RMB):800","MEMO":"\u6c47\u94f6\u652f\u4ed8 - \u6c47\u94f6"},{"ID":"53289936199","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"800.00","MIN_SUM":"801.74","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-09 06:58:03","PS":"\u5355\u53f7:201806090965882969<br\/>\u4eba\u6c11\u5e01(RMB):800","MEMO":"\u77ac\u4ed8 - \u65b0\u77ac\u4ed8"},{"ID":"53278144956","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"1,000.00","MIN_SUM":"1,000.87","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-09 03:15:17","PS":"\u5355\u53f7:201806090965628167<br\/>\u4eba\u6c11\u5e01(RMB):1,000","MEMO":"\u9996\u6377\u652f\u4ed8 - \u9996\u6377\u652f\u4ed8"},{"ID":"53217384272","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"1,000.00","MIN_SUM":"1,000.16","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-08 01:58:00","PS":"\u5355\u53f7:201806080964189885<br\/>\u4eba\u6c11\u5e01(RMB):1,000","MEMO":"\u4f70\u5bcc - \u767e\u5bcc"},{"ID":"53201366880","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"188.16","MIN_SUM":"188.36","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-07 18:09:02","PS":"\u5355\u53f7:201806080963821134<br\/>\u4eba\u6c11\u5e01(RMB):188","MEMO":"\u4fe1\u6c47\u652f\u4ed8 - \u4fe1\u6c47\u652f\u4ed8\u3010\u4f4e\u5c42\u3011"},{"ID":"53201047459","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"198.57","MIN_SUM":"198.81","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-07 17:52:33","PS":"\u5355\u53f7:201806080963813235<br\/>\u4eba\u6c11\u5e01(RMB):198","MEMO":"\u91d1\u9633\u652f\u4ed8 - \u91d1\u9633\u652f\u4ed8"},{"ID":"53157198922","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"200.00","MIN_SUM":"200.81","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-07 01:39:04","PS":"\u5355\u53f7:201806070962763310<br\/>\u4eba\u6c11\u5e01(RMB):200","MEMO":"\u4f70\u5bcc - \u767e\u5bcc"},{"ID":"53145932104","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"50.00","MIN_SUM":"50.56","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-06 20:57:39","PS":"\u5355\u53f7:201806070962518952<br\/>\u4eba\u6c11\u5e01(RMB):50","MEMO":"\u901a\u626b\u652f\u4ed8 - \u901a\u626b"},{"ID":"53136344127","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"30.00","MIN_SUM":"30.81","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-06 14:17:55","PS":"\u5355\u53f7:201806070962278921<br\/>\u4eba\u6c11\u5e01(RMB):30","MEMO":"\u559c\u4ed8 - \u559c\u4ed8\u652f\u4ed8"},{"ID":"53134189234","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"48.27","MIN_SUM":"48.57","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-06 13:19:45","PS":"\u5355\u53f7:201806070962223837<br\/>\u4eba\u6c11\u5e01(RMB):48","MEMO":"\u7acb\u523b\u4ed8 - \u7acb\u523b\u4ed8\u652f\u4ed8\u3010\u9ad8\u5c42\u3011"},{"ID":"53133646924","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"59.46","MIN_SUM":"60.00","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-06 13:06:20","PS":"\u5355\u53f7:201806070962209895<br\/>\u4eba\u6c11\u5e01(RMB):59","MEMO":"\u7acb\u523b\u4ed8 - \u7acb\u523b\u4ed8\u652f\u4ed8\u3010\u9ad8\u5c42\u3011"},{"ID":"53124689038","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"58.56","MIN_SUM":"58.62","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-06 09:54:04","PS":"\u5355\u53f7:201806060961970915<br\/>\u4eba\u6c11\u5e01(RMB):58","MEMO":"\u7acb\u523b\u4ed8 - \u7acb\u523b\u4ed8\u652f\u4ed8\u3010\u9ad8\u5c42\u3011"},{"ID":"53123945184","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"37.21","MIN_SUM":"37.87","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-06 09:39:36","PS":"\u5355\u53f7:201806060961952678<br\/>\u4eba\u6c11\u5e01(RMB):37","MEMO":"\u7acb\u523b\u4ed8 - \u7acb\u523b\u4ed8\u652f\u4ed8\u3010\u9ad8\u5c42\u3011"},{"ID":"53102700015","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"300.00","MIN_SUM":"300.34","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-06 02:49:07","PS":"\u5355\u53f7:201806060961494270<br\/>\u4eba\u6c11\u5e01(RMB):300","MEMO":"\u9996\u6377\u652f\u4ed8 - \u9996\u6377\u652f\u4ed8"},{"ID":"53094964784","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"400.00","MIN_SUM":"400.03","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-06 00:03:56","PS":"\u5355\u53f7:201806060961307975<br\/>\u4eba\u6c11\u5e01(RMB):400","MEMO":"\u95ea\u4ebf\u4ed8 - \u95ea\u4ebf\u4ed8"},{"ID":"53073648343","MEM_NAME":"wayg","ACT_RESULT":"\u7ebf\u4e0a\u5b58\u6b3e","MEM_GOLD":"1,000.00","MIN_SUM":"1,000.96","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-05 09:59:44","PS":"\u5355\u53f7:201806050960776725<br\/>\u4eba\u6c11\u5e01(RMB):1,000","MEMO":"\u767e\u76db\u652f\u4ed8 - \u767e\u76db"}]}
-
-
-下注
-
-Request URL: https://zb168.10050754.com/agv3/cl/?module=CashSystem&method=queryProject&sid=
-Request Method: POST
-
-current: RMB
-sDate: 2018-05-01 00:00:00
-eDate: 2018-06-15 23:59:59
-MemNameSel: single
-mem_name: wayg
-betNum: 
-page: 
-Sort: 1
-m: 1,3,5,12,26,30,31,34,38,35,43
-cid: 2,92,93
-
-
-{"INFO":{"page_num":19,"page":"1","pageO":50,"total":"-6,292.90","maxcredit":"0.34"},"ARR_WDATA":[{"ID":"53596180933","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u6355\u9c7c-BB\u6355\u9c7c\u8fbe\u4eba","MEM_GOLD":"-12.80","MIN_SUM":"0.12","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-14 18:00:14","PS":"\u5355\u53f7:39053235","MEMO":"&nbsp;"},{"ID":"53596036913","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u6355\u9c7c-BB\u6355\u9c7c\u8fbe\u4eba","MEM_GOLD":"-14.00","MIN_SUM":"0.00","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-14 17:53:13","PS":"\u5355\u53f7:39052677","MEMO":"&nbsp;"},{"ID":"53595951827","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u6355\u9c7c-BB\u6355\u9c7c\u8fbe\u4eba","MEM_GOLD":"-79.60","MIN_SUM":"0.00","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-14 17:49:11","PS":"\u5355\u53f7:39052171","MEMO":"&nbsp;"},{"ID":"53571558054","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u79d8\u5883\u5192\u9669","MEM_GOLD":"-500.00","MIN_SUM":"1,152.49","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-14 07:51:58","PS":"\u5355\u53f7:267982563313","MEMO":"&nbsp;"},{"ID":"53567140433","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u7cd6\u679c\u6d3e\u5bf9","MEM_GOLD":"-503.30","MIN_SUM":"0.09","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-14 06:23:57","PS":"\u5355\u53f7:267959508691","MEMO":"&nbsp;"},{"ID":"53511739708","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u6355\u9c7c-BB\u6355\u9c7c\u8fbe\u4eba","MEM_GOLD":"-78.00","MIN_SUM":"0.19","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 06:58:26","PS":"\u5355\u53f7:38887078","MEMO":"&nbsp;"},{"ID":"53511685988","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u6355\u9c7c-BB\u6355\u9c7c\u8fbe\u4eba","MEM_GOLD":"-100.00","MIN_SUM":"78.19","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 06:57:12","PS":"\u5355\u53f7:38887013","MEMO":"&nbsp;"},{"ID":"53511550909","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u6355\u9c7c-BB\u6355\u9c7c\u8fbe\u4eba","MEM_GOLD":"-100.00","MIN_SUM":"178.19","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 06:54:23","PS":"\u5355\u53f7:38886858","MEMO":"&nbsp;"},{"ID":"53511370754","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u6355\u9c7c-BB\u6355\u9c7c\u8fbe\u4eba","MEM_GOLD":"-100.00","MIN_SUM":"278.19","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 06:50:33","PS":"\u5355\u53f7:38886684","MEMO":"&nbsp;"},{"ID":"53511274892","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u6355\u9c7c-BB\u6355\u9c7c\u8fbe\u4eba","MEM_GOLD":"-100.00","MIN_SUM":"185.19","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 06:48:34","PS":"\u5355\u53f7:38886594","MEMO":"&nbsp;"},{"ID":"53511072926","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u6355\u9c7c-BB\u6355\u9c7c\u8fbe\u4eba","MEM_GOLD":"-100.00","MIN_SUM":"285.19","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 06:44:18","PS":"\u5355\u53f7:38886389","MEMO":"&nbsp;"},{"ID":"53510918382","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u6355\u9c7c-BB\u6355\u9c7c\u8fbe\u4eba","MEM_GOLD":"-100.00","MIN_SUM":"385.19","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 06:41:02","PS":"\u5355\u53f7:38886221","MEMO":"&nbsp;"},{"ID":"53510829207","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u6355\u9c7c-BB\u6355\u9c7c\u8fbe\u4eba","MEM_GOLD":"-100.00","MIN_SUM":"485.19","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 06:39:09","PS":"\u5355\u53f7:38886130","MEMO":"&nbsp;"},{"ID":"53510131395","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u6355\u9c7c-BB\u6355\u9c7c\u8fbe\u4eba","MEM_GOLD":"-100.00","MIN_SUM":"585.19","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 06:24:36","PS":"\u5355\u53f7:38884293","MEMO":"&nbsp;"},{"ID":"53509442136","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u6355\u9c7c-BB\u6355\u9c7c\u8fbe\u4eba","MEM_GOLD":"-100.00","MIN_SUM":"151.79","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 06:09:54","PS":"\u5355\u53f7:38882801","MEMO":"&nbsp;"},{"ID":"53505026199","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u6355\u9c7c-BB\u6355\u9c7c\u8fbe\u4eba","MEM_GOLD":"-100.00","MIN_SUM":"502.87","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 04:44:14","PS":"\u5355\u53f7:38874499","MEMO":"&nbsp;"},{"ID":"53498904630","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u5f00\u5fc3\u6d88\u6d88\u4e50","MEM_GOLD":"-100.00","MIN_SUM":"720.70","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 02:50:48","PS":"\u5355\u53f7:267551849152","MEMO":"&nbsp;"},{"ID":"53498792178","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u5f00\u5fc3\u6d88\u6d88\u4e50","MEM_GOLD":"-50.00","MIN_SUM":"820.70","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 02:48:29","PS":"\u5355\u53f7:267551229332","MEMO":"&nbsp;"},{"ID":"53498745880","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u5f00\u5fc3\u6d88\u6d88\u4e50","MEM_GOLD":"-50.00","MIN_SUM":"870.70","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 02:47:31","PS":"\u5355\u53f7:267550968669","MEMO":"&nbsp;"},{"ID":"53498627847","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u5f00\u5fc3\u6d88\u6d88\u4e50","MEM_GOLD":"-50.00","MIN_SUM":"920.70","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 02:45:20","PS":"\u5355\u53f7:267550378864","MEMO":"&nbsp;"},{"ID":"53498589894","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u5f00\u5fc3\u6d88\u6d88\u4e50","MEM_GOLD":"-50.00","MIN_SUM":"970.70","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 02:44:32","PS":"\u5355\u53f7:267550163356","MEMO":"&nbsp;"},{"ID":"53498313626","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u5f00\u5fc3\u6d88\u6d88\u4e50","MEM_GOLD":"-100.00","MIN_SUM":"819.20","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 02:38:59","PS":"\u5355\u53f7:267548663396","MEMO":"&nbsp;"},{"ID":"53498285228","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u5f00\u5fc3\u6d88\u6d88\u4e50","MEM_GOLD":"-50.00","MIN_SUM":"919.20","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 02:38:26","PS":"\u5355\u53f7:267548515046","MEMO":"&nbsp;"},{"ID":"53498260682","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u5f00\u5fc3\u6d88\u6d88\u4e50","MEM_GOLD":"-50.00","MIN_SUM":"969.20","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 02:37:56","PS":"\u5355\u53f7:267548378430","MEMO":"&nbsp;"},{"ID":"53498201812","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u5f00\u5fc3\u6d88\u6d88\u4e50","MEM_GOLD":"-50.00","MIN_SUM":"609.20","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 02:36:40","PS":"\u5355\u53f7:267548033858","MEMO":"&nbsp;"},{"ID":"53497941232","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u5f00\u5fc3\u6d88\u6d88\u4e50","MEM_GOLD":"-50.00","MIN_SUM":"457.70","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 02:31:28","PS":"\u5355\u53f7:267546649363","MEMO":"&nbsp;"},{"ID":"53497736399","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u5f00\u5fc3\u6d88\u6d88\u4e50","MEM_GOLD":"-100.00","MIN_SUM":"507.70","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 02:27:15","PS":"\u5355\u53f7:267545518214","MEMO":"&nbsp;"},{"ID":"53497667282","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u5f00\u5fc3\u6d88\u6d88\u4e50","MEM_GOLD":"-100.00","MIN_SUM":"607.70","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 02:25:50","PS":"\u5355\u53f7:267545135305","MEMO":"&nbsp;"},{"ID":"53497586870","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u5f00\u5fc3\u6d88\u6d88\u4e50","MEM_GOLD":"-100.00","MIN_SUM":"707.70","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 02:24:18","PS":"\u5355\u53f7:267544718245","MEMO":"&nbsp;"},{"ID":"53497493321","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u5f00\u5fc3\u6d88\u6d88\u4e50","MEM_GOLD":"-100.00","MIN_SUM":"806.20","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 02:22:27","PS":"\u5355\u53f7:267544213313","MEMO":"&nbsp;"},{"ID":"53497364642","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u5f00\u5fc3\u6d88\u6d88\u4e50","MEM_GOLD":"-100.00","MIN_SUM":"906.20","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 02:19:51","PS":"\u5355\u53f7:267543522257","MEMO":"&nbsp;"},{"ID":"53497338264","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u5f00\u5fc3\u6d88\u6d88\u4e50","MEM_GOLD":"-50.00","MIN_SUM":"1,006.20","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 02:19:20","PS":"\u5355\u53f7:267543382959","MEMO":"&nbsp;"},{"ID":"53497112832","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u5f00\u5fc3\u6d88\u6d88\u4e50","MEM_GOLD":"-50.00","MIN_SUM":"1,056.20","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 02:14:44","PS":"\u5355\u53f7:267542141678","MEMO":"&nbsp;"},{"ID":"53497061645","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u5f00\u5fc3\u6d88\u6d88\u4e50","MEM_GOLD":"-100.00","MIN_SUM":"1,106.20","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 02:13:41","PS":"\u5355\u53f7:267541856039","MEMO":"&nbsp;"},{"ID":"53496634198","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u5f00\u5fc3\u6d88\u6d88\u4e50","MEM_GOLD":"-100.00","MIN_SUM":"1,206.20","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 02:04:46","PS":"\u5355\u53f7:267539440279","MEMO":"&nbsp;"},{"ID":"53496248293","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u6d77\u5e95\u4e16\u754c","MEM_GOLD":"-50.00","MIN_SUM":"907.80","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 01:56:34","PS":"\u5355\u53f7:267537204234","MEMO":"&nbsp;"},{"ID":"53496157030","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u6d77\u5e95\u4e16\u754c","MEM_GOLD":"-50.00","MIN_SUM":"957.80","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 01:54:48","PS":"\u5355\u53f7:267536726576","MEMO":"&nbsp;"},{"ID":"53495870095","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u6d77\u5e95\u4e16\u754c","MEM_GOLD":"-100.00","MIN_SUM":"1,007.80","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 01:48:51","PS":"\u5355\u53f7:267535117426","MEMO":"&nbsp;"},{"ID":"53495762921","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u79d8\u5883\u5192\u9669","MEM_GOLD":"-100.00","MIN_SUM":"1,097.80","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 01:46:32","PS":"\u5355\u53f7:267534477915","MEMO":"&nbsp;"},{"ID":"53495642979","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u79d8\u5883\u5192\u9669","MEM_GOLD":"-200.00","MIN_SUM":"1,192.80","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 01:43:58","PS":"\u5355\u53f7:267533779421","MEMO":"&nbsp;"},{"ID":"53495604969","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u79d8\u5883\u5192\u9669","MEM_GOLD":"-100.00","MIN_SUM":"1,047.80","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 01:43:07","PS":"\u5355\u53f7:267533548556","MEMO":"&nbsp;"},{"ID":"53495368918","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u79d8\u5883\u5192\u9669","MEM_GOLD":"-200.00","MIN_SUM":"1,147.80","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 01:38:06","PS":"\u5355\u53f7:267532168023","MEMO":"&nbsp;"},{"ID":"53495112592","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u79d8\u5883\u5192\u9669","MEM_GOLD":"-500.00","MIN_SUM":"837.80","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 01:32:43","PS":"\u5355\u53f7:267530684794","MEMO":"&nbsp;"},{"ID":"53494937917","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u79d8\u5883\u5192\u9669","MEM_GOLD":"-500.00","MIN_SUM":"492.80","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 01:29:00","PS":"\u5355\u53f7:267529667664","MEMO":"&nbsp;"},{"ID":"53494713415","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u79d8\u5883\u5192\u9669","MEM_GOLD":"-302.00","MIN_SUM":"0.80","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 01:24:22","PS":"\u5355\u53f7:267528401897","MEMO":"&nbsp;"},{"ID":"53494526779","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u673a\u7387-\u79d8\u5883\u5192\u9669","MEM_GOLD":"-300.00","MIN_SUM":"302.80","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 01:20:25","PS":"\u5355\u53f7:267527318539","MEMO":"&nbsp;"},{"ID":"53491749137","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u6355\u9c7c-BB\u6355\u9c7c\u8fbe\u4eba","MEM_GOLD":"-3.20","MIN_SUM":"0.04","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 00:19:59","PS":"\u5355\u53f7:38850374","MEMO":"&nbsp;"},{"ID":"53491745794","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u6355\u9c7c-BB\u6355\u9c7c\u8fbe\u4eba","MEM_GOLD":"-100.00","MIN_SUM":"3.24","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 00:19:56","PS":"\u5355\u53f7:38850373","MEMO":"&nbsp;"},{"ID":"53491718513","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u6355\u9c7c-BB\u6355\u9c7c\u8fbe\u4eba","MEM_GOLD":"-100.00","MIN_SUM":"103.24","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 00:19:14","PS":"\u5355\u53f7:38850339","MEMO":"&nbsp;"},{"ID":"53491686235","MEM_NAME":"wayg","ACT_RESULT":"\u5f00\u5206-\u6355\u9c7c-BB\u6355\u9c7c\u8fbe\u4eba","MEM_GOLD":"-100.00","MIN_SUM":"203.24","CURRENCY":"\u4eba\u6c11\u5e01","KEY_DATE":"2018-06-13 00:18:24","PS":"\u5355\u53f7:38850305","MEMO":"&nbsp;"}]}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-优惠
-
-Request URL: https://zb168.10050754.com/agv3/cl/index.php?sid=&module=MemberAnalysis&method=premium
-Request Method: POST
-
-start: 2018-06-13
-end: 2018-06-13
-premium: 0
-amount: 
-premium_than1: 0
-times: 
-premium_than2: 0
-Currency: RMB
-sortCol: 1
-sort: 0
-name: wayg
-accountType: member
-analystType: member
-page: 1
-
-{"data":{"\"354792293\"":{"index":"","agent":"djib688","member":"wayg","premium_data":[{"premiumType":"\u5168\u90e8","premiumTotal":"12","premiumAmount":"1002.79"}]}},"total_page":1,"page":1}
-
-
-下注
-Request URL: https://zb168.10050754.com/agv3/cl/index.php?sid=&module=MemberAnalysis&method=betAnalysis
-Request Method: POST
-
-start: 2018-06-01
-end: 2018-06-13
-game: 0
-currency: RMB
-gametype: ALL
-name: wayg
-accountType: member
-analystType: member
-
-
-[{"index":"","agentId":"36721075","key":"354792293","wagersTotal":30530,"wagersAmount":"361087.14","commissionable":"360899.17","payoff":"-19170.85","percentage":0,"member":"wayg","agent":"djib688"}]
-
-
-
-
-
-406698
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`jshd1005`@`%` 
-SQL SECURITY DEFINER VIEW `user_group_level` AS select 
-        `vc_member`.`userName` AS `userName`,
-        `vc_member`.`levelId` AS `levelId`,
-        `vc_group_level`.`groupId` AS `groupId`,
-        `vc_member`.`scName` AS `scName` 
-            
-    from (`vc_member` join `vc_group_level` on(
-            (
-                (`vc_member`.`levelId` = `vc_group_level`.`levelId`) and (`vc_member`.`scId` = `vc_group_level`.`scId`)
-            )
-    ))
-
-
-
-
-
-api.hy590.vip
-create table member_integral  (
-    id int unsigned not null auto_increment,
-
-    title varchar(32) not null default '' comment '域名',
-
-
-
-    create_id int unsigned not null default 0 comment '创建者id  除了管理员只有自己可以删除自己域名',
-    agent_id int unsigned not null default 1 comment '服务商id  1 海洋  2 金沙', 
-
-    status TINYINT unsigned not null default 1 comment '状态 0关闭 1开启   域名关闭后前台将拿不到数据',
-    
-    order_id int not null default 0 comment '排序',
-    create_time int unsigned not null default 0,
-    update_time int unsigned not null default 0,
-
-    key title (title),
-    key type (type),
-    key order_id (order_id),
-    PRIMARY key (id)
-)ENGINE=INNODB  DEFAULT CHARSET=utf8
-
-
-积分出入类型
- 1   签到    是否自动发送
-
-
-资金出入类型
-1    充值    是否
-
 
 schema
 
@@ -205,7 +68,6 @@ node
 
 移动端页面
 
-SASS
 
 vue-element-admin
 
@@ -258,36 +120,10 @@ go 语言
 deno
 
 
-
-
-auth    id _ 用户名
-
-用户id
-用户名
-等级
-最后签到时间
+位运算算法
 
 
 
-下一级积分
-
-
-
-
-auth   储存在缓存   地址也要存储
-
-
-auth key = 
-
-缓存里面的值是  auth_ 加密(username_uid)  userinfo的数据
-
-登录成功时  给缓存住信息
-
-
-
-验证   访问时
-
-18674067679
 
 php /www/wwwroot/admin.hy590.vip/php/think RefreshMemberData > /dev/null 2>&1 &
 

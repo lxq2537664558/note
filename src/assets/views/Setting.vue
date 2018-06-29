@@ -1,17 +1,17 @@
 <template>
   <div>
-    <head-nav-text @tabTo="onTabTo" :navTitle="navTitle"></head-nav-text>
     <!--消息记录列表-->
-    <list :class="['main-list', isIpx() ? 'w-ipx' : '']">
-      <cell @click="clickSetting(v.url)" v-for="v in settingList" style="background-color: #fff;height: 120px;margin-bottom: 5px;flex-direction: row;align-items: center;justify-content: center">
-        <div style="flex: .4;align-items: center">
-          <image :src="v.logo" alt="" style="width: 50px;height: 50px"></image>
+    <list class="pos-a">
+      <cell @click="clickSetting(v.url)" v-for="v in settingList" class="bc-f h120 mb5 fdr f-cent">
+        <div class="f-4 fic">
+          <image :src="v.logo" alt="" class="h50 w50"></image>
         </div>
-        <div style="flex: 1">
-          <text style="font-size: 30px;color: #555">{{v.title}}</text>
+        <div class="f1">
+          <text class="f30 f-c-6">{{v.title}}</text>
         </div>
-        <div style="flex: .3;align-items: center">
-          <image :src="rightArrow" alt="" style="width: 25px;height: 25px"></image>
+        <div class="f-3 fic">
+          <!--<image :src="rightArrow" alt="" style="width: 25px;height: 25px"></image>-->
+          <text class="iconfont icon-text">&#xe6a7;</text>
         </div>
       </cell>
     </list>
@@ -20,10 +20,8 @@
 <script>
 	import _c from '@/Global.vue'
 
-	import headNavText from '../components/headNavText.vue';
 	export default {
 		components: {
-			'head-nav-text': headNavText,
 		},
 		data() {
 			return {
@@ -65,67 +63,27 @@
 		methods: {
 			clickSetting(url) {
 				_c.alterTip('功能维护中', 1)
-			},
-			onTabTo(url) {
-				this.$parent.onTabTo({
-					data: {
-						key: url
-					},
-					status: 'navTabTo'
-				})
-			},
-			isIpx() {
-				return _c.isIpx()
 			}
 		},
 		mounted() {
-			this.$parent.closeLoadding()
-		}
+			// this.$parent.closeLoadding()
+		},
+    created() {
+			// 设置头导航
+			this.$store.dispatch('setHeadNav', {
+				title: '设置',
+				leftButton: 'back',
+				rightButton: 'text'
+			})
+    }
 	}
 </script>
-<style scoped>
-  .main-list{
-    position: fixed;
-    top: 110px;
-    bottom: 90px;
-    left: 0;
-    right: 0;
-  }
-  .user-info {
-    height: 220px;
-    flex-direction: row;
-    align-items: center
-  }
-  .user-info-text {
-    font-size: 24px;
-  }
-  .test-row {
-    flex-direction: row;
-    justify-content: flex-start;
-    align-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    width: 750px;
-  }
-  .t3 {
-    color: #555;
-  }
-  .center-list {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding-right: 20px;
-    padding-left: 20px;
-    padding-top: 20px
-  }
-  .center-list-scroller {
-    position: fixed;
-    top: 330px;
-    bottom: 90px;
-    left: 0;
-    right: 0;
-  }
-  .w-ipx {
-    bottom: 140px;
-  }
+<style scoped lang="sass">
+  @import '@/assets/common/common.sass'
+
+  .icon-text
+    font-size: 34px
+    color: #999
+    font-weight: bold
+
 </style>

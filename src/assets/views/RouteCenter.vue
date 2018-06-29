@@ -1,41 +1,41 @@
 <template>
   <div>
-    <head-nav @tabTo="onTabTo"></head-nav>
+    <!--<head-nav @tabTo="onTabTo"></head-nav>-->
     <!--网址-->
-    <scroller :class="['main-list', isIpx() ? 'w-ipx' : '']" offset-accuracy="300" loadmoreoffset="300">
-      <div style="height: 280px;position: relative;">
-
-        <div style="position: absolute;top: 0;left: 0;right: 0;bottom: 0;">
-          <image :src="domainsBackground" alt="" style="height: 280px;width: 750px"></image>
-        </div>
-        <div style="flex: 1;flex-direction: row;justify-content: space-around;align-items: center;">
-          <div @click="clickDomain(v.url)" v-for="v in domains" style=";height: 150px;width: 150px;border-color: #edc23b;border-width: 3px;border-style: solid;border-radius: 75px;justify-content: center;align-items: center">
-            <text style="color: #edc23b;font-weight: 700;font-size: 30px;">{{v.title}}</text>
-          </div>
+    <div class="h280">
+      <div class="pos-a">
+        <image :src="domainsBackground" alt="" class="h280 w750"></image>
+      </div>
+      <div class="f1 fdr fjsa fic">
+        <div @click="clickDomain(v.url)" v-for="v in domains" class="h150 w150 fic fjc bor-r75 domain-item">
+          <text style="color: #edc23b;font-weight: 700;font-size: 30px;">{{v.title}}</text>
         </div>
       </div>
-      <!--公告-->
-      <announcement :bulletinText="bulletinText"></announcement>
+    </div>
+    <!--公告-->
+    <announcement></announcement>
+
+    <div style="flex: 1;">
       <!--线路-->
-      <!--<scroller style="height: 710px;background-color: #f1f1f1"></scroller>-->
-      <list :class="['route-list', isIpx() ? 'w-ipx' : '']" style="background-color: #f1f1f1;">
-        <cell style="height: 130px;" v-for="route in routes">
-          <div style="background-color: #fff;height: 110px;margin-top: 20px;flex-direction: row;align-items: center">
-            <div style="width: 169px;flex-direction: row">
-              <image :src="routeCenterLogo" alt="" style="margin-left: 20px;height: 30px;width: 30px;" ></image>
-              <text style="margin-left: 10px;font-size: 22px;color: #555">{{route.title}}</text>
+      <list class="pos-a">
+        <cell class="h130" v-for="route in routes">
+          <div class="bc-f h110 mt20 fdr fic">
+            <div class="fdr route-title">
+              <!--<image :src="routeCenterLogo" alt="" class="ml20 h30 w30"></image>-->
+              <text class="iconfont ml20 route-icon">&#xe882;</text>
+              <text class="ml10 f22 route-title-text">{{route.title}}</text>
             </div>
-            <div style="width: 1px;background-color: #aaa;height: 50px;"></div>
-            <div style="width: 400px;justify-content: center;align-items: center">
-              <text style="background-color: #f7f7f7;color: #f81c1b;font-size: 28px;padding-top: 5px;padding-bottom: 5px;padding-right: 30px;padding-left: 30px;border-radius: 30px">{{route.showUrl}}</text>
+            <div class="bc-a h50 route-separate" ></div>
+            <div class="w400 f-cent">
+              <text class="pt5 pb5 pr30 pl30 bor-r30 f28 route-url-text">{{route.showUrl}}</text>
             </div>
-            <div @click="clickRoute(route.url)" style="height: 110px;width: 180px;background-color: #ffcc2e;justify-content: center;align-items: center">
-              <text style="font-size: 28px;color: #555;font-weight: 700;">进入游戏>></text>
+            <div @click="clickRoute(route.url)" class="h110 w180 route-click f-cent">
+              <text class="f28 route-click-text">进入游戏>></text>
             </div>
           </div>
         </cell>
       </list>
-    </scroller>
+    </div>
   </div>
 </template>
 <script>
@@ -45,33 +45,33 @@
 	import HeadNav from '../components/headNav.vue';
 	import AnCement from '../components/announcement.vue';
 
-  export default {
-    data() {
-      return {
+	export default {
+		data() {
+			return {
 				routeCenterLogo: _c.sUrl + '/images/route_center_active.png',
-      	// 公告
-        // bulletinText: '啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊',
-        // domain
-        domains: [
-          {
-            'title': '1001.net',
-            'url': '1005.net',
-            'textClass': ''
-          },
-          {
-            'title': '1005.net',
-            'url': '1005.net',
-            'textClass': ''
-          },
-          {
-            'title': '1005.net',
-            'url': '1005.net',
-            'textClass': ''
-          }
-        ],
-        domainsBackground: _c.sUrl + '/images/route_blurry_background.png',
-        //  route
-        routes: [
+				// 公告
+				// bulletinText: '啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊',
+				// domain
+				domains: [
+					{
+						'title': '1001.net',
+						'url': '1005.net',
+						'textClass': ''
+					},
+					{
+						'title': '1005.net',
+						'url': '1005.net',
+						'textClass': ''
+					},
+					{
+						'title': '1005.net',
+						'url': '1005.net',
+						'textClass': ''
+					}
+				],
+				domainsBackground: _c.sUrl + '/images/route_blurry_background.png',
+				//  route
+				routes: [
 					{
 						title: '加载中',
 						showUrl: 'http://hd5009.com',
@@ -82,16 +82,16 @@
 						showUrl: 'http://hd5009.com',
 						url: '1'
 					}
-        ]
-      }
-    },
-    methods: {
-      clickDomain(url) {
+				]
+			}
+		},
+		methods: {
+			clickDomain(url) {
 				_c.alterTip('功能维护中', 1)
-      },
-      clickRoute(url) {
+			},
+			clickRoute(url) {
 				_c.alterTip('功能维护中', 1)
-      },
+			},
 			onTabTo(url) {
 				this.$parent.onTabTo({
 					data: {
@@ -100,55 +100,64 @@
 					status: 'navTabTo'
 				})
 			},
-      isIpx() {
-      	return _c.isIpx()
-      },
-      init() {
+			isIpx() {
+				return _c.isIpx()
+			},
+			init() {
 				util.GET('oaSystem/urlCesu', {}, e => {
 					this.domains = e.data.data.domains
 					this.routes = e.data.data.routes
 				}, e => {
-				}, (e) =>{})
-      }
-    },
-    components: {
-		  'head-nav': HeadNav,
-		  'announcement': AnCement,
-    },
+				}, (e) => {
+				})
+			}
+		},
+		components: {
+			'head-nav': HeadNav,
+			'announcement': AnCement,
+		},
 		mounted() {
 			this.init()
-    	this.$parent.closeLoadding()
+			// this.$parent.closeLoadding()
 			// this.$parent.isShow = false
 		},
 		computed: {
-			bulletinText(){
+			bulletinText() {
 				return this.$parent.announcement
 			}
 		},
-    created() {
-    }
-  }
+		created() {
+		}
+	}
 </script>
-<style scoped>
-  .domain {
-    flex-direction: row;
-    height: 280px;
-  }
-  .main-list {
-    position: fixed;
-    top: 110px;
-    bottom: 90px;
-    left: 0;
-    right: 0;
-  }
-  .w-ipx {
-    bottom: 140px;
-  }
-  .route-list {
-    position: fixed;
-    top: 430px;
-    bottom: 90px;
-    left: 0;
-    right: 0;
-  }
+<style scoped lang="sass">
+  @import '@/assets/common/common.sass'
+
+  .domain-item
+    border-color: $main_color
+    border-width: 3px
+    border-style: solid
+
+  .route-title
+    width: 169px
+
+  .route-title-text
+    color: $font_color
+
+  .route-separate
+    width: 1px
+
+  .route-url-text
+    background-color: #f7f7f7
+    color: $font2_color
+
+  .route-click
+    background-color: #fecd2e
+
+  .route-click-text
+    color: $font_color
+    font-weight: 700
+
+  .route-icon
+    color: $main_color
 </style>

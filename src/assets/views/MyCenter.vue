@@ -1,96 +1,83 @@
 <template>
   <div>
-    <head-nav @tabTo="onTabTo"></head-nav>
-    <scroller :class="['main-list', isIpx() ? 'w-ipx' : '']" offset-accuracy="300" loadmoreoffset="300">
-      <!--个人资料-->
-      <div style="height: 220px">
-        <div style="position: absolute;top: 0;left:0;right: 0;bottom:0">
-          <image :src="userInfoBlurryBackground" alt="" style="height: 220px;width: 750px"></image>
-        </div>
-        <div class="user-info">
-          <div style="width: 130px;margin-left: 50px">
-            <image :src="user.head_img" alt="" style="height: 130px;width: 130px;border-radius: 65px;"></image>
-          </div>
-          <div style="flex: 1;justify-content: center;align-items: flex-start;margin-left: 20px">
-            <text class="user-info-text" style="color: #fff;">账号: {{user.username}}</text>
-            <text @click="clickLevel" class="user-info-text" style="margin-top: 15px;background-color: #fdcc2e;color: #333;padding-left: 20px;padding-right: 20px;padding-top: 5px;padding-bottom: 5px;border-radius: 20px">等级: VIP{{user.level}}</text>
-          </div>
-          <div style="flex: 1;flex-direction: row;justify-content: flex-end;margin-right: 20px" @click="clickSignIn">
-            <image :src="signInLogo" alt="" style="width: 40px;height: 40px;"></image>
-            <text style="color: #fff;font-size: 26px;margin-left: 10px;padding-top: 5px">每日签到 ></text>
-          </div>
-        </div>
-
+    <!--个人资料-->
+    <div class="h220">
+      <div class="pos-a">
+        <image :src="userInfoBlurryBackground" alt="" class="h220 w750"></image>
       </div>
-      <!--列表-->
-        <scroller :class="['center-list-scroller', isIpx() ? 'w-ipx' : '']">
-          <div class="center-list">
-            <div v-for="list in centerList" @click="clickList(list)" style="width: 370px;height: 120px;background-color: #fff;margin-bottom: 5px;flex-direction: row">
-              <div style="flex: .3;align-items: flex-end;justify-content: center;">
-                <image :src="list.logo" alt="" style="width: 50px;height: 50px;"></image>
+      <div class="h220 fdr fic pos-r">
+        <div class="w130 ml50">
+          <image :src="user.head_img" alt="" class="h130 w130 bor-r65"></image>
+        </div>
+        <div class="f1 fjc fis ml20">
+          <text class="f24 f-c-f">账号: {{user.username}}</text>
+          <text @click="clickLevel" class=" user-level-text f24 mt15 pl20 pr15 pt5 pb5 bor-r20 f-c-3 w165">等级: VIP{{user.level_id}}</text>
+        </div>
+        <div class="f1 fdr fje mr20" @click="clickSignIn">
+          <!--<image :src="signInLogo" alt="" class="w40 h40"></image>-->
+          <text class="icon-text iconfont f40 f-c-f">&#xe6a8;</text>
+          <text class="f-c-f f26 pt5 ml10 iconfont pr15">{{deFont('每日签到 &#xe6a7;')}}</text>
+        </div>
+      </div>
+    </div>
+    <div class="f1 pos-r">
+      <scroller class="pos-a" offset-accuracy="300" loadmoreoffset="300">
+        <!--列表-->
+        <div class="center-list fdr fww fjsb pt10">
+            <div v-for="list in centerList" @click="clickList(list)" class="w370 h120 bc-f mb5 fdr">
+              <div class="f-3 fie fjc">
+                <image :src="list.logo" alt="" class="w50 h50"></image>
               </div>
-              <div style="flex: 1;justify-content: center;padding-left: 20px">
-                <text class="t3" style="font-size: 30px;font-weight: bold">{{list.t1}}</text>
-                <text class="t3" style="font-size: 20px">{{list.t2}}</text>
+              <div class="f1 fjc pl20">
+                <text class="activity-title f30">{{list.t1}}</text>
+                <text class="activity-content f20">{{list.t2}}</text>
               </div>
             </div>
-          </div>
-        </scroller>
-
-
-    </scroller>
-    <!--遮罩-->
-    <div @click="clickCloseMask" v-if="maskShow" class="mask-black" style="justify-content: center;align-items: center"></div>
-    <!--签到成功-->
-    <div @click="clickCloseMask" v-if="maskSignInShow" class="mask-sign-in" style="justify-content: center;align-items: center">
-      <image :src="signInSuccess" alt="" style="width: 600px;height: 600px"></image>
+        </div>
+      </scroller>
     </div>
+
     <!--确认按钮-->
-    <wxc-dialog :title="confirm.title"
+    <dialog :title="confirm.title"
                 :content="confirm.content"
                 :show="confirm.show"
-                :single="false"
                 @wxcDialogCancelBtnClicked="wxcDialogCancelBtnClicked"
                 @wxcDialogConfirmBtnClicked="wxcDialogConfirmBtnClicked">
-    </wxc-dialog>
+    </dialog>
   </div>
 </template>
 <script>
-	import { WxcDialog } from 'weex-ui';
+	import dialog from '@/assets/components/dialog';
 	import _c from '@/Global.vue'
 
-	const storage = weex.requireModule('storage')
-  const modal = weex.requireModule('modal')
-	import util from '../util'
-	import HeadNav from '../components/headNav.vue';
+	import util from '@/assets/util'
 
-  export default {
-    components: {
-      'head-nav': HeadNav,
-			WxcDialog
-    },
-    data() {
-    	return {
-        user: {
+	export default {
+		components: {
+			dialog
+		},
+		data() {
+			return {
+				user: {
 					// 头像
 					head_img: _c.sUrl + '/images/userDefaultLog.jpg',
-          // 名称
-          username: 'QAQ',
-          // 等级
-          level: 0
+					// 名称
+					username: 'QAQ',
+					// 等级
+					level_id: 0
 				},
 				// 签到logo
 				signInLogo: _c.sUrl + '/images/sing_in.png',
 				// 个人信息背景模糊图
 				userInfoBlurryBackground: _c.sUrl + '/images/route_blurry_background.png',
-        // 列表数据
-        centerList: [
+				// 列表数据
+				centerList: [
 					{
 						logo: _c.sUrl + '/images/money.png',
 						t1: '领取周俸禄',
 						t2: 'VIP周俸禄领取',
 						url: 'weekLulu',
-            action: 'form'
+						action: 'form'
 					},
 					{
 						logo: _c.sUrl + '/images/money.png',
@@ -112,237 +99,155 @@
 						t2: '官方信息认证查询',
 						url: '1'
 					}
-        ],
-        // 遮罩
-				maskShow: false,
-        // 签到遮罩
-        maskSignInShow: false,
-        // 签到成功logo
-        signInSuccess:  _c.sUrl + '/images/sign_in_success.png',
-    		testUrl: _c.sUrl + '/images/route_blurry_background.png',
-        // confirm
-        confirm: {}
-      }
-    },
-    methods: {
-    	clickList(item) {
+				],
+
+				testUrl: _c.sUrl + '/images/route_blurry_background.png',
+				// confirm
+				confirm: {
+					show: false
+        }
+			}
+		},
+		methods: {
+			clickList(item) {
 				if (item.action == 'form') {
 					switch (item.url) {
-            case 'weekLulu':
+						case 'weekLulu':
 							this.confirm = {
 								show: true,
 								title: '确定领取周俸禄',
 								content: '每周只能领取一次',
-                action: () => {
+								action: () => {
 									let self = this
-									util.GET('member/weekLulu', {}, e => {
-                    this.$parent.tipList.show = true
-                    this.$parent.tipList.type = 'lulu'
-                    this.$parent.tipList.luluText = '周俸禄'
-                    this.$parent.tipList.luluCoin = e.data.data.integral
-                    this.$parent.tipList.luluCoinText = '积分'
-										this.$parent.tipList.submitShow = false
-									}, e => {
-										this.$parent.tipList.show = true
-										this.$parent.tipList.type = 'default'
-										this.$parent.tipList.text = e.data.message
-										// this.$parent.tipList.text = '您本周的俸禄已领完 (╯︵╰)'
-										this.$parent.tipList.submitShow = false
-									}, (e) =>{self.$parent.clearLogin(e)})
-                }
+                  util.questApi('member/weekLulu', {}, function (ret) {
+										util.dataCheck(self.$store, ret, function (data) {
+                      self.$store.dispatch('openTipList', {
+                        type: 'lulu',
+                        luluText: '周俸禄',
+											  luluCoin: data.integral,
+											  luluCoinText: '积分'
+                      })
+										}, function(message) {
+											self.$store.dispatch('openTipList', {
+												type: 'default',
+												text: message + '(╯︵╰)'
+                      })
+                    })
+									})
+								}
 							}
-            	break
-            case 'monthLulu':
+							break
+						case 'monthLulu':
 							this.confirm = {
 								show: true,
 								title: '确定领取月俸禄',
 								content: '每月只能领取一次',
 								action: () => {
 									let self = this
-									util.GET('member/monthLulu', {}, e => {
-										this.$parent.tipList.show = true
-										this.$parent.tipList.type = 'lulu'
-										this.$parent.tipList.luluText = '月俸禄'
-										this.$parent.tipList.luluCoin = e.data.data.integral
-										this.$parent.tipList.luluCoinText = '积分'
-										this.$parent.tipList.submitShow = false
-									}, e => {
-										// console.log(e)
-										this.$parent.tipList.show = true
-										this.$parent.tipList.type = 'default'
-										// this.$parent.tipList.text = '您本月的俸禄已领完 (╯︵╰)'
-										this.$parent.tipList.text = e.data.message
-										this.$parent.tipList.submitShow = false
-									}, (e) =>{self.$parent.clearLogin(e)})
+									util.questApi('member/monthLulu', {}, function (ret) {
+										util.dataCheck(self.$store, ret, function (data) {
+											self.$store.dispatch('openTipList', {
+												type: 'lulu',
+												luluText: '月俸禄',
+												luluCoin: data.integral,
+												luluCoinText: '积分'
+											})
+										}, function(message) {
+											self.$store.dispatch('openTipList', {
+												type: 'default',
+												text: message + '(╯︵╰)'
+											})
+										})
+									})
 								}
 							}
-            	break
-            default:
-							modal.toast({
-								message: '尚未开发, 敬请期待!',
-								duration: 0.5
-							})
-            	break
-          }
-
-				} else if (item.action == 'jump') {
-					this.onTabTo(item.url)
-        } else {
-					modal.toast({
-						message: '尚未开发, 敬请期待!',
-						duration: 0.5
-					})
-        }
-      },
-      // 签到
-      clickSignIn() {
-				let self = this
-        util.setCache('lastSignIn', null)
-        storage.getItem('lastSignIn', e => {
-					if (e.result == 'success' && e.data == (new Date()).toLocaleDateString()) {
-							modal.toast({
-								message: '今天已签到, 请明天再进行该操作',
-								duration: 1
-							})
-					} else {
-						util.GET('member/register', {}, (rst) => {
-							// 成功
-							self.maskShow = true
-							self.maskSignInShow = true
-							self.$parent.bottomMaskShow = true
-						}, (rst) => {
-							modal.toast({
-								message: rst.data.message,
-								duration: 1
-							})
-						}, (e) => {self.$parent.clearLogin(e)})
-						// 缓存 最后一签到日期
-						util.setCache('lastSignIn', (new Date()).toLocaleDateString())
-          }
-        })
-      },
-			clickCloseMask() {
-				this.maskShow = false
-				this.maskSignInShow = false
-				this.$parent.bottomMaskShow = false
-      },
-      // 等级
-			clickLevel() {
-    		// 判断数据是否在刷数据
-        let self = this
-				util.GET('member/status', {}, (rst) => {
-					// console.log(rst)
-					// 成功
-					self.onTabTo('ActivityDetails')
-				}, (rst) => {
-					modal.toast({
-						message: rst.data.message,
-						duration: 1
-					})
-				}, (e) => {self.$parent.clearLogin(e)})
-      },
-			onTabTo(url) {
-				this.$parent.onTabTo({
-					data: {
-						key: url
-					},
-					status: 'navTabTo'
-				})
-			},
-      init() {
-				if (this.$parent.userInfo) {
-					this.user.username = this.$parent.userInfo.username
-					this.user.level = this.$parent.userInfo.level_id
-					if (!this.$parent.userInfo.head_img) {
-					  this.user.head_img = _c.sUrl + '/images/userDefaultLog.jpg'
+							break
+						default:
+							util.alterTip('功能维护中...')
+							break
 					}
+				} else if (item.action == 'jump') {
+          util.toUrl(this, {path: item.url})
+				} else {
+					util.alterTip('功能维护中...', 0.5)
 				}
-      },
-			wxcDialogCancelBtnClicked () {
-				//此处必须设置，组件为无状态组件，自己管理     取消
-				this.confirm.show = false;
 			},
-			wxcDialogConfirmBtnClicked () {
-				//此处必须设置，组件为无状态组件，自己管理     确定
+			// 签到
+			clickSignIn() {
+				// 未完成
+				 this.$store.dispatch('clickSignIn')
+			},
+			// 等级
+			clickLevel() {
 				let self = this
-				self.confirm.action()
+				// 查看等级状态 				 判断数据是否在刷数据
+				this.$store.dispatch('catStatus', function() {
+        	// 成功
+          util.toUrl(self, {path: 'ActivityDetails'})
+        })
+			},
+			wxcDialogCancelBtnClicked() {
 				this.confirm.show = false;
 			},
-			isIpx() {
-				return _c.isIpx()
+			wxcDialogConfirmBtnClicked() {
+				this.confirm.action()
+				this.confirm.show = false;
 			},
-      isRefresh() {
+			deFont(text) {
+				return util.decodeIconFont(text)
+			},
+			getMyData() {
+				this.user = this.$store.getters.getUserInfo
 
-      }
-    },
+				if (!this.user.head_img) {
+					this.user.head_img = _c.sUrl + '/images/userDefaultLog.jpg'
+				}
+			}
+		},
 		mounted() {
-			this.$parent.closeLoadding()
+			// this.$parent.closeLoadding()
 		},
 		created() {
-			this.init()
-    }
-  }
+			// 初始化数据
+			this.getMyData()
+		}
+	}
 </script>
-<style scoped>
-  .main-list{
-    position: fixed;
-    top: 110px;
-    bottom: 90px;
-    left: 0;
-    right: 0;
-  }
-  .user-info {
-    height: 220px;
-    flex-direction: row;
-    align-items: center;
-    position: relative;
-  }
-  .user-info-text {
-    font-size: 24px;
-  }
-  .test-row {
-    flex-direction: row;
-    justify-content: flex-start;
-    align-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    width: 750px;
-  }
-  .t3 {
-    color: #555;
-  }
-  .center-list {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding-right: 2px;
-    padding-left: 2px;
-    padding-top: 10px
-  }
-  .w-ipx {
-    bottom: 140px;
-  }
-  .center-list-scroller {
-    position: fixed;
-    top: 330px;
-    bottom: 90px;
-    left: 0;
-    right: 0;
-  }
-  .mask-black {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #000;
-    opacity: .5;
-  }
-  .mask-sign-in {
-    position: fixed;
-    top: 0;
-    bottom: 90px;
-    left: 0;
-    right: 0;
-  }
+<style scoped lang="sass">
+  @import '@/assets/common/common.sass'
+
+  .icon-text
+    width: 44px
+    height: 44px
+
+  .user-level-text
+    background-color: $main_color
+
+  .center-list
+    padding-right: 2px
+    padding-left: 2px
+
+  .activity-title
+    font-weight: bold
+    color: $font_color
+
+  .activity-content
+    color: $font_color
+
+
+  .mask-black
+    position: fixed
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    background-color: #000
+    opacity: .5
+
+  .mask-sign-in
+    position: fixed
+    top: 0
+    bottom: 90px
+    left: 0
+    right: 0
 </style>

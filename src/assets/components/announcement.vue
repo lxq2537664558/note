@@ -1,11 +1,12 @@
 <template>
-  <div style="height: 40px;flex-direction: row;background-color: #fff;border-bottom-color: #f1f1f1;border-bottom-width: 1px;border-bottom-style: solid;background-color: #fff">
-    <div style="width:150px;flex-direction: row;justify-content: flex-end;align-items: center;">
-      <image :src="newBulletinLog" alt="" style="width: 30px;height: 30px;margin-right: 5px"></image>
-      <text style="font-size: 24px;font-weight: 500;color: #333;">最新公告:</text>
+  <div class="announcement h40 fdr">
+    <div class="announcement-tip w150 fdr f-cent">
+      <!--<image :src="newBulletinLog" alt="" class="w30 h30 mr5 mt5"></image>-->
+      <text class="iconfont mr5 announcement-icon f30" style="width: 30px">&#xe6bc;</text>
+      <text class="f-c-3 f24">最新公告:</text>
     </div>
-    <scroller scroll-direction="horizontal" :scrollable="false" style="width: 580px;margin-left: 10px">
-      <text class="announcement-text" ref="textEl" :style="{width: announTextWidth + 'px'}">{{bulletinText}}</text>
+    <scroller scroll-direction="horizontal" :scrollable="false" class="ml10 w580" >
+      <text class="announcement-text h40 f22 ml10 pt3" ref="textEl" :style="{width: announTextWidth + 'px'}">{{bulletinText}}</text>
     </scroller>
   </div>
 </template>
@@ -16,11 +17,10 @@
 	const dom = weex.requireModule('dom')
 
   export default {
-		props: ['bulletinText'],
     data() {
     	return {
 				newBulletinLog: _c.sUrl + '/images/new_bulletin.png',
-				// bulletinText: '不计输赢天天返回优惠无需申请, 美东时间: 2018/4/30111 啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊',
+				// bulletinText: '',
         textEl: null
 			}
     },
@@ -59,7 +59,8 @@
 					}
 				}
 				return width
-			}
+			},
+      // init() {}
     },
 		mounted() {
 			this.textEl = this.$refs.textEl
@@ -67,17 +68,33 @@
     computed: {
       announTextWidth() {
 				return this.annon()
+      },
+			bulletinText() {
+      	return this.$store.getters.getAnnouncement
       }
     },
-    created() {}
+    watch: {},
+    created() {
+    	// this.init();
+    }
   }
 </script>
-<style scoped>
-  .announcement-text {
-    height: 40px;
-    font-size: 22px;
-    color: #444;
-    margin-left: 10px;
-    padding-top: 5px;
-  }
+<style scoped lang="sass">
+  @import '@/assets/common/common.sass'
+
+  .announcement
+    border-bottom-color: #f1f1f1
+    border-bottom-width: 1px
+    border-bottom-style: solid
+    background-color: #fff
+
+  .announcement-tip
+    justify-content: flex-end
+
+  .announcement-icon
+    color: $main_color
+
+  .announcement-text
+    color: $font_color
+
 </style>

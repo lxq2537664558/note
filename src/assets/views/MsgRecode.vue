@@ -1,16 +1,15 @@
 <template>
   <div>
-    <head-nav-text @tabTo="onTabTo" :navTitle="navTitle"></head-nav-text>
     <!--消息记录列表-->
-    <list :class="['main-list', isIpx() ? 'w-ipx' : '']">
-      <cell @click="clickMsgRecode(v.url)" v-for="v in msgRecodeList" style="background-color: #fff;height: 150px;margin-bottom: 5px;flex-direction: row;align-items: center;justify-content: center">
-          <div style="flex: .3;justify-content: center;align-items: center">
-            <image :src="v.logo" alt="" style="width: 60px;height: 60px;"></image>
+    <list  class="pos-a">
+      <cell @click="clickMsgRecode(v.url)" v-for="v in msgRecodeList" class="bc-f h150 mb5 fdr f-cent">
+          <div class="f-3 f-cent">
+            <image :src="v.logo" alt="" class="w60 h60"></image>
           </div>
-          <div style="height: 100px;width: 1px;background-color: #717171;"></div>
-          <div style="flex: 1;margin-left: 20px">
-            <text style="font-size: 30px;font-weight: bold;color: #555">{{v.t1}}</text>
-            <text style="font-size: 22px;color: #fd0b09;margin-top:10px">{{v.t2}}</text>
+          <div class="h100 w1 bc-7"></div>
+          <div class="f1 ml20">
+            <text class="f30 fw-b msg-title">{{v.t1}}</text>
+            <text class="msg-desc f22 mt10">{{v.t2}}</text>
           </div>
       </cell>
     </list>
@@ -18,13 +17,11 @@
 </template>
 <script>
 	import _c from '@/Global.vue'
+	import util from '@/assets/util.js'
 
 	// const modal = weex.requireModule('modal')
-	import headNavText from '../components/headNavText.vue';
   export default {
-    components: {
-      'head-nav-text': headNavText,
-    },
+    components: {},
     data() {
     	return {
     		// 导航标题
@@ -62,68 +59,28 @@
     },
     methods: {
 			clickMsgRecode(url) {
-				_c.alterTip('功能维护中', 1)
-      },
-			onTabTo(url) {
-				this.$parent.onTabTo({
-					data: {
-						key: url
-					},
-					status: 'navTabTo'
-				})
-			},
-			isIpx() {
-				return _c.isIpx()
-			}
+				util.alterTip('功能维护中', 1)
+      }
     },
 		mounted() {
-			this.$parent.closeLoadding()
-		}
+			// this.$parent.closeLoadding()
+		},
+    created() {
+      // 替换 headNav 头
+      this.$store.dispatch('setHeadNav', {
+      	title: '消息记录',
+        leftButton: 'back',
+        rightButton: 'text'
+      })
+    }
   }
 </script>
-<style scoped>
-  .main-list{
-    position: fixed;
-    top: 110px;
-    bottom: 90px;
-    left: 0;
-    right: 0;
-  }
-  .user-info {
-    height: 220px;
-    flex-direction: row;
-    align-items: center
-  }
-  .user-info-text {
-    font-size: 24px;
-  }
-  .test-row {
-    flex-direction: row;
-    justify-content: flex-start;
-    align-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    width: 750px;
-  }
-  .t3 {
-    color: #555;
-  }
-  .center-list {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding-right: 20px;
-    padding-left: 20px;
-    padding-top: 20px
-  }
-  .center-list-scroller {
-    position: fixed;
-    top: 330px;
-    bottom: 90px;
-    left: 0;
-    right: 0;
-  }
-  .w-ipx {
-    bottom: 140px;
-  }
+<style scoped lang="sass">
+  @import '@/assets/common/common.sass'
+
+  .msg-title
+    color: $font_color
+
+  .msg-desc
+    color: $font2_color
 </style>

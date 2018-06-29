@@ -1,0 +1,129 @@
+.h 		头文件, 头文件包含类, 方法, 属性的声明
+.m/.mm  类的实现文件, 参与编译的文件,用来实现类中声明的方法
+
+
+
+数据类型
+	基本数据类型
+		整型
+			短整型(short)
+			整型(int)
+			长整型(long)
+			布尔类型(BOOL)
+		字符型(char)
+		实型(浮点型)
+			单精度(float)
+			双精度(double)
+	Block类型
+		代码块数据类型
+	结构类型
+		数组
+		结构体
+		枚举
+		共用体
+	指针类型
+		类(class)
+		id类型
+			动态对象类型 万能指针
+	空类型(Void)
+	特殊类型(SEL, nil)
+		SEL
+			选择器数据类型
+
+
+
+for(NSString * name in NSArray){
+	NSLog(@''%@, name)
+}
+
+
+工具箱路径
+	/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOs.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks
+
+
+#import <Foundation/Foundation.h>
+
+输出
+	NSLog(@"OC Hello World")
+
+
+
+类
+
+// 声明      :NSObject是为了让我们能 实例化 new
+@interface Iphone : NSObject
+{
+	@public    // 公开的    默认是受保护的
+	float _model;
+	int _cpu;
+	double _size;
+	int _color;
+}
+
+// 行为   () 是用来扩住数据类型    - 表示 对象方法
+- (void)about;
+@end
+
+// 实现
+@implementation iphone
+// 行为实现
+- (void)about
+{
+	NSLog("啊啊啊");
+}
+@end
+
+
+int main(int argc, const char * argv[]) {
+	// 发送消息 [类名/对象名 方法名]
+	// 通过iphone 类型的指针接收了 iphone对象的地址
+	Iphone *p = [Iphone new];
+
+
+	return 0;
+}
+
+
+  
+
+
+Fundation 框架
+
+
+
+
+关键字
+@interface
+@implementation
+@end
+@public
+@protected
+@private
+@selector
+@try
+@catch
+@throw
+@finally
+@protocol
+@optional
+@required
+@class
+@property
+@synthesize
+@dynamic
+BOOL
+Class
+SEL
+YES
+NO
+id
+self
+super
+nil
+atomic
+nonatomic
+retain
+assign
+copy
+block
+

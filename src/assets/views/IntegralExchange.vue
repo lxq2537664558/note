@@ -1,207 +1,188 @@
 <template>
   <div>
-    <head-nav-text @tabTo="onTabTo" :navTitle="navTitle"></head-nav-text>
+    <!--账号信息-->
+    <div class="bc-f h100 fdr fic fjsb pl50 pr50">
+      <div class="fdr f-cent">
+        <text class="iconfont username-icon">&#xe637;</text>
+        <text class="username f1 f30 ml5">账号: {{user.username}}</text>
+      </div>
+      <div class="fdr f-cent">
+        <text class="iconfont integral-icon">&#xe671;</text>
+        <text class="username f1 f30 ml5">当前积分: {{user.score}}</text>
+      </div>
+    </div>
+    <!--选择礼品进行兑换-->
+    <div class="h80 fdr bc-e pr20 pl20">
+      <div class="f-3 fis fjc">
+        <!--<image :src="left_arrow" alt="" style="width: 45px;height: 45px"></image>-->
+      </div>
+      <div class="f1 fdr f-cent">
+        <!--<image :src="giftLogo" alt="" style="height: 40px;width: 40px"></image>-->
+        <text class="f40 iconfont prize-icon">&#xe711;</text>
+        <text class="ml10 f30 prize-text">选择礼品进行兑换</text>
+      </div>
+      <div class="f-3 fie fjc">
+        <!--<image :src="right_arrow" alt="" style="height: 45px;width: 45px;"></image>-->
+      </div>
+    </div>
 
-    <scroller :class="['main-list', isIpx() ? 'w-ipx' : '']" offset-accuracy="300" loadmoreoffset="300">
-      <!--账号信息-->
-      <div style="background-color: #fff;height: 100px;flex-direction: row;align-items: center;justify-content: space-between;padding-left: 50px;padding-right: 50px">
-        <div style="flex-direction: row">
-          <image :src="userLogo" alt="" style=";width: 40px;height: 40px;"></image>
-          <text style="flex: 1;font-size: 30px;margin-left: 10px;color: #333">账号:  {{user.username}}</text>
+    <div class="f1">
+      <scroller class="pos-a" offset-accuracy="300" loadmoreoffset="300">
+        <!--礼品-->
+        <div v-for="gift in giftList" class="bc-f h120 mb20 fdr f-cent">
+          <div class="f1 fdr f-cent">
+            <text class="t-red">{{gift.title}}</text>
+            <text class="text"> 元现金筹码</text>
+          </div>
+          <div class="w1 bc-a h50"></div>
+          <div class="f1 fdr f-cent">
+            <text class="text">库存:</text>
+            <text class="t-red">{{gift.stock}}</text>
+          </div>
+          <div class="w1 bc-a h50"></div>
+          <div class="f1 fdr f-cent">
+            <text class="text">所需积分:</text>
+            <text class="t-red">{{gift.need_integral}}</text>
+          </div>
+          <div @click="clickExchange(gift)" class="f-9 h120 bc-f f-cent confirm">
+            <text class="f28 f-c-3">确认兑换</text>
+          </div>
         </div>
-        <div style="flex-direction: row;">
-          <image :src="integralLogo" alt="" style=";width: 40px;height: 40px;"></image>
-          <text style="flex: 1;font-size: 30px;margin-left: 10px;color: #333">当前积分:  {{user.integral}}</text>
-        </div>
-      </div>
-      <!--选择礼品进行兑换-->
-      <div style="height: 80px;flex-direction: row;background-color: #eeeeee;padding-right: 20px;padding-left: 20px">
-        <div style="flex: .3;align-items: flex-start;justify-content: center">
-          <image :src="left_arrow" alt="" style="width: 45px;height: 45px"></image>
-        </div>
-        <div style="flex: 1;flex-direction: row;align-items:center;justify-content: center;">
-          <image :src="giftLogo" alt="" style="height: 40px;width: 40px"></image>
-          <text style="color: #b72021;margin-left: 10px;font-size: 30px;">选择礼品进行兑换</text>
-        </div>
-        <div style="flex: .3;align-items: flex-end;justify-content: center">
-          <image :src="right_arrow" alt="" style="height: 45px;width: 45px;"></image>
-        </div>
-      </div>
-      <!--礼品-->
-      <scroller :class="['gift-list']" style="background-color: #f1f1f1">
-      <!--<list :class="['gift-list']" style="background-color: #f1f1f1;">-->
-        <div  v-for="gift in giftList" style="background-color: #fff;height: 120px;margin-bottom: 20px;flex-direction: row;align-items: center;justify-content: center">
-            <div style="flex: 1;align-items: center;flex-direction: row;justify-content: center;">
-              <text class="t-red">{{gift.money}}</text><text class="text">元现金筹码</text>
-            </div>
-            <div style="width: 1px;background-color: #aaa;height: 50px;"></div>
-            <div style="flex: 1;flex-direction: row;justify-content: center;align-items: center">
-              <text class="text">库存:  </text><text class="t-red">{{gift.inStock}}</text>
-            </div>
-            <div style="width: 1px;background-color: #aaa;height: 50px;"></div>
-            <div style="flex: 1;justify-content: center;align-items: center;flex-direction: row">
-              <text class="text" style="">所需积分: </text><text class="t-red">{{gift.integral}}</text>
-            </div>
-            <div @click="clickExchange(gift)" style="flex: .9;height: 120px;background-color: #ffcb2f;justify-content: center;align-items: center">
-              <text style="font-size: 28px;color: #333;">确认兑换</text>
-            </div>
-        </div>
-      <!--</list>-->
       </scroller>
-    </scroller>
+    </div>
   </div>
 </template>
 <script>
 	import _c from '@/Global.vue'
+	import util from '@/assets/util'
 
-	import HeadNavText from '../components/headNavText.vue';
-	import AnCement from '../components/announcement.vue';
-
-	import util from '../util'
-
-  export default {
-    data() {
-      return {
-      	// 导航标签
-      	navTitle: '签到积分兑换',
-				// 左箭头
-				left_arrow: _c.sUrl + '/images/left_arrow_2.png',
-				// 右箭头
-				right_arrow: _c.sUrl + '/images/right_arrow_2.png',
-        // 礼物logo
-				giftLogo: _c.sUrl + '/images/gift_s.png',
-        // 账号
-        user: {
-      		username: 'QAQ',
-          integral: '666'
-        },
-        // 账号logo
-        userLogo: _c.sUrl + '/images/user_logo.png',
-        // 积分logo
-        integralLogo: _c.sUrl + '/images/integral_s.png',
-        //  route
-        giftList: [
-        ]
-      }
-    },
-    methods: {
+	export default {
+		data() {
+			return {
+				giftList: []
+			}
+		},
+		methods: {
 			clickExchange(item) {
-				if (item.integral > this.user.integral) {
+				let self = this
+				if (item.score > this.user.score) {
 					// 积分不够
-          this.$parent.tipList.show = true
-          this.$parent.tipList.type = 'default'
-          this.$parent.tipList.text = '您当前积分不足 ' + item.integral + ' (╯︵╰)'
-          this.$parent.tipList.submitShow = false
+					self.$store.dispatch('openTipList', {
+						type: 'default',
+						text: '您当前积分不足 ' + item.score + ' (╯︵╰)'
+					})
 				} else if (item.inStock < 1) {
 					// 库存不够
-					this.$parent.tipList.show = true
-					this.$parent.tipList.type = 'default'
-					this.$parent.tipList.text = '库存不足 (╯︵╰)'
-					this.$parent.tipList.submitShow = false
+					self.$store.dispatch('openTipList', {
+						type: 'default',
+						text: '库存不足 (╯︵╰)'
+					})
 				} else {
-          // 确认兑换
-          this.$parent.tipList.show = true
-          this.$parent.tipList.type = 'submit'
-          this.$parent.tipList.submitShow = true
-          this.$parent.tipList.submitText = '10元现金筹码'
-          this.$parent.tipList.currentScore = this.user.integral
-          this.$parent.tipList.needScore = item.integral
-          this.$parent.tipList.submitAct = () => {
-						let self = this
-						util.GET('member/exchangePrizeApi', [{name: 'prize_id', value: item.id},], e => {
-              // 领取成功
-							self.$parent.tipList.show = true
-							self.$parent.tipList.type = 'imageText'
-							self.$parent.tipList.submitShow = false
-							self.$parent.tipList.text = e.data.data.message
-							// 会员信息
-							self.user.username = e.data.data.username
-							self.user.integral = e.data.data.score
-						}, e => {
-							// 错误消息
-							self.$parent.tipList.show = true
-							self.$parent.tipList.type = 'default'
-							self.$parent.tipList.text = e.data.message + ' (╯︵╰)'
-							self.$parent.tipList.submitShow = false
-						}, (e) =>{self.$parent.clearLogin(e)})
-          }
+					// 确认兑换
+					self.$store.dispatch('openTipList', {
+            type: 'submit',
+            submitShow: true,
+            submitText: '10元现金筹码',
+            currentScore: self.user.score,
+            needScore: item.score,
+            submitAct: () => {
+							util.questApi('member/exchangePrizeApi', {prize_id: item.id}, function (ret) {
+								util.dataCheck(self.$store, ret, function (data) {
+									self.$store.dispatch('openTipList', {
+										type: 'imageText',
+										text: data.message,
+									})
+
+                  // 改变积分
+                  self.$store.dispatch('setUserInfo', {
+                  	score: data.score
+                  })
+								}, function(message) {
+									self.$store.dispatch('openTipList', {
+										type: 'default',
+										text: message + '(╯︵╰)'
+									})
+								})
+							})
+            }
+					})
+
 				}
-      },
-			onTabTo(url) {
-				this.$parent.onTabTo({
-					data: {
-						key: url
-					},
-					status: 'navTabTo'
-				})
 			},
-			init() {
+			getPrize() {
 				let self = this
-				util.GET('member/prizeList', {}, e => {
-					// console.log(e.data.data.userInfo['clock_in_score'])
-					// 会员信息
-          self.user.username = e.data.data.userInfo.username
-          self.user.integral = e.data.data.userInfo['score']
-          // 礼品
-          e.data.data.list.forEach(el => {
-          	self.giftList.push({
-              money: el.title,
-              inStock: el.stock,
-              integral: el.need_integral,
-              id: el.id
-            })
-          })
-				}, e => {
-					modal.alert({
-						message: e.data.message,
-						duration: 1
-					}, (value) => {})
-				}, (e) =>{self.$parent.clearLogin(e)})
-      },
-      isIpx() {
-        return _c.isIpx()
+				util.questApi('member/prizeList', {}, function (ret) {
+					util.dataCheck(self.$store, ret, function (data) {
+						// console.log(data)
+						// 会员信息
+						self.$store.dispatch('setUserInfo', {
+							score: data.userInfo['score']
+						})
+            // 礼品
+						self.giftList = data.list
+					})
+				})
+			}
+		},
+    computed: {
+      user() {
+      	let num = this.$store.state.userInfoS
+      	return this.$store.getters.getUserInfo
       }
     },
-    components: {
-		  'head-nav-text': HeadNavText,
-		  'announcement': AnCement,
-    },
 		mounted() {
-			this.$parent.closeLoadding()
+			// this.$parent.closeLoadding()
 		},
-    created() {
-    	this.init()
-    }
-  }
+		created() {
+			// 获取数据
+			this.getPrize()
+      // 设置头导航
+			this.$store.dispatch('setHeadNav', {
+				title: '签到积分兑换',
+				leftButton: 'back',
+				rightButton: 'text'
+			})
+      //
+      // console.log(this.$store.state.userInfo)
+		}
+	}
 </script>
-<style scoped>
-  .text{
-    font-size: 24px;
-    color: #555
-  }
-  .t-red{
-    font-size: 24px;
-    color: #a21a15
-  }
-  .domain {
-    flex-direction: row;
-    height: 280px;
-  }
-  .main-list {
-    position: fixed;
-    top: 110px;
-    bottom: 90px;
-    left: 0;
-    right: 0;
-  }
-  .gift-list {
-    position: fixed;
-    top: 290px;
-    bottom: 90px;
-    left: 0;
-    right: 0;
-  }
-  .w-ipx {
-    bottom: 140px;
-  }
+<style scoped lang="sass">
+  @import '@/assets/common/common.sass'
+
+  .username
+    color: $font_color
+
+  .username-icon
+    font-size: 50px
+    height: 54px
+    width: 54px
+    color: #fecd2e
+
+  .integral-icon
+    font-size: 40px
+    height: 44px
+    width: 44px
+    color: #fecd2e
+
+  .prize-icon
+    color: $main_color
+
+  .prize-text
+    color: $font2_color
+
+  .text
+    height: 28px
+    font-size: 24px
+    color: $font_color
+
+  .t-red
+    padding-top: 2px
+    height: 24px
+    font-size: 24px
+    color: #a21a11
+
+  .confirm
+    background-color: $main_color
+
 </style>

@@ -1,39 +1,39 @@
 <template>
   <div>
-    <head-nav-text @tabTo="onTabTo" :navTitle="navTitle" ></head-nav-text>
+    <!--<head-nav-text @tabTo="onTabTo" :navTitle="navTitle" ></head-nav-text>-->
 
-    <scroller :class="['main-list', isIpx() ? 'w-ipx' : '']" offset-accuracy="300" loadmoreoffset="300" style="background-color: white">
+    <scroller class="pos-a bc-f pb20" offset-accuracy="300" loadmoreoffset="300">
       <!--VIP升级说明    -->
-      <div style="background-color: #eee;height: 60px;justify-content: center;align-items: center">
-        <text style="color: #a92427;font-size: 30px">◆ VIP升级说明 ◆</text>
-      </div>
+      <!--<div style="background-color: #eee;height: 60px;justify-content: center;align-items: center">-->
+        <!--<text style="color: #a92427;font-size: 30px">◆ VIP升级说明 ◆</text>-->
+      <!--</div>-->
       <!--等级列表-->
-      <div style="background-color: #fff;padding-bottom: 20px;padding-left: 20px;padding-right: 20px;padding-top: 20px;">
-        <div style="flex: 1;border-color: #ccc;border-style: solid;border-width: 1px;border-radius: 20px;flex-direction: column">
-          <div v-for="(level, key) of VIPLevel" :class="[(key != VIPLevel.length - 1 ? 'bottom' : '')]" style="height: 100px;flex-direction: row;justify-content: center">
-            <div style="flex: 1;justify-content: center;align-items: center;">
-              <text style="color: #555;">{{level.title}}</text>
+      <div class="bc-f pb20 pl20 pr20 pt20">
+        <div class="f1 bor-1 bor-r20 fdc">
+          <div v-for="(level, key) of VIPLevel" :class="[(key != VIPLevel.length - 1 ? 'bottom' : '')]" class="h100 fdr fjc">
+            <div class="f1 f-cent">
+              <text class="font-color">{{level.level_name}}</text>
             </div>
-            <div style="width: 1px;background-color: #ccc"></div>
-            <div style="flex: 1;justify-content: center;align-items: center;">
-              <text style="color: #555">{{level.gold_max}}</text>
+            <div class="w1 bc-c"></div>
+            <div class="f1 f-cent">
+              <text class="font-color">{{level.gold_min}}</text>
             </div>
-            <div style="width: 1px;background-color: #ccc"></div>
-            <div style="flex: 1;justify-content: center;align-items: center;">
-              <text style="color: #555;">{{level.lottery}}</text>
+            <div class="w1 bc-c"></div>
+            <div class="f1 f-cent">
+              <text class="font-color">{{level.rank_integral}}</text>
             </div>
           </div>
         </div>
       </div>
-      <div style="height: 10px;background-color: #ededed"></div>
+      <div class="h10 bc-e"></div>
       <!--活动介绍-->
-      <div style="height: 70px;justify-content: center;align-items: center;margin-bottom: 10px">
-        <text style="color: #b72021;font-size: 30px;">◆ 活动介绍 ◆</text>
+      <div class="h70 f-cent mb10">
+        <text class="font-color-2 f30">◆ 活动介绍 ◆</text>
       </div>
-      <div style="padding-right: 20px;padding-left: 20px;border-radius: 10px;margin-left: 15px;margin-right: 15px;padding-top: 30px;padding-bottom: 30px;border-width: 1px;border-style: solid;border-color: #ccc">
-        <div v-for="(v, key) of activityList" style="flex-direction: row;margin-bottom: 5px">
-          <text style="width: 40px;font-size: 26px;color: #666;align-items: flex-end;padding-top: 3px">{{key + 1}}. </text>
-          <text style="flex: 1;font-size: 26px;flex-wrap: wrap;color: #666">{{v.title}}</text>
+      <div class="pr20 pl20 bor-r10 ml15 mr15 pt30 pb30 bor-1">
+        <div v-for="(v, key) of activityList" class="fdr mb5">
+          <text class="w40 f26 font-color fie pt3">{{key + 1}}. </text>
+          <text class="f1 f26 fww font-color" >{{v.title}}</text>
         </div>
       </div>
       <!--<scroller style="height: 710px;background-color: #f1f1f1"></scroller>-->
@@ -41,52 +41,67 @@
   </div>
 </template>
 <script>
-	import _c from '@/Global.vue'
-
-	import HeadNavText from '../components/headNavText.vue';
-	import util from '../util'
+	import util from '@/assets/util'
 
   export default {
     data() {
       return {
-      	// 导航标签
-      	navTitle: 'VIP说明',
         // VIP 列表
         VIPLevel: [
 					{
-						'title': '等级',
-						'gold_max': '有效投注',
-						'lottery': '晋级积分'
+						'level_name': '等级',
+						'gold_min': '有效投注',
+						'rank_integral': '晋级积分'
 					},
 					{
-						'title': 'VIP0',
-						'gold_max': '0.00',
-						'lottery': '0.0'
+						'level_name': '0',
+						'gold_min': '10000',
+						'rank_integral': '60'
 					},
 					{
-						'title': 'VIP1',
-						'gold_max': '1000.00',
-						'lottery': '18.0'
+						'level_name': '1',
+						'gold_min': '10000',
+						'rank_integral': '60'
 					},
 					{
-						'title': 'VIP1',
-						'gold_max': '1000.00',
-						'lottery': '18.0'
+						'level_name': '2',
+						'gold_min': '100000',
+						'rank_integral': '180'
 					},
 					{
-						'title': 'VIP1',
-						'gold_max': '1000.00',
-						'lottery': '18.0'
+						'level_name': '3',
+						'gold_min': '300000',
+						'rank_integral': '300'
 					},
 					{
-						'title': 'VIP1',
-						'gold_max': '1000.00',
-						'lottery': '18.0'
+						'level_name': '4',
+						'gold_min': '500000',
+						'rank_integral': '600'
 					},
 					{
-						'title': 'VIP1',
-						'gold_max': '1000.00',
-						'lottery': '18.0'
+						'level_name': '5',
+						'gold_min': '1000000',
+						'rank_integral': '900'
+					},
+					{
+						'level_name': '6',
+						'gold_min': '3000000',
+						'rank_integral': '1200'
+					},
+					{
+						'level_name': '7',
+						'gold_min': '5000000',
+						'rank_integral': '1800'
+					},
+					{
+						'level_name': '8',
+						'gold_min': '8000000',
+						'rank_integral': '3000'
+					},
+					{
+						'level_name': '9',
+						'gold_min': '10000000',
+						'rank_integral': '4800'
 					},
         ],
         //  活动介绍
@@ -106,118 +121,50 @@
         ]
       }
     },
-    computed: {
-    	upgradeIntegral() {
-    		return this.user.nextLevelIntegral - this.user.integral
-      },
-      levelProgress() {
-				// 等级进度条  right 385  = 0     right 0 = 100
-				return 385 - Math.floor((this.user.nextLevelIntegral - this.user.integral) / this.user.nextLevelIntegral * 385)
-      }
-    },
+    computed: {},
     methods: {
-			onTabTo(url) {
-				this.$parent.onTabTo({
-					data: {
-						key: url
-					},
-					status: 'navTabTo'
-				})
-			},
-      init() {
+			getVipLevel() {
 				let self = this
-				util.GET('member/level', {}, e => {
-					let list = []
-          e.data.data.forEach((el) => {
-          	el.title = 'VIP' + el.level_name
-            el.lottery = el.rank_gold
-						list.push(el)
-            // console.log(el)
-          })
-
-					list.unshift({
-						'title': '等级',
-						'gold_max': '有效投注',
-						'lottery': '晋级积分'
-          })
-
-					self.VIPLevel = list
-				}, e => {
-					// console.log(e)
-				}, (e) =>{self.$parent.clearLogin(e)})
-      },
-			isIpx() {
-				return _c.isIpx()
-			}
+				util.questApi('member/level', {}, function (ret) {
+					util.dataCheck(self.$store, ret, function (data) {
+						self.VIPLevel = data
+						self.VIPLevel.unshift({
+							'level_name': '等级',
+							'gold_min': '有效投注',
+							'rank_integral': '晋级积分'
+						})
+					})
+				})
+      }
 		},
-    components: {
-		  'head-nav-text': HeadNavText,
-    },
+    components: {},
 		mounted() {
-			this.$parent.closeLoadding()
+			// this.$parent.closeLoadding()
 		},
     created() {
-			this.init()
+    	// 获取vip等级
+			this.getVipLevel()
+			// 设置头导航
+			this.$store.dispatch('setHeadNav', {
+				title: 'VIP说明',
+				leftButton: 'back',
+				rightButton: 'text'
+			})
     }
   }
 </script>
-<style scoped>
-  .text{
-    font-size: 24px;
-    color: #555
-  }
-  .t-red{
-    font-size: 24px;
-    color: #a21a15
-  }
-  .domain {
-    flex-direction: row;
-    height: 280px;
-  }
-  .main-list {
-    position: fixed;
-    top: 110px;
-    bottom: 90px;
-    left: 0;
-    right: 0;
-  }
-  .gift-list {
-    position: fixed;
-    top: 280px;
-    bottom: 90px;
-    left: 0;
-    right: 0;
-  }
-  .star-text {
-    margin-left: 20px;
-    background-color: #fecc1c;
-    padding-left: 40px;
-    font-size: 24px;
-    padding-right: 10px;
-    border-radius: 7px;
-    color: #b72021;
-    border-bottom-style: solid;
-    border-bottom-width: 2px;
-    border-bottom-color: #999;
-    border-right-color: #999;
-    border-right-style: solid;
-    border-right-width: 1px;
-  }
-  .star-progress {
-    background-color: #fcec35;
-    justify-content: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    border-radius: 10px
-  }
-  .bottom {
-    border-bottom-color: #ccc;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-  }
-  .w-ipx {
-    bottom: 140px;
-  }
+<style scoped lang="sass">
+  @import '@/assets/common/common.sass'
+
+  .font-color
+    color: $font_color
+
+  .font-color-2
+    color: $font2_color
+
+  .bottom
+    border-bottom-color: #ccc
+    border-bottom-style: solid
+    border-bottom-width: 1px
+
 </style>
