@@ -22,9 +22,9 @@ const actions = {
 			title: '绑定会员账号',
 			list: [
 				{
-					name: 'username',
-					placeholder: '请输入您的会员账号',
-					value: ''
+					field_val: 'username',
+					prompt: '请输入您的会员账号',
+					default_data: ''
 				}
 			],
 			descr: '(会员绑定后只能联系客服进行修改, 请谨慎操作)',

@@ -9,7 +9,7 @@
       <div class="f1 fdr f-cent">
         <!--<image :src="discountLogo" alt="" style="height: 40px;width: 40px"></image>-->
         <text class="f40 iconfont discount-icon">&#xe634;</text>
-        <text class="ml10 f30 discount-text">优惠办理中心 - {{text}}</text>
+        <text class="ml10 f30 discount-text">优惠办理中心</text>
       </div>
       <div class="f1 fjc fie">
         <!--<image :src="right_arrow" alt="" style="height: 45px;width: 45px;"></image>-->
@@ -92,8 +92,7 @@
         // 遮罩层 显示
         maskShow: false,
 
-    		testUrl: _c.sUrl + '/images/new_bulletin.png',
-        text: ''
+    		testUrl: _c.sUrl + '/images/new_bulletin.png'
       }
     },
     methods: {
@@ -102,35 +101,27 @@
 				self.$store.dispatch('showForm', {
 					show: true,
 					title: discount.active_name,
-					list: [
-						{
-							name: 'username',
-							placeholder: '请输入您的会员账号',
-							value: ''
-						}
-					],
+					list: discount.actives,
 					descr: '(会员绑定后只能联系客服进行修改, 请谨慎操作)',
 					// submitUrl: 'member/login',
 					submitAct: (data) => {
 						util.questApi('member/login', data, function(ret){
 							util.dataCheck(self, ret, function(data) {
-								// 存进 vuex
-								self.dispatch('setUserInfo', data)
 
 								// 关闭表单
 								self.dispatch('showForm', {
 									show: false
 								})
-								// 登录提示
-								util.alterTip('登录成功', 0.3)
+
+
 
 								// 是否跳转
-								let url = self.getters.jumpUrl
-								if (url && Object.keys(url).length > 0) {
-									// 清除跳转
-									self.dispatch('setJumpUrl', {})
-									util.toUrl(obj, url)
-								}
+								// let url = self.getters.jumpUrl
+								// if (url && Object.keys(url).length > 0) {
+								// 	清除跳转
+									// self.dispatch('setJumpUrl', {})
+									// util.toUrl(obj, url)
+								// }
 							})
 						})
 					}
@@ -139,11 +130,12 @@
 			},
 			getDiscountData() {
 				let self = this
-				// util.questApi('Active/activeList', {}, function (ret) {
-				util.questApi('Active/makeCode', {}, function (ret) {
+				util.questApi('Active/activeListForm', {}, function (ret) {
+				// util.questApi('Active/makeCode', {}, function (ret) {
 					util.dataCheck(self.$store, ret, function (data) {
-						// self.discountList = data
-						self.text = data
+						self.discountList = data
+            // console.log(data)
+						// self.text = data
 					})
 				})
       }
@@ -161,6 +153,8 @@
   @import '@/assets/common/common.sass'
 
   .discount-icon
+    width: 44px
+    height: 44px
     color: $main_color
 
   .discount-text

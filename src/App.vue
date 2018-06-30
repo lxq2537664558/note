@@ -107,9 +107,9 @@ export default {
   watch: {},
   created() {
 		// 初始化加载首页
-		util.toUrl(this, {path: 'DiscountCenter'})
+		// util.toUrl(this, {path: 'DiscountCenter'})
 		// util.toUrl(this, {path: 'MyCenter'})
-    // util.toUrl(this, {path: 'Home'})
+    util.toUrl(this, {path: 'Home'})
 
     // 判断是否有登录记录
     this.checkLogin()

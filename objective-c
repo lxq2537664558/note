@@ -60,15 +60,17 @@ for(NSString * name in NSArray){
 	int _color;
 }
 
-// 行为   () 是用来扩住数据类型    - 表示 对象方法
+// 行为   () 是用来括住数据类型    - 表示 对象方法   + 表示 类方法
 - (void)about;
 @end
 
 // 实现
 @implementation iphone
-// 行为实现
+// 行为实现        
 - (void)about
 {
+
+	_color;
 	NSLog("啊啊啊");
 }
 @end
@@ -78,7 +80,10 @@ int main(int argc, const char * argv[]) {
 	// 发送消息 [类名/对象名 方法名]
 	// 通过iphone 类型的指针接收了 iphone对象的地址
 	Iphone *p = [Iphone new];
-
+	// 属性
+	p->_model
+	// 方法
+	[p about]
 
 	return 0;
 }

@@ -1,8 +1,8 @@
 <template>
-  <div v-if="formList.show" class="fic pos-a lueluelue">
+  <div v-if="formList.show" class="pos-a lueluelue">
     <!--遮罩层-->
     <div @click="clickCloseMask" class="pos-a overlay"></div>
-    <scroller class="w690">
+    <scroller class="w690" style="position: absolute;top: 0;bottom: 0;left: 30px">
       <!--多余的-->
       <div @click="clickCloseMask" class="h280"></div>
 
@@ -17,10 +17,10 @@
             <div class="f1 h85">
               <!--<input type="text">-->
               <input :type="item.type ? item.type : 'text'"
-                     :name="item.name" v-model="item.value" :key="key"
+                     :name="item.field_val" v-model="item.default_data" :key="key"
                      class="f1 bc-e pl30 pr30 f-c-6"
                      style="border-radius: 20px;"
-                     :placeholder="item.placeholder">
+                     :placeholder="item.prompt">
             </div>
           </div>
           <!--提交按钮-->
@@ -36,7 +36,7 @@
           </div>
         </div>
       </div>
-      <div @click="clickCloseMask" class="h150 fje fic">
+      <div @click="clickCloseMask" class="h170 pt80 fic">
         <text @click="clickCloseMask" class="w70 f70 iconfont f-c-f">&#xe6b7;</text>
       </div>
       <!--<div class="h70 w70 fic mt80">-->
@@ -80,9 +80,9 @@
 		props: {
 			formList: {
 				type: Object,
-        default: () => ({})
-      }
-    },
+				default: () => ({})
+			}
+		},
 		data() {
 			return {}
 		},
@@ -97,17 +97,17 @@
 			// 提交按钮
 			clickSubmit() {
 				// 显示 loading
-        this.$store.dispatch('showLoading', '提交中...')
+				this.$store.dispatch('showLoading', '提交中...')
 
 				let data = {}
 				this.formList.list.forEach(el => {
 					// let name =
-					data[el.name] = el.value
-        })
+					data[el.field_val] = el.default_data
+				})
 				// 请求提交
 				this.formList.submitAct(data)
 
-        // 清除输入框内容
+				// 清除输入框内容
 			},
 			// 清空输入框
 			clearForm() {
