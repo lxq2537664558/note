@@ -51,45 +51,81 @@ for(NSString * name in NSArray){
 类
 
 // 声明      :NSObject是为了让我们能 实例化 new
-@interface Iphone : NSObject
+@interface MyClass:NSObject
 {
 	@public    // 公开的    默认是受保护的
 	float _model;
 	int _cpu;
-	double _size;
-	int _color;
 }
 
 // 行为   () 是用来括住数据类型    - 表示 对象方法   + 表示 类方法
 - (void)about;
+// 每个参数前面都要加上:   :是方法的一部分
+- (int)signal:(int)number;
+// 给参数命名  更方便操作
+- (char *)sendMessg:(char *) auth
 @end
 
 // 实现
-@implementation iphone
+@implementation MyClass
 // 行为实现        
 - (void)about
 {
-
 	_color;
 	NSLog("啊啊啊");
+}
+
+-(int)signal:(int)number
+{
+	NSLog(@"啊啊啊啊%n", number);
+	return 1;
 }
 @end
 
 
 int main(int argc, const char * argv[]) {
 	// 发送消息 [类名/对象名 方法名]
-	// 通过iphone 类型的指针接收了 iphone对象的地址
-	Iphone *p = [Iphone new];
+	// 通过 MyClass 类型的指针接收了 MyClass对象的地址
+	Iphone *p = [MyClass new];
+
+	// 创建对象
+	MyClass *objectName = [[MyClass alloc]init];
+
+
 	// 属性
 	p->_model
 	// 方法
-	[p about]
+	[p signal:321 ]
 
 	return 0;
 }
 
 
-  
+ 
+#paragma mark 类注释
+#paragma mark -      //分割线
+
+
+
+字符串  NSString 
+
+// 格式化
+NSString *str = [NSString stringWithForat:@"%i %f", 30, 1.8];
+
+NSString *str = @"aaa";
+
+NSUInteger len = [str length]
+
+
+浮点值的基本类型  CGfloat
+
+
+整型   NSInteger
+
+
+布尔   BOOL
+
+
 
 
 Fundation 框架
