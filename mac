@@ -1,4 +1,263 @@
+
+HomeBrew  
+	// 安装 homebrew
+	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+	// 搜索
+	brew search 应用名（一般需英文名）  /gi*/ (正则搜索)
+
+	brew install squirrel 	// 安装
+	brew uninstall git   	// 卸载
+	brew cask install app   // cask 开头的
+
+	brew list 				// 列表
+	brew info git 			// 信
+	
+	brew outdated 			// 检查需要更新
+	brew upgrade 			// 更新
+	brew upgrade 应用名
+
+	// 安装的服务
+	brew services start/stop/restart serverName
+
+	// 清理缓存
+	brew cleanup
+	brew cleanup -n
+	brew cleanup 应用名
+
+	// 访问官网
+	brew home 应用名
+
+	// 帮组
+	brew --help
+	man brew
+
+
+	// 软件  cask
+	google-chrome
+	steam
+	virtualbox
+	virtualbox-extension-pack
+	cakebrew   				// 可视化管理 brew工具
+	iina       				// 播放器 
+	the-unarchiver  		// 压缩工具
+	Karabiner-Elements		// 改键工具
+
+
+	brew install lrzsz
+
+	mas 	// MAS  官方 app    brew install mas
+		mas search 关键词
+		cmas search 关键字   
+		mas list
+		mas install 甲应用识别码 乙应用识别码 丙应用识别码
+		mas upgrade
+		mas upgrade 甲应用识别码
+		mas upgrade 甲应用识别码 乙应用识别码 丙应用识别码
+
+		// 切换账号
+		mas signin Apple ID "密码"
+
+
+VirtualBox + Vagrant  (装环境)
+	下载安装 VirtualBox
+	下载安装 Vagrant
+		// 安装 要的环境 https://app.vagrantup.com/boxes/search
+		mkdir box && cd box   // 新建一个文件夹 
+		vagrant init centos/7
+
+		// 配置文件 vi vagrantfile
+			config.vm.network "private_network", ip: "192.168.33.10"
+
+			config.vm.synced_folder "/Users/hugo/www","/www/wwwroot",type: "nfs",create: true,:nfs=>true,:mount_options=>['actimeo=2']
+			config.vm.synced_folder ".", "/vagrant", disabled: true
+
+			config.vm.provider "virtualbox" do |vb|
+			vb.memory = "1024"
+   			end
+
+   		// 安装插件 (共享目录用)
+   		vagrant plugin install vagrant-vbguest
+
+		vagrant up		启动本地环境
+		vagrant halt	关闭本地环境
+		vagrant suspend	暂停本地环境
+		vagrant resume	恢复本地环境
+		vagrant reload	修改了 Vagrantfile 后，使之生效（相当于先 halt，再 up）
+		vagrant ssh	通过 ssh 登录本地环境所在虚拟机
+		vagrant destroy	彻底移除本地环境
+
+		// 重载
+		vagrant provision && vagrant reload
+
+		vagrant status  // 查看状态
+
+		not create | 执行vagrant init命令后，从未启动过
+		poweroff | 关机
+		running | 运行中
+		saved | 休眠
+
+
+Alfred Preferences
+
+
+magnet   //窗口管理
+
+// 快捷键提示
+	CheatSheet 
+	系统偏好设置 - 安全性与隐私 - 隐私 - 辅助功能」中勾选 CheatSheet 一项
+
+ssh 连接乱码
+	/etc/ssh/ssh_config 
+	注释此行“ SendEnv LANG LC_*”
+
+
+iterm2
+	安装 Oh My Zsh
+		sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+		// 高亮
+		brew install zsh-syntax-highlighting
+		vim ~/.zshrc   最后一行加上
+			source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+		// 自动建议填充
+		git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+		vim ~/.zshrc   修改 plugins
+		plugins=(
+		  git
+		  zsh-autosuggestions
+		  zsh-syntax-hignlighting
+		)
+
+		// 快捷键
+			ctrl + e 	// 自动补全
+		
+			d  			// 历史记录    在选数字进去
+
+			g	git
+			gst	git status
+			ga	git add
+			gp	git push
+			gc	git commit -v
+			gc!	git commit -v --amend
+
+		// 添加 fbi 警告
+		vim ~/.zshrc
+			_COLUMNS=$(tput cols)
+			_MESSAGE=" FBI Warining "
+			y=$(( ( $_COLUMNS - ${#_MESSAGE} )  / 2 ))
+			spaces=$(printf "%-${y}s" " ")
+
+			echo " "
+			echo -e "${spaces}\033[41;37;5m FBI WARNING \033[0m"
+			echo " "
+			_COLUMNS=$(tput cols)
+			_MESSAGE="Ferderal Law provides severe civil and criminal penalties for"
+			y=$(( ( $_COLUMNS - ${#_MESSAGE} )  / 2 ))
+			spaces=$(printf "%-${y}s" " ")
+			echo -e "${spaces}${_MESSAGE}"
+
+			_COLUMNS=$(tput cols)
+			_MESSAGE="the unauthorized reproduction, distribution, or exhibition of"
+			y=$(( ( $_COLUMNS - ${#_MESSAGE} )  / 2 ))
+			spaces=$(printf "%-${y}s" " ")
+			echo -e "${spaces}${_MESSAGE}"
+
+			_COLUMNS=$(tput cols)
+			_MESSAGE="copyrighted motion pictures (Title 17, United States Code,"
+			y=$(( ( $_COLUMNS - ${#_MESSAGE} )  / 2 ))
+			spaces=$(printf "%-${y}s" " ")
+			echo -e "${spaces}${_MESSAGE}"
+
+			_COLUMNS=$(tput cols)
+			_MESSAGE="Sections 501 and 508). The Federal Bureau of Investigation"
+			y=$(( ( $_COLUMNS - ${#_MESSAGE} )  / 2 ))
+			spaces=$(printf "%-${y}s" " ")
+			echo -e "${spaces}${_MESSAGE}"
+
+			_COLUMNS=$(tput cols)
+			_MESSAGE="investigates allegations of criminal copyright infringement"
+			y=$(( ( $_COLUMNS - ${#_MESSAGE} )  / 2 ))
+			spaces=$(printf "%-${y}s" " ")
+			echo -e "${spaces}${_MESSAGE}"
+
+			_COLUMNS=$(tput cols)
+			_MESSAGE="(Title 17, United States Code, Section 506)."
+			y=$(( ( $_COLUMNS - ${#_MESSAGE} )  / 2 ))
+			spaces=$(printf "%-${y}s" " ")
+			echo -e "${spaces}${_MESSAGE}"
+			echo " "
+
+		// 不支持正则匹配
+			1.在 ~/.zshrc 中加入：setopt no_nomatch 
+			2.执行 source ~/.zshrc
+
+	// 保存连接脚本 
+		// 方式1   vi 出现混乱
+		#!/usr/bin/expect -f
+		set user root
+		set host 192.168.94.134
+		set password javen.zhou
+		set port 12345
+		set timeout -1
+
+		spawn ssh -p $port $user@$host
+		expect "*assword:*"
+		send "$password\r"
+		interact
+		expect eof
+
+		expect /Users/hugo/ssh/ubuntu
+
+		// 方式2 (sshpass)
+		https://github.com/kevinburke/sshpass
+
+		tar -xvf sshpass.tar.gz 
+		cd sshpass 
+		./configure
+		sudo make install  
+
+		/usr/local/bin/sshpass -p 密码 ssh -p 22 用户名@IP
+
+
 karabiner
     更改按键
     ~/.config/karabiner/karabiner.json
-    	
+
+
+软件安装 允许任何来源
+	sudo spctl --master-disable
+
+
+
+
+
+显示 隐藏文件
+	Shift + Command + .
+
+
+显示隐藏文件夹
+	chflags hidden ~/Desktop/Hidden
+
+隐藏文件
+	显示
+		defaults write com.apple.finder AppleShowAllFiles -bool true
+	隐藏	
+		defaults write com.apple.finder AppleShowAllFiles -bool false
+
+隐藏桌面图标
+
+defaults write com.apple.finder CreateDesktop -bool false; killall Finder
+
+
+// 重新布局启动器  行数 列数
+
+defaults write com.apple.dock springboard-columns -int 8; defaults write com.apple.dock springboard-rows -int 7; defaults write com.apple.dock ResetLaunchPad -bool TRUE; killall Dock
+
+// 启动台 背景模糊程度   0~255
+defaults write com.apple.dock springboard-blur-radius -int 100; killall Dock
+
+
+// Option + Keyboard 输出特殊字符
+	难

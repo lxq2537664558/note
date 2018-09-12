@@ -58,12 +58,22 @@ html head body colgroup tbody
 	在开发阶段我们可能想把表单临时提交一下,又不想让它进行表单中所有元素内容的有效性检查,有两种方法可以取消表单验证.一种是在form元素中使用novalidate属性,让整个表单验证全部失效,另一种是利用input语言中使用formnovalidate属性,让指定的单个input元素验证失效.
 		number	number类型的input元素是一种专门用来输入数字的文本框,并且在提交时检查输入的内容是否为数字.它具有min max与step属性
 			<input name="test" type="number" value="50" mix="10" max="100" step="5">
+				// 去掉箭头样式
+			    input::-webkit-outer-spin-button,
+			    input::-webkit-inner-spin-button {
+			        -webkit-appearance: none;
+			    }
+			    input[type="number"]{
+			        -moz-appearance: textfield;
+			    }
 		range	是一种只允许输入一段方位内数值的文本框,她具有min max与step属性,默认范围是0与100
 			<input name="test" type="range" onchange="document.getElementById('num').value=this.value" value="50" min="10" max="100" step="5">
 	在HTML5追加了新的output元素,也增加了大量在提交时对表单与表单内新增元素进行内容有效性验证的功能.其中output元素定义不同类型的输出,比如计算结果或脚本的输出.output元素必须从属于某个表单,些在表单的内部,或者对他添加form属性,目前,只被opera10浏览器支持.output结合range元素使用代码如下
 			<output name="num">50</output>
 		color	用来选择颜色,它提供了一个颜色选择器
 		file	文件选择文本框,与HTML4最大的不同是,可以通过制定multiple属性,一次选择多个文件,value属性的值为用逗号分隔的一个或多个文件名.同事,通过把MIME类型制定给accept属性,可以限制选择文件的种类
+
+
 
 <video>标签属性
 	src			url			要播放的视频的url

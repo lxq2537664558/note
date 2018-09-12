@@ -1,3 +1,257 @@
+npm 附属于 node
+
+npm --version 				// 版本
+npm --help 					// 帮助
+npm install --global npm 	// 自己升级自己
+
+
+// 安装
+npm install [back] [--option]
+	// 没有参数  		会加载 package.json 里面所有的包依赖
+	// back 		要安装的包   多个 包 以空格分隔
+	// --save -S  	会把 包 信息保存到 package.json 文件里面  
+	// uninstall  	删除
+
+npm install jquery @1.1.0  // 安装指定版本
+
+
+
+package.json (包 描述文件)
+	dependencies   	// 第三方包的依赖信息
+	scripts			// 可执行脚本
+
+
+	main			// 项目入口文件
+	name 			// 项目名
+	version			// 版本
+	description		// 描述
+	author 			// 作者
+
+
+
+
+// 初始化  ()
+npm init -y 
+	// -y 跳过向导
+
+
+
+// 转义工具
+npm install -g babel-cli
+npm install --save-dev babel-breset-es2015 babel-cli
+
+
+.babelrc
+{
+	"presets": [
+		"es2015"
+	],
+	"plugins": []
+}
+
+
+
+
+// Express   (node http 框架)
+	var express = require('express')
+
+	// 创建 webServer
+	var app = express()
+
+	// 公开文件目录
+	app.use('/public/', express.static('./public/'))   	// public/text
+	app.use(express.static('./public/')) 				// text
+
+
+	// get
+	app.get('/', function(req, res){})
+
+	// 监听端口
+	app.listen(3000,function(){})
+
+	// 请求 request
+		req.query() 		// 请求数据  只用于 get
+
+
+	// 响应 response
+		res.redirect('/')  //  重定向
+
+
+	// 路由  
+		route.js
+			module.exports = function(app){
+				app.get()
+			}
+
+		app.js
+			var route = require('./router')
+			route(app)	
+
+		express 方法
+		// 路由容器
+		route.js
+			var express = require('express')
+			var router = express.Router()
+			
+			router.get(){}
+
+			module.exports = router
+
+		app.js
+			var router = require('./router')
+			app.use(router)
+
+
+
+// 中间件
+	body-parser  // 获取 post 数据
+		npm install bodyParser --save
+
+		var bodyParser = require('body-parser')
+
+		app.use(bodyParser.urlencoded({ extended: false }))
+		app.use(bodyParser.json())
+
+		res.body
+
+
+
+// art-template 模板引擎 
+	var express = require('express');
+
+	// 模板标签
+		{{value}}
+		{{data.key}}
+		{{data['key']}}
+		{{a ? b : c}}
+		{{a || b}}
+		{{a + b}}
+
+		{{if v1}} ... {{else if v2}} ... {{/if}}
+
+		{{each target}}
+		    {{$index}} {{$value}}
+		{{/each}}
+
+		// 设置变量
+		{{set temp = data.sub.content}}
+
+		// 继承
+		{{extend './layout.art'}}
+		{{block 'head'}} ... {{/block}}
+
+		// 子模板
+		{{include './header.art'}}
+		{{include './header.art' data}}
+
+		// 过滤器
+			// 注册
+			template.defaults.imports.dateFormat = function(date, format){/*[code..]*/};
+			template.defaults.imports.timestamp = function(value){return value * 1000};
+
+			// 使用
+			{{date | timestamp | dateFormat 'yyyy-MM-dd hh:mm:ss'}}
+
+	// 渲染
+		// 基于模板名渲染模板
+		template(filename, data);
+
+		// 将模板源代码编译成函数
+		template.compile(source, options);
+
+		// 将模板源代码编译成函数并立刻执行
+		template.render(source, data, options);
+
+
+	// 结合 express 使用
+		install express-art-template --save
+		
+		// 绑定渲染引擎
+		app.engine('art', require('express-art-template'));
+		
+		// 跟换 view 目录 (默认 views)
+		app.set('views', 'path')
+
+		app.set('view options', {
+		    debug: process.env.NODE_ENV !== 'production'
+		});
+
+
+
+// 代码自动生效
+	npm install --global nodemon
+
+	nodemon app.js
+
+
+
+mongoose 			// mongo 第三方包
+	var mongoose = require('mongoose')
+
+	// 连接数据库   test 可以不用存在 (当插入第一条数据后  就会创建)
+	mongoose.connet('mongodb://localhost/test', { useMongoClient: true })
+
+	// 约束 
+	var Schema = mongoose.Schma
+	var userSchema = new Schema({
+		title: String,
+		author: {
+			type: String,
+			required: true
+		},
+		comments: [{ body: String, date: Date }],
+		date: { type: Date, default: Date.now },
+		hidden: Boolean,
+		meta: {
+			votes: Number,
+			favs: Number
+		}
+	})
+
+	// 文档结构发布为模型        这个 User 会变成 uesrs
+	var User = mongoose.mode('User', userSchema)
+
+
+	// 新增
+	var admin = new User({
+		username: 'aaa'
+	})
+
+	admin.save(function(err, res){
+
+	})
+
+
+	// 查询
+	User.find(function(err, res){}) 		// 所有
+	// 查询条件
+	User.find({ username: 'aa'},function(err, ret){
+
+	})
+	// 只查找一个 和 find 一样
+	User.findOne()
+
+
+	mongoose.Promise = global.Promise
+
+
+	var kitty = mongoose.model('Cat', { name: String })
+
+	// 
+	kitty.save(function(err){
+		if(err){
+			console.log(err)
+		}else{
+			console.log('meow')
+		}
+	})
+
+
+
+
+
+
+
 lockr.js  本地存储localstorage
 	// 前缀  设置一个字符串用于标记相关的值  
 	Lockr.prefix - String
@@ -93,3 +347,26 @@ lockr.js  本地存储localstorage
 		Lockr.sadd("wat", 2);
 		Lockr.srem("wat", 1);
 		Lockr.smembers("wat"); // [2]	
+
+
+Cookies.js   操作cookie
+	方法
+		Cookies.set('key', 'value', { expires: 600 })
+		Cookies.get（key）
+			Alias: Cookies(key)
+		Cookies.expire（key [，options]）
+
+	属性
+		Cookies.enabled 
+
+		Cookies.defaults
+			Cookies.defaults = {
+				path: '/',
+				secure: true
+			};
+
+	options
+		path		"/"
+		domain		undefined
+		expires  	undefined
+		secure		false

@@ -2,7 +2,6 @@
 stability 2 很稳定
 
 
-
 cnpm镜像  淘宝
 npm install -g cnpm –registry=https://registry.npm.taobao.org 
 
@@ -14,27 +13,102 @@ npm install -g cnpm –registry=https://registry.npm.taobao.org
 	不可能用一个js文件去写全部的业务. 肯定要有mvc  ？？？
 	狭义的说，　每一个JavaScript 文件都是一个模块; 而多个JavaScript 文件之间可以互相require, 他们共同实现了一个功能, 他们整体对外, 又称为一个广义上的模块
 	Node.js中, 一个JavaScript 文件中定义的变量, 函数, 都只是这个文件内部有效. 当需要从模块外部引用这些变量, 函数时, 必须使用 exports 对象进行暴露. 使用者用require() 命令引用这个JS 文件
- 
+
+
+exports = module.exports
+module.exports = {}   // 返回单个对象 方法 值
+return module.exports
+
+
 
 HTTP 模块
-var http = require('http');
 
-var server = http.createServer(function(request, response){
-	//req参数表示请求, res表示响应
+	// 引入 http 模块 
+	var http = require('http');
 
+	// 创建 http server
+	var server = http.createServer(;
 
+	server.on('request', function(){
+		// request
+			url 		请求地址 
+		
+		// response
+			// 设置响应头
+			response.writeHead(202,{
+				"Content-type":"text/html;charset=utf-8"
+			});
 
-	//设置响应头
-	response.writeHead(200,{
-		"Content-type":"text/html;charset=utf-8"
+			// 设置响应头内容
+		    response.setHeader(
+		        // 普通文档
+		        // 'Content-Type', 'text/plain; charset=utf-8' 
+		        // html
+		        'Content-Type', 'text/html; charset=utf-8' 
+		    )
+
+		    // 设置响应头状态码
+		    response.statusCode = 302
+
+			// 输出 缓存
+			response.write('hello');
+
+			// 输出 响应
+			response.end([data][, encoding][, callback])
+	})
+
+	//监听端口   绑定端口 ip地址
+	server.listen(3000, function(){
+		console.log('服务器启动成功')
 	});
-	//响应
-	response.end([data][, encoding][, callback])
 
-});
+	// 简写
+	http
+		.createServer(function(req, res){
 
-//监听端口   绑定端口 ip地址
-server.listen(3000,'127.0.0.1');
+		})
+		.listen(3000, function(){
+
+		})
+
+
+FS (file-system)模块   文件操作(异步)
+	
+	// 引入模块
+	var fs = require('fs');
+
+	// 读取文件  data 是二进制文件
+	fs.readFile('./test/1.txt', function(err, data){
+		// err  错误参数      成功时为 nlu
+		// data 返回的数据
+		
+		if(err){
+			throw err; 
+		}
+	});
+
+	// 写入文件
+	fs.writeFile('./data/1.txt', 'content', function(error){})
+
+
+	// 创建一个文件夹
+	ffs.mkdir('./path'[, mode], callback)
+		mode 默认为 0o777
+
+	// 删除一个文件夹
+	fs.rmdir('./path', callback)
+
+	// 文件信息
+	fs.stat('./path', function(err, stats){
+		stats.isDirectory();
+		//判断是不是一个文件夹  返回booler
+	})
+	
+	// 读取一个文件夹 获取所有文件 
+	fs.readdir('./path', function(err, files){
+		//files 是一个数组
+		console.log(files);
+	})
 
 
 Url 模块
@@ -44,27 +118,21 @@ Url 模块
 		//urlString  		url地址
 		//parseQueryString  true 返回结果为 对象
 
-		urlObject.href
-			//  'http://user:pass@host.com:8080/p/a/t/h?query=string#hash'
-		urlObject.protocol
-			//  'http:'
-		urlObject.slashes
-			//  'host.com:8080'
+		urlObject.href 				//  地址    			'http://user:pass@host.com:8080/p/a/t/h?query=string#hash'
+		urlObject.protocol 			//  请求协议 			'http:'
+		urlObject.slashes 			//  域名加端口  		'host.com:8080'
+		urlObject.hostname			//  域名   			'host.com'
+		urlObject.port 				//  端口 			'8080'
+		urlObject.pathname     		//  请求路径 			'/p/a/t/h' 不会对查询字符串执行解码。
+		urlObject.path 				//  请求路径(完整) 	'/p/a/t/h?query=string'  	不会对 path 执行解码。
+		urlObject.query 			//  query 			'query=string' or {'query': 'string'}  如果返回一个对象，则键和值都会被解码。如果返回一个字符串，则不会对查询字符串执行解码。
+		urlObject.hash 				//  锚点 			'#hash'
+
 		urlObject.auth 			auth 属性是 URL 的用户名与密码部分。 该字符串跟在 protocol 和双斜杠（如果有）的后面，排在 host 部分的前面且被一个 ASCII 的 at 符号（@）分隔。 该字符的格式为 {username}[:{password}]，[:{password}] 部分是可选的
 			//  'user:pass'
-		urlObject.hostname
-			//  'host.com'
-		urlObject.port
-			//  '8080'
-		urlObject.pathname      不会对查询字符串执行解码。
-			//  '/p/a/t/h'
-		urlObject.path
-			//  '/p/a/t/h?query=string'  	不会对 path 执行解码。
-		urlObject.query
-			//  'query=string' or {'query': 'string'}   如果返回一个对象，则键和值都会被解码。如果返回一个字符串，则不会对查询字符串执行解码。
-		urlObject.hash
-			//  '#hash'
 
+
+	// 解析查询参数
 	var querystring =  require('querystring');
 
 		querystring.parse('foo=bar&baz=quz&baz=quux&corge');
@@ -76,36 +144,6 @@ Url 模块
 		//return 
 		{w:'中文', foo:'bar'}
 
-FS 模块   文件操作(异步)
-	var fs = require('fs');
-
-	//读取文件
-	//第一个参数是完整路径
-	//第二个参数是回调函数, 表示文件读取成功之后, 做的事情
-	fs.readFile('./test/1.txt', function(err, data){
-		if(err){
-			throw err; 
-		}
-	});
-
-	//创建一个文件夹
-	ffs.mkdir('./path'[, mode], callback)
-		mode 默认为 0o777
-
-	//删除一个文件夹
-	fs.rmdir('./path', callback)
-
-	//文件信息
-	fs.stat('./path', function(err, stats){
-		stats.isDirectory();
-		//判断是不是一个文件夹  返回booler
-	})
-	
-	//读取一个文件夹 获取所有文件 
-	fs.readdir('./path', function(err, files){
-		//files 是一个数组
-		console.log(files);
-	})
 
 Path 模块
 	var path = require('path');
@@ -115,6 +153,7 @@ Path 模块
 
 	//返回路径的正确 路径
 	path.normalize('pathname');
+
 
 
 

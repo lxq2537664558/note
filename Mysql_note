@@ -1,3 +1,8 @@
+ ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+
+
+ UNIQUE KEY `unique_member` (`member_name`,`time_day`),
+
 //将某列内容按照用户自定义的顺序排序
 select name from table_name order by field(id,2,1,3);
 //字符串, 号分隔 查询
@@ -314,6 +319,8 @@ ALTER TABLE语句可能完成的修改
 
 	//修改字段类型
 	alter table tbName modify 字段名称 字段类型 [是否允许非空];
+	alter table vc_note_query modify note char(32) not null default '' comment '注单号';
+
 	//修改字段名称
 	alter table tbName change 旧字段名称 新字段名称 字段类型 [是否允许非空];
 	//修改自增长

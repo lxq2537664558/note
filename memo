@@ -1,59 +1,107 @@
-18个月   学会  ios  android  前端 桌面端         
+CREATE TABLE `vc_deposits_member` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_name` varchar(32) NOT NULL DEFAULT '' COMMENT '会员名',
+  `member_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '会员id',
+  `dep_amount` decimal(16,2) NOT NULL DEFAULT '0.00' COMMENT '入款金额',
+  `wit_amount` decimal(16,2) NOT NULL DEFAULT '0.00' COMMENT '出款金额',
+  `dep_total` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '入款次数',
+  `wit_total` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '出款次数',
+  `agent_name` varchar(32) NOT NULL DEFAULT '' COMMENT '代理账号',
+  `time_day` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '日期',
+  PRIMARY KEY (`id`),
+  KEY `member_name` (`member_name`),
+  KEY `dep_amount` (`dep_amount`),
+  KEY `wit_amount` (`wit_amount`),
+  KEY `time_day` (`time_day`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+
+
+
+
+// chrome 插件管理
+chrome://components/
+
+连接一下 chrome 插件开发
+
+chrome 创建一个  网站导航
+
+chrome 通知
+
+
+
+php aop 
+
+
+
+
+
+
+18个月   学会  ios  android  前端(响应式 node)          
+
+
+
+swoole
+
+学python 抓取数据
+
+
+lua 了解一下
+
+
+桌面端
+大数据
+
+Electron
+
+
+si ki dai you
+
+
+
+禅道
+http://47.90.34.174:88/zentao
+
+
+
+E:\www\lottery\src\components\gcdt\official-way.vue
+
+
+
+美洽
+
+jskefu01@gmail.com 
+mlxg7788
+
+jskefu03@gmail.com
+
+
+
+E:\www\openSourceChess\application\admin\controller\Pay.php
+E:\www\openSourceChess\application\admin\view\pay\setconfig.html
+
+
+      - "application/x-www-form-urlencoded"
+
+      
+https://market.aliyun.com/products/56928004/cmapi027240.html?spm=5176.2020520132.101.6.KK86z0#sku=yuncode2124000000
+
+
+
+
+
+
+// kyqp 文档
+https://app.swaggerhub.com/apis/onrp/ornp/1.0.1
+
+
+
+增长黑客
+
+
+
 
 
 9777081419
-
-admin.hy590.vip
-
-
-
-weex-ui
-
-
-https://cdn.bootcss.com/font-awesome/4.7.0/fonts/fontawesome-webfont.ttf?v=4.7.0
-  
-
-
-设置一个开盘时间
-
-
-
-刷新奖品库存
-
-
-statData
-
-
-member_id   会员id
-deposit     存款
-Bet         下注
-day  18023
-
-
-login_time   登录时间
-
-
-
-
-
-
-只有总数用到这表
-
-
-
-一次只能取60天
-
-登录时判断是否
-    有数据
-    没数据  判断swoole是否有开启 发送给swoole 进行获取数据 
-        获取数据  每次获取50天的  
-
-
-
-
-
-
-
 
 schema
 
@@ -123,9 +171,11 @@ deno
 位运算算法
 
 
+深入浅出 webpack
 
 
-php /www/wwwroot/admin.hy590.vip/php/think RefreshMemberData > /dev/null 2>&1 &
+C语言  指针
+
 
 
 
@@ -136,67 +186,6 @@ composer require topthink/think-queue
 
 
 
-47.90.106.4:1111
-hugo 密sdfafaf#123dfa333
-
-47.90.106.4
-root
-
-47.90.106.4
-jsvip
-S2WsBeZsmPpYJAA2
-
-u.99205.site
-
- 47.90.106.4
-http://47.90.106.4:39001/
-v.99205.site
-
-
-
-首次绑定送积分
-解决了跨域的问题
-每日签到
-app登录验证
-
-
-Bt-Panel: http://47.52.33.206:8888
-username: admin
-password: qqqq4321
-
-42xx_com
-BCwSXwAmnh
-
-svn://103.35.116.101:1111
-hugo   密码etdclzvbfgdfa#234
-
-
-//    app01
-//    qwe123
-
-
-金沙：
-vonly=eefe5edda0438ade95879a636d3e2936
-svn://47.52.154.155
-https://www.hd5009.com/
------------------------------------------------------------------------
-海洋：
-vonly=f00d541b1c38377c965ca2c575c241eb
-47.75.38.5
-http://hd6590.com
--------------------------------------------------
-http://payhy.8889s.com/
-svn://47.90.34.174:7777
-hugo=f7aa37fcd991195620ee7066a104f566
---------------------------------------
-dd778799
-hugo=dkghedad54124!#^%
-47.52.1.158:3333
-
-
-
-😊😊。
- 
 
 
 
@@ -226,29 +215,6 @@ hugo=dkghedad54124!#^%
 alert talbe global_config add create_id int unsigned not null default 0 comment '创建人'
 
 
-
-域名管理添加
-
-alter table global_member add column user_id int not null default 0;
-
-
-alter table oa_admin_user add column domains varchar(32) not null default ''; 
-
-
-alter table oa_admin_user modfiy column domains varchar(32) not null dafault '' comment '所拥有域名';
-
-
-
- <wxc-loading 
-          :show="loading.show"
-          :loading-text="loading.text"
-          :need-mask="true"
-          :interval="'200'"
-          :mask-style="{backgroundColor: 'rgba(0, 0, 0, .6)'}"
-    >
-
-
-
 E:\www\hd5009\active\index120.html
 E:\www\hd5009\images\registered38_gb.jpg
 E:\www\hd5009\active\registered38.html
@@ -259,20 +225,6 @@ phone
 email
 real_name
 
-    
-vueThink
-    47.90.124.47 
-
-
-    admin
-    hugodemima
-
-    api.hy590.vip
-    admin.hy590.vip
-
-
-    svn://47.90.124.47    hugo    密码fafgjdfaj1231#
-
 
 
 
@@ -280,6 +232,7 @@ https://github.com/PanJiaChen/vue-element-admin
 
 
 
+alter table vc_note_query add coloumn app_id int unsigned not null default 0 comment '活动id';
 
 alter table zp_winning add column user_id int unsigned not null default 0 comment '中奖者id';
 alter table zp_winning add column domain_id int unsigned not null default 0 comment '域名id';
@@ -320,6 +273,11 @@ custWinning
 
 
 JavaScriptCore
+
+
+
+/www/server/php/71/bin/php /www/wwwroot/my.noQuery.com/think RefreshMemberNoteData
+
 
 
 Domain

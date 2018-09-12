@@ -1,0 +1,63 @@
+
+// 检查依赖
+flutter doctor
+
+
+// 临时
+export PATH=/Users/hugo/flutter/flutter/bin:$PATH
+export ANDROID_HOME="/Users/hugo/Library/Android/sdk" 
+export PATH=${PATH}:${ANDROID_HOME}/tools
+export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+
+
+// 永久 vi ~/.zshrc
+export PATH=/Users/hugo/flutter/bin:$PATH
+export ANDROID_HOME="/Users/hugo/Library/Android/sdk" 
+export PATH=${PATH}:${ANDROID_HOME}/tools
+export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+
+
+
+// ios 打开虚拟机
+open -a Simulator
+
+
+// Xcode 签名
+open ios/Runner.xcworkspace
+
+Runner
+
+常规>签名>团队
+
+
+
+
+
+
+
+
+
+
+
+material 		// 一套标准的移动端和 web 端视觉设计语言    Flutter 提供了一套 Material widgets
+
+
+Material library
+	
+
+	widget   主要提供了 build() 方法来描述如何根据其他比较低级的 widget 来显示自己
+
+	MaterialApp
+
+
+	Scaffold      // 提供了默认的导航栏 标题 包含主屏幕	
+
+		title 		// 标题
+		home 		// 主屏幕
+			appBar 		// 标题部分
+			body 		// 内容
+
+
+			new AppBar() 		// 标题头
+			new Center() 		// 居中
+			new Text('啊啊啊啊') // 文本 	

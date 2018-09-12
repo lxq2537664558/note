@@ -1,0 +1,193 @@
+游戏管理
+	// 视讯投注现况   全部数据
+	Request URL: https://zb168.10050715.com/game/bet_live_video/longpolling
+	Request Method: POST
+
+
+	// 获取有条件的查询   ( 查询 视讯厅别  桌号  层级)
+	Request URL: https://zb168.10050715.com/game/bet_live_video/fetch_bet_live
+	Request Method: POST
+
+	Form Data
+		// 游戏类别
+		GameType: 3001
+		// 视讯厅别
+		State: All
+		// 桌号
+		GameCode: All
+		// 层级
+		Level: 2
+		// 账号id   All()
+		UserID: 35011060
+
+
+	// 获取视讯厅别   (例   BB视讯  VIP视讯  竞咪视讯)
+	Request URL: https://zb168.10050715.com/game/bet_live_video/fetch_state
+	Request Method: POST
+
+	Form Data
+		// 游戏类型
+		GameType: 3001R
+
+	Response
+	{"code":200,"status":"OK","data":{"result":true,"OptionVal":{"0":"BB\u89c6\u8baf","5":"VIP\u89c6\u8baf","6":"\u7ade\u54aa\u89c6\u8baf"},"Selected":"All"}}
+
+
+	// 获取桌号
+	Request URL: https://zb168.10050715.com/game/bet_live_video/fetch_gamecode
+	Request Method: POST
+
+	Form Data
+		// 游戏类型
+		GameType: 3001
+		
+		State: All
+
+	Response
+	{"code":200,"status":"OK","data":{"result":true,"OptionVal":{"A":"A","B":"B","C":"C","D":"D","E":"E","V1":"V1","V2":"V2","V3":"V3","I":"I","J":"J","M1":"M1","M2":"M2","M3":"M3","M4":"M4","M5":"M5","M6":"M6","TB1":"TB1","TB2":"TB2"},"Selected":"All"}}
+
+
+	// 获取账号   (层级下面的账号)
+	Request URL: https://zb168.10050715.com/game/bet_live_video/fetch_level_username
+	Request Method: POST
+
+	FormData
+		// 层级id
+		Level: 0
+			0 全部
+			2 大股东
+			3 股东
+			4 总代理
+			5 代理商
+
+
+账号管理
+
+	https://zb168.10050715.com/user/list?Status=All&role=All&dispensing=all&SearchField=username&SearchValue=yuan7932618
+
+现金系统
+
+	// 查询会员余额
+	Request URL: https://zb168.10050715.com/agv3/cl/?module=CashSystem&method=queryProject&sid=
+	Request Method: POST
+
+	Form Data
+		current: RMB
+		sDate: 2018-08-01 00:00:00
+		eDate: 2018-08-01 23:59:59
+		MemNameSel: single
+		mem_name: qing645280
+		betNum: 
+		page: 
+		Sort: 1
+		m: 5
+		cid: 1,5,16
+
+	Response	
+	{"INFO":{"page_num":0,"page":"1","pageO":50,"total":0,"maxcredit":"0.17"},"ARR_WDATA":[{"ID":"&nbsp;","MEM_NAME":"&nbsp;","CASH_ID":"&nbsp;","TOTAL":"0","PAGE_NAME":"0","CURRENCY":"&nbsp;","MEM_GOLD":"&nbsp;","KEY_DATE":"&nbsp;","ACT_RESULT":"&nbsp;","MIN_SUM":"&nbsp;","PAGE":"","PS":"&nbsp;","MEMO":"&nbsp;","PAGE_SELECT":""}]}
+
+
+公告讯息
+报表/查询
+
+
+create table vc_noteQuery(
+    id int unsigned not null auto_increment,
+
+
+
+
+    status TINYINT unsigned not null default 1 comment '状态 0关闭 1开启   域名关闭后前台将拿不到数据',
+    
+
+    order_id int not null default 0 comment '排序',
+    create_time int unsigned not null default 0,
+    update_time int unsigned not null default 0,
+
+
+    key title (title),
+    key type (type),
+    key order_id (order_id),
+    PRIMARY key (id)
+)ENGINE=INNODB  DEFAULT CHARSET=utf8
+
+
+	noteQuery
+		id
+		memberId
+		memberName
+
+	用户id
+
+	用户名
+
+	平台
+		BB电子...
+
+	游戏类型
+		糖果
+
+
+	注单号
+
+	下注时间
+
+	下注金额
+
+	状态(可从本地数据库查询)
+
+
+
+	验证账号   用户名  bb余额   是否正确    // 加上ip限制
+	点击拉取远程数据  // 有次数限制  修改用户加载状态  5s 查询一次状态
+		根据用户名拿到   用户id
+		拿到要获取的所有的 游戏类型id
+		要获取的游戏id(每天刷新 游戏类型 游戏id)
+
+		拿到所有注单   (总数  自己翻页取)  
+
+		存进数据库
+
+	显示数据
+		遍历状态   (根据游戏类型  判断是否可以领取)
+			可以领取  去判断一下  数据库里面是否已经存了
+
+		可查询注单	
+
+
+	每10分钟检查脚本是否结束
+
+
+	处理错误
+
+
+
+
+
+
+	//  查询某账号的 某个游戏类型 下 所有的游戏
+	/game/betrecord_search/kind5?SearchData=StatementsBet&LiveAllBet=N&SelKind=mem&UserID=301001044&date_start=2018-07-31&date_end=2018-07-31&GameType=0&BarID=1
+	/game/betrecord_search/kind5?SearchData=StatementsBet&LiveAllBet=N&SelKind=mem&UserID=37370029&date_start=2018-07-31&date_end=2018-07-31&GameType=0&BarID=1
+		UserID  		// 用户id
+		date_start		// 开始时间
+		date_end 		// 结束时间
+	/game/betrecord_search/kind5?SearchData=StatementsBet&LiveAllBet=N&SelKind=mem&GameType=0&BarID=1
+
+
+	//  某账号  某个游戏 下 所有注单   
+	kind5?SearchData=StatementsBet&BarID=1&GameKind=5&GameType=-1
+	kind5?SearchData=StatementsBet&BarID=1&GameKind=5&GameType=-1
+	kind5?SearchData=StatementsBet&BarID=1&GameKind=5&date_start=2018-07-31&date_end=2018-07-31&GameType=-1&Limit=100&Sort=DESC&UserID=37370029&GameType=5901
+	kind5?SearchData=StatementsBet&BarID=1&GameKind=5&GameType=-1&&&GameType=5901
+		https://zb168.10050715.com/game/betrecord_search/kind5
+			date_start  // 开始时间
+			date_end  	// 结束时间
+			Limit 		// 一页多少条数据
+			Sort 		// 排序
+			UserID 		// Uid 37370029
+			GameType  	// 游戏id  5908  糖果派对2        5902  糖果派对
+
+	// 
+	kind5?SearchData=StatementsBet&BarID=1&amp;GameKind=5&amp;date_start=2018-07-31&amp;date_end=2018-07-31&amp;GameType=-1&amp;Limit=100&amp;Sort=DESC&amp;UserID=155482854&amp;GameType=5902
+
+其他

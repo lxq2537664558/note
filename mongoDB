@@ -1,0 +1,35 @@
+
+
+
+
+
+mongod --vserion  			// 版本
+
+mongod 						// 启动
+
+
+// 创建一个数据存储目录
+/data/db
+
+// 修改默认目录
+mongod --dbpath= 数据存储目录路径
+
+
+mongo 						// 连接  默认本地的
+
+
+show dbs 									// 查看所有数据库
+
+
+db 											// 查看当前的数据库
+
+use db_name 								// 切换数据库
+
+
+db.field.insertOne({"name": "hugo"}) 		// 插入数据 			
+
+
+show collections 	// 查看所有集合
+
+
+db.students.find() 						// 取数据

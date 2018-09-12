@@ -1,0 +1,740 @@
+应用启动的过程
+	加载一个storyboard(Main interface)
+	加载箭头指向的控制器
+	加载控制器的view(显示到用户面前)
+
+
+
+// 当前类名
+NSStringFromClass(self)
+
+
+IB Interface Bullder 
+
+// 动作
+
+IBAction
+
+- (IBAction)click{
+	
+}  	
+
+
+
+// 属性
+
+IBOutlet
+
+@property (nonatomic, weak) IBOutlet UILabel *label; 
+
+// 改变文本颜色
+self.label.textColor = [UIColor greenColor];
+// 改变文本内容 
+self.label.text = [UIColor greenColor];
+// 背景色 
+self.label.backgroundColor = [UIColor redColor]
+// 居中
+self.label.textAlignment = NSTextAlignmentCenter
+// 文字大小
+self.label.font = [UIFont systemFontfSize:20.f ]
+
+
+
+UIView
+  所有的控件都继承UIView
+
+  @property(nonatomic, readonly) UIView *superview
+  self.greenView.superview
+  // 获得父控件对象
+
+  @property(nonatomic, readonly, copy) NSArray *subviews;
+  self.greenView.subviews  
+  // 子控件
+
+  [self.shopCarView.subviews lastObject]
+  // 最后一个控件
+
+
+  @property(nonatomic) NSInteger tag;
+  // 控件的ID[标识], 父控件可以通过tag来找到对应的子控件
+
+  @property(nonatomic) CGAffineTransform transform;
+  // 控件的形变属性[可以设置旋转角度, 比例缩放, 平移等属性]
+
+
+
+  -(void)addSubview:(UIView)
+
+  -()
+
+
+viewController.m
+
+  // 系统调用  view 加载完毕的时候调用   控件的初始化 数据的初始化
+  -(void)viewDidLoad {
+  	[super viewDidLoad];
+  }  
+
+
+  // 布局计算完成
+  -(void)layoutSubviews{
+  	[super layoutSubviews];
+  }
+
+  // 系统调用  当控制器接收到内存警告调用  去除一些不必要的内存 去除耗时的内存
+  -(void)didReceiveMemoryWarning {
+  	[super didReceiveMemoryWarning];
+  }
+
+
+  // 点击控制器的view空白处 触发的方法
+  - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+  {
+  	NSLog(@"ko");
+  }
+
+
+  // 创建 UIWsitch 对象 
+  UISwitch *sw = [[UISwitch alloc] init];
+
+  // 添加一个 对象
+  [self.view addSubview:sw]; 
+
+  // 删除一个 对象
+  [sg removeFromSuperview];
+
+  // 根据 tag 找到对应的view
+  UIView *redView = [self.view viewWithTag:1];
+
+  // 常见属性
+  
+@property(nonatomic) CGRect frame;
+  // 控件矩形框在父控件中的位置和尺寸[ 以父控件的左上角为坐标原点]
+  self.label.frame = CGRectMack(100, 100, 100, 100);
+  // 更改x
+  CGRect frame = self.lbael.frame;
+  frame.origin.x += 100;
+  // frame.size.width
+  // frame.size.height
+  self.label.frame = frame;
+
+  @property(nonatomic) CGRect bounds;
+  // 控件矩形框的位置和尺寸 [以自己左上角为坐标原点, 所以bounds 的 x y 一般为0]
+  self.label.bounds = CGRectMack(100, 100, 100, 100);
+
+  @property(nonatomic) CGPoint center;
+  // 控件中点的位置 [以父控件的左上角为做坐标原点]
+  self.label.center = CGPointMack(100, 100);
+
+
+
+// 常用结构
+
+// 二维平面中的一个点
+NSPoint CGPoint   
+	x
+	y
+
+
+GPPoint  point = NSMakePoint(10, 20);
+
+// 尺寸
+CGSize size = NSMakeSize(100, 50);
+
+// 坐标 尺寸
+CGRect rect = NSMakeRect(10, 20, 100, 50);
+
+
+
+UI控件
+	UIImage
+		// 	创建UIImage对象
+		UIImage *image = [UIImage imageNamed:@"buttongreen"];
+
+		//  拉伸保护图片
+			方式 1 
+				CGFloat iamgeWidth = iamge.size.width;
+				CFGloat imageHeight = iamge.size.height;
+
+				//  返回一张受保护而且拉伸的图片 CapInsets: 那些地方要保护
+				UIImage *resizableImage = [image resizableImageWithCapInsets:
+					UIEdgeInsetsMake(imageHeight * 0.5, imageWidth * 0.5, imageHeight * 0.5 - 1, imageWidth * 0.5  -1)
+					resizingMode:UIImageResizingModeTile
+				];
+					// resizingMode 模式
+						UIImageResizingModeTile 		// 平铺 
+						UIImageResizingModeStretch		// 拉伸 
+			方式 2 
+				UIImage *resizableImage = [image stretchableImageWithLeftCapWidth:imageWidth * 0.5 topCapHeight:iamgeHeight * 0.5];
+
+
+	UIButton 			按钮
+
+		UIControlStateNormal    		(普通状态  )
+		UIControlStateHighlighted 		(高亮状态  点下时)
+		UIControlStateDisabled			(失效状态  不可用)
+		 
+		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+		
+		button.frame = CGRectMake(100, 100, 170, 60);
+		[button setBackgroundColor:[UIColor redColor]];
+		[button setTitleColor:[UIColor yellowColor] forState:UIControlStateNoraml];
+		[button setTitleShadowColor:[UIColor blackColor] forState:UIControlStateNormal];
+		[button setImage:[UIImage imageNamed:@"1"] forState:UIControlStateNormal]; 
+		[button setBackfroundImage: [UIImage imageNamed:@"1"] forState: UIControlStateNormal];
+
+		// 内边距
+			// 内容
+				self.button.contentEdgeInsets = UIEdgeInsetsMage(20, 20, 20, 20);
+			// 图片
+				self.button.imageEdgeInsets = UIEdgeInsetsMake(20, 20, 20, 20);
+			// 标题
+				self.button.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -10);
+
+		// 按钮内容位置   重写
+		-(CGRect)titleRectForContentRect:(CGRect)contentRect{
+			return CGRectMake(0, 0, 100, 70);
+		}
+
+		-(CGRect)imageRectForContentRect:(CGRect)contentRect{
+			return CGRectMake(100, 0, 70, 70);
+		}
+
+
+		// 绑定事件  只有button 有
+		[button addTarget:self action:@selector(demo:) forControlEvents: UIControlEventTouchUpInside];
+			// Target   目标
+			// action   执行的方法
+			// Events   事件
+
+			-(void)demo:(UIButton *)btn{}
+
+
+	UILabel 			文本标签(显示文字)
+		Lines  显示行数(0 为自动换行)
+
+		UILabel *label = [[UILabel alloc] init];
+		label.frame = CGRectMake(100, 100, 100, 100);
+		label.background = [UIColor redColor];
+		label.text = @"我的天啊";
+		label.textAlignment = NSTextAlignmentCenter;
+		label.font = [UIFont systemFontOfSize:20.f];
+		label.textColor = [UIColor purpleColor];
+		label.shadowColor = [UIColor blackColor];
+
+
+	UITextField 		文本输入框
+		// 退出键盘
+		[textFiled endEditing:YES];
+		[textFiled resignFirstResponder];
+		[self.view endEditing:YES];
+
+		textFlied.addTarget:self 
+		textFlied.delegate = self;
+
+
+	UIImageView 		图片显示(显示图片)   png 图片不需要后缀
+		UIImageView *imageView = [[UIImageView alloc] init];
+		imageView.frame = CGRectMake(100, 100, 200, 200);
+		imageView.image = [UIImage imageNamed:@"1"];
+		// 内容模式
+		imageView.contentMode =   ;
+		// 是否裁剪   
+		imageView.clipsToBounds = YES;
+
+		// UIIamge
+		UIImage *image = [[UIImage imageNamed:@"1"]];
+		// 自适应宽高 1
+		iamgeView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+		imageView.image = image; 
+		// 2
+		UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(100, 10, image.size.width, image.size.height)];
+		imageView.image = image
+		// 3
+		UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"1"]]; 
+
+
+		// 动画
+		
+		// 1 加载所有图片的名称
+		NSMutableArray<UIImage *> *bigImages = [NSMutableArray array];
+		for(int i=0; i<87; i++){
+			// 获取所有图片的名称
+			NSString *imageName = [NSString stringWithFormat:@"dazhao_%d", i+1];
+			// 创建UIImage
+			UIImage *image = [UIImage imageNamed:imageName];
+			// 装入数组
+			[bigImages addObject:image];
+		}
+		// 2 设置动画图片
+		self.imageView.animationImages = bigImages;
+
+		// 3 设置动画次数
+		self.imageView.animationRepeatCount = 1;
+
+		// 4 设置播放时长
+		self.imageView.animationDuration = 2.5;
+
+		// 播放
+		[self.imageView startAnimating];
+
+
+		// 1
+		self.imageView.image = [UIImage imageNamed:@"1"];
+		// 2
+		NSString *path = [[NSBundle mainBundle] pathForResourrce:@"1" ofType:@"png"];
+		self.imageView.image = [UIImage imageWithContentsOfFile:path];
+ 
+
+	UIScrollView 		滚动的控件
+		UIScrollView *scrollView = [[UIscrollVIew alloc] init];
+
+		// 超出范围 不显示    默认YES
+		scrollView.clipsToBounds = YES;
+		// 可滚动的范围
+		scrollView.contentSize = CGSizeMake(300, 200);
+
+		// 控制是否可以滚动
+		scrollView.scrollEnabled = NO;
+		// 是否能够跟用户交互   内部所以子控件  都不会和用户交互
+		scrollView.userInteractionEnabled = YES;
+		// 下拉刷新
+		scrollView.alwaysBounceHorizontal = YES;
+		scrollView.alwaysBounceVertical = YES;
+		// 滚动条
+		scrollView.showHorizontalScrollIndicator = NO;
+		scrollView.showVerticalScrollIndicator = NO;
+		// 内容偏移量
+		scrollView.contentOffset = CGPointMake(200, 100);
+		// 偏移时 带动画
+		[scrollView.setContentOffset:CGPointMake(scrollView.contentOffset.x, 0) animated:YES];
+		// 内边距
+		scrollView.contentInset = UIEdgeInsetsMake(10, 20, 30, 40);
+
+		// 代理  代理协议   UIScrollViewDelegate
+		scrollView.delegate = self;
+
+			// 当scrollView滚动的时候就会自动调用
+			-(void)scrollViewDidScroll:(UIScrollView *)scrollView{}
+
+			// 用户将开始拖拽scrollView时候调用
+			-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{}
+
+			// 要结束的时候
+			-(void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{}
+
+			// 结束时
+			-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{}
+
+			// 减速完毕的时候
+			-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{}
+
+		// 设置缩放图片
+			scrollView.maximumZoomScale = 2.0;
+			scrollView.minimunZoomScale = 0.5;
+
+			-(UIView *)viewForZomingInScrollView{
+				// 要进行缩放的子控件
+				return self.imageView;
+			}
+
+
+		// 开启分页
+			scrollView.pagingEnabled = YES
+
+	UITableView 		表格     继承 UIScrollView
+		// 控制器 遵守 <UITableViewDataSource>协议
+		// 两种样式  UITableViewStylePlain (组没有连在一起)  UITableViewStyleGrouped (组之间有间隔)
+
+
+		self.tableView.dataSource = self;
+
+		// 一共有多少组
+		- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+			return 4;
+		}
+
+		// 每组有多少
+		- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+			if(section == 0){  // 第一组 2行
+				return 2
+			}
+		}
+
+		// 每一行的内容
+		- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+			// indexPath.section == 2   哪一组
+			// indexPath.row == 0		哪一行
+			UITableViewCell *cell = [[UITableViewCell alloc] init];
+
+			// 右边显示的 内容  		accessoryView > accessoryType  (优先级)
+			cell.accessoryView = [[UISwitch alloc] init];
+			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+			// 显示的文字 
+			cell.textLabel.text = @"aaa";
+			return cell;
+		}
+
+
+	UICollectionView	九宫格
+	UIWebView 			网页显示控件
+	UIAlertView 		对话框(中间弹框)
+	UINavigationBar 	导航条
+
+	UIPageControl 		分页控件
+		// 设置有多少页
+		pageControl.numberOfPages = 5;
+		// 分页当前显示的页数
+		pageControl.currentPage = 2;
+		// 隐藏
+		pageControl.hidden = YES;
+		// 单页时  是否隐藏
+		pageControl.hidesForSinglePage = YES;
+		// 设置图片
+		[pageControl setValue:[UIImage imageNamed:@"current"] forKeyPath:@"_currentPageImage"];
+		[pageControl setValue:[UIImage imageNamed:@"other"] forKeyPath:@"_pageImage"];
+
+	UITextView 			能滚动的文字显示控件
+	UIActivityIndicator 圈圈
+	UISwitch 			开关
+	UIActionSheet 		底部弹框
+	UIDatePicker 		日期选择器
+	
+	UIToolbar 			工具条   ()
+		// 毛玻璃
+		UIToolbar *toolBar = [[UIToolbar alloc] init];
+		toolBar.frame = imageView.bounds;
+		[imageView addSubview:toolBar];
+
+	UIProgressView 		进度条
+	UISlider 			滑块
+	UISegmentControl 	选项卡
+		UISegmentedControl *s = [[UISegmentedControl alloc] initWithItems:@[@"123", @"234", @"345"]];
+		s.selectedSegmentIndex = 0; // 选中第几个
+
+	UIPickerView 		选择器
+
+
+
+
+xib 
+	方法1
+		NSArray *views = [[NSBundle mainBundle] loadNibNamed:@"xib文件名" owner:nil options:nil]
+
+	方法2
+		UINib *nib = [UINid nibWithNibName:@"xib文件名" bundle:nil];
+		NSArray *views = [nib instantiateWithOwner:nil options:nil];
+
+	// 构造方法
+		-(instancetype)initWithCoder:(NSCoder *)aDecoder{
+			if(self = [super initWithCoder:aDecoder]){
+
+			}
+			return self; 
+		}
+
+	// 从xib中唤醒   添加 子控件 里的 子控件
+		-(void)awakeFromNib{
+			UIToolbar *toolBar = [[UIToolbar alloc] init];
+			[self.iconView addSubview:toolBar];
+			self.toolBar = toolBar;
+		}	
+
+
+kvc
+	Person *person1 = [[Person alloc] init];
+
+	赋值   // 自动类型转换
+		[person setValue:@"王五" forKey:@"name"];
+		[person setValue:@"19" forKeyPath:@"age"];
+
+		[person setValue:@"啊啊啊" forKeyPath:@"dog.name"]; 
+
+		// 对象赋值字典
+		[self setValesForKeysWithDictionary:dict];
+
+	取值
+		[person valueForKey:@"name"];
+		// 可以取一个数组里面  对象name 的值
+		[person valueForKeyPath:@"name"];
+		[[person valueForKeyPath:@"price"] floatValue];
+		// 模型转字典
+		[person dictionaryWithValuesForKeys:@[@"name", @"money"]];
+
+
+kvo
+	-(void)viewDidLoad{
+		[super viewDidLoad];
+
+		// 给对象绑定一个监听器(观察者)      ObServer 观察者  KeyPath 监听的属性 options 选项(方法中拿到属性值)
+		[person addObserver:self forKeyPath:@"name" options:
+			NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];	
+
+		// 移除监听
+		[person removeObserver:self forKeyPath:@"name"];
+	}
+
+	-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:
+		(NSDictionary<NSString *,id> *)change context:(void *)context{
+			// keyPath          监听的键
+			// object 			监听的对象
+			// change 			改变的值
+		}
+
+
+定时器 NSTimer
+	Timer timer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(nextPage) userInfo:nil repeats:NO];
+		// TimeInterval 	延时
+		// selector   		执行的方法
+		// repeats   		是否重复
+
+	// 停止定时器 
+	[timer invalidate];
+	timer = nil;
+
+	// 作用:修改timer在runLoop中的模式为NSRunLoopCommonModes
+	// 目的:不管主线程在做什么操作, 都会分配一定的时间处理定时器
+	[[NSRunLoop mainRunLoop] addTimer:self.timer forMode: NSRunLoopCommonModes];
+
+
+Plist 文件   // 存放 数组 字典
+
+// 读取
+// 数组写入文件中  字典也一样
+BOOL flag = [arr writeToFile:@"/User/abc.plist" atomically:YES];
+
+// 从文件中读取
+	1
+	NSArray *newArrAy = [NSArray arrayWithContentsOfFile:@"/User/abc.plist"];
+	2
+	NSBundle *bundle = [NSBundle mainBundle];
+	NSString *path = [bundle pathForResource:@"shops" ofType:@"plist"];
+	_shops = [NSArray arrayWithContentsOfFile:path]
+
+
+
+// 动画
+	方式1
+		// 1 开始动画
+		[UIView beginAnimations:nil context:nil];
+		[UIView setAnimationDuration:1.0];
+
+		// 2 动画代码
+		CGRect frame = self.animationView.frame;
+		frame.origin.y -= 50;
+		self.animationView.frame = frame;
+
+		// 3 提交动画
+		[UIView commitAnimations];
+
+	方式2
+		[UIView animateWithDuration:2.0 animations:^{
+			// 回调执行动画
+			CGRect frame = self.animationView.frame;
+			frame.origin.y -= 50;
+			self.animationView.frame = frame;
+		} completion:^(BOOLfinished) {
+			// 动画完成执行什么
+			self.animationView.backgroundColor = [UIColor redColor];
+		}]
+
+		[UIView animateWithDuration:1.0 delay:2.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+			CGRect frame = self.animationView.frame;
+			// 平移
+			frame.origin.y -= 50;
+			// 缩放
+			frame.size = CGSizeMake(200, 150);
+			
+			self.animationView.frame = frame;
+
+			// 透明度
+			self.animationView.alpha -= 0.9;
+
+		} completion:^(BOOL finished) {
+			self.animationView.backgroundColor = [UIColor redColor];
+		}]
+
+
+
+
+// 让scrollView 里面的每个元素 都执行  removeFromSuperview
+[scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+
+
+
+
+
+// 控制台
+po NSHomeDirectory()  // 输出文件夹
+
+
+
+// 播放器  
+@import <AVFoundation/AVFoundaion.h>
+
+	1
+	NSString *path = [[NSBundle mainBundle] pathForResource:@"1.mp3" ofType:nil];
+	NSURL *url = [NSURL fileURLWithPath:]
+	2
+	NSURL *url = [[NSBundle mainBundle] URLForResource:@"1.mp3" withExtension:nil]
+
+	AVPlayerItem *playerItem = [[AVPlayerItem alloc] initWithURL:url];
+	AVPlayer *player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
+
+	// 播放
+	[playre play]
+
+	// 暂停
+	[player pause]
+
+	// 切换
+	[player replaceCurrentItemWithPlayer]
+
+	// 速率
+	player.rate = 2.0 
+
+
+
+// 适配
+	autoresizingMask  (控制 子控制 相对于 相对于父控件)   6 根线
+		// 去除   Usr Auto Layout     Use Size Classes
+
+		custView.autoresizingMask = ;  // 多个参数 | 分隔 
+			UIViewAutoresizingFlexibleLeftMargin 	// 距离父控件的左边是可以伸缩的
+			UIViewAutoresizingFlexibleBottomMargin 	// 距离父控件的底部是可以伸缩的
+			UIViewAutoresizingFlexibleRightMargin 	// 距离父控件的右边是可以伸缩的
+			UIViewAutoresizingFlexibleTopMargin 	// 距离父控件的顶部是可以伸缩的
+			UIViewAutoresizingFlexibleHeight	 	// 高度会跟随父控件的高度进行伸缩
+			UIViewAutoresizingFlexibleWidth		 	// 宽度会跟随父控件的宽度进行伸缩
+
+	Autolayout    约束 (确定元素的位置和尺寸)   参照 (相对于谁)
+		obj1.property1 = (obj2.peoperty2 * multiplier) + constant value //自动布局公式
+		// 去掉 Constrain to margins
+
+
+		UIView *redView = [[UIView alloc] init];
+		redView.backgroundColor = [UIColor redColor];
+		// 禁止自动转换 autoresizingMask
+		redView.translatesAutoresizingMaskIntoConstraints = NO;
+		[self.view.addSubview:redView]
+
+		//添加约束
+			// 宽度约束
+			NSLayourConstraint *wlcs = [NSLayoutConstraint constraintWithItem:redView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:100];
+			[redView addConstraint:wlcs];
+
+			// 高度约束
+			NSLayoutConstraint *hlcs = [NSLayoutConstraint constraintWithItem:redView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:100];
+			[redView addConstraint:hlcs];
+
+			// 右边约束
+			NSLayoutConstraint *rlcs = [NSLayoutConstraint constraintWithItem:redView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:-20];
+			[self.view addConstraint:rlcs];
+
+			// 底部约束
+			NSLayoutConstraint *blcs = [NSLayoutConstraint constraintWithItem:redView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-20];
+			[self.view addConstraint:blcs];
+
+		// 修改约束
+			self.reViewW.constant = 50;
+			// 约束修改动画
+			[UIView animateWithDuration:2.0 animations:^{     
+				[self.view layoutIfNeeded];  // 强制刷新
+			}]
+
+		// UILabel 实现包裹内容
+			设置宽度约束 <= 度定制
+			设置位置约束
+			不需要设置高度约束
+
+	VFL语言 	(Visual FOrmat Language)  可视化格式语言
+		// views        元素 对应关系
+		NSDictionary *views = @{
+			@"redView": redView
+			@"blueView": blueView
+		};
+		NSDictionary *views = NSDictionaryOfVariableVindings(redView, blueView);  // 效果同上
+
+		// metrics      属性 对应关系
+		NSDictionary *metrics = @{@"space": @30};
+		// kNilOptions  对齐方式
+
+		// 水平方向
+		NSString *hvfl = @"H:|-space-[abc]-space-|";
+		NSArray *hlcs = [NSLayourConstraint constraintsWithVisualFormat:hvfl
+			options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom metrics:metrics views:views];
+			// 顶部对齐 底部对齐
+		[self.view addConstraints:hlcs];
+
+		// 垂直方向
+		NSString *vvfl = @"V:[abc(40)-space-|]";
+		NSArray *vlcs = [NSLayoutConstraint constraintsWithVisualFormat:vvfl
+			options:kNilOptions metrics:metrics views:views];
+		[self.view addConstraints:vlcs]
+
+		H  水平方向
+		V  垂直方向
+		[] 元素
+		() 元素的 H 宽 V 高
+			优先级
+				@		
+			约束条件
+				== 		
+				>=
+	    -  间隔
+	    |  父级
+
+
+		H:[cancelButton(72)]-12-[acceptButton(50)]
+		// 他们间距 12
+
+		H:[wideView(>=60@700)]
+		// wideView宽度大于等于60point
+		// 约束条件优先级为700(优先级最大值为1000, 优先级越高的约束先被满足)
+
+		V:[redBox][yellowBox(==redBox)]    
+		// yellowBox和redBox 高度相等
+
+		H:|-10-[Find]-[FindNext]-[findField(>=20)]-|
+
+
+		note: vfl也要去掉自动 转换autoresizingMask
+
+	// Masonry  layout 第三方框架  优雅的编写Autolayout  
+		#define MAS_SHORTHAND
+		// 参数 和 初始化方法  可以不用带 mas_   makeConstraints  self.view.height
+
+		#define MAS_SHORTHAND_GLOBALS
+		// 方法 可以不用带 mas_  equalTO
+
+		@import "Masonry.h"
+
+		// 添加约束
+			[redView mas_makeConstraints:^(MASConstraintMaker *make){
+				// make     						相等于 this
+				// width height 					宽高
+				// centerX cnetterY 				中心点  x y
+				// top bottom left right 			上下左右
+				// equalTo(self.view)				相对于 谁   // 默认父级
+				// mas_equalTo(100) 				可以写入基本类型   会自动给转换 				
+				// offset(20) 						偏移量
+				// and  with 						添加的条件
+				// multipliedBy  倍数    默认 1.0
+				make.width.equalTo(@100);
+				make.height.equalTo(@100);
+				make.size.mas_equalTo(CGSizeMake(100, 100));   // 设置 宽 高
+				make.centerX.equalTo(self.view.mas_centerX);
+				make.centerY.equalTo(self.view.mas_centerY);
+				// make.top.equalTo(self.view.mas_top).multipliedBy(1.0).offset(20);
+			}];
+
+		// 更新约束
+			[redView updateConstraints:^(MASConstrainMaker *make){
+				make.height.equalTo(80);
+			}]
+
+		// 删除之前的约束  添加新的约束
+			[redView remakeConstraints:^(MASConstraintMaker *make){}];
+
+

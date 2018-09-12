@@ -645,7 +645,7 @@ curl post json数据发送
 
 
 
-js
+js_function
 
 // 合并多个空白为一个空白
 String.prototype.ResetBlank = function() {    //对字符串扩展
@@ -912,31 +912,51 @@ var urlEncode = function (param, key, encode) {
 };
 
 
-
-    //判断照片大小
-    function checkFileTicket(obj){
-        photoExt=obj.value.substr(obj.value.lastIndexOf(".")).toLowerCase();//获得文件后缀名
-        if(photoExt!='.xls'){
-            window.parent.window.parent.tipObj.showError("请上传xls格式的文件",2);
-            obj.value = '';
-            return false;
-        }
-        var fileSize = 0;
-        var isIE = /msie/i.test(navigator.userAgent) && !window.opera;
-        if (isIE && !obj.files) {
-            var filePath = obj.value;
-            var fileSystem = new ActiveXObject("Scripting.FileSystemObject");
-            var file = fileSystem.GetFile (filePath);
-            fileSize = file.Size;
-        }else {
-            fileSize = obj.files[0].size;
-        }
-        fileSize=Math.round(fileSize/1024*100)/100; //单位为KB
-        if(fileSize>500){
-            window.parent.window.parent.tipObj.showError("文件最大尺寸为500KB，请重新上传!",2);
-            return false;
-        }
+//判断照片大小
+function checkFileTicket(obj){
+    photoExt=obj.value.substr(obj.value.lastIndexOf(".")).toLowerCase();//获得文件后缀名
+    if(photoExt!='.xls'){
+        window.parent.window.parent.tipObj.showError("请上传xls格式的文件",2);
+        obj.value = '';
+        return false;
     }
+    var fileSize = 0;
+    var isIE = /msie/i.test(navigator.userAgent) && !window.opera;
+    if (isIE && !obj.files) {
+        var filePath = obj.value;
+        var fileSystem = new ActiveXObject("Scripting.FileSystemObject");
+        var file = fileSystem.GetFile (filePath);
+        fileSize = file.Size;
+    }else {
+        fileSize = obj.files[0].size;
+    }
+    fileSize=Math.round(fileSize/1024*100)/100; //单位为KB
+    if(fileSize>500){
+        window.parent.window.parent.tipObj.showError("文件最大尺寸为500KB，请重新上传!",2);
+        return false;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 php文件大小
@@ -1099,6 +1119,7 @@ function size($byte)
     $byte .= $unit;
     return $byte;
 }
+
 //辅助函数 round_up()，该函数用来取舍小数点位数的，四舍五入。
 function round_dp($num , $dp)
 {

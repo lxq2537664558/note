@@ -1,8 +1,70 @@
 
+
+
+
+
+
+
+//  查看进程总数
+pstree | grep php-fpm
+
+//  消耗内存最多的50个进程
+ps auxw | head -1;ps auxw|sort -rn -k4|head -50 
+
+//  查看打开的文件   结束掉没用的句柄
+lsof  | grep php.php
+
+
+// 查看内存
+	kb
+		grep MemTotal /proc/meminfo
+		grep MemTotal /proc/meminfo | cut -f2 -d:
+	mb
+		free -m | grep "Mem" | awk '{print $2}'
+		free -m
+
+// 统计磁盘使用量
+	df
+	df -h
+	df -lh			查看系统分区
+	df -ht 			是以磁盘分区为单位来查看文件系统
+
+// 统计文件大小
+	du -h 文件		目标占据磁盘空间的大小 以K,M,G为单位
+	du -hs 目录
+	du -bs dir_name  查看单个目录
+
+	fdisk -l
+	du -sh 			可以看到全部占用的空间
+
+
+
+// 更改模式  php-fpm   (php-fpm进程数 改善php-fpm 进程数过多)   内存不够用时
+pm = dynamic    //  Static 静态
+
+pm.max_children = 100   	//  静态方式下开启的php-fpm进程数量
+pm.start_servers = 20		//  动态方式下的起始php-fpm进程数量
+pm.min_spare_servers = 5  	//  动态方式下的最小php-fpm进程数
+pm.max_spare_servers = 35 	//  动态方式下的最大php-fpm进程数量。
+
+动态  允许php-fpm释放多余进程，从而节约内存资源。
+静态  不允许php-fpm释放多于进程，避免了频繁开启或停止php-fpm进程，从而降低了服务器在某些情况下的响应时间
+
+
+
+
+
+
+// shadowsocks
+ssserver -p 65533 -k hugo666 -m aes-256-cfb -d start
+
+
+
+在此处打开 powershell 窗口
+
 只查看目录
 ls -ld */
 
-nmap
 
 apropos 'directory'  列出帮助文档里面包含了 directory 字符的所有命令
 
@@ -631,6 +693,7 @@ DNS设置
 
 
 
+
 修改主机名
 	1 hostname 主机名称
 		这种方式，只能修改临时的主机名，当重启机器后，主机名称又变回来了。
@@ -641,13 +704,7 @@ DNS设置
 	查看cpu
 		more /proc/cpuinfo | grep "model name"
 		grep "model name" /proc/cpuinfo
-	查看内存
-		kb
-			grep MemTotal /proc/meminfo
-			grep MemTotal /proc/meminfo | cut -f2 -d:
-		mb
-			free -m | grep "Mem" | awk '{print $2}'
-			free -m
+
 	cpu位数
 		getconf LONG_BIT
 		echo $HOSTTYPE
@@ -660,18 +717,7 @@ DNS设置
 		lsb_release -a
 	当前时间
 		data
-	统计磁盘使用量
-		df
-		df -h
-		df -lh			查看系统分区
-		df -ht 			是以磁盘分区为单位来查看文件系统
-	统计文件大小
-		du -h 文件		目标占据磁盘空间的大小 以K,M,G为单位
-		du -hs 目录
-		du -bs dir_name  查看单个目录
 
-		fdisk -l
-		du -sh 			可以看到全部占用的空间
 	查看系统安装时装的软件包
 		cat -n /root/install.log
 		more /root/install.log | wc -l

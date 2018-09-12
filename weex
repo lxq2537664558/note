@@ -155,10 +155,6 @@ ios
 	安装   weexSDK
 		 pod install
 	
-
-
-
-
 	-licucore
 
 
@@ -192,6 +188,26 @@ backListener() {
 this.backListener()
 
 
+//  event 事件加上方法
+ 
+// 跳转页面
+app3\platforms\android\app\src\main\java\com\weex\app\extend\WXEventModule.java
+
+  @JSMethod()
+  public void toUrl(String url) {
+    if (TextUtils.isEmpty(url)) {
+      return;
+    }
+    Uri uri = Uri.parse(url);
+    String scheme = uri.getScheme();
+
+    Intent intent = new Intent(Intent.ACTION_VIEW);
+    intent.setData(uri);
+    mWXSDKInstance.getContext().startActivity(intent);
+  }
+
+
+
 
 加载 sass
 
@@ -222,10 +238,3 @@ module.exports = (options) => {
     }
 }
 
-
-安装 bui-ui
-
-npm install -g bui-weex-toolkit
-
-// 更新
-npm update -g bui-weex-toolkit

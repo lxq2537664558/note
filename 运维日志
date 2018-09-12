@@ -1,0 +1,440 @@
+// +----------------------------------------------------------------------
+// | php
+// +----------------------------------------------------------------------
+
+// 查看 php-fpm 进程
+ps -ef | grep php-fpm
+
+// 重启php-fpm
+kill -USR2 1480
+
+
+
+// php-fpm 慢日志
+
+
+
+// php-fpm-slow.log 慢日志  频繁出现session_start()
+存储session 方式改为 缓存
+
+memcache
+	session.save_handler = memcache
+	session.save_path = "tcp://127.0.0.1:11211"
+
+memcached
+	session.save_handler = memcached
+	session.save_path = "127.0.0.1:11211"
+
+
+
+// php 错误日志
+	error_reporting  =  E_ALL             	;将会向PHP报告发生的每个错误   
+	display_errors = Off                 	;不显示满足上条 指令所定义规则的所有错误报告   
+	log_errors = On                    		;开启错误日志   
+	log_errors_max_len = 1024               ;设置每个日志项的最大长度   
+	error_log = /var/php_errors.log         ;指定产生的 错误报告写入的日志文件位置  
+
+
+// php-fpm 进程   内存不够用时
+pm = dynamic    //  Static 静态
+
+pm.max_children = 100   	//  静态方式下开启的php-fpm进程数量
+pm.start_servers = 20		//  动态方式下的起始php-fpm进程数量
+pm.min_spare_servers = 5  	//  动态方式下的最小php-fpm进程数
+pm.max_spare_servers = 35 	//  动态方式下的最大php-fpm进程数量。
+
+动态  允许php-fpm释放多余进程，从而节约内存资源。
+静态  不允许php-fpm释放多于进程，避免了频繁开启或停止php-fpm进程，从而降低了服务器在某些情况下的响应时间
+
+
+
+// php 加速器
+	opcache 		// 官方推出的产品还是好用的
+	APC 			// Alternative PHP Cache  是一个开放自由的PHP opcode缓存
+	eAccelerator 	// 前身其实是truck-mmcache
+	xcache  		// 国产 
+
+
+
+
+// +----------------------------------------------------------------------
+// | mysql
+// +----------------------------------------------------------------------
+
+// 锁
+	// 关闭 Performance Schema 
+	[mysqld] 字段添加一句 performance_schema = off
+
+	// 查询是否锁表
+	show OPEN TABLES where In_use > 0;
+
+
+	// 查询进程              Navicat 窗口不关闭  是占用mysql进程的
+	show processlist
+
+
+	// 查看正在锁的事务
+	SELECT * FROM INFORMATION_SCHEMA.INNODB_TRX
+
+	// 查看等待锁的事务
+	SELECT * FROM INFORMATION_SCHEMA.INNODB_LOCK_WAITS;
+
+
+	// MySQL数据库的死锁信息
+	show engine innodb status;
+		找到LATEST DETECTED DEADLOCK这一行
+
+
+	// 查看锁表情况
+	show status like 'Table%'; 
+
+	Table_locks_immediate 	// 指的是能够立即获得表级锁的次数 
+	Table_locks_waited 		// 指的是不能立即获取表级锁而需要等待的次数，如果数量大，说明锁等待多，有锁争用情况
+
+
+// mysql 加上慢日志
+
+// 查看慢 状态
+show variables like "%slow%";
+show variables like 'slow_query%';
+show variables like 'long_query_time';
+  
+// 慢查询数量
+show global status like '%slow%';
+
+// 配置
+	// mysql 命令   重新登录
+	set global slow_query_log='ON'; 
+	set global slow_query_log_file='/www/server/data/localhost-slow.log';
+	set global long_query_time=1;
+
+	// 配置文件  重启mysql
+	[mysqld]  
+	long_query_time=2  
+
+	#5.5以前版本配置如下选项  
+	log-slow-queries="/www/server/data/localhost-slow.log"  
+	#5.5及以上版本配置如下选项  
+	slow-query-log=On  
+	slow_query_log_file="/www/server/data/localhost-slow.log"  
+
+	// 记录下没有使用索引的query
+	log-query-not-using-indexes
+
+
+方式一.通过工具分析
+MySQL 自带了 mysqldumpslow 工具用来分析 slow query 日志，除此之外，还有一些好用的开源工具。比如MyProfi、mysql-log-filter，当然还有 mysqlsla。
+
+以下是 mysqldumpslow 常用参数说明，详细内容可用 mysqldumpslow -help 查询。
+-s，表示按照何种方式排序，c、t、l、r分别是按照记录次数、时间、查询时间、返回的记录数来排序（从大到小），ac、at、al、ar表示相应的倒序。
+-t，是top n的意思，即为返回前面多少条数据。
+-g，后边可以写一个正则匹配模式，大小写不敏感。
+
+
+列出记录次数最多的10个sql语句
+mysqldumpslow -s c -t 10 host-slow.log
+
+列出返回记录集最多的10个sql语句
+mysqldumpslow -s r -t 10 host-slow.log
+
+按照时间返回前10条里面含有左连接的sql语句
+mysqldumpslow -s t -t 10 -g "left join" host-slow.log
+
+
+
+
+// 查找 mysql 配置文件
+/www/server/mysql/bin/mysqld --verbose --help | grep -A 1 'Default options'
+
+// 查看mysql 信息
+mysqladmin variables -p
+mysql -V
+
+show global variables;
+
+
+
+// 查看支持的字符集
+SHOW CHARACTER SET;
+
+mysql> use information_schema;
+mysql> select * from CHARACTER_SETS;
+
+//  查看是否支持 表情 字体
+SHOW VARIABLES WHERE Variable_name LIKE 'character\_set\_%' OR   Variable_name LIKE 'collation%';
+
+
+// 使用表情字符集
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
+
+
+
+
+// +----------------------------------------------------------------------
+// | 宝塔
+// +----------------------------------------------------------------------
+
+宝塔查看登录日志
+	cat /var/log/secure
+
+
+// +----------------------------------------------------------------------
+// | redis
+// +----------------------------------------------------------------------
+
+redis cli命令
+// 链接
+$redis-cli -h 127.0.0.1 -p 6379
+
+
+// +----------------------------------------------------------------------
+// | 存储空间
+// +----------------------------------------------------------------------
+
+
+// 删除1天前的文件
+find /tmp -mtime +1 -name "*.log*" -exec rm -rf {} \;
+
+// h 显示单位
+ls -lh 
+
+// 查看文件时  以 m 为单位   [k,m,g]
+ls -l --block-size=M 
+
+
+// 查看当前目录   深度为1
+du -h --max-depth=1
+
+
+
+// 统计磁盘使用量
+	df
+	df -h
+	df -lh			查看系统分区
+	df -ht 			是以磁盘分区为单位来查看文件系统
+
+// 统计文件大小
+	du -h 文件		目标占据磁盘空间的大小 以K,M,G为单位
+	du -hs 目录
+	du -bs dir_name  查看单个目录
+
+	fdisk -l
+	du -sh 			可以看到全部占用的空间
+
+
+// +----------------------------------------------------------------------
+// | 其他  命令
+// +----------------------------------------------------------------------
+
+
+//  查看进程总数
+pstree | grep php-fpm
+
+//  消耗内存最多的50个进程
+ps auxw | head -1;ps auxw|sort -rn -k4|head -50 
+
+//  查看打开的文件   结束掉没用的句柄
+lsof  | grep php.php
+
+// xshell 窗口关闭  脚本停止
+nohup php  >/dev/null 2>&1 &
+
+查看软件安装路径
+	which name		查看运行文件
+	whereis name 	查看安装文件
+
+// 查看内存
+	free
+	 	总量（total），使用量（used）和有多少空闲的交换区（free）
+		free -m | grep "Mem" | awk '{print $2}'
+		free -m
+
+	grep (kb)
+		grep MemTotal /proc/meminfo
+		grep MemTotal /proc/meminfo | cut -f2 -d:
+
+
+
+
+// top 
+	第一行  系统信息
+		09:14:56 ： 系统当前时间
+		264 days, 20:56 ： 系统开机到现在经过了多少时间
+		1 users ： 当前2用户在线
+		load average: 0.02, 0.04, 0.00： 系统1分钟、5分钟、15分钟的CPU负载信息
+
+	第二行  进程
+		Tasks：任务;
+		87 total：很好理解，就是当前有87个任务，也就是87个进程。
+		1 running：1个进程正在运行
+		86 sleeping：86个进程睡眠
+		0 stopped：停止的进程数
+		0 zombie：僵死的进程数
+
+	第三行  cpu
+		Cpu(s)：表示这一行显示CPU总体信息
+		0.0%us：用户态进程占用CPU时间百分比，不包含renice值为负的任务占用的CPU的时间。
+		0.7%sy：内核占用CPU时间百分比
+		0.0%ni：改变过优先级的进程占用CPU的百分比
+		99.3%id：空闲CPU时间百分比
+		0.0%wa：等待I/O的CPU时间百分比
+		0.0%hi：CPU硬中断时间百分比
+		0.0%si：CPU软中断时间百分比
+		注：这里显示数据是所有cpu的平均值，如果想看每一个cpu的处理情况，按1即可；折叠，再次按1；
+
+	第四行  内存
+		Men：内存的意思
+		8175320kk total：物理内存总量
+		8058868k used：使用的物理内存量
+		116452k free：空闲的物理内存量
+		283084k buffers：用作内核缓存的物理内存量
+
+	第五行  控件
+		Swap：交换空间
+		6881272k total：交换区总量
+		4010444k used：使用的交换区量
+		2870828k free：空闲的交换区量
+		4336992k cached：缓冲交换区总量	
+
+	进程信息
+		PID：进程的ID
+		USER：进程所有者
+		PR：进程的优先级别，越小越优先被执行
+		NInice：值
+		VIRT：进程占用的虚拟内存
+		RES：进程占用的物理内存
+		SHR：进程使用的共享内存
+		S：进程的状态。S表示休眠，R表示正在运行，Z表示僵死状态，N表示该进程优先值为负数
+		%CPU：进程占用CPU的使用率
+		%MEM：进程使用的物理内存和总内存的百分比
+		TIME+：该进程启动后占用的总的CPU时间，即占用CPU使用时间的累加值。
+		COMMAND：进程启动命令名称
+
+//  nc	(netcat) 网络查询工具   适用 tcp udp    可以连接 tcp udp 传输数据
+	// 端口扫描
+		-z  使用 0 IO 连接成功立即关闭连接, 不进行数据交换
+		-v  使用冗余选项 (详细输出)
+		-n 	不使用 DNS 反向查询 IP地址的域名
+
+		note:   nc -v 127.0.0.1 21
+	// char Server
+		Server  (A)
+			nc -l 1567
+		Client  (B)
+			nc 127.0.0.1 1567
+
+		note:  不管在 B 上出入什么都会出现在机器 A 上
+	// 文件传输
+		Server 	(A)
+			1. nc -l 1567 < file.text
+			2. nc -l 1567 > file.text
+		Client	(B)
+			1. nc -n 127.0.0.1 1567 > test.text
+			2. nc 127.0.0.1 1567 < test.text
+		
+		1. note: B 连接上 服务器(A) 会下载 file.text 内容保存到 test.text
+		2. note: B 发送 test.text 内容到 服务器(A) file.text 保存
+	// 目录传输
+		Server (A)
+			tar -cvf dir_name | nc -l 1567
+		Client (B)
+			nc -n 172.31.100.7 1567 | tar -xvf -
+
+		note:  服务器 A 发送了一个目录的压缩包  B 接收了 解压
+	// 端口转发
+		ncat -u -l  80 -c  'ncat -u -l 8080'
+
+		note:  所有连接到 80 单口的连接都会转发到 8080 端口
+	// 创建后门
+		Server
+			ncat -l 1000 -e /bin/bash
+		Client
+			ncat 127.0.0.1 10000
+
+// nmap 端口扫描   [yum insatll nmap]
+	nmap [扫描类型] [通用选项] [扫描目标]
+		nmap -sP 192.168.0.0/24   判断哪些主机存活
+		nmap -sT 192.168.0.3   开放了哪些端口 			#是最基本的TCP扫描方式 很容易被检测到，会在目标主机的日志中记录大批的连接请求以及错误信息
+		nmap -sS 192.168.0.127 开放了哪些端口（隐蔽扫描）   #TCP同步扫描(TCP SYN), 因为不必全部打开一个TCP连接，所以这项技术通常称为半开扫描(half-open) 这项技术最大的好处是，很少有系统能够把这记入系统日志。
+		nmap -sU 192.168.0.127 开放了哪些端口（UDP）
+		nmap -sS -O  192.168.0.127 操作系统识别
+		nmap -sT -p 80 -oG – 192.168.1.* | grep open    列出开放了指定端口的主机列表
+		nmap -sV -p 80 thief.one  列出服务器类型(列出操作系统，开发端口，服务器类型,网站脚本类型等)
+		
+		-sT 	
+		-sS 	
+		-v  	#显示扫描过程中的详细信息
+		-p  	#待扫描的端口号范围  nmap -p0-65535 127.0.0.1
+
+		端口状态
+			open(开放的)
+			closed(关闭的)
+			fitered(被过滤的)
+			unfiltered(未被过滤的)
+			open|filtered(开放或者被过滤的)
+			closed|fitered(关闭或者被过滤的)
+
+// ubuntu 连接 samba 服务器
+	
+	sudo apt-get install cifs-utils
+	mount.cifs //10.92.49.4/www /www/wwwroot -o username=hugo, passwd=1
+
+
+
+	// 安装客户端
+	sudo apt-get install smbclient
+
+	// 查看目录
+	smbclient -L 10.0.0.11
+
+	// 连接共享目录
+	smbclient //10.0.0.11/dirPath
+		? | help [command]         提供关于帮助或某个命令的帮助
+	    ! [shell command]          执行所用的SHELL命令，或让用户进入 SHELL提示符
+	    cd [目录]        切换到服务器端的指定目录，如未指定，则 smbclient 返回当前本地目录
+	    lcd [目录]        切换到客户端指定的目录；
+	    dir 或ls        列出当前目录下的文件；
+	    exit 或quit        退出smbclient     
+	    get file1  file2        从服务器上下载file1，并以文件名file2存在本地机上；如果不想改名，可以把file2省略
+	    mget file1 file2 file3  filen        从服务器上下载多个文件；
+	    md或mkdir 目录        在服务器上创建目录
+	    rd或rmdir   目录        删除服务器上的目录
+	    put file1 [file2]        向服务器上传一个文件file1,传到服务器上改名为file2；
+	    mput file1 file2 filen  向服务器上传多个文件
+
+	// 将共享目录挂载到本地
+	mount //10.92.39.4/www /www/wwwroot -o username=hugo
+
+	// 开机自动挂载
+	vi /etc/fstab
+	//10.92.39.4/www /www/wwwroot cifs defaults,rw,uid=1000,gid=1000,username=hugo,password=1 0 0
+
+
+
+// vpn
+	// 一键安装
+
+	wget --no-check-certificate https://raw.githubusercontent.com/teddysun/across/master/l2tp.sh
+	chmod +x l2tp.sh
+	./l2tp.sh
+
+	本地 ip 段
+	psk
+	账号
+	密码
+
+
+	l2tp -a 新增用户
+	l2tp -d 删除用户
+	l2tp -m 修改现有的用户的密码
+	l2tp -l 列出所有用户名和密码
+	l2tp -h 列出帮助信息
+
+	ipsec status （查看 IPSec 运行状态）
+	ipsec verify （查看 IPSec 检查结果）
+	/etc/init.d/ipsec start|stop|restart|status （CentOS6 下使用）
+	/etc/init.d/xl2tpd start|stop|restart （CentOS6 下使用）
+	systemctl start|stop|restart|status ipsec （CentOS7 下使用）
+	systemctl start|stop|restart xl2tpd （CentOS7 下使用）
+	service ipsec start|stop|restart|status （Debian/Ubuntu 下使用）
+	service xl2tpd start|stop|restart （Debian/Ubuntu 下使用）

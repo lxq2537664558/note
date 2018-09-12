@@ -297,7 +297,7 @@ git stash list
 git stash
 git stash pop
 
-git stash save "work in progress for foo feature"
+git stash save "work in progress for foo feature D"
 git stash apply stash@{1}
 
 git stash clear   		//清空所有的暂存

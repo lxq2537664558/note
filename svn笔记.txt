@@ -1,6 +1,135 @@
 svn全称SubVersion子级版本(自己源代码版本控制管理软件)
 它是一个自由/开源的版本控制系统,一组文件存放在中心本库,记录每一次文件和目录的修改,Subversion允许把数据恢复到早期版本,或是检查数据修改的历史,subversion可以通过网络访问它的版本库,从而使用户在不同的电脑上进行操作.
 
+
+linux
+	// 查看是否有安装
+	rpm -qa subversion
+
+	// 安装
+	yum -y install subversion
+
+	// 创建SVN文件夹
+	mkdir -p /opt/svn/repos/svn1  
+
+	// 创建SVN版本库
+	svnadmin create /opt/svn/repos/svn1
+
+	// 修改SVN配置文件
+	vim /opt/svn/repos/svn1/conf/svnserve.conf
+		[general]
+			anon-access = none
+			auth-access = write
+			// 用户 权限 配置文件
+			password-db = passwd
+			authz-db = authz
+
+	// 创建svn用户和权限分配    
+		// passwd  此文件配置用户账号和密码
+		vim /opt/svn/repos/svn1/conf/passwd
+			[users]
+				username = userpassword
+
+		//authz  此文件配置用户权限
+		vim /opt/svn/repos/svn1/conf/authz
+			// 设置分组 
+			[groups]
+				// 管理员
+				admin = hugo
+				// 用户
+				user  = hugo
+			// 根目录的权限设置
+			[/]
+				// 读写
+				@admin = rw
+				// 只读
+				@user  = r
+			[/picture]
+				// admin 组
+				@admin = rw
+				// hugo这个用户
+				hugo   = rw	
+
+	// 启动SVN进程
+	svnserve -d -r /opt/svn/repos  // 注意目录，不包含svn1
+	svnserve -d -r /opt/svn/repos --listen-port 81   // 开启端口为81
+
+	// 查看进程
+	netstat –apn | grep svnserve
+	// 查看服务是否启动
+	ps aux | grep svnserve
+
+	// Linux SVN服务器自动提交数据至Web服务器同步            
+		// 导出一份SVN文件到网站目录
+		svn co svn://localhost/svn1 /www/web/weixin
+			svn://localhost/svn1为服务器SVN所在路径
+			/www/web/weixin为网站目录路径
+
+		// note
+			// 每次使用svn co提醒你是否保存密码，这样每次都会出现交互提示信息，我们需要去掉。
+			// 修改/root/.subversion/server中的相关内容为：
+				store-passwords = no
+				store-plaintext-passwords = no
+
+			// 如遇到UUID不一致错误信息
+			// svn: Repository UUID '4ecc44b9-f3ad-4d43-b838' doesn't match expected UUID '7699d06a-2fa1-49ae-958b'
+				1、首先查看项目的所有者的UUID
+				svnlook uuid /www/svn1
+				xxxxxxx
+
+				2、更新项目的UUID
+				svnadmin setuuid /www/svn1 xxxxxxx
+
+				3、查看一下更新后的UUID
+				svnlook uuid /www/svn1
+
+		// 修改SVN中post-commit.tmpl文件
+		cd /www/svn1/hooks
+		mv post-commit.tmpl  post-commit
+
+		// 更改post-commit权限：
+		chmod +x post-commit
+
+		// 编辑post-commit文件：
+		vi post-commit
+			#!/bin/sh
+			REPOS="$1"
+			REV="$2"
+
+			export LANG=zh_CN.UTF-8 #防止乱码
+			svn update /www/web/weixin  #更新svn
+			echo `date`,`whoami`,$REPOS,$REV >> //www/svn1/hooks/svn_hook.log ＃记录时间日志信息
+			chown -R www:www /www/web/weixin #更改网站目录用户组及用户
+
+
+			export LANG=en_US.UTF-8
+			REPOS="$1"
+			REV="$2"
+			TXN_NAME="$3"
+			LOG_PATH=/svn/svn_hook.log
+			SVN=/usr/local/svn/bin/svn
+			WEB=/www/wwwroot/activity
+			chown -R www:www /www/wwwroot/activity
+			$SVN update $WEB --username hugo --password hugo666
+
+
+			export LANG=en_US.UTF-8
+			REPOS="$1"
+			REV="$2"
+			TXN_NAME="$3"
+			LOG_PATH=/svn/svn_hook.log
+			SVN=/usr/local/svn/bin/svn
+			WEB=/www/wwwroot/activity
+			chown -R www:www /www/wwwroot/activity
+			$SVN update $WEB --username hugo --password hugo666
+
+		// 完成之后，结束svn进程
+		killall svnserve
+
+		// 重启SVN服务
+		svnserve -d -r /www
+
+
 创建仓库
 cmd >svnadmin create D:/Subversion/app/book
 /usr/local/svn/bin
@@ -31,36 +160,6 @@ cmd >svnserve -d -r D:/Subversion/app/shop
 版本回退
 右键 -> tortoiseSVN -> 跟新至版本 -> 显示日志 -> 选择版本 -> 确定
 
-权限控制
-svnserve.conf	svn的主配置文件
-passwd			用户名和密码配置文件
-authz			权限配置文件
-
-默认情况下,系统主配置文件,是没有开启passwd以及authz授权功能的,
-svnserve.conf 开启passwd authz
-	password-db = passwd
-	zuthz-db = authz
-添加用户	passwd
-	[users]		
-	用户名 = 密码
-给用户授权 authz
-	[groups]
-	组名 = 用户名1,用户名2,用户名3
-	名称_groups = 用户名
-	[操作文件夹名称:/]
-	
-	[/]			仓库的主机名地址 svn://localhost 
-				运行的仓库服务   svnserve -d -r D:/Subversion/app/shop
-	
-	[shop:/]	仓库的主机名地址 svn://localhost/shop
-				运行的仓库服务   svnserve -d -r D:/Subversion/app/
-	用户名 = rw或r
-	* = 
-	@组名 = rw|r
-
-	[shop:/controller]	给文件夹设置权限
-	
-anon-access = none
 
 添加到系统服务
 	sc create SVNService(服务名字) binpath= "路径\svnserve.exe -r 监管目录 --service" start= auto

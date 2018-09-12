@@ -1,0 +1,145 @@
+
+telegram 机器人   BotFather
+https://telegram.me/botfather
+
+/newbot  			// 创建机器人 
+/token 				// 生成 token
+/mybots 			// 机器人列表
+
+// 编辑机器人
+/setname 			// 更改机器人名字
+/setdescription  	// 描述
+/setabouttext 		// 机器人信息
+/setuserpic 		// 个人资料图片
+/setcommands 		// 更改机器人的命令列表  '/' 开头  不能超过32个字符 不区分大小写
+/deletebot 			// 删除机器人
+
+// 设置机器人
+/setinline 			// 为您的机器人切换内联模式  ???
+/setinlinegeo 		// 请求位置数据以提供基于位置的内联结果
+/setjoingroups		// 是否可加入组
+/setprivacy 		// 是否接收群组消息
+
+/newgame 			// 创建一个游戏
+/listgames 			// 游戏列表
+/editgame 			// 编辑游戏。
+/deletegame  		// 删除现有游戏。
+/mygames 			// 我的游戏		
+
+
+
+
+
+663898425:AAEXhfjJxMaprn4F3IjTYObQcJFAIk-Qg6U
+
+我的 id     598910954
+组 id       -266500900
+
+
+bot api
+	
+// 格式 
+https://api.telegram.org/bot<Token>/<Method Name> 
+
+
+
+
+
+
+
+
+获取信息 
+	getUpdates   (拉取)
+
+	webHook 	 (推送)
+		setWebhook   	// 设置 webhook
+			网址  (require)
+			证书		(支持的端口 443，80，88，8443)
+			HTTPS 连接数 (1~100)  默认40  
+			需要接收的消息 
+
+
+
+
+###tets###
+
+
+
+
+leaveChat 				// 让机器人 离开一个 群 或 频道
+	chat_id					int|str 		
+ 	
+getChat					// 获取聊天对象的最新信息
+	chat_id 				int|str 	
+
+getChatAdministrators	// 获取 管理员列表
+	chat_id 				int|str 
+
+getChatMembersCount  	// 获取 成员个数
+	chat_id 				int|str
+
+setChatStickerSet 		// 给群组设置标签  (要有权限)
+	chat_id 				int|str
+	sticker_set_name		str
+
+deleteChatStickerSet 	// 删除标签
+	chat_id 				int|str
+
+
+@PollBot   // 投票机器人
+
+
+Available methods // 可用方法
+	getMe 				// 获取机器人信息   检验令牌
+
+	sendMessage 		// 发送信息
+		chat_id 					int|str
+		text 						str
+		
+		[parse_mode] 				str 			文本解析类型  markdown 或 html
+		[disable_web_page_preview]	bool 			是否禁止网站预览
+		[disable_notification] 		bool 			是否是无声模式
+
+		[reply_to_message_id] 		int 			回复消息唯一 id
+		[reply_markup] 				 				回复标志
+
+
+		// 连接里面使用  tg://user?id=<user_id>   联系人信息 		
+
+
+	forwardMessage 		// 转发内容
+		chat_id 					int|str
+		from_chat_id 				int|str
+		[disable_notification] 		bool 			无声
+		message_id 					int 			
+
+
+		https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Bundesstra%C3%9Fe_312_number.svg/1200px-Bundesstra%C3%9Fe_312_number.svg.png
+
+Available types  可用类型
+
+
+ForceReply 				// 强制回复
+	force_reply 			true 			向用户显示回复界面
+	selective 				bool 			是否根据 @ 或则 回复
+
+
+
+// 内联模式  
+
+/setinline
+
+
+InlineQuery
+
+
+answerCallbackQuery		// 内联键盘 发送的回调    成功为 true   ???
+	callback_query_id
+	[text]
+	[show_alert]
+	[url]
+	[cache_time]
+	
+
+
+

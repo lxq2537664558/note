@@ -1,4 +1,15 @@
-PHP合并数组+与array_merge
+// 随机数  0 补位
+str_pad(mt_rand(0, 999999), 6, "0", STR_PAD_BOTH);
+
+错误日志
+1. error_reporting  =  E_ALL             ;将会向PHP报告发生的每个错误   
+2. display_errors = Off                 ;显示错误  
+3. log_errors = On                    ;开启错误日志   
+4. log_errors_max_len = 1024               ;设置每个日志项的最大长度   
+5. error_log = /var/php_errors.log            ;指定产生的 错误报告写入的日志文件位置
+
+
+PHP合并数组 + 与 array_merge
 1）键名为数字时，array_merge()不会覆盖掉原来的值，但＋合并数组则会把最先出现的值作为最终结果返回，而把后面的数组拥有相同键名的那些值“抛弃”掉（不是覆盖） 
 
 2）键名为字符时，＋仍然把最先出现的值作为最终结果返回，而把后面的数组拥有相同键名的那些值“抛弃”掉，但array_merge()此时会覆盖掉前面相同键名的值 

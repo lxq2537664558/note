@@ -1,0 +1,48 @@
+// 安装 electron
+
+npm install -g electron-prebuilt
+
+
+
+// 初始化
+
+	npm init -f
+
+	npm install electron --save
+
+
+
+
+
+// 打包
+
+npm install --save-dev electron-packager
+
+
+"scripts": {
+
+os系统:"packageDarwin": "electron-packager . 'Hosts' --platform=darwin --arch=x64 --icon=hosts.icns --out=./dist --asar --app-version=2.0.1 --ignore=\"(dist|src|docs|.gitignore|LICENSE|README.md|webpack.config*|node_modules)\"",
+
+os系统:"packageDarwin": "electron-packager . 'Hosts' --platform=darwin --arch=x64 --icon=hosts.icns --out=./dist --asar --app-version=2.0.1",
+
+
+windows系统:"packageWin": "electron-packager . 'Hosts' --platform=win32 --arch=x64 --icon=hosts.ico --out=./dist --asar --app-version=2.0.1 --ignore=\"(dist|src|docs|.gitignore|LICENSE|README.md|webpack.config.js|node_modules)\"",
+
+windows系统:"packageWin": "electron-packager . 'Hosts' --platform=win32 --arch=x64 --icon=hosts.ico --out=./dist --asar --app-version=2.0.1",
+
+
+linux系统:"packageLinux": "electron-packager . 'Hosts' --platform=linux --arch=x64 --out=./dist --asar --app-version=2.0.1 --ignore=\"(dist|src|docs|.gitignore|LICENSE|README.md|webpack.config.js|node_modules)\""
+
+linux系统:"packageLinux": "electron-packager . 'Hosts' --platform=linux --arch=x64 --out=./dist --asar --app-version=2.0.1"
+
+}
+
+
+
+
+
+
+
+
+npm install -g asar
+

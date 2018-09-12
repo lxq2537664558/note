@@ -41,7 +41,20 @@
 	// 在做php组件开发时，编辑composer.json文件时有对应的属性和值的自动完成功能
 	PHP composer.json support
 
-phpstorm快捷键
+phpstorm快捷键	
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ESC   				光标返回编辑框
 SHIFT+ESC  			光标返回编辑框,关闭无用的窗口

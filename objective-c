@@ -39,6 +39,21 @@ for(NSString * name in NSArray){
 
 工具箱路径
 	/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOs.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks
+main 模板
+	/Applications/Xcode.app/Contents/Developer/Library/Xcode/Templates/Project/Templates/Mac/Application/Command/Line/Tool.xctemplate
+文件模板
+	/Applications/Xcode.app/Contents/Developer/Library/Xcode/Templates/File/Templates/Source/Cocoa/Class.xctemplate
+文档安装的位置
+	/Applicationd/Xcode.app/Contents/Developer/Documentation/DocSets
+
+#import "Person.h" 
+	编译指令, 他会将"" 中的文件拷贝到import所在的位置
+	特点: 只要'' 中的文件发生了变化, 那么import就会重新拷贝一次(更新操作)
+
+@class Person;
+	仅仅告诉编译器, @class后面的名称是一个类, 不会做任何拷贝操作
+	由于@class 仅仅是告诉编译器后面的名称是一个类, 所以编译器并不知道这个类中有哪些属性和方法, 所以在.m中使用这个类时需要import这个类, 才能使用
+
 
 
 #import <Foundation/Foundation.h>
@@ -106,15 +121,346 @@ int main(int argc, const char * argv[]) {
 #paragma mark -      //分割线
 
 
+// 编译器字符
+// 调用父级的方法
+[super functionName:status]
 
-字符串  NSString 
 
-// 格式化
-NSString *str = [NSString stringWithForat:@"%i %f", 30, 1.8];
+// 实例变量修饰符
+@public
+@private
+@protected
+@package
+	跨包为 private
+	同包为 public
 
-NSString *str = @"aaa";
 
-NSUInteger len = [str length]
+// description
+// 使用 %@ 输出一个变量的时候 会调用 description
+NSLog(@"p = %@", p)
+
+
+
+在Xcode4.4 之前
+
+// @porperty 是一个编译器指令   代替 getter/setter
+@property int age     	// 声明
+
+
+// @synthesize  是一个编译器指令  简化 getter/setter
+@synthesize age = _age 		// 实现 默认会赋值给  age
+
+xcode 4.4 之后
+@property int age        // 声明处写就好了  系统会自动生成一个成员变量
+
+@property(readonly) int age;    // 只读
+@property(readwrite) NSString * name;  // 默认
+
+@property(getter=abc) double height ;  // getter 方法名 为abc
+@property(setter=tiZhong:) double weight; // setter 方法名 为 tiZhong: 
+
+@property(assign) int age; // 用于基础类型 不会生成set方法内存管理的代码, 仅仅生成普通的getter/setter  (默认 )
+@property(retain)Dog *dog; // 会自动生成getter/setter方法内存管理的代码
+// ARC 中使用strong
+@peoperty(strong)Dog *dog;
+@peoperty(weak)Dog *dog;   // 循环引用 时使用弱
+
+
+@property(atomic) int age; // 低性能(默认)
+@property(nonatomic) int age; // 高性能
+
+
+QQWAPPAY
+
+
+
+id 类型    是一个动态数据类型   NSObject *   万能指针
+id obj = [Person new]
+[obj sleep]
+
+
+
+[Person class]
+//返回当前类
+
+
+[obj isKindOfClass:[Student class]]
+// 判断指定的对象是否是某一个类 或者摸一个类的子类
+
+[obj isMemberOfClass:[Student class]]
+// 判断指定的对象是否是当前指定的类的实例
+
+[Student isSubclassOfClass:[Person class]]
+// 判断 Student 是不是 Person 的子类 
+
+
+
+new 执行过程
+	1 开辟存储空间      alloc 
+		1 开辟存储空间
+		2 将所有属性设置为0
+		3 返回当前实例对象的地址
+	2 初始化所有属性    init
+		1 初始化成员变量 默认情况下是什么都没有做
+		2 返回初始化后实例对象地址   和 alloc 返回的地址一样
+	3 返回对象的地址
+ 
+
+[[Person alloc] init]
+
+
+重写构造方法
+- (instancetype)init
+{
+	self = [super init];
+	if(self != nil){
+		// !!!
+		_age = 6;
+	}
+
+	return self;
+}
+
+
+// 自定义构造方法
+- (instancetype)initWithAge:(int)age
+{
+	if(self = [super init]){
+		_age = age;
+	}
+
+	return self;
+}
+
+[[Person alloc] initWithAge:10]
+
+
+
+// 获取类对象  一个类在内存中总只有一份类对象
+Person *p1 = [[Person alloc] init];
+Class c1 = [p1 class];
+
+// 实例化对象
+Person *p3 = [[c1 alloc] init]
+
+
+
+// 类的启动过程
+	// load方法会在当前类被加载到内存的时候调用, 有且仅会调用一次
+	+ (void)load{}
+	// initialize 方法在整个程序的运行过程中只会调用一次, 无论你使用多少次这个类都只会调用一次
+	+ (void)initialize{}
+
+
+// SEL类型
+	// 生成类型
+		SEL sel = @selector(setAge:);
+		SEL sel1 = @selector(setAge:);
+		Person *p = [Person new];
+		// 如果 P 对象 没有实现 setAge: 方法就返回NO   反正返回YES
+		BOOL flag = [p respondsToSelector:sel];
+
+	// 调用
+		// 调用p对象中sel类型对应的方法
+		[p performSelector:sel];
+
+		// 调用时需要传递参数    最多两个参数
+		[p performSelector:sel1 withObject:@"132132"];
+
+	// 配合对象将SEL类型作为方法的形参
+		Car *c = [Car new];
+		SEL sel = @selector(run);
+
+		Person *p = [Person new];
+		[p makeObject:c andSel:sel];
+
+		// 调用
+		-(void)makeObject:(id)obj andSel:(SEL)sel
+		{
+			[obj performSelector:sel];
+		}
+
+
+Fundation 框架
+
+
+
+
+// 内存管理  
+
+// 引用计数器   对象引用计数器   
+ARC Automatic(自动) Reference(引用) Counting(计数)
+MRC Manul(手动) Reference(引用) Counting(计数)
+	automatic re      Objective-C Automatic Reforence Counting  No   
+ 
+	Person *p = [[Person alloc] init];
+
+	// 引用器加1
+	[p retain];
+	
+	// 引用器减1 
+	[p release];
+
+
+	// 只要创建一个对象默认应用计数器的值就是1
+	[p retainCount]   //引用计算器 (不准确)
+
+	// xcode 4.4 之后就不用手动 release 了
+
+
+// 重写 dealloc     监听一个对象有没有被释放
+- (void)dealloc
+{
+	// !!! 
+	NSLog(@"Person dealloc");
+
+	[super dealloc];
+}  
+
+
+// 开启 僵尸对象 报的错误
+View->Edit Scheme->Run->Diagnostics    勾选 Objective-C Enable Zombie Objects 
+
+
+// 为了避免给野指针发送消息会报错  一般情况下 当一个对象被释放后我们会将这个对象的指针设置为空指针
+p = nil;
+
+
+
+autorelease   // 自动释放池   并不一定会完全释放
+
+@autoreleasepool
+{ // 创建自动释放池
+	Person *p = [[Person alloc] init];
+	p = [p autorelease];  // 只要调用了 autorelease 就不用调用 release 了
+
+	// 简写
+	Person *p = [[[Person alloc] init] autorelease];
+
+} // 销毁自动释放池
+
+
+xcode 5 之前
+NSAutoreleasePool *Pool = [[NsAutoreleasePool alloc] init];   	// 创建一个自动释放池
+
+Person *p = [[[Person alloc] init] autorelease]; 				
+
+[pool release]; 												// 释放一个自动释放池
+
+
+// 强指针
+__strong Person *p1 = [[Person alloc] init];
+
+// 弱指针
+__weak Person *p2 = p;
+
+
+
+
+Category  扩展已有类 方法
+
+// 分类的声明
+@interface className (CategoryName)
+
+-(void)paly
+@end
+
+// 分类的实现
+@implementation className(CategoryName)
+
+-(void)paly
+{
+	
+}
+@end
+
+jingtang888520
+
+
+类扩展   主要扩展属性    匿名分类没有名字
+在.m文件里面
+@interface Person()
+{
+	int _age;	
+}
+- (void)say;
+@end
+
+
+
+
+
+Block  是一种特殊的数据类型
+
+void (^roseBlock) ();
+	// void 代表没有返回值
+	// ()   代表没有形参
+	// (^roseBlock) 代表 reseBlock 是一个block变量 可以用于保存一段block代码
+
+roseBlock = ^{
+	printf("我的天啊");	
+};
+
+
+roseBlock();
+
+
+int (^aBlock)(int num) = ^int (int num){
+	printf("aaaa");
+	return num;	
+};
+
+
+// 如果想在block中修改外界变量的值,  必须在外界变量前面加上__block
+__block int a = 10;
+void (^myBlock)() = ^{
+	a = 50;	
+};
+
+myBlock();
+
+
+
+
+
+protocol   协议
+ 
+//  协议只能声明方法 不能声明实例
+
+@protocol SportProtocol : NSObject 
+
+@required    // 必须实现  默认的
+-(void)playBacketball;
+
+@optional   // 可选的
+-(void)playTest()
+
+@end
+
+
+@interface Person: NSObject<SportProtocol>
+
+
+ 
+// 设计模式 例子
+@class Person;
+
+@protocol PersonProtocol <NSObject>
+
+- (void)personFindHoures:(Person *)person;
+
+@end
+
+@interface Person : NSObject
+
+@peoperty (nonatomic, strong) id<PersonProtocol> delegate;
+
+@end
+
+
+
+
+__func__     // 当前控制器
 
 
 浮点值的基本类型  CGfloat
@@ -127,8 +473,387 @@ NSUInteger len = [str length]
 
 
 
+字符串  NSString 
 
-Fundation 框架
+// 常量区   多次创建指向同一块存储空间
+NSString *str1 = @"str1"; 
+// 堆区
+NSString *str2 = [[NSString alloc] initWithFormat:@"lmj"];
+
+NSString *str3 = [NSString stringWithFormat:@"zs"]
+
+
+// 文件操作
+NSString *path = @"/Users/inrp/Desktop/1.txt";
+
+	// 读取文件
+NSError *error = nil;
+
+NSString *str = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+if(error == nil){
+	NSLog(@"str = %@", str);	
+}else{
+	// 显示主要的错误信息
+	NSLog(@"error = %@", [error localizedDescription]);
+}
+
+
+	// 写入文件
+NSString *str = @"iOS0601基础班";
+BOOL falg = [str writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];
+	// atomically YES 没有写入完成不生成文件  NO 没有写入完成会生成文件
+
+
+	// 获取 uri 资源   加载本机文件  可以去掉地址  file:///User
+// url地址方式1
+NSString *path = @"file://192.168.199.199/Users/NJ-Lee/Desktop/lnj.txt";
+NSURL *url = [NSURL URLWithString:path];
+// url地址方式2    可以去掉协议头
+NSString *path = @"/Users/NJ-Lee/Desktop/lnj.txt";
+NSURL *url = [NSURL fileURLWithPath:path];
+// 对中文进行%号编码
+NSString *path = @"file:///User/irnp/我的天那/1.txt";
+path = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+
+NSString *str = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+
+
+
+// 字符串比较
+	// 比较内容
+	BOOL flag = [str1 isEqualToString:str2];
+
+	// 比较地址是否相同
+	flag = (str1 == str2)
+
+	// 大小
+	[str1 compare:str2]
+
+	// 忽略大小比较
+	[str1 caseInsensitiveCompare:str2]
+
+	// 字符串搜索
+	[str hasPrefix:@"http://"];
+		// 判断字符串是否以 http:// 开头
+
+	[str hasSuffix:@".png"];
+		// 判断字符串是否以 .png 结尾
+
+	NSRange range = [str rangeOfString:@"123it.com" options:NSBackwardsSearch];
+		// 判读字符串是否包含 it
+			options NSBackwardsSearch   从后往前找
+		range.location  起始位置
+		range.length    字符串长度
+
+// 字符串截取
+	NSRange range = {6, 3};
+	NSRange range;
+	range.location = 6;
+	range.length = 3;
+	NSRange range = NSMakeRange(6, 3);
+	NSString *newStr = [str substringWithRange:range];
+
+	// 从什么地方 开始截取  一直到最后
+	NSString *newStr = [str substringFromIndex:6];
+	NSString *newStr = [str substringToIndex:6];
+
+// 字符串替换
+	NSString *str = @"adfsdfdsfds";
+	NSString *newStr = [str stringByReplaccingOccurrencesOfString:@"a" withString:@"b"];
+	// 把 a 替换为 b
+
+	//替换首尾
+	NSCharacterSet *set = [NSChaaracterSet whitespaceCharacterSet];
+	[str stringByTrimmingCharactersInSet:set];
+
+
+// 大小写 转换
+[str uppercaseString]
+[str lowercaseString]
+// 首字母
+[str capitalizedString]
+
+// 字符串 转整型
+[str intValue]
+
+
+// C 转 OC
+NSString *str = [NSString stringWithUTF8String:cStr];
+// OC 转 C
+const char *cStr = [newStr UTF8String];
+
+
+
+
+// NSMutalbleString 可变字符串/
+NSMutableString *strM = [NSMutableString stringWithFormat:@"www.baidu.com"];
+	// 在字符串后面添加 /image
+[strM appendString:@"/image"];
+
+	// 删除
+NSRange range = [strM rangeOfString:@"baidu"];	
+[strM deleteCharactersInRange:range];
+	
+	// 在指定字符前面插入
+NSRange range = [strM rangeOfString:@"baidu"];
+[strM insertString:@"baidu" atIndex:range.location];
+
+	// 替换字符串
+NSUInter count = [strM replaceOccurrencesOfString:@"520" withString:@"530" options:0 range:NSMakeRange(0, strM.length)];
+		// count 被替换的次数
+
+
+
+// 数组  nul 是结束符
+NSArray *arr = [NSArray arrayWithObject:@"adf", @"qwer", @"cp", nil];
+NSArray *arr = @[@"aa", @"fdsf", @"fdfsd"];
+
+// 长度
+[arr count]  
+
+// 最后一个
+[arr lastObject]
+// 第一个
+[arr firstObject]
+// 指定的一个
+[arr objectAtIndex:1]
+arr[0]
+
+// 是否包含
+BOOL *flag = [arr containsObject:@"sz"]
+
+// 循环
+for(NSObject *obj in arr){	}
+
+// OC数组迭代器
+[arr enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
+	
+}]
+
+
+// 数组中所有的的元素都执行一个方法 类型要一样
+[arr makeObjectsPerformSelector:@selector(say)];
+[arr makeObjectsPerformSelector:@selector(sayWithName:) withObject:@"jkl"];
+
+// 排序
+NSArray *arr = @[@123, @321, @10];
+NSArray *newArr = [arr sortedArrayUsingSelector:@selector(compare:)];
+
+
+// 根据 类属性 排序
+NSArray *newArr = [arr sortedArrayWithOptions:NSSortStable usingComparator:^NSComparisonResult(Person *obj1, Person *obj2){
+	return obj1.age > obj2.age;
+}]
+
+
+// 数组转换为字符串
+[arr componentsJoinedByString:@"**"]
+
+// 字符串分隔为数组
+[str componentsSepartedByString:@"**"]
+
+
+// 数组写入文件中  字典也一样
+BOOL flag = [arr writeToFile:@"/User/abc.plist" atomically:YES];
+
+// 从文件中读取
+NSArray *newArrAy = [NSArray arrayWithContentsOfFile:@"/User/abc.plist"];
+
+
+// NSMutableArray 可变数组
+NSMutableArray *arrM = [NSMutableArray array];
+
+// 添加
+[arrM addObject:@"asd"];
+// 添加指定元素
+[arrM addObjectsFromArray:@[@"asd", @"zxc"]];
+
+// 插入
+[arrM insertObject:@"qwer" atIndex:1];
+// 插入 2个 到3的位置
+NSRange range = NSMakeRange(3, 2);
+NSIndexSet *set = [NSIndexSet indexSetWithIndexesInRange:range];
+[arrM insertObjects:@[@"A", @"B"] atIndexes:set];
+
+// 删除
+[arrM removeObjectAtindex:0];
+[arrM removeLastObject];
+[arrM removeObject:@"A"];
+
+
+// 替换
+[arrM replaceObjectAtIndex:1 withObject:@"M"];
+
+// 获取
+[arrM objectAtIndex:0]
+arrM[0]
+
+
+// 字典   NSDictionary
+NSDictionary *dict = [NSDictionary dictionaryWithObject:@"asd" forKey:@"name"];
+NSString *name = [dict objectForKey:@"name"];
+
+NSDictionary *dict = [NSDictionary dictionaryWithObjects:@[@"asd", @"qwer", @"zc"] forKeys:@[@"name", @"age", @"height"]];
+
+[dict objectForKey:@"age"];
+
+
+NSDictionary *dict = @{@"name": @"lnj"};
+dict[@"name"]
+
+// 长度
+[disct count]
+
+// 循环
+[dict enumerateKeysAndObjectsUsingBlock:^(id key, id obj), BOOL *stop) {
+	
+}]   
+
+// 空字典
+NSMutableDictionary *dictM = [NSMutableDictionary dictionary];
+
+// 添加
+[dictM setObject:@"asd" forKey:@"name"];
+
+[dictM setValuesForKeysWithDictionary:@{@"asd":@"30", @"height":@"12.8"}];
+
+// 删除
+[dictM removeObjectForKey:@"name"];
+
+// 修改
+[dictM setObject:@"88" forkey:@"age"];   
+
+
+
+// NSNumber 
+
+// 基本数据类型转换为对象类型
+NSNumber *ageN = [NSNumber numberWithInt:age];
+NSNumber *numberN = [NSNumber numberWithDouble:number];
+
+NSnumber *temp = @(number);
+
+
+// 将对象类型转换为基本数据类型
+int temp = [ageN intValue];
+double temp = [numberN doubleValue];
+
+
+// NSValue 可以包含所有
+[NSValue valueWithPoint:point];
+
+NSValue *value = [NSValue valueWithBytes:&p objCtype:@endcode(Person)];
+
+Person res;
+[pValue getValue:&res];
+res.age; 
+
+
+// NSDate 时间类型
+
+// 获取当前时间
+NSDate *now = [NSDate date];
+
+// 当前时间加10s 
+NSDate *date = [now dateByAddingTimeInterval:10];
+
+// 获取当前时区
+NSTimeZone *zone = [NSTimeZone systemTimeZone];
+
+// 获取时间差
+NSInteger secounds = [zone secondsFromGMTForDate:now];
+
+// 格式化时间戳    时间戳 转 时间字符串
+NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+formatter.dateFormat = @"yyyy年MM月dd日 HH时mm分ss秒";
+NSString *res = [formatter stringFromDate:now];
+// 时间字符串 转 时间对象   格式要一样
+NSString *str = @"2015-06-29 07:25:25 +0000";
+NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss Z";
+NSDate *date = [formatter dateFromString:str];
+
+// 日历对象   获取单独年月日
+NSCalender *calendar = [NSCalender currentCalender];
+// 取当前的月
+NSDateComponents *cmps = [calendar1 components:NSCalendarUnitMonth fromDate:now];
+cmps.month
+
+
+
+// NSFileManager  文件操作
+NSFileManager *manager = [NSFileManager defaultManager];
+
+// 判断文件是否存在
+(BOOL)fileExistsAtPath:(NSString *)path;
+
+// 文件是否可读
+(BOOL)isReadableFileAtPath:(NSString *)path;
+
+// 文件是否科协
+(BOOL)isWritableFileAtPath:(NSString *)path;
+
+// 文件是否可删除
+(BOOL)isDeletableFileAtPath:(NSString *)path;
+
+// 判断文件路径是否 存在  dir 是否为文件夹 
+BOOL dir = NO;
+BOOL flag = [manager fileExistsAtPath:@"/user/aaa" isDirectory:&dir]
+
+// 获取文件或文件夹属性
+NSDictionary *info = [manager attributesOfItemAtPath:@"" error:nil];
+
+// 获取文件夹里面的所有文件
+NSArray *res = [manager contentsOfDirectoryAtPath:@"" error:nil];
+
+// 创建文件夹
+BOOL flag = [manager createDirectoryAtPath:@"" withIntermediateDirectories:NO attributes: nil error:nil];
+	// withIntermediateDirectories  是否递归创建文件夹
+	// attributes 					文件夹属性
+
+// 创建文件
+NSString *str = @"是的飞洒发";
+NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
+[manager createFileAtPath:@"" contents:data attributes:nil];
+	// contents 文件内容  二进制数据
+
+// 拷贝
+(BOOL)copyItemAtPath:(NSString)srcPath toPath:(NSString)dstPath error(NSError **)error
+
+// 移动
+(BOOL)moveItemAtPath:(NSString)srcPath toPath:(NSString)dstPath error:(NSError **)error
+
+// 删除
+(BOOL)removeItemAtPath:(NSString)path error:(NSError *)error;
+
+
+
+
+
+
+
+
+
+
+// 格式化
+NSString *str = [NSString stringWithForat:@"%i %f", 30, 1.8];
+
+NSString *str = @"aaa";
+
+
+// 长度
+NSUInteger len = [str length];
+// 转换为数字
+NSUInteger len = [str integerValue];
+
+
+
+
+// 数组
+@property (nonatomic, strong) NSMutableArray *dataArr;
+NSMutableArray *arr = [NSMutableArray array];
+
 
 
 

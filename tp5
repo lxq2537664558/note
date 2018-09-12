@@ -195,7 +195,7 @@ curd操作
 		//跟新单个字段 调用的update()
 		$data->setField('name', 'zzz')
 		
-		$data->setInc('score')          //递增1
+		$data->setInc('score')          //try1
 		$data->setInc('score', 5);    	//递减5
 		$data->setDec('score')          //递减1
 		$data->setDec('score', 5);    	//递减5
@@ -485,6 +485,13 @@ curd操作
 	server 	获取$_SERVER变量
 	env 	获取$_ENV变量
 	file 	获取上传文件信息
+
+	input('get.id/d')
+	s	强制转换为字符串类型
+	d	强制转换为整型类型
+	b	强制转换为布尔类型
+	a	强制转换为数组类型
+	f	强制转换为浮点类型
 
 	除了file方法之外，其它方法都支持默认值和过滤方法
 
@@ -1225,7 +1232,7 @@ curd操作
 	php think list
 
 
-	//生成模块
+//生成模块
 		首先需要在 application 目录下面创建一个 build.php 定义文件
 
 		return [

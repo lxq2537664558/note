@@ -1,4 +1,31 @@
-调试工具
+
+
+// 引入文件
+require('./b')
+
+var b = require('./b')
+
+// 导出  ./b 文件
+var test = 'ok'
+exports.test;  	// 挂载
+
+console.log(b.test)  // ok
+
+
+
+el.closest('h1')  		// 向上查找元素  	
+el.matches('.class')  // 是否包含某class  
+
+parentEl.insertAdjacentElement('beforeend', newEl) 
+	beforebegin
+	afterbegin
+	afterend
+
+modalEl.contains(e.targetEl) // 判断targetEl 是否在modalEl中
+
+
+
+调试工具		
 	debugger
 		在代码中加上  chrome执行的时候会在该行停下来
 
@@ -879,25 +906,25 @@ reader.onload = function(e) {
 reader.readAsDataURL(file);
 
 
-
-
-
-
 es6
-	// 初始化  使用默认值
-	npm init -y 
+	7**2     Math.pow(7, 2)  	// 7的2次方
+	
+	Object.key(obj)      		// 以数组形式 返回对象的下标
+	Object.values(obj)			// 以数组形式 返回对象的值
+	Object.entries(obj)  		// 以数组的形式 返回对象的下标和值
+		for(let [key, value] of object.entries(obj)){
+			console.log(`key: ${key} value: ${vaule}`)
+		}
 
-	// 转义工具
-	npm install -g babel-cli
-	npm install --save-dev babel-breset-es2015 babel-cli
 
-	.babelrc
-	{
-		"presets": [
-			"es2015"
-		],
-		"plugins": []
-	}
+	'5'.padStart(10, '*')		// 前填充
+	'5'.padEnd(10, '*')			// 后填充
+
+
+	Object.getOwnPropertyDescriptors(Car)  	// 深度拷贝
+
+
+
 
 
 	var

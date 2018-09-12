@@ -72,7 +72,7 @@ list类型操作
 	lpop key 				从list的头部伤处元素,并返回删除元素
 	rpop key 				从list的尾部删除元素,并返回删除元素
 
-set集合
+set集合   (无序)
 	sadd key member				添加一个string元素到key对应的set集合中,成功返回1,如果元素已经在集合中 返回0,key对应的set不存在返回错误
 	srem key member[member]		从key对应set中移除给定元素,成功返回1
 	smove p1 p2 member			从p1对应set中移除member并添加到p2对应set中
@@ -86,7 +86,7 @@ set集合
 	sdiffstore p1 key1 key2 	同sdiff,并同时保存差集到p1中
 	smembers key 				返回key对应set的所有元素,结果是无序的
 
-sort set 排序集合类型
+sort set 排序集合类型  (有序)
 	set类型 		集合类型,内部元素没有顺序,同一个集合没有重复元素
 	list类型 	内部元素有彼此的先后顺序,同一个链表允许有重复元素
 	Sort set类型 排序集合类型,相比set类型有排序功能
@@ -102,7 +102,7 @@ sort set 排序集合类型
 	zcount key min max			返回集合中score在给定区间的数量
 	zcard key 					返回集合中元素个数
 	zscore key element			返回给定元素对应的score
-	zremrangebyrank key min max	删除集合中排名在给定区间的元素
+	zremrangebyrank key min max	删除集合中排名在给定区间的元素   WITHSCORES  返回值
 	zremrangebyscore key mix max删除集合中score在给定区间的元素
 
 hash数据类型		redis模仿数据库把一条记录信息给存储起来

@@ -1,3 +1,8 @@
+
+
+
+
+
 WEB安全
 	常规web漏洞
 		sql注入
@@ -70,17 +75,81 @@ http://www.gzxinhua.com/plus/view.php?aid=14301634
 
 
 
-google语法	可以组合使用
 
-site	搜索指定域名下的内容
-site:http://www.gzxinhua.com/
-site:gzxinhua.com
+信息收集
 
-inurl	搜索url中存在的内容
-inurl:gzxinhua.com
 
-intitle	搜索标题中存在的内容
-intitle:管理员登陆
+
+googlehacking
+	intext: (仅针对google有效)
+		把网页中的正文内容中饿某个字符作为搜索的条件
+
+	intitle:
+		把网页标题中的某个字符作为搜索条件
+
+	cache:
+		搜索搜索引擎关于某些内容的缓存, 可能会在过期内容中发现有价值的信息
+
+	filetype:
+		指定一个格式类型的文件作为搜索对象  我的天 filetype:pdf    
+
+	inurl	
+		搜索url中存在的内容 inurl:gzxinhua.com
+
+	site	搜索指定域名下的内容
+		在指定站点搜索相关内容	site:http://www.gzxinhua.com/
+
+站长工具
+	IP 查询
+	同 IP 网站查询
+	WHOIS 查询和反查
+	子域名查询
+	识别服务器类型 页面类型
+	DNS 信息查询
+	网站安全检测
+	端口扫描 
+
+
+
+漏洞信息收集
+	乌云漏洞平台
+	360补天漏洞平台
+	Exploit-DB
+	GHDB
+	CVE中文漏洞信息库
+	中国国家信息安全漏洞库
+	国家信息安全漏洞共享平台
+
+
+常用的扫描工具
+	AWVS
+	AppScan
+	Zenmap
+	Dirbuster
+	Wwwscan
+	遇见系列扫描工具
+	Layer子域名挖掘机
+	Maltego
+
+浏览器插件
+	showIP
+	HttpFox
+	Cookie Watcher
+	Header Spy
+	Wappalyzer
+	FlagFox
+	Domain Details
+	
+
+tracert www.baidu.com
+	主机连接到百度 都要经过哪些路由 
+
+netstat -a 
+	开启的所有端口
+
+net user 1 1/add
+	建立账户
+
 
 脚本类型：
 Asp php aspx jsp cgi do pl py js

@@ -1,10 +1,11 @@
+
 $.noop    jquery提供的空函数
 
 
 
 
 
-onclick="$(#cat_list).append($('$cat_list').find('select').eq(0).clone())"
+
 
 jQuery 一款免费且开放源代码的javascript代码库
 
@@ -161,6 +162,9 @@ css操作
 		mouseout(fn)	鼠标离开
 		select(fn)		选择内容
 		submit(fn)		提交按钮
+
+		mouseenter 		鼠标经过
+		mouseleave 		鼠标移出
 	事件切换
 		hover(over,out) 这个方法是针对鼠标经过和离开的事件绑定
 			over 鼠标经过时执行的事件处理程序
@@ -292,13 +296,16 @@ ajax	$=jQuery
 		$.ajax({
 	     url : "http://localhost:8080/STS/rest/user",
 	     type : "POST",
-	     data : $( '#postForm').serialize()}).
-	     done(function(data) {
+	     data : $( '#postForm').serialize()})
+	     .done(function(data) {
 	          $( '#serverResponse').html(data);
-	     }).
-	     fail(function(data) {
+	     })
+	     .fail(function(data) {
 	          $( '#serverResponse').html(data.status + " : " + data.statusText + " : " + data.responseText);
-	     });
+	     })
+	     .always（function(){
+	     })
+	     .beforeSend
 
 	ajax 上传文件
 		var formData = new FormData($( "#uploadForm" )[0]);
