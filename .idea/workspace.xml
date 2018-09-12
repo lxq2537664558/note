@@ -14,8 +14,8 @@
       <file leaf-file-name=".gitinnore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitinnore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="9" lean-forward="true" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="9" />
+            <state relative-caret-position="30">
+              <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -25,6 +25,13 @@
   <component name="Git.Settings">
     <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/.gitinnore" />
+      </list>
+    </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
@@ -89,15 +96,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1536753575501</updated>
-      <workItem from="1536753576788" duration="396000" />
+      <workItem from="1536753576788" duration="750000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="396000" />
+    <option name="totallyTimeSpent" value="750000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1671" y="170" width="1497" height="708" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Key Promoter X" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -105,8 +113,8 @@
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" weight="0.329653" />
-      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.329653" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.249833" />
+      <window_info anchor="bottom" id="Terminal" visible="true" weight="0.329653" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.249833" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="right" id="Database" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -133,8 +141,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitinnore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="9" lean-forward="true" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="9" />
+        <state relative-caret-position="30">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
         </state>
       </provider>
     </entry>
