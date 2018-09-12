@@ -15,7 +15,7 @@
         <entry file="file://$PROJECT_DIR$/.gitinnore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
-              <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+              <caret line="2" column="6" lean-forward="true" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -43,8 +43,8 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1671" />
-    <option name="y" value="170" />
+    <option name="x" value="2231" />
+    <option name="y" value="357" />
     <option name="width" value="1497" />
     <option name="height" value="708" />
   </component>
@@ -96,16 +96,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1536753575501</updated>
-      <workItem from="1536753576788" duration="750000" />
+      <workItem from="1536753576788" duration="1014000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="750000" />
+    <option name="totallyTimeSpent" value="1014000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1671" y="170" width="1497" height="708" extended-state="0" />
-    <editor active="true" />
+    <frame x="1569" y="320" width="1497" height="708" extended-state="0" />
     <layout>
       <window_info anchor="right" id="Key Promoter X" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -142,7 +141,7 @@
     <entry file="file://$PROJECT_DIR$/.gitinnore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
-          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+          <caret line="2" column="6" lean-forward="true" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
         </state>
       </provider>
     </entry>
