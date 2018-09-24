@@ -264,7 +264,8 @@ karabiner
 隐藏文件
 	显示
 		defaults write com.apple.finder AppleShowAllFiles -bool true
-	隐藏	x		defaults write com.apple.finder AppleShowAllFiles -bool false
+	隐藏	
+		defaults write com.apple.finder AppleShowAllFiles -bool false
 
 隐藏桌面图标
 
