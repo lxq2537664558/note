@@ -169,7 +169,6 @@ UI控件
 
 
 	UIButton 			按钮
-
 		UIControlStateNormal    		(普通状态  )
 		UIControlStateHighlighted 		(高亮状态  点下时)
 		UIControlStateDisabled			(失效状态  不可用)
@@ -343,37 +342,113 @@ UI控件
 			scrollView.pagingEnabled = YES
 
 	UITableView 		表格     继承 UIScrollView
-		// 控制器 遵守 <UITableViewDataSource>协议
+		# 谁知数据源对象(一般是控制器)
+		self.tableView.dataSource = self;
+		
+		# 数据源对象需要遵守协议-> UITableViewDataSource          // 控制器 遵守 <UITableViewDataSource>协议
+		@interface ViewController()<UITableViewDataSource>
+		@end
+		
+
 		// 两种样式  UITableViewStylePlain (组没有连在一起)  UITableViewStyleGrouped (组之间有间隔)
 
+		# 实现数据源协议里面的方法 (3个) 
 
-		self.tableView.dataSource = self;
+		- (void)viewDidLoad{
+			[super viewDidLoad];
+			self.tableView.rowHeight = 100;  # 设置 cell 行高
+			self.tableView.sectionHeaderHeight = 100;  # 头部高度 
+			self.tableView.sectionFooterHeight = 100;  # 尾部高度
+			self.tableView.separatorColor = [UIColor clearColor];  # 设置分隔线颜色
+			self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;  # 分隔线样式
+			self.tableView.tableHeaderView = [[UISwitch alloc] init]; 	# 表格头部 控件
+			self.tableView.tableFooterView = [[UISwitch alloc] init]; 	# 表格尾部 控件
+		}
 
-		// 一共有多少组
+		# 一共有多少组           如果不是实现 默认就是一组
 		- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 			return 4;
 		}
 
-		// 每组有多少
+		# 每组有多少
 		- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 			if(section == 0){  // 第一组 2行
 				return 2
 			}
 		}
 
-		// 每一行的内容
+		# 每一行的内容
 		- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 			// indexPath.section == 2   哪一组
 			// indexPath.row == 0		哪一行
 			UITableViewCell *cell = [[UITableViewCell alloc] init];
 
-			// 右边显示的 内容  		accessoryView > accessoryType  (优先级)
+			# 设置类型
+			UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier: nil];
+
+			# contentView  image text 3个子控件 的父控件    (左滑删除)
+
+
+			# 右边显示的 内容  		accessoryView > accessoryType  (优先级)
 			cell.accessoryView = [[UISwitch alloc] init];
 			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
-			// 显示的文字 
+			# 显示的文字 
 			cell.textLabel.text = @"aaa";
+
+			# 选中样式  (除了 none 其他的 ios 7  之前有用)
+			cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+
+			# 设置 cell 的背景色
+			cell.backgroundColor = [UIColor redColor];
+			# 设置 cell 背景 view     优先级大于 color
+			UIView *bg = [[UIView alloc] init];
+			bg.backgroundColor = [UIColor blueColor];
+			cell.backgroundView = bg; 
+
 			return cell;
+		}
+
+		# 告诉 tableView 每一组头显示的标题
+		-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{}
+
+		# 告诉 tableView 每一组尾显示的标题
+		-(NSStting *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{}
+
+
+		# 监听方法
+		@interface ViewController()<UITableViewDataSource, UITableViewDelegate>
+
+		# 选中某一行
+		- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+			# 选中的行号
+			indexPath.row
+		}
+
+		# 取消选中
+		- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{}
+
+		# table 设置每一组头部控件
+		- (UIView *)tableView:(UITableView *)tableView viewForHeaderInsection:(NSInteger)section{
+			return [UIButton buttonWithType:UIButtonTypeContactAdd];
+		}
+
+		# table 设置每一组尾部控件
+		- (UIView *)talbeView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{}
+
+		# 设置头部的高度
+		- (CFFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+			return 100;
+		}
+
+		# 设置尾部的高度
+        - (CFFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+			return 100;
+		}
+
+		# 设置行高
+		- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+			return 50;
 		}
 
 

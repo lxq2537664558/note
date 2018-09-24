@@ -1,3 +1,42 @@
+ ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+
+
+ UNIQUE KEY `unique_member` (`member_name`,`time_day`),
+
+//将某列内容按照用户自定义的顺序排序
+select name from table_name order by field(id,2,1,3);
+//字符串, 号分隔 查询
+WHERE FIND_IN_SET('1',list)
+//字段输出加上字符串
+separtor ''
+//去重
+distinct
+`|`
+
+多个字段拼接
+	concat()  select concat('1','2','3') from test ;
+				123
+	concat_ws()
+
+group_concat(col)		由属于一组的列值连接组合而成的结果
+GROUP_CONCAT(CAST(B.buyer_id AS char))
+
+
+
+
+
+json 函数
+	JSON_APPEND() JSON_ARRAY_INSERT() JSON_UNQUOTE() JSON_ARRAY()
+	JSON_REPLACE() JSON_CONTAINS() JSON_DEPTH() JSON_EXTRACT()
+	JSON_INSERT() JSON_KEYS() JSON_LENGTH() JSON_VALID()
+	JSON_MERGE() JSON_OBJECT() JSON_QUOTE() JSON_REMOVE()
+	JSON_CONTAINS_PATH() JSON_SEARCH() JSON_SET() JSON_TYPE()
+
+	// 大多数规则
+	JSON_APPEND(json_doc, path, val[, path, val] ...)
+
+
+
 概述
 
 sql层面

@@ -1,0 +1,2231 @@
+# 配置文件  config 文件夹
+	# 设置
+	config('app.debug');
+	# 获取
+	config(['app.timezone' => 'America/Chicago']);
+
+
+	# 配置缓存
+	php artisan config:cache
+
+# 环境配置
+.env
+
+
+PHPUnit 测试或以 --env=testing
+
+
+获取配置项
+
+
+# 维护模式
+php artisan down 		# 开启维护
+php artisan up 			# 关闭维护
+
+# 维护模板
+resources/views/errors/503.blade.php
+
+
+# 404页面设置   404 Not Found     
+默认使用  //resaources/views/errors/404.blade.php
+
+Route::get('/404' , function(){
+	abort(404);
+});
+
+
+# 创建软连接  把 storage 连接到 public
+php artisan storage:link
+
+
+
+
+# 单元测试 (tests)
+phpunit 或者 php vendor/bin/phpunit
+
+
+
+# 优化自动加载
+composer install --optimize-autoloader
+
+# 优化路由加载
+php artisan route:cache
+php artisan route:clear  		# 清除
+
+
+
+
+# 自定义函数 自定义类文件
+	app/Helpers/functions.php
+
+	在项目下的 commposer.json 中添加信息
+	"autoload":{
+		"files":[
+			"app/Helpers/functions.php"
+		]
+	},
+
+	composer dump-auto
+
+
+
+# 路由  App\providers\RouteServiceProider    route
+	# 基本路由
+		Route::get('/', function(){
+			// '/' 表示根目录
+			return view('weicome');
+		});
+		Route::post($uri, $callback);
+		Route::put($uri, $callback);
+		Route::patch($uri, $callback);
+		Route::delete($uri, $callback);
+		Route::options($uri, $callback);
+
+	# 实现是有方法
+		Route::match(['get', 'post'], '/', function(){});
+		Route::any('foo', function(){})
+
+	# 重定向
+		Route::redirect('/here', '/there', 301);
+
+	# 命名路由  as
+		Route::get('user/profile', ['as' => 'profile', function(){}]);
+		Route::get('user/profile', function () {})->name('profile');
+		Route::get('user/profile', 'UserController@showProfile')->name('profile');
+
+	# 视图路由
+		Route::view('/welcome', 'welcome');
+		Route::view('/welcome', 'welcome', ['name' => 'Taylor']);
+
+	# 路由命名
+		# 生成 url
+			$url = route('profile');
+			$url = route('profile', ['id' => 1]);
+			return redirect()->route('profile'); # 生成重定向
+			
+			Route::get('user/{id}/profile', ['as' => 'profile', funciton($id){}]);
+			$url = route('profile', ['id' => 1]);
+		
+		# 判断当前路由是否指向了某个路由
+	    	if ($request->route()->named('profile')) {}
+
+	# 路由参数
+		# 必须参数
+			# 捕获 id
+			Router::get('user/{id}', function ($id){});
+			# 多个路由参数
+			Route::get('posts/{post}/comments/{comment}', function($postId, $commentId){}); 
+		# 可选参数
+			Route::get('user/{name?}', function ($name = null){});
+		# 正则表达式约束
+			Route::get('user/{name}', function ($name) {})->where('name', '[A-Za-z]+');
+			Route::get('user/{id}', function($id){})->where('id', '[0-9]+');
+			Route::get('user/{id}/{name}', function ($id, $name) {})->where(['id' => '[0-9]+', 'name' => '[a-z]+']);
+		# 全局设置    ( RouteServiceProvider 中的 boot )
+			public function boot(Router $router)
+			{
+				$router->pattern('id', '[0-9]+');
+				parent::boot($router);
+			}
+
+	# 路由组
+		# 路由群组     as 关键字来为群组中的路由设置一个公用的路由名前缀
+		Route::group(['as' => 'admin::'], function(){
+			Route::get('abd', ['as' => 'abd', function(){
+				//路由被命名为 'admin::abc'
+			}])
+		});
+
+		# 中间件  可以在 group 之前调用 middleware 方法
+		Route::middleware(['first', 'second'])->group(function () {
+		    Route::get('/', function () {
+		        // 使用 first 和 second 中间件
+		    });
+
+		    Route::get('user/profile', function () {
+		        // 使用 first 和 second 中间件
+		    });
+		});
+
+		# 命名空间 namespace        App\Http\Controllers 之后的部分
+		Route::group(['namespace' => 'Admin'], function (){
+			// 控制器在 'App\Http\Controllers\Admin' 命名空间下
+			Route::group(['namespace' => 'User'], function(){
+				//控制器在 'App\Http\Controllers\Admin\User' 命名空间下
+			});
+		});
+
+
+		# 子域名路由
+		Route::domain('{account}.myapp.com')->group(function () {
+		    Route::get('user/{id}', function ($account, $id) {
+		        //
+		    });
+		});
+
+		Route::group(['domain'] => '{account}.myapp.com'], function(){
+			Route::get('user/{id}', function($account, $id){
+				//
+			});
+		});
+
+		# 路由前缀
+		Route::group(['prefix' => 'admin'], function(){
+			Route::get('user', function(){
+				// 匹配 '/admin/user' URL
+			});
+		});
+
+		你还可以使用prefix 参数为路由群组指定公共路由参数
+		Route::group(['prefix' => 'accounts/{account_id}'], function(){
+			Route::get('detail', function($account_id){
+				// 匹配 accounts/{account_id}/detail URL
+			});
+		});
+
+	# 路由模型绑定
+		# 隐式绑定
+		Route::get('api/users/{user}', function (App\User $user) {
+		    return $user->email;
+		});
+		
+		# 自定义键名  (Eloquent 模型里面)
+		public function getRouteKeyName()
+		{
+		    return 'slug';
+		}
+
+		# 显式绑定   (RouteServiceProvider 类中的 boot 方法)
+		public function boot()
+		{
+		    parent::boot();
+		    Route::model('user', App\User::class);
+		}
+
+		# 自定义逻辑解析  (RouteServiceProvider 类中的 boot 方法)
+		public function boot()
+		{
+		    parent::boot();
+
+		    Route::bind('user', function ($value) {
+		        return App\User::where('name', $value)->first() ?? abort(404);
+		    });
+		}
+
+		Route::get('profile/{user}', function (App\User $user) {});
+
+	# 访问控制   
+		# 每分钟 频率不超过60的路由
+		Route::middleware('auth:api', 'throttle:60,1')->group(function () {
+		    Route::get('/user', function () {
+		        //
+		    });
+		});
+
+		# 动态访问控制
+			Route::middleware('auth:api', 'throttle:rate_limit,1')->group(function () {
+			    Route::get('/user', function () {
+			        //
+			    });
+			});
+
+	# 表单   方法伪造 CSRF 保护 
+ 		<form action="/foo/bar" method="POST">
+		    <input type="hidden" name="_method" value="PUT">
+		    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+		</form>
+
+		<form action="/foo/bar" method="POST">
+		    @method('PUT')
+		    @csrf
+		</form>
+
+	# 访问当前路由
+		$route = Route::current();
+		$name = Route::currentRouteName();
+		$action = Route::currentRouteAction();	
+
+
+
+# 中间件  app/Http/Middleware
+	# checkAge  中间件
+		namespace App\Http\Middleware;
+
+		use Closure;
+		# 处理请求前执行
+		class BeforeMiddleware
+		{
+		    public function handle($request, Closure $next)
+		    {
+		        // Perform action
+
+		        return $next($request);
+		    }
+		}
+
+		class CheckAge
+		{
+		    /**
+		     * 处理传入的请求
+		     *
+		     * @param  \Illuminate\Http\Request  $request
+		     * @param  \Closure  $next
+		     * @return mixed
+		     */
+		    public function handle($request, Closure $next)
+		    {
+		        if ($request->age <= 200) {
+		            return redirect('home');
+		        }
+
+		        return $next($request);
+		    }
+		}
+
+		# 处理请求前执行
+		class AfterMiddleware
+		{
+		    public function handle($request, Closure $next)
+		    {
+		        $response = $next($request);
+
+		        // 执行操作
+
+		        return $response;
+		    }
+		}
+
+	# 注册中间件
+		# 全局中间件
+			# 在 app/Http/Kernel.php 中的 $middleware 属性中列出这个中间件
+
+		# 为路由分配中间件
+			Route::get('admin/profile', function () {})->middleware('auth');
+			Route::get('/', function () {)->middleware('first', 'second');
+
+			use App\Http\Middleware\CheckAge;
+			Route::get('admin/profile', function () {})->middleware(CheckAge::class);
+
+		# 中间件组
+			# 在 Http kernel 的 $middlewareGroups 属性
+			Route::get('/', function () {})->middleware('web');
+			Route::group(['middleware' => ['web']], function () {});
+
+		note:  RouteServiceProvider 将 web 中间组自动应用到 routes/web.php
+
+		# 中间件参数		
+			namespace App\Http\Middleware;
+
+			use Closure;
+			class CheckRole
+			{
+			    public function handle($request, Closure $next, $role)
+			    {
+			        if (! $request->user()->hasRole($role)) {
+			            // 重定向
+			        }
+
+			        return $next($request);
+			    }
+
+			}
+
+			# 多个参数 使用 : 分隔
+			Route::put('post/{id}', function ($id) {})->middleware('role:editor');
+
+		# Terminable 中间件  响应发送到浏览器后调用
+			namespace Illuminate\Session\Middleware;
+
+			use Closure;
+			class StartSession
+			{
+			    public function handle($request, Closure $next)
+			    {
+			        return $next($request);
+			    }
+
+			    public function terminate($request, $response)
+			    {
+			        // Store the session data...
+			    }
+			}
+
+	# CSRF 白名单	
+	# X-CSRF-TOKEN
+	# X-XSRF-TOKEN
+
+
+# 控制器  controller
+	# 控制台创建
+		php artisan make:controller HelloController
+
+	# 基础控制器
+		namespace App\Http\Controllers;
+
+		use App\User;
+		use App\Http\Controllers\Controller;
+
+		class UserController extends Controller
+		{
+		    public function show($id)
+		    {
+		        return view('user.profile', ['user' => User::findOrFail($id)]);
+		    }
+		}
+
+		Route::get('user/{id}', 'UserController@show');
+
+	# 控制器和命名空间
+		Route::get('foo', 'Photos\AdminController@method');
+
+	# 单个行为控制器
+		namespace App\Http\Controllers;
+
+		use App\User;
+		use App\Http\Controllers\Controller;
+
+		class ShowProfile extends Controller
+		{
+		    public function __invoke($id)
+		    {
+		        return view('user.profile', ['user' => User::findOrFail($id)]);
+		    }
+		}
+
+		Route::get('user/{id}', 'ShowProfile');
+
+	# 控制器中间件 Middleware 
+		# 路由指定
+		Route::get('profile', 'UserController@show')->middleware('auth');
+
+		# 控制器中调用
+		class UserController extends Controller
+		{
+		    public function __construct()
+		    {
+		        $this->middleware('auth');
+		        $this->middleware('log')->only('index');
+		        $this->middleware('subscribed')->except('store');
+		    }
+		}
+
+		# 闭包调用
+		$this->middleware(function ($request, $next) {
+		    return $next($request);
+		});
+
+	# 资源控制器
+		php artisan make:controller PhotoController --resource
+		
+		Route::resource('photo', 'PhotoController');
+
+		Route::resources([
+		    'photos' => 'PhotoController',
+		    'posts' => 'PostController'
+		]);
+
+		GET			/photo				index	photo.index
+		GET			/photo/create		create	photo.create
+		POST		/photo				store	photo.store
+		GET			/photo/{photo}		show	photo.show
+		GET			/photo/{photo}/edit	edit	photo.edit
+		PUT/PATCH	/photo/{photo}		update	photo.update
+		DELETE		/photo/{photo}		destroy	photo.destroy
+
+		php artisan make:controller PhotoController --resource --model=Photo
+
+		# 部分资源路由
+			Route::resource('photos', 'PhotoController', ['only' => [
+			    'index', 'show'
+			]]);
+
+			Route::resource('photos', 'PhotoController', ['except' => [
+			    'create', 'store', 'update', 'destroy'
+			]]);
+
+	# API 资源路由
+		Route::apiResource('photos', 'PhotoController');
+		
+		Route::apiResources([
+			'photos' => 'PhotoController',
+			'posts' => 'PostController'
+		]);
+
+		php artisan make:controller API/PhotoController --api
+
+	# 命名资源路由
+		Route::resource('photos', 'PhotoController', ['names' => [
+		    'create' => 'photos.build'
+		]]);
+
+	# 命名资源路由参数
+		Route::resource('user', 'AdminUserController', ['parameters' => [
+		    'user' => 'admin_user'
+		]]);
+
+	# 本地化资源 URIs   (AppServiceProvider)
+		use Illuminate\Support\Facades\Route;
+
+		public function boot()
+		{
+		    Route::resourceVerbs([
+		        'create' => 'crear',
+		        'edit' => 'editar',
+		    ]);
+		}
+
+HTTP request  请求
+	# 引入 Illuminate\Http\Request
+
+	# 自动注入
+    public function store(Request $request)
+    {
+        $name = $request->input('name');
+    }
+
+
+    public function update(Request $request, $id){}
+
+
+    # PSR-7 请求
+    composer require symfony/psr-http-message-bridge
+	composer require zendframework/zend-diactoros
+
+	use Psr\Http\Message\ServerRequestInterface;
+
+	Route::get('/', function (ServerRequestInterface $request) {
+	    //
+	});
+
+	# 输入预处理 | 规范化
+		# 中间件
+			TrimStrings
+			ConvertEmptyStringsToNull
+
+	# 获取输入
+		$input = $request->all();
+		$name = $request->input('name');
+		$name = $request->input('name', 'Sally'); 			# 默认值
+		$names = $request->input('products.*.name'); 		# 获取数组
+	# 从查询字符串获取输入
+		$name = $request->query('name'); 					# 查询字符串
+		$name = $request->query('name', 'Helen'); 			# 默认值
+		$query = $request->query()
+	# 通过动态属性获取输入
+		$name = $request->name;
+	# 获取 JSON 输入信息
+		$name = $request->input('user.name');
+	# 获取部分输入数据
+		$input = $request->only(['username', 'password']);
+		$input = $request->only('username', 'password');
+		$input = $request->except(['credit_card']);
+		$input = $request->except('credit_card');
+
+		only  	返回指定的
+		except  排除指定的
+	# 确定是否存在输入值
+		if ($request->has('name')) {}
+		if ($request->has(['name', 'email'])) {}
+		if ($request->filled('name')) {} 			# 不为空
+
+	# 旧输入  
+		# 闪存到 session
+			$request->flash();
+			return back();
+
+			$request->flashOnly(['username', 'email']);
+			$request->flashExcept('password');
+
+		# 闪存输入后重定向
+			return redirect('form')->withInput();
+
+			return redirect('form')->withInput(
+			    $request->except('password')
+			);
+
+		# 获取旧输入
+			$username = $request->old('username');
+
+			<input type="text" name="username" value="{{ old('username') }}">
+
+	# Cookie
+		# 从请求中获取 Cookie 
+			$value = $request->cookie('name');
+
+			# 使用 Cookie Facade
+			$value = Cookie::get('name');
+
+		# 将 Cookies 附加到响应
+			return response('Hello World')->cookie(
+			    'name', 'value', $minutes
+			);
+
+			return response('Hello World')->cookie(
+			    'name', 'value', $minutes, $path, $domain, $secure, $httpOnly
+			);
+
+			Cookie::queue(Cookie::make('name', 'value', $minutes));
+			Cookie::queue('name', 'value', $minutes);
+
+			return response('')->withCookie('name', 'value', 10)
+
+		# 生成 Cookie 实例
+			$cookie = cookie('name', 'value', $minutes);
+			return response('Hello World')->cookie($cookie);
+
+	# 文件
+		# 获取上传文件
+			$file = $request->file('photo');
+
+			$file = $request->photo;
+		# 文件是否存在
+			$request->hasFile('filekeyname');
+		# 验证成功上传
+			if ($request->file('photo')->isValid()) {}
+		# 文件路径 & 扩展名
+			$path = $request->photo->path();
+			$extension = $request->photo->extension();
+
+		# 存储上传文件
+			$path = $request->photo->store('images');
+			$path = $request->photo->store('images', 's3');
+
+			$path = $request->photo->storeAs('images', 'filename.jpg');
+			$path = $request->photo->storeAs('images', 'filename.jpg', 's3');
+		# 其他方法
+			$file->getClientOriginalName()   	# 获取文件名称
+			$file->getFileName() 				# 缓存在tmp文件夹中的文件名
+			$file->getRealPath() 				# 缓存在tmp文件下的文件的绝对路径,
+			$file->getClientOriginalExtension() # 上传文件的后缀
+			$file->getMimeType() 				# mimeType
+			$request->file('fileKeyName')->move('./upload', 'newFileName') #文件保存
+
+	# 配置可信代理   (tls/ssl https 不能生成连接时)
+
+
+	# 其他方法	
+		$request->method();  # 请求方法	
+		$request->isMethod('get'); 			# 检测方式	
+		$request->path(); 					# 请求路径	
+		$request->url(); 					# 获取完整的url	
+		$request->ip(); 					# 获取请求的ip
+
+		$request->header('请求头名称'); 		# 获取请求头信息
+
+		\Session::flash('name', 'value'); 	# 自定义删除
+		session('name'); 					# 读取
+
+
+
+	Input::file('myfile')   // 接收文件信息
+	Input::all() 			// 获取值
+	Input::except('name') 	// 除了name下标的值
+
+
+# HTTP responses  响应
+	# 创建响应
+		# 字符串
+			Route::get('/', function () {
+    			return 'Hello World';
+    		});
+    	# 数组
+    		Route::get('/', function () {
+			    return [1, 2, 3];
+			});
+
+		note: 返回 Eloquent 集合  会自动转为 json
+
+	# 响应对象
+		Route::get('home', function () {
+		    return response('Hello World', 200)->header('Content-Type', 'text/plain');
+		});
+
+	# 为响应增加头信息
+		return response($content)
+	            ->header('Content-Type', $type)
+	            ->header('X-Header-One', 'Header Value')
+	            ->header('X-Header-Two', 'Header Value');
+		
+		return response($content)
+            ->withHeaders([
+                'Content-Type' => $type,
+                'X-Header-One' => 'Header Value',
+                'X-Header-Two' => 'Header Value',
+            ]);
+
+    # 为响应增加 Cookie
+    	return response($content)
+                ->header('Content-Type', $type)
+                ->cookie('name', 'value', $minutes);
+
+        ->cookie($name, $value, $minutes, $path, $domain, $secure, $httpOnly)
+
+        Cookie::queue(Cookie::make('name', 'value', $minutes));
+		Cookie::queue('name', 'value', $minutes);
+
+	# Cookies 和 加密  App\Http\Middleware\EncryptCookies   $except
+		# 不参加加密
+		protected $except = [
+			'cookie_name',
+		];
+
+	# 重定向
+		Route::get('dashboard', function () {
+		    return redirect('home/dashboard');
+		});
+
+		Route::post('user/profile', function () {
+			// Validate the request...
+			return back()->withInput();
+		});
+
+	# 重定向至命名路由
+		return redirect()->route('login');
+		return redirect()->route('profile', ['id' => 1]);
+
+	# 通过 Eloquent 模型填充参数
+		return redirect()->route('profile', [$user]);
+
+	# 重定向至控制器行为
+		return redirect()->action('HomeController@index');
+
+		return redirect()->action(
+			'UserController@profile', ['id' => 1]
+		);
+
+	# 重定向到外部域
+		return redirect()->away('https://www.google.com');
+
+	# 重定向并使用闪存的 Session 数据
+		Route::post('user/profile', function () {
+		    // 更新用户的信息...
+
+		    return redirect('dashboard')->with('status', 'Profile updated!');
+		});
+
+	# 视图响应
+		return response()
+            ->view('hello', $data, 200)
+            ->header('Content-Type', $type);
+
+    # JSON 响应
+    	return response()->json([
+		    'name' => 'Abigail',
+		    'state' => 'CA'
+		]);
+
+	# 文件下载   Symfony HttpFoundation
+		return response()->download($pathToFile);
+		return response()->download($pathToFile, $name, $headers);
+		return response()->download($pathToFile)->deleteFileAfterSend(true);
+
+	# 流式下载
+		return response()->streamDownload(function () {
+		    echo GitHub::api('repo')
+		                ->contents()
+		                ->readme('laravel', 'laravel')['contents'];
+		}, 'laravel-readme.md');
+
+# 模型
+	class User extends Model
+	{
+		//设置表名
+		protected $table = 'user';
+		//设置主键字段
+		protected $primaryKey = 'user_id';
+		//设置不使用默认时间字段
+		public $timestamps = false;
+		//允许插入的字段
+		protected $fillable = ['name'];
+		//不允许插入的字段
+		protected $guarded = ['name'];
+	}
+
+
+	# 运行原生 SQL 查询
+		use Illuminate\Support\Facades\DB;
+		
+		# 运行 Select 查询
+		$users = DB::select('select * from users where active = ?', [1]);
+
+		# 使用命名绑定
+		$results = DB::select('select * from users where id = :id', ['id' => 1]);
+
+		# 运行插入语句
+		DB::insert('insert into users (id, name) values (?, ?)', [1, 'Dayle']);
+
+		# 运行更新语句
+		$affected = DB::update('update users set votes = 100 where name = ?', ['John']);
+
+		# 运行删除语句
+		$deleted = DB::delete('delete from users');
+
+		# 运行普通语句
+		DB::statement('drop table users');
+
+		# 监听查询事件  AppServiceProvider
+		    public function boot()
+		    {
+		        DB::listen(function ($query) {
+		            // $query->sql
+		            // $query->bindings
+		            // $query->time
+		        });
+		    }
+
+		# 数据库事务
+			DB::transaction(function () {
+				DB::table('users')->update(['votes' => 1]);
+				DB::table('posts')->delete();
+			});
+
+		# 处理死锁
+			DB::transaction(function () {
+			    DB::table('users')->update(['votes' => 1]);
+			    DB::table('posts')->delete();
+			}, 5);
+
+		# 手动使用事务
+			DB::beginTransaction();
+			DB::rollBack();
+			DB::commit();
+
+	# 查询构造器
+		use Illuminate\Support\Facades\DB;
+
+		# 从数据表中获取所有行
+		$users = DB::table('users')->get();
+
+		# 从数据表中获取单行或列
+		$user = DB::table('users')->where('name', 'John')->first();
+		$email = DB::table('users')->where('name', 'John')->value('email');
+
+		# 获取一列的值
+		$titles = DB::table('roles')->pluck('title');
+		$roles = DB::table('roles')->pluck('title', 'name');
+
+		# 分块结果
+		DB::table('users')->orderBy('id')->chunk(100, function ($users) {
+		    foreach ($users as $user) {
+		        // 返回 false 来阻止进一步的分块结果
+		        return false;
+		    }
+		});
+
+		# 聚合
+		$users = DB::table('users')->count();
+		$price = DB::table('orders')->max('price');
+		$price = DB::table('orders')->where('finalized', 1)->avg('price');
+
+		# 确定记录是否存在
+		return DB::table('orders')->where('finalized', 1)->exists();
+		return DB::table('orders')->where('finalized', 1)->doesntExist();
+
+		# Selects
+			# 指定一个 Select 语句
+			$users = DB::table('users')->select('name', 'email as user_email')->get();
+			# 没有重复的结果
+			$users = DB::table('users')->distinct()->get();
+			# 加一个字段
+			$query = DB::table('users')->select('name');
+			$users = $query->addSelect('age')->get();
+
+		# 原生表达式
+			$users = DB::table('users')
+				->select(DB::raw('count(*) as user_count, status'))
+				->where('status', '<>', 1)
+				->groupBy('status')
+				->get();
+
+		# 原生方法   selectRaw 代替 select(DB::raw(''))
+			# selectRow
+				$orders = DB::table('orders')
+	                ->selectRaw('price * ? as price_with_tax', [1.0825])
+	                ->get();
+
+	        # whereRaw / orWhereRaw
+	            $orders = DB::table('orders')
+	            ->whereRaw('price > IF(state = "TX", ?, 100)', [200])
+	            ->get();
+
+	        # havingRaw / orHavingRaw
+	        	$orders = DB::table('orders')
+                ->select('department', DB::raw('SUM(price) as total_sales'))
+                ->groupBy('department')
+                ->havingRaw('SUM(price) > 2500')
+                ->get();
+
+            # orderByRaw
+            	$orders = DB::table('orders')
+                ->orderByRaw('updated_at - created_at DESC')
+                ->get();
+
+        # joins 
+        	# Inner Join 语句
+	        	$users = DB::table('users')
+		            ->join('contacts', 'users.id', '=', 'contacts.user_id')
+		            ->join('orders', 'users.id', '=', 'orders.user_id')
+		            ->select('users.*', 'contacts.phone', 'orders.price')
+		            ->get();
+
+		    # Left Join 语句
+			    $users = DB::table('users')
+		            ->leftJoin('posts', 'users.id', '=', 'posts.user_id')
+		            ->get();
+
+		    # Cross Join 语句
+		    	$users = DB::table('sizes')
+		            ->crossJoin('colours')
+		            ->get();
+
+		    # 高级 Join 语句
+		    	DB::table('users')
+			        ->join('contacts', function ($join) {
+			            $join->on('users.id', '=', 'contacts.user_id')->orOn(...);
+			        })
+			        ->get();
+
+			    DB::table('users')
+			        ->join('contacts', function ($join) {
+			            $join->on('users.id', '=', 'contacts.user_id')
+			                 ->where('contacts.user_id', '>', 5);
+			        })
+			        ->get();    
+
+			# Unions
+				$first = DB::table('users')
+				            ->whereNull('first_name');
+
+				$users = DB::table('users')
+				            ->whereNull('last_name')
+				            ->union($first)
+				            ->get();
+
+			# Where 语句
+				# 简单的 Where 语句
+					$users = DB::table('users')->where('votes', '=', 100)->get();
+					$users = DB::table('users')->where('votes', 100)->get();
+					$users = DB::table('users')
+					                ->where('votes', '>=', 100)
+					                ->get();
+
+					$users = DB::table('users')
+					                ->where('votes', '<>', 100)
+					                ->get();
+
+					$users = DB::table('users')
+					                ->where('name', 'like', 'T%')
+					                ->get();
+
+					$users = DB::table('users')->where([
+					    ['status', '=', '1'],
+					    ['subscribed', '<>', '1'],
+					])->get();
+
+			# Or 语句
+				$users = DB::table('users')
+                    ->where('votes', '>', 100)
+                    ->orWhere('name', 'John')
+                    ->get();
+
+            # 其他 Where 语句
+            	# whereBetween
+            		$users = DB::table('users')->whereBetween('votes', [1, 100])->get();
+
+            	# whereNotBetween
+            		$users = DB::table('users')->whereNotBetween('votes', [1, 100])->get();
+
+            	# whereIn / whereNotIn
+            		$users = DB::table('users')->whereIn('id', [1, 2, 3])->get();
+            		$users = DB::table('users')->whereNotIn('id', [1, 2, 3])->get();
+
+            	# whereNull / whereNotNull
+            		$users = DB::table('users')->whereNull('updated_at')->get();
+            		$users = DB::table('users')->whereNotNull('updated_at')->get();
+
+            	# whereDate / whereMonth / whereDay / whereYear / whereTime
+            		$users = DB::table('users')->whereDate('created_at', '2016-12-31')->get();
+					$users = DB::table('users')->whereMonth('created_at', '12')->get();
+					$users = DB::table('users')->whereDay('created_at', '31')->get();
+					$users = DB::table('users')->whereYear('created_at', '2016')->get();
+					$users = DB::table('users')->whereTime('created_at', '=', '11:20')->get();
+
+				# whereColumn
+					$users = DB::table('users')->whereColumn('first_name', 'last_name')->get();
+					$users = DB::table('users')->whereColumn('updated_at', '>', 'created_at')->get();
+					$users = DB::table('users')->whereColumn([
+	                    ['first_name', '=', 'last_name'],
+	                    ['updated_at', '>', 'created_at']
+	                ])->get();
+
+	        # 参数分组
+	        	DB::table('users')
+		            ->where('name', '=', 'John')
+		            ->orWhere(function ($query) {
+		                $query->where('votes', '>', 100)
+		                      ->where('title', '<>', 'Admin');
+		            })
+		            ->get();
+
+		    # Where Exists 语句
+		    	DB::table('users')
+		            ->whereExists(function ($query) {
+		                $query->select(DB::raw(1))
+		                      ->from('orders')
+		                      ->whereRaw('orders.user_id = users.id');
+		            })
+		            ->get();
+
+		    # JSON Where 语句
+		    	$users = DB::table('users')
+				                ->where('options->language', 'en')
+				                ->get();
+
+				$users = DB::table('users')
+				                ->where('preferences->dining->meal', 'salad')
+				                ->get();
+
+			# Ordering, Grouping, Limit, & Offset
+				# orderBy
+					$users = DB::table('users')->orderBy('name', 'desc')->get();
+
+				# latest / oldest   ( 默认 created_at )
+					$user = DB::table('users')
+		                ->latest()
+		                ->first();
+
+		        # inRandomOrder  (随机)
+		        	$randomUser = DB::table('users')
+		                ->inRandomOrder()
+		                ->first();
+
+		        # groupBy / having
+		        	$users = DB::table('users')
+			            ->groupBy('account_id')
+			            ->having('account_id', '>', 100)
+			            ->get();
+
+			        $users = DB::table('users')
+		                ->groupBy('first_name', 'status')
+		                ->having('account_id', '>', 100)
+		                ->get();
+
+		        # skip / take    limit offset
+		        	$users = DB::table('users')->skip(10)->take(5)->get();
+		        	$users = DB::table('users')->offset(10)->limit(5)->get();
+
+		    # 条件语句
+		    	$role = $request->input('role');
+
+				$users = DB::table('users')
+				                ->when($role, function ($query) use ($role) {
+				                    return $query->where('role_id', $role);
+				                })
+				                ->get();
+
+				# 默认排序
+				$sortBy = null;
+				$users = DB::table('users')
+				                ->when($sortBy, function ($query) use ($sortBy) {
+				                    return $query->orderBy($sortBy);
+				                }, function ($query) {
+				                    return $query->orderBy('name');
+				                })
+				                ->get();
+
+			# 插入
+				DB::table('users')->insert(
+				    ['email' => 'john@example.com', 'votes' => 0]
+				);
+
+				DB::table('users')->insert([
+				    ['email' => 'taylor@example.com', 'votes' => 0],
+				    ['email' => 'dayle@example.com', 'votes' => 0]
+				]);
+
+				# 自增 id
+				$id = DB::table('users')->insertGetId(
+				    ['email' => 'john@example.com', 'votes' => 0]
+				);
+
+			# 更新
+				DB::table('users')->where('id', 1)->update(['votes' => 1]);
+
+		    # 更新 json 字段
+		    	DB::table('users')
+		            ->where('id', 1)
+		            ->update(['options->enabled' => true]);
+
+		    # 自增与自减
+		    	DB::table('users')->increment('votes');
+				DB::table('users')->increment('votes', 5);
+				DB::table('users')->decrement('votes');
+				DB::table('users')->decrement('votes', 5);
+
+				DB::table('users')->increment('votes', 1, ['name' => 'John']);
+
+			# 删除 deletes
+				DB::table('users')->delete();
+				DB::table('users')->where('votes', '>', 100)->delete();
+
+				# 清空表
+				DB::table('users')->truncate();
+
+			# 悲观锁
+				# 共享锁
+				DB::table('users')->where('votes', '>', 100)->sharedLock()->get();
+				# 更新锁
+				DB::table('users')->where('votes', '>', 100)->lockForUpdate()->get();
+
+# Eloquent (ActiveRecord)
+	# 创建模型 
+	php artisan make:model User
+
+	# 生成模型时 生成数据库迁移
+	php artisan make:model User --migration
+	php artisan make:model User -m
+	
+	# 模型所对应的默认的表名是在模型后面有s, 则表名跟模型名称同名
+
+	protected $table = 'my_flights';	# 表名
+	protected $primaryKey = ''; 		# 主键名
+	public $incrementing = false; 		# 主键非自增
+	protected $keyType = string; 		# 主键类型
+
+    #时间字段 created_at updated_at
+	public $timestamps = false; 		# 不自动维护类型
+	
+	protected $dateFormat = 'U'; 		# 模型日期字段的存储格式
+    const CREATED_AT = 'creation_date'; # 创建时间字段名
+    const UPDATED_AT = 'last_update';	# 更新时间字段名
+
+
+    protected $connection = 'connection-name';   # 数据模型专属的数据库连接
+
+    protected $fillable = ['name']; 			 # 可以被批量赋值的属性    
+    protected $guarded = ['name']; 				 # 不可被批量赋值的属性
+
+
+    # 获取模型
+	    use App\Flight;
+		$flights = App\Flight::all();
+
+		# 添加约束
+			$flights = App\Flight::where('active', 1)
+		               ->orderBy('name', 'desc')
+		               ->take(10)
+		               ->get();
+
+		# 集合
+			$flights = $flights->reject(function ($flight) {
+			    return $flight->cancelled;
+			});
+
+		# 分块结果
+			Flight::chunk(200, function ($flights) {
+			    foreach ($flights as $flight) {
+			        //
+			    }
+			});
+
+		# 使用游标
+		foreach (Flight::where('foo', 'bar')->cursor() as $flight) {
+	    	//
+		}
+
+	# 检索单个模型／集合
+		$flight = App\Flight::find(1);
+		$flight = App\Flight::where('active', 1)->first();
+
+		$flights = App\Flight::find([1, 2, 3]);
+
+		# 『找不到』异常    找不到时会返回404
+			$model = App\Flight::findOrFail(1);
+			$model = App\Flight::where('legs', '>', 100)->firstOrFail();
+
+		# 检索集合
+			$count = App\Flight::where('active', 1)->count();
+			$max = App\Flight::where('active', 1)->max('price');
+
+	# 插入 & 更新模型
+		# 插入
+			$flight = new Flight;
+	        $flight->name = $request->name;
+	        $flight->save();
+
+	    # 更新
+	    	$flight = App\Flight::find(1);
+			$flight->name = 'New Flight Name';
+			$flight->save();
+
+		# 批量更新    Eloquent 的批量更新不会触发 saved 和 updated 事件
+			App\Flight::where('active', 1)
+			          ->where('destination', 'San Diego')
+			          ->update(['delayed' => 1]);
+
+		# 其它创建方法
+			# firstOrCreate/ firstOrNew  (不存在创建) 
+				$flight = App\Flight::firstOrCreate(['name' => 'Flight 10']); 	
+				$flight = App\Flight::firstOrCreate(
+				    ['name' => 'Flight 10'], ['delayed' => 1]
+				);
+			
+				$flight = App\Flight::firstOrNew(['name' => 'Flight 10']);  # 需要使用 save() 保存
+
+			# updateOrCreate  (没匹配到存在的模型，则创建一个)
+					$flight = App\Flight::updateOrCreate(
+					    ['departure' => 'Oakland', 'destination' => 'San Diego'],
+					    ['price' => 99]
+					);		
+
+	# 删除模型
+		$flight = App\Flight::find(1);
+		$flight->delete();
+
+		# 通过主键删除模型
+			App\Flight::destroy(1);
+			App\Flight::destroy([1, 2, 3]);
+			App\Flight::destroy(1, 2, 3);
+
+		# 通过查询删除模型
+			$deletedRows = App\Flight::where('active', 0)->delete();
+
+		note: 批量删除时 不会触发 deleting 和 deleted 模型事件
+
+	# 软删除  ( deleted_at 字段 )   Illuminate\Database\Eloquent\SoftDelete	
+		protected $dates = ['deleted_at'];    # 需要转换成日期的属性
+
+		Schema::table('flights', function ($table) {
+		    $table->softDeletes();
+		});
+
+		# 判断当前模型是否被删除
+		if ($flight->trashed()) {}
+
+	# 查询软删除模型
+		# 包括软删除的模型
+			$flights = App\Flight::withTrashed()
+                ->where('account_id', 1)
+                ->get();
+
+            $flight->history()->withTrashed()->get();
+
+        # 检索软删除模型
+	        $flights = App\Flight::onlyTrashed()
+                ->where('airline_id', 1)
+                ->get();
+
+		# 恢复软删除模型
+			$flight->restore();
+			
+			App\Flight::withTrashed()->where('airline_id', 1)->restore();
+
+			$flight->history()->restore();
+
+	# 永久删除
+		$flight->forceDelete();
+		$flight->history()->forceDelete();
+
+	# 查询作用域
+			# 编写全局作用域   Illuminate\Database\Eloquent\Scope
+			    public function apply(Builder $builder, Model $model)
+			    {
+			        $builder->where('age', '>', 200);
+			    }
+
+				note: 如果需要在 select 语句里添加字段，应使用 addSelect 方法，而不是 select 方法。 这将有效防止无意中替换现有 select 语句的情况
+
+			# 应用全局作用域
+			    protected static function boot()
+			    {
+			        parent::boot();
+
+			        static::addGlobalScope(new AgeScope);
+			    }
+
+		# 匿名的全局作用域
+		    protected static function boot()
+		    {
+		        parent::boot();
+
+		        static::addGlobalScope('age', function (Builder $builder) {
+		            $builder->where('age', '>', 200);
+		        });
+		    }
+
+		# 取消全局作用域
+			User::withoutGlobalScope(AgeScope::class)->get();  	# 取消全局作用域 AgeScope::class
+			User::withoutGlobalScope('age')->get(); 			# 取消全局闭包作用域 age
+
+			User::withoutGlobalScopes()->get();  				# 取消全部作用域
+			# 取消个别 全局作用域
+			User::withoutGlobalScopes([
+			    FirstScope::class, SecondScope::class
+			])->get();
+
+		# 本地范围
+		    public function scopePopular($query)
+		    {
+		        return $query->where('votes', '>', 100);
+		    }
+
+		    $users = App\User::popular()->active()->orderBy('created_at')->get();
+
+		# 动态范围
+			public function scopeOfType($query, $type)
+			{
+			    return $query->where('type', $type);
+			}
+
+			$users = App\User::ofType('admin')->get();
+
+		# 事件
+			retrieved 		# 检索现有模型时
+			creating 		# 第一次被保存
+			created 		# 第一次被保存
+			updating 		# 已存在 并调用 save
+			updated 		# 已存在 并调用 save
+			saving			# 已存在 并调用 save
+			saved 			# 已存在 并调用 save
+			, deleting, deleted, restoring, restored
+
+			#  此模型的事件映射
+			protected $dispatchesEvents = [
+			    'saved' => UserSaved::class,
+			    'deleted' => UserDeleted::class,
+			];
+
+		# 观察者
+			namespace App\Observers;
+			use App\User;
+
+			class UserObserver
+			{
+			    # 监听创建用户事件.
+			    public function created(User $user){}
+
+			    # 监听删除用户事件.			    
+			    public function deleting(User $user){}
+			}
+
+			# 注册观察者
+			namespace App\Providers;
+			use App\User;
+			use App\Observers\UserObserver;
+			use Illuminate\Support\ServiceProvider;
+
+			class AppServiceProvider extends ServiceProvider
+			{
+			    # 运行所有应用服务
+			    public function boot()
+			    {
+			        User::observe(UserObserver::class);
+			    }
+
+			    # 注册服务提供.
+			    public function register(){}
+			}
+
+
+
+
+
+
+User::find(1); 	//id = 1
+$user = User::where('id', 1)->get();
+
+
+
+
+
+//操作多个数据库
+DB::connection('slaver-1')->select();
+
+//查询单条结果中的某个字段值
+DB::table('user')->value('username');
+
+//获取结果集中某一个字段的所有值
+DB::table('user')->lists('username');
+
+####连贯操作
+
+DB::table('user')->select('name','pass')->get();
+DB::raw('count(id) count')   //select里面
+
+//设置where条件
+DB::table('user')->where('name','=','名字')->get();
+DB::table('user')->where('cotes','>',100)->orWhere('name','=','John')->get();
+DB::table('user')->	('id',[1,100])->get();
+DB::table('user')->whereIn('id',[1,2,3])->get();
+//排序
+DB::table('user')->orderBy('id','decs')->get();
+//分页
+DB::table('user')->skip(5)->take(4)->get();
+skip 偏移位置
+take 获取数量
+//连接表
+DB::table('good_test')->leftJoin('cate','cate.id','=','good_test.cid')->where('goods_test.gid','<',20)->get();
+DB::table('good_test')->leftJoin('cate', function($joinOn){
+	$joinOn
+		->on('id', '=', 'pid')
+		->orOn('cid', '=', 'vd');
+})->where('goods_test.gid','<',20)->get();
+//计算
+DB::table('good_test')->count();
+DB::table('good_test')->max('price');
+DB::table('good_test')->avg('price');
+
+####sql语句记录
+//获取到生成的Sql
+Model::table()->where()->toSql();
+
+放在路由文件的最上面
+Event::listen('illuminate.query',function($query){
+	var_dump($query);
+});
+
+### Eloquet
+#### 模型限定
+
+eg
+	order => orders
+	country => countries
+##### 主键字段 id
+
+#### 操作
+##### 添加
+$model = new Model;
+$model->age = 1;
+$model->save();
+
+##### 读取
+$model = (new Model)->find(1);
+echo $model->title;
+echo $model['title'];
+
+##### 删除
+$model = (new Model)->find(1);
+$model->delete();
+
+##### 更新
+$model = (new Model)->find(1);
+$model->age = 2;
+$model->save();
+
+#### 关系
+##### 一对一
+return $this->hasOne('App\User', 'user_id');
+##### 一对多
+return $this->hasMany('App\User', 'user_id');
+##### 关系创建
+return $this->belongsTo('App\Country', 'country_id');
+##### 多对多
+return $this->belongs ToMany('App\Group', 'group_user', 'user_id', 'group_id');
+###### 多对多的信息添加
+$user = User::find(2);
+$user->group()->attach(1);
+$group = Group::find(1);
+$user->group()->attch($group); //这里既可以放置一个id, 也可以放置一个模型对象
+###### 多对多关系的删除
+$user = User::find(1);
+$group = Group::find(3);
+$user->group()->detach($group);
+###### 同步
+$user = User::find(2);
+$user->group()->sync([1,2,3]);
+
+#### 方法
+##### only()  返回集合中指定键的所有项目
+$collection = collect(['product_id' => 1, 'name' => 'Desk', 'price' => 100, 'discount' => false]);
+$filtered = $collection->only(['product_id', 'name']);
+$filtered->all();
+// ['product_id' => 1, 'name' => 'Desk']
+
+###### pluck() 获取所有集合中指定「键」 对应的值
+$collection = collect([
+    ['product_id' => 'prod-100', 'name' => 'Desk'],
+    ['product_id' => 'prod-200', 'name' => 'Chair'],
+]);
+$plucked = $collection->pluck('name');
+$plucked->all();
+// ['Desk', 'Chair']
+你也可以指定要怎么给最后出来的集合分配键：
+$plucked = $collection->pluck('name', 'product_id');
+$plucked->all();
+// ['prod-100' => 'Desk', 'prod-200' => 'Chair']
+
+
+
+
+# 视图   resources/views
+	# 创建视图  resources/views/greeting.blade.php
+		<html>
+		    <body>
+		        <h1>Hello, {{ $name }}</h1>
+		    </body>
+		</html>
+
+		Route::get('/', function () {
+			return view('greeting', ['name' => 'James']);
+		});
+
+		return view('admin.profile', $data);
+
+	# 判断视图文件是否存在
+		use Illuminate\Support\Facades\View;
+
+		if (View::exists('emails.customer')) {}
+
+	# 创建第一个可用视图
+		return view()->first(['custom.admin', 'admin'], $data);
+
+		use Illuminate\Support\Facades\View;
+		return View::first(['custom.admin', 'admin'], $data);
+
+	# 向视图传递数据
+		return view('greetings', ['name' => 'Victoria']);
+
+		return view('greeting')->with('name', 'Victoria');
+
+	# 与所有视图共享数据  AppServiceProvider
+	    public function boot()
+	    {
+	        View::share('key', 'value');
+	    }
+
+
+	asset()
+
+	TokenMismatchException in VerifyCsrfToken.php line 53
+	//说明当前的post 请求中缺少验证信息
+	在每一个 xxxcsdffvcaqwertyuiopjklklf;dssdfhgjzvcxnm,.nb
+
+	{{csrf_field()}}
+	{{csrf_token()}}
+
+	{{ method_field('PUT') }}
+
+
+	{{$name}}
+	@{{$name}} //不解析
+	{{$name or XXX}} //默认值 XXX ($name 为 null时)
+	{{isset($name)?$nme:'XXX'}} // 当$name没有时 输出 XXX
+	//默认转义
+	{!! $str !!}  不转义html标签
+
+	流程控制
+	@if()
+	@else
+	@endif
+
+	@unless() 			//除非
+	@endunless
+
+	@for()
+	@endfor
+
+	@foreach()
+	@endforeach
+
+	@forelse() 			//foreach 的一种扩展
+	@empty
+	没有数据
+	@endforelse
+
+	@while()
+	@endwhile
+
+	引入
+	@include('common.header');
+	@include('common.header', ['page' => '文章页面']);
+
+	@yield('content')			//单标签
+
+	@extends('layoutes.home')
+	@section('content', '更改的内容')
+
+
+	@section('content')
+	@show  					//父视图
+
+	@section('content')
+	@endsection 			//子视图里面显示
+
+
+	@parent 				//使用父级模板
+		//我是yidel的继承
+
+
+
+
+	//模板解析
+	return view('response');
+	//设置响应头
+	//设置返回内容并跳转
+	return '成功<script>lcation.href="/form"</script>';
+
+
+
+
+
+//隐式控制器  如果是goods开头的路径 都是交给GoodsController来实现
+Route::controller('goods', 'GoodsController');
+goods/add
+function getAdd(){}
+
+
+```php
+namespace App\Http\Controllers;
+
+Class IndexController extends Controller{
+	public function index(Request $request)
+	{
+		$name = '123';
+		$data = [
+			'a' => 1;
+		];
+		//return view('my_laravel')->with('name', $name);
+		//return view('my_laravel')->with('name', $name)->with('name', $name);
+		return view('index', $data);
+		return view('index', compact('data', 'title'));
+	}
+
+}
+```
+
+Crypt::encrypt() 		//加密
+Crypt::decrypt() 		//解密
+
+Hash::make('')		//单方面加密
+Hash::check('plain-text', $hashedPassword)
+Hash::needsRehash($hashed)
+
+
+
+
+
+# 数据库迁移  migrate
+	# 生成迁移  [/database/migrtions]
+	php artisan make:migration create_users_table
+
+	php artisan make:migration create_users_table --create=users
+	php artisan make:migration add_votes_to_users_table --table=users
+
+	# 迁移结构 (up 和 down)
+	use Illuminate\Support\Facades\Schema;
+	use Illuminate\Database\Schema\Blueprint;
+	use Illuminate\Database\Migrations\Migration;
+
+	class CreateFlightsTable extends Migration
+	{
+		#  运行数据库迁移
+		public function up()
+		{
+			# 重命名表
+			Schema::rename($from, $to);
+
+			# 删除
+			Schema::drop('users');
+			Schema::dropIfExists('users');
+
+			
+			# 判断表是否存在
+			if(!Schema::hasTable('table_name')){
+				# 创建表 表名是  没有前缀的 带s结尾 y是 ies
+				Schema::create('table_name', function(Blueprint $table){
+					# 自增
+					$table->tinyIncrements('id');  			# tinyint   
+					$table->increments('id'); 				# int
+					$table->smallIncrements('id');	 		# small
+					$table->mediumIncrements('id'); 		# medium
+					$table->bigIncrements('id'); 			# big int
+
+					# 数值
+					$table->tinyInteger('votes'); 			# tinyint
+					$table->unsignedTinyInteger('votes'); 	# tinyint 不带符号
+					$table->integer('password');			# int
+					$table->unsignedInteger('votes'); 		# int 不带符号
+					$table->smallInteger('votes'); 			# small
+					$table->unsignedSmallInteger('votes'); 	# small 不带符号
+					$table->mediumInteger('id'); 			# MEDIUMINT
+					$table->unsignedMediumInteger('votes'); # mediumint 不带符号
+					$table->unsignedBigInteger('votes'); 	# bigint 不带符号
+
+					$table->decimal('amount', 8, 2); 		# decimal
+					$table->unsignedDecimal('amount', 8, 2);# decimal 不带符号
+					$table->double('amount', 8, 2); 		# double
+					$table->float('amount', 8, 2); 			# float
+
+					$table->uuid('id'); 					# uuid
+
+					# 字符串
+					$table->char('pwd'); 					# char
+					$table->string('name', 64, false);		# varchar
+					$table->mediumText('description'); 		# mediumtext
+					$table->text('description'); 			# text
+					$table->longText('description'); 		# longtext
+
+					# 时间
+					$table->time('sunrise'); 				# time
+					$table->timeTz('sunrise'); 				# time 带时区
+					$table->timestamp('added_on'); 			# timestamp
+					$table->timestampTz('added_on');		# timestamp 带时区
+					$table->date('created_at'); 			# date
+					$table->dateTime('created_at'); 		# datetime
+					$table->dateTimeTz('created_at');		# 带时区 datetime
+					$table->year('birth_year'); 			# year
+
+					$table->timestamps();					# 自动创建时间字段 可空的 created_at 和 updated_at TIMESTAMP
+					$table->timestampsTz(); 				# 带时区的
+					$table->softDeletes(); 					# 软删除 deleted_at
+					$table->softDeletesTz(); 				# 软删除 带时区
+
+					# 空间
+					$table->geometry('positions'); 			# 几何
+					$table->geometryCollection('positions');# 几何合集
+					$table->lineString('positions'); 		# 线段坐标
+					$table->multiLineString('positions');
+					$table->multiPoint('positions');
+					$table->multiPolygon('positions');
+					$table->point('position');
+					$table->polygon('positions');
+
+					# 其他
+					$table->ipAddress('visitor'); 			# ip 地址
+					$table->macAddress('device'); 			# mac 地址
+					$table->json('options'); 				# json
+					$table->jsonb('options'); 				# jsonb
+
+					$table->morphs('taggable'); 			# 相当于加入递增的 taggable_id 与字符串 taggable_type
+					$table->nullableMorphs('taggable');
+					$table->nullableTimestamps();
+
+
+					$table->binary('data'); 				# blob
+					$table->boolean('confirmed'); 			# boolean
+					$table->enum('level', ['easy', 'hard']);# enum
+
+
+					->after('column') 						# 在谁之后
+					->autoIncrement() 						# integer 自增
+					->charset('utf8') 						# 字符集
+					->collation('utf8_unicode_ci') 			# 排序规则
+					->comment('my comment') 				# 注释
+					->default($value) 						# 默认值
+					->first()								# 此字段在首位
+					->nullable() 							# 允许为空
+					->storedAs($expression) 				# 创建一个存储生成的字段
+					->unsigned() 							# 无符号
+					->useCurrent() 							# 将 timestamp 字段设置为 CURRENT_TIMESTAMP 为默认值
+					->virtualAs($expression) 				# 虚拟成功的字段
+					
+					# 索引
+					$table->primary('id'); 					# 主键索引
+					$table->index('password'); 				# 普通索引
+					$table->unique('username'); 			# 唯一索引
+					$table->unique(['username','aa']);		# 复合索引
+					$table->spatialIndex('location'); 		# 空间索引
+
+					$table->engine = 'myisam'; 				# 设置引擎  InnoDB
+					$table->charset = 'utf8'; 				# 字符集
+					$table->collation = 'utf8_unicode_ci';	# 排序规则
+					$table->temporary(); 					# 创建临时表
+				});
+			}else{
+				# 调整表结构
+				Schema::table('table_name', funciton ($table){
+					# 判断字段是否存在
+					if(!Schema::hasColumn('table_name', 'field_name')){
+						$table->tinyinteger('sxe')->comment('性别');
+					}
+
+					# 修改字段类型 这里需要安装一个包, composer require doctrine/dbal
+					$table->text('nickanme', 30)->change();
+
+					# 重命名字段
+					$table->renameColumn('from', 'to');
+
+					# 删除字段
+					$table->dropColumn('votes');
+					$table->dropColumn(['votes', 'avatar', 'location']);  # 删除多个
+
+					# 删除索引
+					$table->dropPrimary('users_id_primary');
+					$table->dropUnique('users_email_unique');
+					$table->dropIndex('geo_state_index');
+					$table->dropSpatialIndex('geo_location_spatialindex');
+
+					$table->index('group_id');
+
+					if($this->hasIndex('test','unique')){
+						$table->dropPrimary('id');
+					}
+				});
+			}
+
+			//创建字段
+
+		}
+
+		//回滚的时候执行
+		public funciton down()
+		{
+			Schema::drop('test');
+		}
+	}
+
+	# 运行迁移
+		php artisan migrate  			# 所有的
+		php artisan migrate --force 	# 强制执行
+		
+		php artisan migrate:rollback   	# 回滚最后一次迁移
+		php artisan migrate:rollback --step=5 	# 限制回滚迁移的个数
+
+		# 回滚所有的数据库迁移
+		php artisan migrate:reset [--database[="..."]] [--force] [--pretend]
+
+		# 重置并重新运行所有的 migrations
+		php artisan migrate::refresh 	
+		php artisan migrate:fresh --seed
+
+
+
+
+
+//迁移的时候执行
+
+public function hasIdex($table, $name)
+{
+	$conn = Schema::getConnection();
+	$dbschemaMabager = $conn->getDoctrineSchemaManager();
+	$doctrineTable = $dbSchemaManager->listTableDetails($table);
+	return $doctrineTable->hasIndex($name);
+}
+
+
+
+
+### 数据填充
+#### 套路一
+##### 创建注入文件(文件默认在 database/seed中)
+php artisan make:seeder testSeeder
+
+##### 在文件中填写注入代码
+public function run()
+{
+	$arr = [];
+	for($i = 0; $i < 20;$i++){
+		$tmp = [];
+		//返回20长度的随机字符串
+		$tmp['username'] = str_random(20);
+		$tmp['password'] = str_random(20);
+		$tmp['group_id'] = rand(1,10);
+		$tmp['email'] = rand(10000,99999).'@qq.com';
+		$tmp['sex'] = rand(0,1);
+		$tmp['age'] = rand(10, 60);
+
+		$arr[] = $tmp;
+	}
+	DB::table('test')->insert($arr);
+}
+
+
+##### 运行指令
+php artisan db:seed --class=testSeeder
+
+#### 套路二
+##### 创建注入文件
+php artisan make:seeder testSeeder
+
+##### 在文件中填写注入代码
+public function run()
+{
+	$arr = [];
+	for($i = 0; $i < 20;$i++){
+		$tmp = [];
+		//返回20长度的随机字符串
+		$tmp['username'] = str_random(20);
+		$tmp['password'] = str_random(20);
+		$tmp['group_id'] = rand(1,10);
+		$tmp['email'] = rand(10000,99999).'@qq.com';
+		$tmp['sex'] = rand(0,1);
+		$tmp['age'] = rand(10, 60);
+
+		$arr[] = $tmp;
+	}
+	DB::table('test')->insert($arr);
+}
+y$z8v
+
+##### 在 DatabaseSeeder
+public function run()
+{
+	Model::unguard();
+	$this->call(testSeeder::class);
+	Model::reguard();
+}
+
+##### 运行指令
+php artisan db:seed
+
+
+
+
+
+
+
+
+
+# 广播频道
+Broadcasting
+
+# Artisan 命令  (make:command)
+Console 
+
+# 事件   (make:event)
+Events
+
+# 异常处理
+Exceptions
+
+# 控制器 中间件 表单请求   逻辑
+Http
+
+# 队列任务 (make:job)
+Jobs
+
+# 事件监听 (make:listener)
+Listeners
+
+# 邮件 (make:mail)
+Mail
+
+# 「事务性」通知 (make:notification)
+Notifications
+
+# 授权策略类 (make:policy)
+Policies
+
+# 服务容器中绑定服务、注册事件、以及执行其他任务
+Providers
+
+# 验证规则 (make:rule)
+Rules
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 安装
+composer create-project laravel/laravel --prefer-dist
+
+
+
+# blog 的 Laravel 项目
+composer create-project laravel/laravel blog --prefer-dist
+composer create-project laravel/laravel blog --prefer-dist "5.2.*"
+
+
+
+
+# 服务器错误 500
+linux系统上，（以ubuntu为例），nginx、php-fpm 默认安装之后都是以
+www-data
+用户运行的，你可以看看这两个服务的原始配置文件，建议不要修改用户，而是把你的laravel项目目录也设置属主为
+www-data
+如下：
+sudo chown -R www-data:www-data /path/to/your/laravel/project
+
+nginx配置中的root html;去掉就好了。
+
+# 运行环境要求
+
+	1 php 版本 >= 5.5.9
+	2 开启 rewrite 和 vhost
+
+	# nginx 开启重写
+	location / {
+	    try_files $uri $uri/ /index.php?$query_string;
+	}
+
+	3 开启 php 扩展
+	vi php.ini 
+
+	extension=php_openssl.dll
+	extension=php_mbstring.dll
+	extension=php_pdo_mysql.dll
+
+	mcrypt PHP 扩展  		php的加密扩展, 提供多种加算法
+	openssl 扩展				对传输的数据进行加密
+	mbstring 扩展			mbstring 提供了针对多字节字符串
+	Tokenizer PHP 扩展		php代码解析
+
+
+
+resource
+
+
+Note: 路由参数不能包括 `-` 字符, 需要的话可以使用_替换
+
+MethodNotAllowedHttpException in RouteCollection.php line 218
+//说明当前路由的请求方式和路由规则的请求方式不匹配
+
+laravel 跨级啊中所有的模板文件都是存放在 resources/views
+
+
+
+
+
+
+
+composer dump-auto
+
+### 工具
+#### debugbar安装
+composer require barryvdh/laravel-debugbar
+
+在config/app.php里面的providers添加Barryvdh\Debugbar\ServiceProvider::class,
+
+#### postman
+
+#### IDE Helper 安装
+composer require barryvdh/laravel-ide-helper
+
+在 config/app.php 的 providers 中添加：
+Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+
+生成辅助文件：
+php artisan ide-helper:generate
+提示：需要首先清除 bootstrap/compiled.php，所以生成前需要执行 php artisan clear-compiled，生成后执行 php artisan optimize
+
+配置 composer.json 以在每次提交之后执行。
+"scripts":{
+    "post-update-cmd": [
+        "php artisan clear-compiled",
+        "php artisan ide-helper:generate",
+        "php artisan optimize"
+    ]
+},
+
+### 验证器
+//验证
+$input = Input::all();
+
+$rules = [
+	'password' => 'required|between:6,20|confirmed',
+	//confirmed   -----  _confirmation
+];
+
+$message = [
+	'password.required' => '新密码不能为空',
+	'password.between' => '新密码必须在6-20位之间!',
+];
+
+$validator = Validator::make($input, $rules,$message);
+
+if($validator->passes()){
+	echo 'ok';
+}else{
+	//dd($validator->errors()->all());
+	return back()->withErrors($validator);
+}
+
+
+
+public function store(Request $request)
+{
+    $this->validate($request, [
+        'title' => 'required|unique:posts|max:255',
+        'body' => 'required',
+    ], [
+		'username' => '用户名不能为空',
+    ]);
+}
+
+<!-- /resources/views/post/create.blade.php -->
+
+<h1>创建文章</h1>
+
+@if (count($errors) > 0)
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
+@if (count($errors) > 0)
+    <figure class="highlight">
+        <div class="mark">
+            @foreach ($errors->all() as $error)
+                <p> {{ $error }} </p>
+            @endforeach
+        </div>
+    </figure>
+@endif
+
+
+#### Rules
+accepted
+active_url
+after:YYYY-MM-DD
+before:YYYY-MM-DD
+alpha
+alpha_dash
+alpha_num
+#####　数组
+array
+##### 范围
+between:1,10
+confirmed
+date
+date_format:YYYY-MM-DD
+different:fieldname
+digits:value
+digits_between:min,max
+##### 布尔
+boolean
+##### 邮箱
+email
+exists:table,column
+##### 图片
+image
+##### in
+in:foo,bar,...
+not_in:foo,bar,...
+##### 整数
+integer
+##### 数值
+numeric
+##### ip
+ip
+##### 最大最小值
+max:value
+min:value
+##### 图片格式
+mimes:jpeg,png
+##### 正则
+regex:[0-9]
+##### 必填
+required
+required_if:field,value
+required_with:foo,bar,...
+required_with_all:foo,bar,...
+##### 两个字段必须有一个必填
+'email' => 'required_without:phone',
+'phone' => 'required_without:email',
+
+required_without_all:foo,bar,...
+##### 验证字段值和指定的 字段 field 值是否相同。
+same:field
+##### 验证字段值的大小是否符合指定的 value 值。对于字符串来说，value 为字符数。对于数字来说，value 为某个整数值。对文件来说，size 对应的是文件大小(单位 kb)
+size:value
+##### 字符串
+string
+##### 验证字段值是否是有效的时区
+timezone
+unique:table,column,except,idColumn
+##### Url
+url
+
+
+
+### 控制台
+
+
+创建模板
+php artisan make:model User
+php artisan make:model User -m  //这里会自定创建一个数据迁移文件
+
+创建中间件
+php artisan make:middleware AuthMiddleware
+
+查看路由
+php artisan route:list
+
+重新生成一个秘钥
+php artisan key:generate
+
+
+### 分页
+$data = Model::orderBy('id', 'desc')->paginate(10);
+return view('admin.model.index', compact('data'));
+
+<div class="page_list">
+    {{ $data->links() }}
+</div>
+
+<style>
+    .result_content ul li span {
+        font-size: 15px;
+        padding: 6px 12px;
+    }
+</style>
+
+
+### Ajax
+post
+
+
+function(){
+	var x = new XMLHttpRequeset();
+
+	x.onreadystatchange = function(){
+		if(x.readyState == 4 && x.status == 200){
+			alert(x.responseText);
+		}
+	}
+
+	x.open('post', '/ajax', true);
+	x.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+
+	x.send('_token={{csrf_token()}}&user=123');
+}
+
+
+### 　系统框架
+####　请求生命周期
+#####　简介
+使用　现实世界　中的任何工具时，　若能了解它的运作原理，　你将会更有信心来用好他．　开发应用程序也一样
+
+#### 门面
+//获取配置文件夹  文件的内容
+\Illuminate\Support\Facades\Config::get('web..web_title')
+
+//公开分享 视图数据
+\Illuminate\Support\Facades\View::share('navs', $navs);
+
+fuzhu
+### 辅助函数
+
+#### 数组
+//方法从数组中返回给定键对应的键值对列表
+$array = array_pluck($array, 'developer.name', 'developer.id');
+
+#### 路径
+app_path() 		 	app文件夹的完整路径
+base_path() 		项目根目录的完整路径
+
+
+
+自动匹配 [模块 /控制器 /方法]：
+Route::any('/{module}/{class}/{action}', function($module, $class, $action) {
+    $ctrl = \App::make("\\App\\Http\\Controllers\\" . $module . "\\" . $class . "Controller");
+    return \App::call([$ctrl, $action]);
+});
+

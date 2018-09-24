@@ -1,3 +1,50 @@
+/******************************************************************************************
+| js                                                                                |
+*******************************************************************************************/
+
+# 日期格式化 
+
+Date.prototype.Format = function (fmt) { //author: meizz 
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
+
+(new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+
+
+
+
+
+
+            'nine' => [
+                '9zhounian',
+                '9zhounian5',
+                '9zhounian6'
+            ]
+
+common
+route
+
+
+app
+tags
+
+common
+base
+
+
+
 php
 
 function format_date( $time )
@@ -610,38 +657,6 @@ public function url_exists($url) {
 /******************************************************************************************
 | 其它函数                                                                                |
 *******************************************************************************************/
-curl post
-    $ch = curl_init();//初始化curl
-    curl_setopt($ch, CURLOPT_URL,$urlString);//抓取指定网页
-    curl_setopt($ch, CURLOPT_HEADER, 0);//设置header
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//要求结果为字符串且输出到屏幕上
-    curl_setopt($ch, CURLOPT_POST, 1);//post提交方式
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $dataArray);
-    $data = curl_exec($ch);//运行curl
-    curl_close($ch);
-    return $data;
-
-curl post json数据发送
-    $headers = array("Content-type: application/json;charset='utf-8'",
-        "Accept: application/json",
-        "Cache-Control: no-cache",
-        "Pragma: no-cache"
-    );
-
-    $dataJsonString = json_encode($dataArray);
-
-    $ch = curl_init();
-    curl_setopt($ch,CURLOPT_URL,$urlString);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_HEADER, false);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, ($dataJsonString));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    $response=curl_exec($ch);
-    curl_close($ch);
-
 
 
 

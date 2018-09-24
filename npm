@@ -76,6 +76,10 @@ npm install --save-dev babel-breset-es2015 babel-cli
 	// 响应 response
 		res.redirect('/')  //  重定向
 
+		// 返回200 json 数据
+		res.status(200).json({
+
+		})
 
 	// 路由  
 		route.js
@@ -102,6 +106,15 @@ npm install --save-dev babel-breset-es2015 babel-cli
 			app.use(router)
 
 
+	// 处理错误
+
+		next(err)    // next 带有参数的时候   会找到下一个带有4个参数的中间件
+
+		app.ues(function(err, req, res, next){
+
+		})
+
+
 
 // 中间件
 	body-parser  // 获取 post 数据
@@ -113,6 +126,24 @@ npm install --save-dev babel-breset-es2015 babel-cli
 		app.use(bodyParser.json())
 
 		res.body
+
+	express-session // 获取 session
+		npm install exp
+
+		var session = require('express-session')
+
+		app.use(session({
+			secret: 'keyboard cat',
+			resave: false,
+			saveUninitialized: true  // 为真是 写了 session 才添加 session
+		}))
+
+		// 设置
+		req.session.foo = assa
+
+		// 获取
+		req.session.foo = sasa
+
 
 
 
@@ -231,6 +262,17 @@ mongoose 			// mongo 第三方包
 	// 只查找一个 和 find 一样
 	User.findOne()
 
+	// 删除
+	User.remove({ user: 'aa' }, funciton(){
+
+	})
+
+	// 更新数据
+	User.findByIdAndUpdate(id, {
+		username: 321
+	}, function(err, ret){
+
+	})
 
 	mongoose.Promise = global.Promise
 
@@ -247,7 +289,22 @@ mongoose 			// mongo 第三方包
 	})
 
 
+mysql 			// mysql
+	var mysql = require('mysql') 
+	varconnection = mysql.createConnection({
+		host: 'localhost',
+		user: 'me',
+		password: 'secret',
+		database: 'my_db'
+	})
 
+	connection.connect()
+
+	connection.query('select 1 + 1 AS solution', function(error, resulte, fields){
+
+	})
+
+	connection.end();
 
 
 

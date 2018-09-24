@@ -30,6 +30,41 @@ https://telegram.me/botfather
 
 
 
+
+查看 所有  账号 状态
+
+在线
+
+
+账号信息
+
+添加账号
+
+登录账号
+
+
+login - 登录  例: /login name otp
+
+
+
+
+
+
+下载昨天返水
+
+
+
+
+发送信息  
+回复一个 otp
+
+账号退出登录
+
+
+
+
+
+
 663898425:AAEXhfjJxMaprn4F3IjTYObQcJFAIk-Qg6U
 
 我的 id     598910954
@@ -52,14 +87,14 @@ https://api.telegram.org/bot<Token>/<Method Name>
 	getUpdates   (拉取)
 
 	webHook 	 (推送)
-		setWebhook   	// 设置 webhook
-			网址  (require)
-			证书		(支持的端口 443，80，88，8443)
-			HTTPS 连接数 (1~100)  默认40  
-			需要接收的消息 
+		setWebhook   			# 设置 webhook
+		 	url  				str 		# https网址 (支持的端口 443，80，88，8443)
+			[certificate]		file 		# 证书
+			[max_connections] 	int 		# 最大连接数 1~100 默认40
+			[allowed_updates] 	arr|str 	# 指定接收那些内容的消息
 
-
-
+		deleteWebhook
+		getWebhookInfo
 
 ###tets###
 
@@ -104,7 +139,7 @@ Available methods // 可用方法
 		[reply_markup] 				 				回复标志
 
 
-		// 连接里面使用  tg://user?id=<user_id>   联系人信息 		
+			
 
 
 	forwardMessage 		// 转发内容
@@ -141,5 +176,91 @@ answerCallbackQuery		// 内联键盘 发送的回调    成功为 true   ???
 	[cache_time]
 	
 
+
+
+node  框架
+const Telegraf = require('telegraf');
+const { Markup, Telegram } = Telegraf;
+
+
+
+
+
+
+
+
+
+
+Inline Keyboard 			inline的按钮不会造成客户端向机器人发送消息
+
+util.sendMessage({
+    chat_id: -266500900,
+    text: '账号:  `9zhounian` 掉线了   /otp',
+    parse_mode: 'Markdown',
+    reply_markup: JSON.stringify({
+        inline_keyboard: [[
+            { text: '👍', callback_data: 'like' },
+            { text: '👎', callback_data: 'dislike' }
+        ]]
+    })
+}, function(error, response, body){
+    console.log(body)
+})
+
+
+custom Reply Keyboard   	自定义按钮
+
+util.sendMessage({
+    chat_id: -266500900,
+    text: '账号:  `9zhounian` 掉线了   /otp',
+    parse_mode: 'Markdown',
+    reply_markup: JSON.stringify({
+            keyboard: [[
+                {text: 'text1'},
+                {text: 'text2'}
+            ]],
+    })
+}, function(error, response, body){
+    console.log(body)
+})
+
+
+
+Reply Keyboard 				用于快速回复
+
+
+ForceReply 回复内容
+util.sendMessage({
+    chat_id: -266500900,
+    text: '账号:  `9zhounian` 掉线了   /otp',
+    parse_mode: 'Markdown',
+    reply_markup: JSON.stringify({
+        force_reply: true
+    })
+}, function(error, response, body){
+    console.log(body)
+})
+
+
+
+// 浏览器使用时加上前面的域名
+https://telegram.me/joinchat/EaEnSUPktgfoI-XPfMYtcQ
+
+// 连接里面使用  
+tg://user?id=<user_id>   				联系人信息 	
+tg://join?invite=  			 			// 连接邀请
+tg://addstickers?set=
+tg://msg_url?
+tg://confirmphone?
+tg://socks?
+tg://proxy?
+tg://resolve/?domain=
+
+
+
+# markdown
+	# Link
+	[like this](http://www.baidu.com)
+	
 
 

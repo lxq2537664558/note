@@ -1,139 +1,119 @@
-安装
-	centos
-		1 下载composer
-			curl -sS https://getcomposer.org/installer | php
-		2 移动或复制composer到环境下可执行
-		3 composer -V 查看版本
+# 安装 (注意环境变量)
+curl -sS https://getcomposer.org/installer | php
 
+
+# composer.lock    存储
 	
+	composer -V 			# 查看版本
+	composer selfupdate 	# 更新 composer
 
 
-	打开命令行并执行下列命令安装最新版本的 Composer (以下指令摘自 https://getcomposer.org/download/ ，请前往查看最新的安装指令)：
 
-	php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php
+	# 全局参数   (参数可与每一个命令结合使用)
+		--verbose (-v)	 		增加反馈信息的详细度
+			-v 					表示正常输出
+			-vv 				表示更详细的输出
+			-vvv 				则是为了 debug
+		--help (-h) 			显示帮助信息
+		--quiet (-q) 			禁止输出任何信息
+		--no-interaction (-n) 	不要询问任何交互问题
+		--working-dir (-d) 		如果指定的话，使用给定的目录作为工作目录
+		--profile				显示时间和内存使用信息
+		--ansi 					强制 ANSI 输出
+		--no-ansi 				关闭 ANSI 输出
+		--version (-V) 			显示当前应用程序的版本信息
 
-	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-	php -r "if (hash_file('SHA384', 'composer-setup.php') === '55d6ead61b29c7bdee5cccfb50076874187bd9f21f65d8991d46ec5cc90518f447387fb9f76ebae1fbbacf329e583e30') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-	php composer-setup.php
-	php -r "unlink('composer-setup.php');"
+	# 进程退出代码
+		0: 正常
+		1: 通用/未知错误
+		2: 依赖关系处理错误
 
-	执行第一条命令下载下来的 composer-setup.php 脚本将简单的检测 php.ini 中的参数设置，如果某些参数未正确设置则会给出警告；然后下载最新版本的 composer.phar 文件到当前目录。
+	composer init 			#初始化
+		--name					包的名称
+		--description			包的描述
+		--author				包的作者
+		--homepage				包的主页
+		--require 				需要依赖的其它包，必须要有一个版本约束。并且应该遵循 foo/bar:1.0.0 这样的格式。
+		--require-dev 			开发版的依赖包，内容格式与 --require 相同。
+		--stability (-s)		minimum-stability 字段的值。
 
-	上述 4 条命令的作用依次是：
-		下载安装脚本（composer-setup.php）到当前目录。
-		验证 composer-setup.php 是否正确
-			Installer verified 为成功
-		执行安装过程。
-		删除安装脚本 -- composer-setup.php 。
+
+	composer install 		# 安装 --profile 显示执行时间
+
+
+
+
+	# 全局资源管理插件
+	php composer.phar global require "fxp/composer-asset-plugin:1.1.4"
 	
-	局部安装
-		上述下载 Composer 的过程正确执行完毕后，可以将 composer.phar 文件复制到任意目录（比如项目根目录下），然后通过 php composer.phar 指令即可使用 Composer 了！
-	全局安装
-		全局安装是将 Composer 安装到系统环境变量 PATH 所包含的路径下面，然后就能够在命令行窗口中直接执行 composer 命令了。
-		Mac 或 Linux 系统：打开命令行窗口并执行如下命令将前面下载的 composer.phar 文件移动到 /usr/local/bin/ 目录下面：
-			curl -sS https://getcomposer.org/installer | php
-			sudo mv composer.phar /usr/local/bin/composer
-		
-	Windows 系统：
-		1 找到并进入 PHP 的安装目录（和你在命令行中执行的 php 指令应该是同一套 PHP）。
-		2 将 composer.phar 复制到 PHP 的安装目录下面，也就是和 php.exe 在同一级目录。
-		3 在 PHP 安装目录下新建一个 composer.bat 文件，并将下列代码保存到此文件中。
-			@php "%~dp0composer.phar" %*
-			
-		最后重新打开一个命令行窗口试一试执行 composer --version 看看是否正确输出版本号。
+	# 克隆一个仓库
+	composer create-project --prefer-dist laravel/laravel blog 
+
+	composer clearcache 	# 清楚缓存
+	composer update 		# 更新
+	composer update foo/bar # 更新某个库(一般不建议使用)
+	
+	# 安装指定库
+	composer require "foo/bar:1.0.0"
+	
+	# 版本
+		确切的版本    	
+			1.0.0
+		范围 			
+			> >= < <= !=   	(and 处理)
+			| 				(or 处理)
+
+			>=1.0 >=1.0
+			<2.0 >=1.0
+			<1.1 | >=1.2
+		通配符
+			1.0.*
+		赋值运算符
+			~1.2    		(>=1.2,<2.0)
+ 			~1.2.3 			(>=1.2.3,<1.3)
 
 
-	重命名文件composer.phar 为 composer 
-	$ mv composer.phar composer
-
-	$ chmod +x composer
-
-	使用中国镜像
-		即将配置信息添加到 Composer 的全局配置文件 config.json 中
-		打开命令行窗口（windows用户）或控制台（Linux、Mac 用户）并执行如下命令：
-		已OK的
-			composer config -g repositories.packagist composer http://packagist.phpcomposer.com
-		
-		composer config -g repo.packagist composer https://packagist.phpcomposer.com
-		php composer.phar config -g repostitories.packagist composer https://packagist.phpcomposer.com
-
-
-
-	下载软件包
-		php composer.phar -require 软件名 软件版本
-	安装软件包
-		php composer.phar install
-	全局资源管理插件
-		php composer.phar global require "fxp/composer-asset-plugin:1.1.4"
-
-
-
-	在要安装的文件夹建立 composer.json 
-	//安装二维码包
-	```php
-	{
-		"require": {
-			"endroid/qrcode" : "1.7.3"
-		}
-	}
-	当前文件夹执行 
-
-	composer install
-
-	更新 
-
-	composer update
-
-
-
-	composer self-update
-
-
-	include './vendor/autoload.php';
-
-
-	安装yii2
-
-
-	创建yii2项目 
-		基础包  
-			php composer.phar create-project yiisoft/yii2-app-basic basic 2.0.9
-		高级包
-			php composer.phar create-project yiisoft/yii2-app-advanced advanced 2.0.9
-
-
-	归档文件安装
-		wget https://github.com/yiisoft/yii2/releases/download/2.0.7/yii-basic-app-2.0.7.tgz
-	GitHub托管
-		git clone https://github.com/yiisoft/yii2.git
+ 	# 自动加载
+ 	autoload
 
 
 
 
 
 
-	windows
 
-	首先确定安装了php	 		命名窗口执行php -v			环境变量
-	进入官网， 选择download 往下拉
-	找Manual Download	选择最新版本下载
 
-	把下载的composer.phar文件粘贴到你的php的文件目录下面
-	是有php.exe文件的同级目录下
 
-	在新建一个composer.bat  里面写入：
-	@ECHO OFF
-	php "%~dp0composer.phar" %*
 
-	打开命令提示符 输入 composer -v
+# packagist 包寄存的网站
+https://packagist.org/
 
-	安装Yii2
-		1) 首先安装 Composer, 如果已经安装的可以升级下 composerself-update 
-			下载地址：https://getcomposer.org/Composer-Setup.exe 
-		2) 启动 cmd.exe 下载 Yii2 
-			C:\Users\Administrator>cd/dD:\wamp\www 
-			C:\Users\Administrator>composerglobalrequire"fxp/composer-asset-plugin:~1.1.1" 
-			C:\Users\Administrator>composercreate-project--prefer-distyiisoft/yii2-app-basicbasic 
-				下载过程中会使用到 git 账号 ， 没有的到 https://github.com/注册一个
 
-composer install phpoffice/phpexcel
+
+
+
+# 在项目中使用
+include './vendor/autoload.php';
+
+
+
+
+
+
+http请求 [Guzzle]
+	composer require guzzlehttp/guzzle
+
+	document 
+		https://guzzle-cn.readthedocs.io/zh_CN/latest/index.html
+
+
+excel导入导出 [phpexcel]
+	composer install phpoffice/phpexcel
+
+
+
+操作页面 dom 元素 [imangazaliev/didom]
+
+
+二维码  [endroid/qrcode]
+

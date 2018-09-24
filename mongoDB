@@ -26,10 +26,11 @@ db 											// 查看当前的数据库
 use db_name 								// 切换数据库
 
 
-db.field.insertOne({"name": "hugo"}) 		// 插入数据 			
+db.jihe.insertOne({"name": "hugo"}) 		// 插入数据 			
 
 
 show collections 	// 查看所有集合
 
 
-db.students.find() 						// 取数据
+db.jihe.find() 								// 取数据
+

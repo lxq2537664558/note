@@ -1,4 +1,8 @@
 
+
+try \Exception $e  是一个引用函数    使用 var_export 会报错
+
+
 debug_backtrace			回溯跟踪函数的调用信息
 debug_print_backtrace	与之不同的是它会直接打印回溯信息。
 

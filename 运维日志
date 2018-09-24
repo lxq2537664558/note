@@ -43,6 +43,7 @@ pm.start_servers = 20		//  动态方式下的起始php-fpm进程数量
 pm.min_spare_servers = 5  	//  动态方式下的最小php-fpm进程数
 pm.max_spare_servers = 35 	//  动态方式下的最大php-fpm进程数量。
 
+
 动态  允许php-fpm释放多余进程，从而节约内存资源。
 静态  不允许php-fpm释放多于进程，避免了频繁开启或停止php-fpm进程，从而降低了服务器在某些情况下的响应时间
 
@@ -55,11 +56,37 @@ pm.max_spare_servers = 35 	//  动态方式下的最大php-fpm进程数量。
 	xcache  		// 国产 
 
 
+CREATE ALGORITHM=UNDEFINED DEFINER=`hugo`@`%` 
+SQL SECURITY DEFINER 
+VIEW `ny_win_info` AS select 
+`ny_winners`.`id` AS `id`,
+`ny_winners`.`winner_name` AS `winner_name`,
+`ny_winners`.`winner_grade` AS `winner_grade`,
+`ny_winners`.`prize_name` AS `prize_name`,
+`ny_trophy`.`trophy_name` AS `trophy_name`,
+`ny_trophy`.`grade` AS `grade`,
+`ny_trophy`.`type` AS `type`,
+`ny_trophy`.`win` AS `win`,
+`ny_winners`.`winner_status` AS `winner_status`,
+`ny_winners`.`winner_time` AS `winner_time`,
+`ny_winners`.`winner_ip` AS `winner_ip` 
+from (
+ `ny_trophy` 
+ 	left join `ny_winners` on((`ny_winners`.`winner_grade` = `ny_trophy`.`id`))) where ((`ny_winners`.`winner_status` = 1) and (`ny_trophy`.`win` > 0)) order by `ny_winners`.`id`
+
 
 
 // +----------------------------------------------------------------------
 // | mysql
 // +----------------------------------------------------------------------
+
+// 添加一个有全部权限的账号
+
+mysql> GRANT ALL PRIVILEGES ON *.* TO'hugo'@'%'IDENTIFIED BY'hugotest'WITH GRANT OPTION;
+
+GRANT ALL PRIVILEGES ON *.* TO'47.52.154.155'@'47.52.154.155'IDENTIFIED BY'5vEtmUA8yAjWfiqTN8aFYjHACFiMs0UO'WITH GRANT OPTION;
+
+添加完成记得FLUSH PRIVILEGES;
 
 // 锁
 	// 关闭 Performance Schema 
@@ -168,6 +195,14 @@ SHOW VARIABLES WHERE Variable_name LIKE 'character\_set\_%' OR   Variable_name L
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
 
 
+// 查看是否支持分区
+SHOW VARIABLES LIKE '%partition%';
+
+// +----------------------------------------------------------------------
+// | node/
+// +----------------------------------------------------------------------
+
+
 
 
 // +----------------------------------------------------------------------
@@ -193,7 +228,7 @@ $redis-cli -h 127.0.0.1 -p 6379
 
 
 // 删除1天前的文件
-find /tmp -mtime +1 -name "*.log*" -exec rm -rf {} \;
+find /tmp -mtime +30 -name "*.log*" -exec rm -rf {} \;
 
 // h 显示单位
 ls -lh 
@@ -226,12 +261,18 @@ du -h --max-depth=1
 // | 其他  命令
 // +----------------------------------------------------------------------
 
+//  消耗内存最多的50个进程
+ps auxw | head -1;ps auxw|sort -rn -k4|head -50 
+
+
+
+// +----------------------------------------------------------------------
+// | 其他  命令
+// +----------------------------------------------------------------------
 
 //  查看进程总数
 pstree | grep php-fpm
 
-//  消耗内存最多的50个进程
-ps auxw | head -1;ps auxw|sort -rn -k4|head -50 
 
 //  查看打开的文件   结束掉没用的句柄
 lsof  | grep php.php
@@ -243,6 +284,39 @@ nohup php  >/dev/null 2>&1 &
 	which name		查看运行文件
 	whereis name 	查看安装文件
 
+
+// 查找文件
+	find 被查找目录 选项 选项值[选项 选项值 选项 选项值]
+		-name  filename  		# 文件名
+			通配符写法
+				* 		任何数量的任意字符
+				? 		一个任意字符
+				[xyz]	xyz其中一个
+				[4-8] 	4到8  任意一个
+				[^xyz]  除了 xyz
+		-mtime -n|+n 			# 文件更改时间 -n n天内   +n n 天前
+		-mmin  -n|+n 			# 分钟    +60 60分钟前  
+		-atime -n|+n 			# 文件访问时间
+		-ctime -n|+n 			# 文件创建时间
+		-size  +n[c]			# 大小 +大于 -小于 c字节 默认为K  +8k 
+		-type  f|d 				# f文件 d 目录
+		-maxdepth				# 最多层次
+		-mindepth				# 最少层次
+		
+		-perm 					# 按照执行权限
+		-user  username 		# 按文件属主
+		-group groupname  		# 组
+		-nogroup 				# 无有效组   	/etc/groups 中不存在
+		-nouser 				# 无有效属主 /etc/passwd
+
+		find host -name ".*" -ls > foo.txt
+
+		查找后操作
+		find . -name "install.log" -exec rm -rf {} \;
+			-exec 	执行的命令
+			{} 		占位,找到的文件
+			\ 		命令结束
+
 // 查看内存
 	free
 	 	总量（total），使用量（used）和有多少空闲的交换区（free）
@@ -252,8 +326,6 @@ nohup php  >/dev/null 2>&1 &
 	grep (kb)
 		grep MemTotal /proc/meminfo
 		grep MemTotal /proc/meminfo | cut -f2 -d:
-
-
 
 
 // top 
@@ -374,20 +446,43 @@ nohup php  >/dev/null 2>&1 &
 			open|filtered(开放或者被过滤的)
 			closed|fitered(关闭或者被过滤的)
 
-// ubuntu 连接 samba 服务器
+
+
+// +----------------------------------------------------------------------
+// | 其他  命令
+// +----------------------------------------------------------------------
+
+
+# 修改主机名
+	# 临时   (ssh 重新登录即可见)
+	hostname test
+
+	# centos 7
+	hostnamectl set-hostname test
+
+	# 永久
+	vi /etc/sysconfig/network
+	HOSTNAME=test
+
+	vi /etc/hosts
+	127.0.0.1 test
+
+	# ubuntu
+	vi /etc/hostname
+
+
+# ubuntu 连接 samba 服务器
 	
 	sudo apt-get install cifs-utils
 	mount.cifs //10.92.49.4/www /www/wwwroot -o username=hugo, passwd=1
 
-
-
-	// 安装客户端
+	# 安装客户端
 	sudo apt-get install smbclient
 
-	// 查看目录
+	# 查看目录
 	smbclient -L 10.0.0.11
 
-	// 连接共享目录
+	# 连接共享目录
 	smbclient //10.0.0.11/dirPath
 		? | help [command]         提供关于帮助或某个命令的帮助
 	    ! [shell command]          执行所用的SHELL命令，或让用户进入 SHELL提示符
@@ -402,18 +497,17 @@ nohup php  >/dev/null 2>&1 &
 	    put file1 [file2]        向服务器上传一个文件file1,传到服务器上改名为file2；
 	    mput file1 file2 filen  向服务器上传多个文件
 
-	// 将共享目录挂载到本地
+	# 将共享目录挂载到本地
 	mount //10.92.39.4/www /www/wwwroot -o username=hugo
 
-	// 开机自动挂载
+	# 开机自动挂载
 	vi /etc/fstab
 	//10.92.39.4/www /www/wwwroot cifs defaults,rw,uid=1000,gid=1000,username=hugo,password=1 0 0
 
 
 
-// vpn
-	// 一键安装
-
+# vpn
+	# 一键安装
 	wget --no-check-certificate https://raw.githubusercontent.com/teddysun/across/master/l2tp.sh
 	chmod +x l2tp.sh
 	./l2tp.sh
@@ -438,3 +532,14 @@ nohup php  >/dev/null 2>&1 &
 	systemctl start|stop|restart xl2tpd （CentOS7 下使用）
 	service ipsec start|stop|restart|status （Debian/Ubuntu 下使用）
 	service xl2tpd start|stop|restart （Debian/Ubuntu 下使用）
+
+	ubuntu 连接   ss
+		# 先安装pip工具包，如果有则跳过
+		sudo apt-get update
+		sudo apt-get install python-pip
+		sudo apt-get install python-setuptools m2crypto
+
+		# 接着安装shadowsocks
+		pip install shadowsocks
+
+		sslocal -c /xxx/config.json

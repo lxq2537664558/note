@@ -27,7 +27,7 @@ HTTP 模块
 	var http = require('http');
 
 	// 创建 http server
-	var server = http.createServer(;
+	var server = http.createServer();
 
 	server.on('request', function(){
 		// request
@@ -154,10 +154,22 @@ Path 模块
 	//返回路径的正确 路径
 	path.normalize('pathname');
 
+	// 获取文件名
+	path.basename('')
+	path.basename('', '.text')   // 去除掉 .text 后的名字
+
+	path.dirname('') 			//文件名
+
+	path.isAbsolute('') 		// 判断路径是否为绝对路径
+
+	path.join('/a/', '/b')    	// 辅助拼接 路径 字符串
+
+	path.parse() 				// 把路径转为对象
 
 
-
-
+非模块成员
+	__dirname 				// 当前文件名
+	__filename 				// 当前文件路径
 
 
 log4js

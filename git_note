@@ -255,38 +255,36 @@ centOS 7.2 安装 git2.7
 
 # git --version
 
+
+
 git checkout -b huidu origin/huidu
 
 
-git checkout -b dev 新建并切换到本地dev分支
-git pull origin dev 本地分支与远程分支相关联
 
-git branch --set-upstream-to=origin/远程分支的名字
+
 
 在本地新建分支并推送到远程
 git checkout -b test
 git push origin test   这样远程仓库中也就创建了一个test分支
+
+
+git pull origin huidu --allow-unrelated-histories
+
+
 
 删除远程分支
 git branch -r -d origin/branch-name
 git push origin :branch-name
 
 
-
-Push rejected: Push to origin/huidu was rejected
-git pull origin huidu --allow-unrelated-histories
+git branch --set-upstream-to=origin/远程分支的名字
 
 
-git clean -d -fx  	删除一些没有 git add 的文件
-    git clean 参数
-    -n 显示将要删除的文件和目录；
-    -x -----删除忽略文件已经对git来说不识别的文件
-    -d -----删除未被添加到git的路径中的文件
-    -f -----强制运行
-    git clean -n
-    git clean -df
-    git clean -f
 
+
+
+git checkout -b dev 新建并切换到本地dev分支
+git pull origin dev 本地分支与远程分支相关联
 
 git reset --hard origin/huidu
 git fetch origin hiudu
@@ -302,28 +300,48 @@ git stash apply stash@{1}
 
 git stash clear   		//清空所有的暂存
 
-
-
-
- git mergetool
-
+git charry-pick  commit-id
 
 合并commit
 git rebase -i
+
+
+刷新分支
+git fetch
+
+git clean -d -fx  	删除一些没有 git add 的文件
+    git clean 参数
+    -n 显示将要删除的文件和目录；
+    -x -----删除忽略文件已经对git来说不识别的文件
+    -d -----删除未被添加到git的路径中的文件
+    -f -----强制运行
+    git clean -n
+    git clean -df
+    git clean -f
+
+
+
+
+
 
 
 更改commit注释
 git commit --amend
 
 
-刷新分支
-git fetch
+
+
+
 
 
 
 git show commit-id filename
 
 
+
+
+
+git mergetool
 
 
 //创建秘钥

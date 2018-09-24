@@ -1,5 +1,43 @@
 
 
+
+async / await  异步等待
+
+
+
+Promise 		// 解决回调地狱
+	Pending 		// 等待
+		Resolved		// 成功
+		Rejected 		// 失败
+
+
+var test = new Promise(function(resolv, reject){
+	fs.readFile('a.text', 'utf8', function(err, data){
+		if(err){
+			// 失败
+			reject(err)
+		}else{
+			// 成功
+			resolve(data)
+		}
+	})
+})
+
+// then 方法接收 resolve 方法
+test.then(function(data){
+	// 成功
+},function(err){
+	// 失败
+})
+
+
+
+
+
+
+// 抛出异常  结束脚本
+throw err 
+
 // 引入文件
 require('./b')
 
@@ -462,7 +500,7 @@ BOM对象
 		match()				(正则)
 		.sort(function(a,b){return a.localeCompare(b)})
 		按照本地语言方式排列
-		tirm()				去除空格 // 注意：IE9以下的版本没有trim()方法
+		trim()				去除空格 // 注意：IE9以下的版本没有trim()方法
 
 	日期时间
 		getYear()			获取年份(会有兼容问题)

@@ -93,35 +93,16 @@ linux
 		// 编辑post-commit文件：
 		vi post-commit
 			#!/bin/sh
-			REPOS="$1"
-			REV="$2"
 
-			export LANG=zh_CN.UTF-8 #防止乱码
-			svn update /www/web/weixin  #更新svn
-			echo `date`,`whoami`,$REPOS,$REV >> //www/svn1/hooks/svn_hook.log ＃记录时间日志信息
-			chown -R www:www /www/web/weixin #更改网站目录用户组及用户
-
-
-			export LANG=en_US.UTF-8
-			REPOS="$1"
-			REV="$2"
-			TXN_NAME="$3"
-			LOG_PATH=/svn/svn_hook.log
-			SVN=/usr/local/svn/bin/svn
-			WEB=/www/wwwroot/activity
-			chown -R www:www /www/wwwroot/activity
-			$SVN update $WEB --username hugo --password hugo666
-
-
-			export LANG=en_US.UTF-8
-			REPOS="$1"
-			REV="$2"
-			TXN_NAME="$3"
-			LOG_PATH=/svn/svn_hook.log
-			SVN=/usr/local/svn/bin/svn
-			WEB=/www/wwwroot/activity
-			chown -R www:www /www/wwwroot/activity
-			$SVN update $WEB --username hugo --password hugo666
+export LANG=zh_CN.UTF-8
+REPOS="$1"
+REV="$2"
+TXN_NAME="$3"
+LOG_PATH=/svn/svn_hook.log
+SVN=/usr/bin/svn
+WEB=/www/wwwroot/hugo
+chown -R www:www /www/wwwroot/hugo
+$SVN update $WEB --username hugo --password hugo666
 
 		// 完成之后，结束svn进程
 		killall svnserve

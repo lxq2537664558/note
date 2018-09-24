@@ -193,6 +193,27 @@ iterm2
 			1.在 ~/.zshrc 中加入：setopt no_nomatch 
 			2.执行 source ~/.zshrc
 
+	注销重新登录
+		sudo chsh -s $(which zsh)设置zsh为默认shell
+
+
+
+	查看shell
+		cat /etc/shells
+		chsh -l
+	当前使用的shell
+		echo $SHELL
+	切换shell
+		chsh -s /bin/bash
+		chsh -s /bin/zsh
+
+		bash
+	shell执行的目录
+		/etc/passwd
+	是否有权执行sudo命令
+		/etc/sudoers
+
+
 	// 保存连接脚本 
 		// 方式1   vi 出现混乱
 		#!/usr/bin/expect -f
@@ -243,8 +264,7 @@ karabiner
 隐藏文件
 	显示
 		defaults write com.apple.finder AppleShowAllFiles -bool true
-	隐藏	
-		defaults write com.apple.finder AppleShowAllFiles -bool false
+	隐藏	x		defaults write com.apple.finder AppleShowAllFiles -bool false
 
 隐藏桌面图标
 

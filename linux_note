@@ -263,39 +263,6 @@ Systemdctl 是一个 systemd 工具, 主要负责控制 systemd 系统和服务�
 			echo 内容 > 文件 		把内容以覆盖方式添加到文件中
 			echo 内容 >> 文件		把内容以追加方式添加到文件中
 
-	文件查找
-	find 被查找目录 选项 选项值[选项 选项值 选项 选项值]
-		-name		文件名字
-			find / -name passwd
-			通配符写法
-				* 		任何数量的任意字符
-				? 		一个任意字符
-				[xyz]	xyz其中一个
-				[4-8] 	4到8  任意一个
-				[^xyz]  除了 xyz
-		-size		大小 +大于 -小于 c字节 默认为K
-			find / -size +8K
-		-mtime 		时间 +3|3|-3
-			find / -mtime -3  3天内 修改的
-		-maxdepth	最多层次
-		-mindepth	最少层次
-		-perm		权限
-		-user 		主人名字
-		-group 		组名字
-		-type 		f 文件 d 目录
-
-		find /要查找的文/件/夹/ -name ".*" -print
-		find /要查找的文/件/夹/ -name ".*" -ls
-		find /要查找的文/件/夹/ -type f -iname ".*" -ls
-		find /要查找的文/件/夹/ -type d -iname ".*" -ls
-		find host -name ".*" -ls > foo.txt
-
-		查找后操作
-		find . -name "install.log" -exec rm -rf {} \;
-			-exec 	执行的命令
-			{} 		占位,找到的文件
-			\ 		命令结束
-
 	Locate filename 查找文件
 
 
